@@ -1,0 +1,38 @@
+{
+  "extension_name": "univie_pure",
+  "target_mail_address": "ebeling-hoppe@luis.uni-hannover.de",
+  "allowedStandards": "WCAG2AA",
+  "deploy":{
+    "vhost":"cmsdev1",
+    "typo3version": "v7.6.46",
+    "git_snipped": "git:t3luh/univie_pure",
+    "instance": "demosfb871"
+  },
+  "viewports":[
+    {
+      "comment": "Mobile",
+      "width": 750,
+      "height": 1334,
+      "deviceScaleFactor": 2,
+      "isMobile": true
+    },
+    {
+      "comment": "Desktop",
+      "width": 1366,
+      "height": 768,
+      "deviceScaleFactor": 1,
+      "isMobile": false
+    }
+  ],
+  "level": "error",
+  "defaults": {
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox"]
+    },
+    "timeout": 60000
+  },
+  "urls": [
+    "https://www.demosfb871.uni-hannover.de/index.php?id=157"
+  ]
+}
+

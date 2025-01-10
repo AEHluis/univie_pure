@@ -1,0 +1,90 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+<f:render partial="Pure/Paginate/Index" arguments="{pagination:pagination}"/>
+
+<div class="c-search__list"></div>
+<f:for each="{equipments}" as="item">
+    <f:if condition="{item.renderings.rendering}">
+        <div class="c-search__item">
+            <f:spaceless>
+                <f:format.html>{item.renderings.rendering.html}</f:format.html>
+            </f:spaceless>
+            <div class="rendering rendering_equipment rendering_short rendering_equipment_short">
+                <f:if condition="{item.contactPerson}">
+                    <f:then>
+                        <f:spaceless>
+                        <p class="type">
+                            <span class="type_contact_person">
+                                <f:translate
+                                        key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.contactPerson"/>
+                            </span>
+                            <span class="type_classification">
+
+                                    <f:for each="{item.contactPerson}" as="p" iteration="Iter">
+                                        <f:format.raw>{p}</f:format.raw><f:if condition="{Iter.isLast}"><f:else>, </f:else></f:if>
+                                    </f:for>
+
+                            </span>
+                        </p>
+                        </f:spaceless>
+                    </f:then>
+                </f:if>
+
+                <f:if condition="{item.email}">
+                    <f:then>
+                        <f:spaceless>
+                        <p class="type">
+                            <span class="type_contact_email">
+                                <f:translate
+                                        key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.contactMail"/>
+                            </span>
+                            <span class="type_classification">
+                                <f:for each="{item.email}" as="e" iteration="Iter">
+                                    <f:link.email class="c-link c-link--inline"  email="{e}">
+
+                                                <f:format.raw value="{v:format.replace(substring: '@', content: e, replacement: '<i class=\"fa-fa\" aria-hidden=\"true\"></i>')}" />
+
+                                    </f:link.email>
+                                    <f:if condition="{Iter.isLast}"><f:else>, </f:else></f:if>
+                                </f:for>
+                            </span>
+                        </p>
+                        </f:spaceless>
+                    </f:then>
+                </f:if>
+
+                <f:if condition="{item.webAddress}">
+                    <f:then>
+                        <f:spaceless>
+                        <p class="type">
+                            <span class="type_contact_webAddress">
+                                <f:translate
+                                        key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.webAddress"/>
+                            </span>
+                            <span class="type_classification">
+                                <f:for each="{item.webAddress}" as="w" iteration="Iter">
+                                    <f:link.external uri="{w}" target="_blank"
+                                                     class="c-link--extern u-icon-after u-icon-after--new-tab">{w}</f:link.external><f:if condition="{Iter.isLast}"><f:else>, </f:else></f:if>
+                                </f:for>
+                            </span>
+                        </p>
+                        </f:spaceless>
+                    </f:then>
+                </f:if>
+            </div>
+            <p>
+                <f:if condition="{settings.linkToPortal}">
+                    <f:if condition="{item.portaluri}">
+                         <div style="text-align: center;">
+                            <f:link.external uri="{item.portaluri}" target="_blank"
+                                             class="c-button u-icon-after u-icon-after--new-tab">
+                                <f:translate
+                                        key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong"/>
+                            </f:link.external>
+                        </div>
+                    </f:if>
+                </f:if>
+            </p>
+        </div>
+    </f:if>
+</f:for>
+</div>

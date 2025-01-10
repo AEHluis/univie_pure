@@ -1,0 +1,87 @@
+{
+    "modules": [
+        {
+            "config": {
+                "position": [
+                    78,
+                    89
+                ]
+            },
+            "name": "New Model Object",
+            "value": {
+                "actionGroup": {
+                    "_default0_list": true,
+                    "_default1_show": true,
+                    "_default2_new_create": false,
+                    "_default3_edit_update": false,
+                    "_default4_delete": false,
+                    "customActions": []
+                },
+                "name": "Publication",
+                "objectsettings": {
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "aggregateRoot": false,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": "",
+                    "sorting": false,
+                    "type": "Entity",
+                    "uid": "482746040632"
+                },
+                "propertyGroup": {
+                    "properties": []
+                },
+                "relationGroup": {
+                    "relations": []
+                }
+            }
+        }
+    ],
+    "properties": {
+        "backendModules": [],
+        "description": "access the pure research information system (as installed at the university of Vienna)",
+        "emConf": {
+            "category": "plugin",
+            "custom_category": "",
+            "dependsOn": "typo3 => 6.2.0-6.2.99\n",
+            "disableLocalization": false,
+            "disableVersioning": false,
+            "skipGenerateDocumentationTemplate": false,
+            "sourceLanguage": "en",
+            "state": "alpha",
+            "version": ""
+        },
+        "extensionKey": "univie_pure",
+        "name": "T3LUH FIS",
+        "originalExtensionKey": "univie_pure",
+        "persons": [
+            {
+                "company": "univie",
+                "email": "christian.klettner@univie.ac.at",
+                "name": "Christian Klettner",
+                "role": "Developer"
+            }
+        ],
+        "plugins": [
+            {
+                "actions": {
+                    "controllerActionCombinations": "",
+                    "noncacheableActions": "",
+                    "switchableActions": ""
+                },
+                "key": "univiepure",
+                "name": "T3LUH FIS"
+            }
+        ],
+        "vendorName": "UNIVIE"
+    },
+    "wires": [],
+    "log": {
+        "last_modified": "2016-01-19 01:00",
+        "extension_builder_version": "6.2",
+        "be_user": " (2)"
+    }
+}

@@ -1,0 +1,20 @@
+<f:layout name="Default" />
+<f:section name="main">
+  <f:flashMessages  />
+  <f:render partial="Pure/Properties" arguments="{publication:publication, lang:lang, showLinkToPortal:showLinkToPortal}" />
+  <f:if condition="{settings.showBibtex}">
+    <div class="c-section" style="width:100%">
+      <ul class="accordion c-accordion" data-accordion="insxal-accordion" data-allow-all-closed="true" data-multi-expand="false" role="tablist">
+        <li class="accordion-item c-accordion__item" data-accordion-item="">
+          <a href="#" class="accordion-title c-accordion__headline c-headline--medium u-text--hyphens" aria-controls="bibtex-accordion" role="tab" id="bibtex-accordion-label" aria-expanded="false" aria-selected="false">BibTeX</a>
+          <div class="accordion-content c-accordion__content" data-tab-content="" role="tabpanel" aria-labelledby="bibtex-accordion-label" aria-hidden="true" id="bibtex-accordion" style="display: none;">
+            <div id="c2881" class="c-section__element">
+              {bibtex -> f:format.raw()}
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </f:if>
+  <hr>
+</f:section>

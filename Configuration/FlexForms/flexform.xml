@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.sDEF
+                    </sheetTitle>
+                    <cshFile>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf</cshFile>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.what_to_display>
+                        <TCEforms>
+                            <onChange>reload</onChange>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display
+                            </label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <items type="array">
+
+                                    <numIndex index="-1" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectBlank
+                                        </numIndex>
+                                        <numIndex index="-1"></numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.detail
+                                        </numIndex>
+                                        <numIndex index="1">DETAIL</numIndex>
+                                    </numIndex>
+
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.publications
+                                        </numIndex>
+                                        <numIndex index="1">PUBLICATIONS</numIndex>
+                                    </numIndex>
+
+                                    <numIndex index="5" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.projects
+                                        </numIndex>
+                                        <numIndex index="1">PROJECTS</numIndex>
+                                    </numIndex>
+
+                                    <numIndex index="6" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.equipments
+                                        </numIndex>
+                                        <numIndex index="1">EQUIPMENTS</numIndex>
+                                    </numIndex>
+
+                                    <numIndex index="7" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.data_sets
+                                        </numIndex>
+                                        <numIndex index="1">DATASETS</numIndex>
+                                    </numIndex>
+
+
+                                </items>
+                                <maxitems>1</maxitems>
+                                <multiple>0</multiple>
+                                <size>1</size>
+                            </config>
+                        </TCEforms>
+                    </settings.what_to_display>
+
+                    <settings.showBibtex>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.showBibtex
+                            </label>
+                            <displayCond>FIELD:settings.what_to_display:IN:DETAIL</displayCond>
+                            <config>
+                                <type>check</type>
+                                <default>1</default>
+                            </config>
+                        </TCEforms>
+                    </settings.showBibtex>
+                    <settings.linkToPortal>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.linkToPortal
+                            </label>
+                            <displayCond>FIELD:settings.what_to_display:IN:DETAIL,PROJECTS,PUBLICATIONS,EQUIPMENTS
+                            </displayCond>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.linkToPortal>
+                    <settings.singlePid>
+                        <TCEforms>
+                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.singlePid
+                            </label>
+                            <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS</displayCond>
+                            <config>
+                                <type>input</type>
+                                <size>7</size>
+                                <allowed>pages</allowed>
+                                <wizards type="array">
+                                    <link type="array">
+                                        <type>popup</type>
+                                        <title>LLL:EXT:cms/locallang_ttc.xlf:header_link_formlabel</title>
+                                        <params type="array">
+                                            <blindLinkOptions>url,mail,spec,file,folder</blindLinkOptions>
+                                        </params>
+                                        <icon>link_popup.gif</icon>
+                                        <module type="array">
+                                            <name>wizard_element_browser</name>
+                                            <urlParameters type="array">
+                                                <mode>wizard</mode>
+                                                <act>file</act>
+                                            </urlParameters>
+                                        </module>
+                                        <JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1
+                                        </JSopenParams>
+                                    </link>
+                                </wizards>
+                            </config>
+                        </TCEforms>
+                    </settings.singlePid>
+                    <settings.pageSize>
+                        <TCEforms>
+                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.pageSize
+                            </label>
+                            <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS
+                            </displayCond>
+                            <config>
+                                <type>input</type>
+                                <size>3</size>
+                                <max>3</max>
+                                <eval>int</eval>
+                                <placeholder>20</placeholder>
+                                <default>20</default>
+                            </config>
+                        </TCEforms>
+                    </settings.pageSize>
+                    <settings.showSearchForm>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.showSearchForm
+                            </label>
+
+
+                            <displayCond>
+                                FIELD:sDEF.settings.what_to_display:IN:EQUIPMENTS,PUBLICATIONS,PROJECTS,DATASETS
+                            </displayCond>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.showSearchForm>
+                    <settings.showDescription>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.showDescription
+                            </label>
+                            <displayCond>FIELD:settings.what_to_display:IN:PROJECTS</displayCond>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.showDescription>
+                    <settings.pager.insertAbove>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.pager.insertAbove
+                            </label>
+                            <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS
+                            </displayCond>
+                            <config>
+                                <type>check</type>
+                                <default>1</default>
+                            </config>
+                        </TCEforms>
+                    </settings.pager.insertAbove>
+
+                    <settings.initialNoResults>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.initialnoResults
+                            </label>
+                            <displayCond>FIELD:settings.what_to_display:=:PUBLICATIONS</displayCond>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.initialNoResults>
+                </el>
+            </ROOT>
+        </sDEF>
+
+
+        <Common>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>
+                        LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.settings
+                    </sheetTitle>
+                    <displayCond>FIELD:sDEF.settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS</displayCond>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.chooseSelector>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.ChooseSelector
+                            </label>
+                            <onChange>reload</onChange>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getItemsToChoose
+                                </itemsProcFunc>
+                            </config>
+                        </TCEforms>
+                    </settings.chooseSelector>
+                    <settings.selectorOrganisations>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectOrganisation
+                            </label>
+                            <displayCond>FIELD:settings.chooseSelector:=:0</displayCond>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectMultipleSideBySide</renderType>
+                                <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getOrganisations
+                                </itemsProcFunc>
+                                <size>10</size>
+                                <autoSizeMax>20</autoSizeMax>
+                                <maxitems>9999</maxitems>
+                                <minitems>0</minitems>
+                                <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>
+                            </config>
+                        </TCEforms>
+                    </settings.selectorOrganisations>
+                    <settings.selectorPersons>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectPerson
+                            </label>
+                            <displayCond>FIELD:settings.chooseSelector:=:1</displayCond>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+
+                                <items type="array"></items>
+
+                                <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getPersons
+                                </itemsProcFunc>
+                                <size>15</size>
+                                <autoSizeMax>25</autoSizeMax>
+                                <maxitems>20000</maxitems>
+                                <minitems>0</minitems>
+                                <renderType>selectMultipleSideBySide</renderType>
+                                <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>
+                            </config>
+                        </TCEforms>
+                    </settings.selectorPersons>
+                    <settings.luhPubsOnly>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.luhPubsOnly
+                            </label>
+                            <displayCond>
+                                <and>
+                                    <vaule1>FIELD:settings.chooseSelector:=:1</vaule1>
+                                    <value2>FIELD:sDEF.settings.what_to_display:IN:PUBLICATIONS</value2>
+                                </and>
+                            </displayCond>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.luhPubsOnly>
+
+                    <settings.selectorProjects>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectProject
+                            </label>
+                            <displayCond>FIELD:settings.chooseSelector:=:2</displayCond>
+
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+
+                                <itemsProcFunc>
+                                    Univie\UniviePure\Utility\ClassificationScheme->getProjects
+                                </itemsProcFunc>
+                                <items type="array"></items>
+                                <size>15</size>
+                                <maxitems>9999</maxitems>
+                                <minitems>0</minitems>
+                                <renderType>selectMultipleSideBySide</renderType>
+                                <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>
+
+                            </config>
+                        </TCEforms>
+                    </settings.selectorProjects>
+
+                </el>
+            </ROOT>
+        </Common>
+
+        <Equipments>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.equipments
+                    </sheetTitle>
+                    <displayCond>FIELD:sDEF.settings.what_to_display:=:EQUIPMENTS</displayCond>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.narrowBySearch>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.equipments.narrowBySearch
+                            </label>
+                            <config>
+                                <type>input</type>
+                                <placeholder>
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                </placeholder>
+                                <mode>useOrOverridePlaceholder</mode>
+                            </config>
+                        </TCEforms>
+                    </settings.narrowBySearch>
+                </el>
+            </ROOT>
+        </Equipments>
+
+        <DataSets>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.data_sets
+                    </sheetTitle>
+                    <displayCond>FIELD:sDEF.settings.what_to_display:=:DATASETS</displayCond>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.narrowBySearch>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.data_sets.narrowBySearch
+                            </label>
+                            <config>
+                                <type>input</type>
+                                <placeholder>
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                </placeholder>
+                                <mode>useOrOverridePlaceholder</mode>
+                            </config>
+                        </TCEforms>
+                    </settings.narrowBySearch>
+                    <settings.rendering>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.data_sets.rendering
+                            </label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">Standard</numIndex>
+                                        <numIndex index="1">standard</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">Erweitert</numIndex>
+                                        <numIndex index="1">extended</numIndex>
+                                    </numIndex>
+
+                                </items>
+                                <default>standard</default>
+                            </config>
+                        </TCEforms>
+                    </settings.rendering>
+
+                </el>
+            </ROOT>
+        </DataSets>
+
+        <Publication>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications
+                    </sheetTitle>
+                    <displayCond>FIELD:sDEF.settings.what_to_display:=:PUBLICATIONS</displayCond>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.narrowByPublicationType>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.narrowByPublicationType
+                            </label>
+                            <onChange>reload</onChange>
+                            <config>
+                                <type>check</type>
+                            </config>
+                        </TCEforms>
+                    </settings.narrowByPublicationType>
+                    <settings.selectorPublicationType>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.selectPublicationType
+                            </label>
+                            <displayCond>FIELD:settings.narrowByPublicationType:REQ:true</displayCond>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectMultipleSideBySide</renderType>
+                                <itemsProcFunc>
+                                    Univie\UniviePure\Utility\ClassificationScheme->getTypesFromPublications
+                                </itemsProcFunc>
+                                <size>10</size>
+                                <autoSizeMax>20</autoSizeMax>
+                                <maxitems>9999</maxitems>
+                                <minitems>0</minitems>
+                                <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>
+                            </config>
+                        </TCEforms>
+                    </settings.selectorPublicationType>
+
+                    <settings.peerReviewedOnly>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.peerReviewedOnly
+                            </label>
+                            <config>
+                                <type>check</type>
+                            </config>
+                        </TCEforms>
+                    </settings.peerReviewedOnly>
+                    <settings.inPress>
+                        <TCEforms>
+                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.inPress
+                            </label>
+                            <config>
+                                <type>check</type>
+                                <default>1</default>
+                            </config>
+                        </TCEforms>
+                    </settings.inPress>
+                    <settings.notPeerReviewedOrNotSetOnly>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.notPeerReviewedOrNotSetOnly
+                            </label>
+                            <config>
+                                <type>check</type>
+                            </config>
+                        </TCEforms>
+                    </settings.notPeerReviewedOrNotSetOnly>
+
+                    <settings.narrowBySearch>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.narrowBySearch
+                            </label>
+                            <config>
+                                <type>input</type>
+                                <placeholder>
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                </placeholder>
+                                <mode>useOrOverridePlaceholder</mode>
+                            </config>
+                        </TCEforms>
+                    </settings.narrowBySearch>
+
+                    <settings.publishedAfterDate>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedAfterDate
+                            </label>
+                            <config>
+                                <type>input</type>
+                                <placeholder>
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedAfterPlaceholder
+                                </placeholder>
+                                <mode>useOrOverridePlaceholder</mode>
+                            </config>
+                        </TCEforms>
+                    </settings.publishedAfterDate>
+
+                    <settings.publishedBeforeDate>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedBeforeDate
+                            </label>
+                            <config>
+                                <type>input</type>
+                                <placeholder>
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedBeforePlaceholder
+                                </placeholder>
+                                <mode>useOrOverridePlaceholder</mode>
+                            </config>
+                        </TCEforms>
+                    </settings.publishedBeforeDate>
+
+
+                    <settings.groupByYear>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.groupByYear
+                            </label>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.groupByYear>
+
+                    <settings.researchOutputOrdering>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering
+                            </label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationYearAndAuthor-desc
+                                        </numIndex>
+                                        <numIndex index="1">-publicationYearAndAuthor</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationYearAndAuthor-asc
+                                        </numIndex>
+                                        <numIndex index="1">publicationYearAndAuthor</numIndex>
+                                    </numIndex>
+
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.year-desc
+                                        </numIndex>
+                                        <numIndex index="1">-publicationYear</numIndex>
+                                    </numIndex>
+                                    <numIndex index="3" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.year-asc
+                                        </numIndex>
+                                        <numIndex index="1">publicationYear</numIndex>
+                                    </numIndex>
+                                    <numIndex index="4" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.authorLastName-asc
+                                        </numIndex>
+                                        <numIndex index="1">authorLastName</numIndex>
+                                    </numIndex>
+                                    <numIndex index="5" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.authorLastName-desc
+                                        </numIndex>
+                                        <numIndex index="1">-authorLastName</numIndex>
+                                    </numIndex>
+                                    <numIndex index="6" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.title-asc
+                                        </numIndex>
+                                        <numIndex index="1">title</numIndex>
+                                    </numIndex>
+                                    <numIndex index="7" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.title-desc
+                                        </numIndex>
+                                        <numIndex index="1">-title</numIndex>
+                                    </numIndex>
+                                    <numIndex index="8" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationDate-asc
+                                        </numIndex>
+                                        <numIndex index="1">publicationDate</numIndex>
+                                    </numIndex>
+                                    <numIndex index="9" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationDate-desc
+                                        </numIndex>
+                                        <numIndex index="1">-publicationDate</numIndex>
+                                    </numIndex>
+                                </items>
+                            </config>
+                        </TCEforms>
+                    </settings.researchOutputOrdering>
+
+                    <settings.rendering>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.rendering
+                            </label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">Vancouver</numIndex>
+                                        <numIndex index="1">vancouver</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">Harvard</numIndex>
+                                        <numIndex index="1">harvard</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">Apa</numIndex>
+                                        <numIndex index="1">apa</numIndex>
+                                    </numIndex>
+                                    <numIndex index="3" type="array">
+                                        <numIndex index="0">MLA</numIndex>
+                                        <numIndex index="1">mla</numIndex>
+                                    </numIndex>
+                                    <numIndex index="4" type="array">
+                                        <numIndex index="0">CBE</numIndex>
+                                        <numIndex index="1">cbe</numIndex>
+                                    </numIndex>
+                                    <numIndex index="5" type="array">
+                                        <numIndex index="0">Author</numIndex>
+                                        <numIndex index="1">author</numIndex>
+                                    </numIndex>
+                                    <numIndex index="6" type="array">
+                                        <numIndex index="0">Authorlist</numIndex>
+                                        <numIndex index="1">authorlist</numIndex>
+                                    </numIndex>
+                                    <numIndex index="7" type="array">
+                                        <numIndex index="0">Standard</numIndex>
+                                        <numIndex index="1">standard</numIndex>
+                                    </numIndex>
+                                    <numIndex index="8" type="array">
+                                        <numIndex index="0">Langformat für Dissertationen inkl. Betreuerangabe
+                                        </numIndex>
+                                        <numIndex index="1">luhlong</numIndex>
+                                    </numIndex>
+                                </items>
+                                <default>standard</default>
+                            </config>
+                        </TCEforms>
+                    </settings.rendering>
+
+                </el>
+            </ROOT>
+        </Publication>
+        <Projects>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects
+                    </sheetTitle>
+                    <displayCond>FIELD:sDEF.settings.what_to_display:=:PROJECTS</displayCond>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.orderProjects>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects
+                            </label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.startDate.desc
+                                        </numIndex>
+                                        <numIndex index="1">-startDate</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.startDate.asc
+                                        </numIndex>
+                                        <numIndex index="1">startDate</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.title.asc
+                                        </numIndex>
+                                        <numIndex index="1">title</numIndex>
+                                    </numIndex>
+                                    <numIndex index="3" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.title.desc
+                                        </numIndex>
+                                        <numIndex index="1">-title</numIndex>
+                                    </numIndex>
+                                </items>
+                            </config>
+                        </TCEforms>
+                    </settings.orderProjects>
+                    <settings.filterProjects>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects
+                            </label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.none
+                                        </numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.not-started
+                                        </numIndex>
+                                        <numIndex index="1">NOT_STARTED</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.running
+                                        </numIndex>
+                                        <numIndex index="1">RUNNING</numIndex>
+                                    </numIndex>
+                                    <numIndex index="3" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.finished
+                                        </numIndex>
+                                        <numIndex index="1">FINISHED</numIndex>
+                                    </numIndex>
+                                </items>
+                            </config>
+                        </TCEforms>
+                    </settings.filterProjects>
+                    <settings.narrowBySearch>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.narrowBySearch
+                            </label>
+                            <config>
+                                <type>input</type>
+                                <placeholder>
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                </placeholder>
+                                <mode>useOrOverridePlaceholder</mode>
+                            </config>
+                        </TCEforms>
+                    </settings.narrowBySearch>
+
+                </el>
+            </ROOT>
+        </Projects>
+    </sheets>
+</T3DataStructure>

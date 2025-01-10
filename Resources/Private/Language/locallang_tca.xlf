@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-19T13:00:54Z" product-name="univiepure">
+		<header/>
+		<body>
+            <trans-unit id="flexform.showBibtex">
+        	    <source>Show BibTeX</source>
+        	</trans-unit>
+			<trans-unit id="flexform.sDEF">
+				<source>General settings</source>
+			</trans-unit>
+			<trans-unit id="flexform.what_to_display">
+				<source>What to display:</source>
+			</trans-unit>
+			<trans-unit id="flexform.what_to_display.detail">
+				<source>Detail view</source>
+			</trans-unit>
+			<trans-unit id="flexform.what_to_display.publications">
+				<source>List of publications</source>
+			</trans-unit>
+			<trans-unit id="flexform.what_to_display.equipments">
+				<source>List of equipment</source>
+			</trans-unit>
+			<trans-unit id="flexform.what_to_display.data_sets">
+				<source>List of datasets</source>
+			</trans-unit>
+			<trans-unit id="flexform.what_to_display.pressMedia">
+				<source>List of press-media</source>
+			</trans-unit>
+			<trans-unit id="flexform.what_to_display.projects">
+				<source>List of projects</source>
+			</trans-unit>
+			<trans-unit id="flexform.singlePid">
+				<source>PID of page with detail view</source>
+			</trans-unit>
+			<trans-unit id="flexform.pageSize">
+				<source>Entries per page:</source>
+			</trans-unit>
+			<trans-unit id="flexform.showSearchForm">
+				<source>Show search form:</source>
+			</trans-unit>
+			<trans-unit id="flexform.showDescription">
+				<source>Show abstract:</source>
+			</trans-unit>
+			<trans-unit id="flexform.initialnoResults">
+				<source>Initially show no results. (Use this only with activated search form):</source>
+			</trans-unit>
+			<trans-unit id="flexform.linkToPortal">
+				<source>Enable linking to FIS portal:</source>
+			</trans-unit>
+			<trans-unit id="flexform.pager.insertAbove">
+				<source>Show pager above: (Appears if the total number of results is greater than the number of results per page.)</source>
+			</trans-unit>
+			<trans-unit id="flexform.pager.insertBelow">
+				<source>Show pager below: (Appears if the total number of results is greater than the number of results per page.)</source>
+			</trans-unit>
+			<trans-unit id="flexform.inPress">
+                <source>Show publications in status "in Press":</source>
+            </trans-unit>
+			<trans-unit id="flexform.common.settings">
+				<source>Units, Persons and Projects</source>
+			</trans-unit>
+			<trans-unit id="flexform.common.selectBlank">
+				<source>--- please choose ---</source>
+			</trans-unit>
+			<trans-unit id="flexform.common.ChooseSelector">
+				<source>Choose entity for which to show entries:</source>
+			</trans-unit>
+			<trans-unit id="flexform.common.selectByUnit">
+				<source>Show list of chosen endpoint for organisational units:</source>
+			</trans-unit>
+			<trans-unit id="flexform.common.selectByPerson">
+				<source>Show list of chosen endpoint for person(s):</source>
+			</trans-unit>
+			<trans-unit id="flexform.common.selectByProject">
+				<source>Show list of chosen endpoint for project(s):</source>
+			</trans-unit>
+			<trans-unit id="flexform.common.selectOrganisation">
+				<source>Show list for selected organisation:</source>
+			</trans-unit>
+			<trans-unit id="flexform.common.includeSubUnits">
+				<source>Include all sub units for the chosen organisation:</source>
+			</trans-unit>
+			<trans-unit id="flexform.common.narrowByPerson">
+				<source>Narrow selection by manually choosing person(s):</source>
+			</trans-unit>
+			<trans-unit id="flexform.common.selectPerson">
+				<source>Show list for selected person(s):</source>
+			</trans-unit>
+			<trans-unit id="flexform.data_sets">
+				<source>In depth settings for datasets</source>
+			</trans-unit>
+			<trans-unit id="flexform.data_sets.rendering">
+				<source>Output rendering style:</source>
+			</trans-unit>
+
+			<trans-unit id="flexform.publications">
+				<source>In depth settings for publications</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.narrowByPublicationType">
+				<source>Narrow selection by choosing publication type:</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.selectPublicationType">
+				<source>Select publications by type:</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.narrowBySearch">
+				<source>Choose publications by searchterms (separated by OR or AND if more than 1 entry):</source>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.narrowBySearch">
+				<source>Choose equipment by searchterms (separated by OR or AND if more than 1 entry):</source>
+			</trans-unit>
+			<trans-unit id="flexform.data_sets.narrowBySearch">
+				<source>Choose datasets by searchterms (separated by OR or AND if more than 1 entry):</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.searchPlaceholder">
+				<source>searchterm OR searchterm1 OR search...</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.publishedBeforeDate">
+				<source>Published before date (Select the last day of the month from which publications are to be displayed as the date limit, e.g. 2025-12-31):</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.publishedBeforePlaceholder">
+				<source>2025-12-31</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.publishedAfterDate">
+				<source>Published after date (Select the first day of the month from which publications are to be displayed as the date limit, e.g. 2017-01-01):</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.publishedAfterPlaceholder">
+				<source>1970-01-01</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.groupByYear">
+				<source>Group publications by year (and give a headline for each year):</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.luhPubsOnly">
+				<source>Show only publications created at LUH:</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.peerReviewedOnly">
+				<source>Show only peer-reviewed publications:</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.notPeerReviewedOrNotSetOnly">
+				<source>Show only not peer-reviewed publications or undefined:</source>
+			</trans-unit> 
+			<trans-unit id="flexform.publications.showPublicationType">
+				<source>Show publication status (but only if status is not 'published'):</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.wFlowSteps_forRevalidation">
+				<source>Show only publications that are in workflow status "forRevalidation":</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.wFlowSteps_validated">
+				<source>Show only publications that are in workflow status "validated":</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.wFlowSteps_approved">
+				<source>Show only publications that are in workflow status "approved":</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.wFlowSteps_forValidation">
+				<source>Show only publications that are in workflow status "forValidation":</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.onlypublicationStatusPublished">
+				<source>Hide publications that are not in status "published":</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.ordering">
+				<source>Order by:</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.ordering.publicationDate-asc">
+			    <source>Publication date 1-9</source>
+            </trans-unit>
+            <trans-unit id="flexform.publications.ordering.publicationDate-desc">
+                <source>Publication date 9-1</source>
+            </trans-unit>
+			<trans-unit id="flexform.publications.ordering.year-desc">
+				<source>Year 9-1</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.ordering.year-asc">
+				<source>Year 1-9</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.ordering.firstAuthor-asc">
+				<source>First author a-z</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.ordering.firstAuthor-desc">
+				<source>First author z-a</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.ordering.authorLastName-asc">
+				<source>Last name of first author a-z</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.ordering.authorLastName-desc">
+				<source>Last name of first author z-a</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.ordering.publicationYearAndAuthor-desc">
+				<source>Publication year and author 9-1</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.ordering.publicationYearAndAuthor-asc">
+				<source>Publication year and author 1-9</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.ordering.title-asc">
+				<source>Title a-z</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.ordering.title-desc">
+				<source>Title z-a</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.rendering">
+				<source>Citation style (Vancouver, Harvard...):</source>
+			</trans-unit>
+			<trans-unit id="flexform.activities">
+				<source>In depth settings for activities</source>
+			</trans-unit>
+			<trans-unit id="flexform.activities.narrowByActivitiesType">
+				<source>Narrow selection by choosing activity type:</source>
+			</trans-unit>
+			<trans-unit id="flexform.activities.selectActivitiesType">
+				<source>Select activities by type:</source>
+			</trans-unit>
+			<trans-unit id="flexform.pressMedia">
+				<source>In depth settings for press/media</source>
+			</trans-unit>
+			<trans-unit id="flexform.pressMedia.narrowByPressMediaType">
+				<source>Narrow selection by choosing press/media type:</source>
+			</trans-unit>
+			<trans-unit id="flexform.pressMedia.selectPressMediaType">
+				<source>Select press/media by type:</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects">
+				<source>In depth settings for projects</source>
+			</trans-unit>
+			<trans-unit id="flexform.equipments">
+				<source>In depth settings for equipment</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.narrowBySearch">
+				<source>Choose Projects by searchterms (separated by OR or AND if more than 1 entry):</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.orderProjects">
+				<source>Order projects:</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.orderProjects.startDate.desc">
+				<source>Startdate 9-1</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.orderProjects.startDate.asc">
+				<source>Startdate 1-9</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.orderProjects.title.asc">
+				<source>Title a-z</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.orderProjects.title.desc">
+				<source>Title z-a</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.WFlowSteps_validated">
+				<source>Show only validated projects:</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.filterProjects">
+				<source>Filter Projects:</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.filterProjects.none">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.filterProjects.not-started">
+				<source>Not started</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.filterProjects.running">
+				<source>Running</source>
+			</trans-unit>
+			<trans-unit id="flexform.projects.filterProjects.finished">
+				<source>Finished</source>
+			</trans-unit>
+			<trans-unit id="univiepure.plus_wizard_description">
+				<source>T3LUH FIS extension for pure research information system</source>
+			</trans-unit>
+			<trans-unit id="univiepure.title">
+				<source>T3LUH FIS</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

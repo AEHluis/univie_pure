@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-19T13:00:54Z" product-name="univie_pure">
+		<header/>
+		<body>
+			<trans-unit id="univiepur.title">
+				<source>T3LUH FIS</source>
+				<target>T3LUH FIS</target>
+			</trans-unit>
+			<trans-unit id="univiepur.description">
+				<source>T3LUH FIS research information system</source>
+				<target>T3LUH FIS Forschungsinformationssystem</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.publication">
+				<source>Publication</source>
+				<target>Publikation</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.abstract">
+				<source>Abstract</source>
+				<target>Abstract</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.authors">
+				<source>authored by</source>
+				<target>verfasst von</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.supervisors">
+				<source>supervised by</source>
+				<target>betreut von</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.units">
+				<source>Organisational Unit(s)</source>
+				<target>Organisationseinheit(en)</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.extunits">
+				<source>External Organisation(s)</source>
+				<target>Externe Organisation(en)</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.journal">
+				<source>Journal</source>
+				<target>Journal</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.issn">
+				<source>ISSN</source>
+				<target>ISSN</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.volume">
+				<source>Volume</source>
+				<target>Band</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.pages">
+				<source>Pages</source>
+				<target>Seiten</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.type">
+				<source>type</source>
+				<target>Typ</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.numberOfPages">
+				<source>No. of pages</source>
+				<target>Anzahl der Seiten</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.publicationDate">
+				<source>Publication Date</source>
+				<target>Publikationsdatum</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.publicationStatus">
+				<source>Publication status</source>
+				<target>Publikationsstatus</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.peerReviewed">
+				<source>Peer reviewed</source>
+				<target>Peer-reviewed</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.peerReviewed-true">
+				<source>Yes</source>
+				<target>Ja</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.peerReviewed-false">
+				<source>No</source>
+				<target>Ja</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.doi">
+				<source>DOI</source>
+				<target>DOI</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.portalUrl">
+				<source>Portal URL</source>
+				<target>Link zum Forschungsportal</target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.link">
+				<source>Link</source>
+				<target>Link</target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.description">
+				<source>Abstract</source>
+				<target>Abstract</target>
+			</trans-unit>
+			<trans-unit id="univiepur.equipments.contactPerson">
+				<source>Contact person(s) for booking:</source>
+				<target>Ansprechperson(en) für Buchung:</target>
+			</trans-unit>
+			<trans-unit id="univiepur.equipments.contactMail">
+				<source>E-Mail(s):</source>
+				<target>E-Mail(s):</target>
+			</trans-unit>
+			<trans-unit id="univiepur.equipments.webAddress">
+				<source>URL(s):</source>
+				<target>URL(s):</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.portalUrlLong">
+                <source>Details in the research portal "Research@Leibniz University"</source>
+            	<target>Details im Forschungsportal „Research@Leibniz University“</target>
+            </trans-unit>
+			<trans-unit id="univiepur.publication.electronicVersions">
+				<source>Electronic version(s)</source>
+				<target>Elektronische Version(en)</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.electronicVersionsAccess">
+                <source>Access:</source>
+            	<target>Zugang:</target>
+            </trans-unit>
+			<trans-unit id="univiepur.more">
+				<source>more...</source>
+				<target>Mehr...</target>
+			</trans-unit>
+			<trans-unit id="univiepur.searchForm">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="univiepur.searchSubmit">
+				<source>search</source>
+				<target>Suchen</target>
+			</trans-unit>
+			<trans-unit id="pagination.totalItems">
+				<source>Showing results </source>
+				<target>Zeige Ergebnisse </target>
+			</trans-unit>
+			<trans-unit id="pagination.to">
+				<source> - </source>
+				<target> - </target>
+			</trans-unit>
+			<trans-unit id="pagination.outOf">
+				<source> out of </source>
+				<target> von </target>
+			</trans-unit>
+			<trans-unit id="pagination_first">
+				<source>first page</source>
+			</trans-unit>
+			<trans-unit id="pagination_previous">
+				<source>previous page</source>
+				<target>Vorige Seite</target>
+			</trans-unit>
+			<trans-unit id="pagination_next">
+				<source>next page</source>
+				<target>Nächste Seite</target>
+			</trans-unit>
+			<trans-unit id="pagination_last">
+				<source>last page</source>
+				<target>Letzte Seite</target>
+			</trans-unit>
+			<trans-unit id="suggest-placeholder">
+				<source>name, press enter</source>
+				<target>Name, Enter-taste drücken</target>
+			</trans-unit>
+			<trans-unit id="suggest-already-in-list">
+				<source> is already in the list!</source>
+				<target> ist bereits in der Liste!</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

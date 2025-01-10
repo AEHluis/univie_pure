@@ -1,0 +1,15 @@
+
+plugin.tx_univiepure_univiepure {
+	view {
+		# cat=plugin.tx_univiepure_univiepure/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:univie_pure/Resources/Private/Templates/
+		# cat=plugin.tx_univiepure_univiepure/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:univie_pure/Resources/Private/Partials/
+		# cat=plugin.tx_univiepure_univiepure/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:univie_pure/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_univiepure_univiepure//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}

@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Univie\UniviePure\:
+    resource: '../Classes/*'
+
+  Univie\UniviePure\Command\ImportFisCommand:
+    tags:
+      - name: 'console.command'
+        command: 'univie_pure:importfis'
+        schedulable: false

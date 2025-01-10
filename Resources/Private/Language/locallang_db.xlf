@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-19T13:00:54Z" product-name="univiepure">
+		<header/>
+		<body>
+			<trans-unit id="tx_univiepure_domain_model_publication">
+				<source>Publication</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

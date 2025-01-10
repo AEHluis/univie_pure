@@ -1,0 +1,10 @@
+<f:render partial="Pure/Paginate/Index" arguments="{pagination:pagination}"/>
+<div class="c-search__list"></div>
+<f:for each="{dataSets}" as="item">
+    <f:if condition="{item.renderings.rendering.html}">
+        <div class="c-search__item">
+            <f:format.html>{item.renderings.rendering.html}</f:format.html>
+        </div>
+    </f:if>
+</f:for>
+</div>

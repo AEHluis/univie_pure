@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-19T13:00:54Z" product-name="univie_pure">
+		<header/>
+		<body>
+			<trans-unit id="univiepur.title">
+				<source>T3LUH FIS</source>
+			</trans-unit>
+			<trans-unit id="univiepur.description">
+				<source>T3LUH FIS research information system</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.publication">
+				<source>Publication</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.abstract">
+				<source>Abstract</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.authors">
+				<source>authored by</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.supervisors">
+                <source>supervised by</source>
+            </trans-unit>
+			<trans-unit id="univiepur.publication.units">
+				<source>Organisation(s)</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.extunits">
+                <source>External Organisation(s)</source>
+            </trans-unit>
+			<trans-unit id="univiepur.publication.journal">
+				<source>Journal</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.issn">
+				<source>ISSN</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.volume">
+				<source>Volume</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.pages">
+				<source>Pages</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.numberOfPages">
+				<source>No. of pages</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.publicationDate">
+				<source>Publication date</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.publicationStatus">
+				<source>Publication status</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.peerReviewed">
+				<source>Peer reviewed</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.peerReviewed-true">
+				<source>Yes</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.peerReviewed-false">
+				<source>No</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.doi">
+				<source>DOI</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.portalUrl">
+				<source>Portal URL</source>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.link">
+				<source>Link</source>
+			</trans-unit>
+			<trans-unit id="univiepur.equipments.contactPerson">
+				<source>Contact person(s) for booking:</source>
+			</trans-unit>
+			<trans-unit id="univiepur.equipments.contactMail">
+				<source>E-Mail(s):</source>
+			</trans-unit>
+			<trans-unit id="univiepur.equipments.webAddress">
+				<source>URL(s):</source>
+			</trans-unit>
+            <trans-unit id="univiepur.publication.portalUrlLong">
+                <source>Details in the research portal "Research@Leibniz University"</source>
+            </trans-unit>
+			<trans-unit id="univiepur.publication.electronicVersions">
+				<source>Electronic version(s)</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.electronicVersionsAccess">
+				<source>Access:</source>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.description">
+				<source>Abstract</source>
+			</trans-unit>
+
+			<trans-unit id="univiepur.more">
+				<source>More...</source>
+			</trans-unit>
+			<trans-unit id="univiepur.searchForm">
+				<source> </source>
+			</trans-unit>
+			<trans-unit id="univiepur.searchSubmit">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="pagination.totalItems">
+				<source>Showing results </source>
+			</trans-unit>
+			<trans-unit id="pagination.to">
+				<source> - </source>
+			</trans-unit>
+			<trans-unit id="pagination.outOf">
+				<source> out of </source>
+			</trans-unit>
+			<trans-unit id="pagination_first">
+				<source>First Page</source>
+			</trans-unit>
+			<trans-unit id="pagination_previous">
+				<source>Previous Page</source>
+			</trans-unit>
+			<trans-unit id="pagination_next">
+				<source>Next Page</source>
+			</trans-unit>
+			<trans-unit id="pagination_last">
+				<source>Last Page</source>
+			</trans-unit>
+			<trans-unit id="suggest-placeholder">
+				<source>Name, press enter</source>
+			</trans-unit>
+			<trans-unit id="suggest-already-in-list">
+				<source> is already in the list!</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

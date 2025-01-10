@@ -1,0 +1,41 @@
+routeEnhancers:
+  UniviePurePlugin:
+    type: Extbase
+    extension: univie_pure
+    plugin: UniviePure
+    routes:
+      - routePath: '/fis-list'
+        _controller: 'Pure::list'
+      - routePath: '/fis-list/{local_page}-{page}'
+        _controller: 'Pure::list'
+        _arguments:
+          page: currentPageNumber
+      - routePath: '/fis-list/{local_page}-{page}/filter-{filterdata}'
+        _controller: 'Pure::list'
+        _arguments:
+          filterdata: filter
+          page: currentPageNumber
+      - routePath: '/fis-details/{what}/{uuid}'
+        _controller: 'Pure::show'
+        _arguments:
+          what: what2show
+          uuid: uuid
+    defaultController: 'Pure::list'
+    defaults:
+      page: '1'
+      filterdata: ''
+    requirements:
+      uuid: ^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}?$
+      what: ^[a-zA-Z0-9]+
+      page: \d+
+    aspects:
+      local_page:
+        type: LocaleModifier
+        default: 'seite'
+        localeMap:
+          - locale: 'en_*'
+            value: 'page'
+          - locale: 'de_*'
+            value: 'seite'
+
+

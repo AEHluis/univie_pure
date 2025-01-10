@@ -1,0 +1,49 @@
+<f:render partial="Pure/Paginate/Index" arguments="{pagination:pagination}"/>
+<div class="c-search__list"></div>
+<f:for each="{projects}" as="item">
+
+	<f:if condition="{item.renderings.rendering.html}">
+		<div class="c-search__item">
+			<f:format.html>{item.renderings.rendering.html}</f:format.html>
+			<f:if condition="{item.link}">
+				<p class="type">
+					<span class="type_family">URL<span class="type_family_sep">: </span></span>
+					<span class="type_classification">
+						<f:if condition="{item.link.description.text}">
+							<f:then>
+								<f:link.external uri="{item.link.url}" target="_blank" class="c-link--extern"><strong>{item.link.description.text}</strong></f:link.external>
+							</f:then>
+							<f:else>
+								<f:link.external uri="{item.link.url}" target="_blank" class="c-link--extern">
+									<strong>{item.link.url}</strong>
+								</f:link.external>
+							</f:else>
+						</f:if>
+					</span>
+				</p>
+			</f:if>
+			<f:if condition="{settings.showDescription}">
+				<f:if condition="{item.description}">
+					<p class="type">
+						<span class="type_family"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.description" /><span class="type_family_sep">: </span></span>
+						<span class="type_classification">
+							<f:if condition="{item.description}">
+									<f:format.raw>{item.description}</f:format.raw>
+							</f:if>
+						</span>
+					</p>
+				</f:if>
+			</f:if>
+			<f:if condition="{settings.linkToPortal}">
+				<f:if condition="{item.portaluri}">
+					<div style="text-align: center; margin-top: 0.3rem">
+						<f:link.external uri="{item.portaluri}" target="_blank" class="c-button u-icon-after u-icon-after--new-tab">
+							<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" />
+						</f:link.external>
+					</div>
+				</f:if>
+			</f:if>
+    	</div>
+	</f:if>
+</f:for>
+</div>

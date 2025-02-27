@@ -7,7 +7,7 @@
 - Fetch and display **publications**, **projects**, **datasets**, and **equipment** from Elsevier Pure Web Service.
 - Provides configurable TYPO3 plugins for embedding **Pure API data**.
 - Supports **caching** for improved performance.
-- Compatible with TYPO3 versions supporting **Extbase & Fluid**.
+- Compatible with TYPO3 version 12.4.
 - Designed to work with **Pure/FIS API v524**.
 
 ## Installation
@@ -32,7 +32,7 @@ PURE_ENDPOINT=/ws/api/524/
 ## Usage
 ### 1. Adding a Plugin to a Page
 1. In TYPO3 backend, go to a page where you want to display Pure data.
-2. Add a **new content element** and select the **Univie Pure plugin**.
+2. Add a **new content element** and select the **T3LUH FIS plugin**.
 3. Configure the plugin settings (e.g., **Publication List, Project List, Dataset List, Equipment List**).
 4. Save and preview the page.
 

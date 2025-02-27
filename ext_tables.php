@@ -1,20 +1,22 @@
 <?php
-if (!defined('TYPO3')) {
-    die('Access denied.');
-}
+defined('TYPO3') || die();
 
-$_EXTKEY = 'univie_pure';
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    $_EXTKEY,
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
+// Register plugin
+ExtensionUtility::registerPlugin(
+    'UniviePure',
     'UniviePure',
     'T3LUH FIS'
 );
-$extensionName = strtolower(\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY));
-$pluginName = strtolower($extensionName);
-$pluginSignature = $extensionName . '_' . $pluginName;
 
+// Plugin signature should be defined directly
+$pluginSignature = 'univiepure_univiepure';
 
+// Add FlexForm configuration
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform.xml');
-
+ExtensionManagementUtility::addPiFlexFormValue(
+    $pluginSignature,
+    'FILE:EXT:univie_pure/Configuration/FlexForms/flexform.xml'
+);

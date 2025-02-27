@@ -3,25 +3,23 @@ namespace Univie\UniviePure\Endpoints;
 use Univie\UniviePure\Service\WebService;
 use Univie\UniviePure\Utility\CommonUtilities;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Univie\UniviePure\Utility\LanguageUtility;
 
 /*
- * (c) 2016 Christian Klettner <christian.klettner@univie.ac.at>, univie
- *          TYPO3-Team LUIS Uni-Hannover <typo3@luis.uni-hannover.de>, LUH
- *
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
  */
 
-class Projects
+class Projects extends Endpoints
 {
+    private readonly WebService $webservice;
+
+    public function __construct(WebService $webservice)
+    {
+        $this->webservice = $webservice;
+    }
 
     /**
      * query for single Proj
@@ -29,8 +27,7 @@ class Projects
      */
     public function getSingleProject($uuid,$lang='de_DE')
     {
-        $webservice = new WebService;
-        return $webservice->getAlternativeSingleResponse('projects', $uuid,  "json",  $lang);
+        return $this->webservice->getAlternativeSingleResponse('projects', $uuid,  "json",  $lang);
     }
 
 
@@ -51,7 +48,7 @@ class Projects
         //set offset:
         $xml .= CommonUtilities::getOffset($settings['pageSize'], $currentPageNumber);
         //$xml .= '<linkingStrategy>portalLinkingStrategy</linkingStrategy>';
-        $xml .= CommonUtilities::getLocale();
+        $xml .= LanguageUtility::getLocale();
         $xml .= '<renderings><rendering>short</rendering></renderings>';
         $xml .= '<fields>
                     <field>renderings.*</field>
@@ -61,7 +58,7 @@ class Projects
                     <field>info.portalUrl</field>                    
                  </fields>';
         //set ordering:
-        $xml .= $this->getOrderingXml($settings['orderProjects']);
+        $xml .= $this->getOrderingXml($settings['orderProjects'] ?? '', '-startDate');
 
         //set filter:
         $xml .= $this->getFilterXml($settings['filterProjects']);
@@ -72,16 +69,15 @@ class Projects
         $xml .= CommonUtilities::getPersonsOrOrganisationsXml($settings);
 
         //search AND filter:
-        if ($settings['narrowBySearch'] || $settings['filter']) {
+        if ($this->getArrayValue($settings, 'narrowBySearch') || $this->getArrayValue($settings, 'filter')) {
             $xml .= $this->getSearchXml($settings);
         }
 
-
         $xml .= '</projectsQuery>';
 
-        $webservice = new WebService;
 
-        $view = $webservice->getXml('projects', $xml);
+
+        $view = $this->webservice->getXml('projects', $xml);
 
         if (is_array($view)){
             if($view["count"] > 1){
@@ -95,13 +91,12 @@ class Projects
                                             foreach ($items['renderings'] as $i => $x) {
                                                 $uuid = $view["items"]["project"][$index]["@attributes"]["uuid"];
                                                 $new_render = $items["renderings"]['rendering'];
-                                                $new_render = preg_replace('#<h2 class="title">(.*?)</h2>#is', '<h4 class="title">$1</h4>', $new_render);
-                                                $new_render = preg_replace('#<p><\/p>#is', '', $new_render);
-                                                $new_render = str_replace('<br />', ' ', $new_render);
+                                                $new_render = $this->transformRenderingHtml($new_render, []);
                                                 $view["items"][$index]["renderings"][$i]['html'] = $new_render;
                                                 $view["items"][$index]["uuid"] = $uuid;
-                                                $view["items"][$index]["link"] = $items['links']['link'];
-                                                $view["items"][$index]["description"] = $items['descriptions']['description']['value']['text'];
+                                                $view["items"][$index]["link"] = $this->getNestedArrayValue($items, 'links.link', '');
+                                                $view["items"][$index]["description"] = $this->getNestedArrayValue($items, 'descriptions.description.value.text', '');
+
                                                 if ((array_key_exists('linkToPortal', $settings)) && ($settings['linkToPortal'] == 1)) {
                                                     $view["items"][$index]["portaluri"] = $items['info']['portalUrl'];
                                                 }
@@ -115,54 +110,40 @@ class Projects
                 }
             }
         }else{
-            $uuid = $view["items"]["project"]["@attributes"]["uuid"];
-            $new_render = $view["items"]["project"]["renderings"]['rendering'];
-            $new_render = preg_replace('#<h2 class="title">(.*?)</h2>#is', '<h4 class="title">$1</h4>', $new_render);
-            $new_render = preg_replace('#<p><\/p>#is', '', $new_render);
-            $new_render = str_replace('<br />', ' ', $new_render);
+            // Get the project data safely
+            $project = $this->getNestedArrayValue($view, 'items.project', []);
+
+            // Get UUID and rendering data
+            $uuid = $this->getNestedArrayValue($project, '@attributes.uuid', '');
+            $rendering = $this->getNestedArrayValue($project, 'renderings.rendering', '');
+
+            // Transform the rendering HTML if it's not empty
+            $new_render = '';
+            if (!empty($rendering)) {
+                $new_render = $this->transformRenderingHtml($rendering, []);
+            }
+
+            // Assign basic values to the view array
             $view["items"][0]["renderings"]['rendering']['html'] = $new_render;
             $view["items"][0]["uuid"] = $uuid;
-            $view["items"][0]["link"] = $view["items"]["project"]['links']['link'];
-            $view["items"][0]["description"] = $view['items']['project']['descriptions']['description']['value']['text'];
-            if ((array_key_exists('linkToPortal', $settings)) && ($settings['linkToPortal'] == 1)) {
-                $view["items"][0]["portaluri"] = $view["items"]["project"]['info']['portalUrl'];
+
+            // Assign additional data
+            $view["items"][0]["link"] = $this->getNestedArrayValue($project, 'links.link', '');
+            $view["items"][0]["description"] = $this->getNestedArrayValue($project, 'descriptions.description.value.text', '');
+
+            // Add portal URI if setting is enabled
+            if (isset($settings['linkToPortal']) && $settings['linkToPortal'] == 1) {
+                $view["items"][0]["portaluri"] = $this->getNestedArrayValue($project, 'info.portalUrl', '');
             }
+
         }
         unset($view["items"]["project"]);
-        $offset = (((int)$currentPageNumber - 1) * (int)$settings['pageSize']);
-        $view['offset'] = $offset;
+
+        $view['offset'] = $this->calculateOffset((int)$settings['pageSize'], (int)$currentPageNumber);
 
         return $view;
     }
 
-
-    /**
-     * xml for search string
-     * @return string xml
-     */
-    public function getSearchXml($settings)
-    {
-        $terms = $settings['narrowBySearch'];
-
-        //combine the backend filter and the frontend form:
-        if ($settings['filter']) {
-            $terms .= ' ' . $settings['filter'];
-        }
-        return '<searchString>' . trim($terms) . '</searchString>';
-    }
-
-
-    /**
-     * set the ordering
-     * @return string xml
-     */
-    public function getOrderingXml($order)
-    {
-        if (!$order) {
-            $order = '-startDate';
-        }//default
-        return '<orderings><ordering>' . $order . '</ordering></orderings>';
-    }
 
     /**
      * set the filter
@@ -175,5 +156,3 @@ class Projects
         }
     }
 }
-
-?>

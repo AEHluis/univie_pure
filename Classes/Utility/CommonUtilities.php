@@ -1,33 +1,17 @@
 <?php
+
 namespace Univie\UniviePure\Utility;
 
 use Univie\UniviePure\Service\WebService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Context\Context;
 
-/***************************************************************
+/*
+ * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
  *
- *  Copyright notice
- *
- *  (c) 2016 Christian Klettner <christian.klettner@univie.ac.at>, univie
- *           TYPO3-Team LUIS Uni-Hannover <typo3@luis.uni-hannover.de>, LUH
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
 
 /**
  * Helpers for all endpoints
@@ -35,31 +19,38 @@ use Univie\UniviePure\Service\WebService;
  */
 class CommonUtilities
 {
-
-    /**
-     * xml for frontend locale
-     * @ return String xml
-     */
-    public static function getLocale()
+    public static function getArrayValue($array, $key, $default = null)
     {
-        //TODO: get sys_language_uid, check for allowed languages in service, compare, prepare a fallback
-        $lang = ($GLOBALS['TSFE']->config['config']['language'] == 'de') ? 'de_DE' : 'en_GB';
-        return '<locales><locale>' . $lang . '</locale></locales>';
+        return self::arrayKeyExists($key, $array) ? $array[$key] : $default;
     }
 
-    /**
-     * get backend locale
-     * @ return String locale
-     */
-    public static function getBackendLanguage()
+    public static function arrayKeyExists($key, $array): bool
     {
-        return ($GLOBALS['BE_USER']->uc['lang'] == 'de') ? 'de_DE' : 'en_EN';
+        return is_array($array) && array_key_exists($key, $array);
     }
 
-    /**
-     * page size entered in flexform
-     * @return String xml
-     */
+    public static function getNestedArrayValue($array, string $path, $default = null)
+    {
+        // Return default if input is not an array
+        if (!is_array($array)) {
+            return $default;
+        }
+
+        $keys = explode('.', $path);
+        $current = $array;
+
+        foreach ($keys as $key) {
+            // Check if current is an array and if the key exists
+            if (!is_array($current) || !array_key_exists($key, $current)) {
+                return $default;
+            }
+            $current = $current[$key];
+        }
+
+        return $current;
+    }
+
+
     public static function getPageSize($pageSize)
     {
         if ($pageSize == 0 || $pageSize === null) {
@@ -72,9 +63,8 @@ class CommonUtilities
      * keep track of the counter
      * @return String xml
      */
-    public static function getOffset($pageSize,$currentPage)
+    public static function getOffset($pageSize, $currentPage)
     {
-
         $offset = $currentPage;
         $offset = ($offset - 1 < 0) ? 0 : $offset - 1;
         return '<offset>' . $offset * (int)$pageSize . '</offset>';
@@ -84,7 +74,8 @@ class CommonUtilities
      * Either send a request for a unit or for persons
      * @return String xml
      */
-    public static function getPersonsOrOrganisationsXml($settings){
+    public static function getPersonsOrOrganisationsXml($settings)
+    {
         $xml = "";
         //either for organisations or for persons or for projects:
         //If settings.chooseSelector equals 0 => organisational units, case 1 => persons, case 2 => projects:
@@ -97,11 +88,6 @@ class CommonUtilities
                 //Research-output for persons:
                 $xml = self::getPersonsXml($settings);
                 break;
-          /*  case 2:
-                //Research-output for projects:
-                $xml = self::getProjectsXml($settings);
-                break;
-          */
         }
         return $xml;
     }
@@ -114,25 +100,27 @@ class CommonUtilities
      */
     public static function getOrganisationsXml($settings)
     {
-        //if search is entered organisations may be omitted:
-        if ($settings['selectorOrganisations'] == '' && $settings['narrowBySearch'] != '') {
+// Safely read relevant keys:
+        $selectorOrganisations = self::getArrayValue($settings, 'selectorOrganisations', '');
+        $narrowBySearch = self::getArrayValue($settings, 'narrowBySearch', '');
+
+        if ($selectorOrganisations === '' && $narrowBySearch !== '') {
             return '';
         }
+
         $xml = '<forOrganisationalUnits><uuids>';
-        $organisations = explode(',', $settings['selectorOrganisations']);
+        $organisations = explode(',', $selectorOrganisations);
         foreach ((array)$organisations as $org) {
-            if (strpos($org, "|")) {
-                $tmp = explode("|", $org);
-                $org = $tmp[0];
+            if (strpos($org, '|') !== false) {
+                $org = explode('|', $org)[0];
             }
             $xml .= '<uuid>' . $org . '</uuid>';
-            //check for sub units:
-            if ($settings['includeSubUnits'] == 1) {
+            // check for sub units
+            if (self::getArrayValue($settings, 'includeSubUnits', 0) == 1) {
                 $subUnits = self::getSubUnits($org);
                 if (is_array($subUnits) && count($subUnits) > 1) {
                     foreach ($subUnits as $subUnit) {
-
-                        if ($subUnit['uuid'] != $org) {
+                        if (self::getArrayValue($subUnit, 'uuid') !== $org) {
                             $xml .= '<uuid>' . $subUnit['uuid'] . '</uuid>';
                         }
                     }
@@ -140,7 +128,6 @@ class CommonUtilities
             }
         }
         $xml .= '</uuids><hierarchyDepth>100</hierarchyDepth></forOrganisationalUnits>';
-
         return $xml;
     }
 
@@ -150,71 +137,89 @@ class CommonUtilities
      */
     public static function getPersonsXml($settings)
     {
-        //if search is entered persons may be omitted:
-        if ($settings['selectorPersons'] == '' && $settings['narrowBySearch'] != '') {
+        $selectorPersons = self::getArrayValue($settings, 'selectorPersons', '');
+        $narrowBySearch = self::getArrayValue($settings, 'narrowBySearch', '');
+
+        if ($selectorPersons === '' && $narrowBySearch !== '') {
             return '';
         }
-        //otherwise allways write the xml. If persons are empty nothing is returned from ucris:
+
         $xml = '<forPersons><uuids>';
-        $persons = explode(',', $settings['selectorPersons']);
+        $persons = explode(',', $selectorPersons);
         foreach ((array)$persons as $person) {
-            if (strpos($person, "|")) {
-                $tmp = explode("|", $person);
-                $person = $tmp[0];
+            if (strpos($person, '|') !== false) {
+                $person = explode('|', $person)[0];
             }
             $xml .= '<uuid>' . $person . '</uuid>';
         }
         $xml .= '</uuids></forPersons>';
         return $xml;
-
     }
 
     /**
      * Projects query
      * @return String xml | boolean
      */
-    public static function getProjectsXml($settings)
+    public static function getProjectsXml(array $settings)
     {
-        $xml = false;
-        if ($settings['selectorProjects'] == '' && $settings['narrowBySearch'] != '') {
-            $xml = '';
-        }elseif ($settings['chooseSelector'] == 2){
-            $xmlProjects = '<?xml version="1.0"?>
-			<projectsQuery>';
-            $projects = explode(',', $settings['selectorProjects']);
-            $xmlProjects .= "<uuids>";
-            foreach ((array)$projects as $project) {
-                if (strpos($project, "|")) {
-                    $tmp = explode("|", $project);
-                    $project = $tmp[0];
-                }
-                $xmlProjects .= '<uuid>' . $project . '</uuid>';
-            }
-            $xmlProjects .= "</uuids>";
-            $xmlProjects .= '<size>99999</size><linkingStrategy>string</linkingStrategy>
-				<locales><locale>de_DE</locale></locales>
-				<fields><field>relatedResearchOutputs.uuid</field></fields>
-				<orderings><ordering>title</ordering></orderings>';
+        // Safely retrieve settings
+        $selectorProjects = self::getArrayValue($settings, 'selectorProjects', '');
+        $narrowBySearch = self::getArrayValue($settings, 'narrowBySearch', '');
+        $chooseSelector = self::getArrayValue($settings, 'chooseSelector', -1);
 
-            $xmlProjects .= '</projectsQuery>';
-            $webservice = new WebService;
-            $publications = $webservice->getJson('projects', $xmlProjects);
-            $xml = "";
-            if (is_array($publications['items'])) {
-                $xml .= "<uuids>";
-                foreach ($publications['items'] as $researchOutputs) {
-                    if (!empty($researchOutputs)) {
-                        foreach ($researchOutputs['relatedResearchOutputs'] as $researchOutput) {
-                            $xml .= '<uuid>' . $researchOutput['uuid'] . '</uuid>';
-                        }
-                    }
-                }
-                $xml .= "</uuids>";
-
-            }
+        // 1) If no selectorProjects but user did enter a search, return empty string
+        if ($selectorProjects === '' && $narrowBySearch !== '') {
+            return '';
         }
 
+        // 2) If not choosing "2", then we do nothing special here
+        if ($chooseSelector !== 2) {
+            return false;
+        }
 
+// Build the request XML for the selected projects
+        $xmlProjects = '<?xml version="1.0"?><projectsQuery><uuids>';
+        $projects = explode(',', $selectorProjects);
+        foreach ($projects as $proj) {
+            // If user appended “|something”, strip that off
+            if (strpos($proj, '|') !== false) {
+                $proj = explode('|', $proj)[0];
+            }
+            if (!empty($proj)) {
+                $xmlProjects .= '<uuid>' . $proj . '</uuid>';
+            }
+        }
+        $xmlProjects .= '</uuids>
+    <size>99999</size>
+    <linkingStrategy>string</linkingStrategy>
+    <locales><locale>de_DE</locale></locales>
+    <fields><field>relatedResearchOutputs.uuid</field></fields>
+    <orderings><ordering>title</ordering></orderings>
+</projectsQuery>';
+
+        // 4) Call the webservice
+        $webservice = new WebService;
+        $publications = $webservice->getJson('projects', $xmlProjects);
+
+        // 5) Build the final return XML with related research outputs
+        $xml = '';
+        if (is_array($publications)
+            && isset($publications['items'])
+            && is_array($publications['items'])
+        ) {
+            $xml .= '<uuids>';
+            foreach ($publications['items'] as $researchOutputs) {
+                // “relatedResearchOutputs” may not exist or might be empty
+                $related = self::getArrayValue($researchOutputs, 'relatedResearchOutputs', []);
+                foreach ($related as $researchOutput) {
+                    $uuid = self::getArrayValue($researchOutput, 'uuid', '');
+                    if (!empty($uuid)) {
+                        $xml .= '<uuid>' . $uuid . '</uuid>';
+                    }
+                }
+            }
+            $xml .= '</uuids>';
+        }
         return $xml;
     }
 
@@ -224,49 +229,71 @@ class CommonUtilities
      */
     public static function getProjectsForDatasetsXml($settings)
     {
-        $xml = false;
-        if ($settings['selectorProjects'] == '' && $settings['narrowBySearch'] != '') {
-            $xml = '';
-        }elseif ($settings['chooseSelector'] == 2){
-            $xmlProjects = '<?xml version="1.0"?>
-			<projectsQuery>';
-            $projects = explode(',', $settings['selectorProjects']);
-            $xmlProjects .= "<uuids>";
-            foreach ((array)$projects as $project) {
-                if (strpos($project, "|")) {
-                    $tmp = explode("|", $project);
-                    $project = $tmp[0];
-                }
-                $xmlProjects .= '<uuid>' . $project . '</uuid>';
-            }
-            $xmlProjects .= "</uuids>";
-            $xmlProjects .= '<size>99999</size><linkingStrategy>string</linkingStrategy>
-				<locales><locale>de_DE</locale></locales>
-				<fields><field>relatedDataSets.uuid</field></fields>
-				<orderings><ordering>title</ordering></orderings>';
+        // Ensure $settings is an array
+        if (!is_array($settings)) {
+            $settings = [];
+        }
 
-            $xmlProjects .= '</projectsQuery>';
+        // Safely retrieve keys
+        $narrowBySearch = self::getArrayValue($settings, 'narrowBySearch', '');
+        $chooseSelector = self::getArrayValue($settings, 'chooseSelector', null);
+        $selectorProjects = self::getArrayValue($settings, 'selectorProjects', '');
+
+        // If no projects were set but search is given:
+        if ($selectorProjects === '' && $narrowBySearch !== '') {
+            return '';
+        }
+
+        if ($chooseSelector === 2) {
+            // Build Projects query
+            $xmlProjects = '<?xml version="1.0"?><projectsQuery><uuids>';
+            $projectsArray = explode(',', $selectorProjects);
+
+            foreach ($projectsArray as $project) {
+                if (strpos($project, "|") !== false) {
+                    $project = explode("|", $project)[0];
+                }
+                if (!empty($project)) {
+                    $xmlProjects .= '<uuid>' . $project . '</uuid>';
+                }
+            }
+
+            $xmlProjects .= '</uuids>
+    <size>99999</size>
+    <linkingStrategy>string</linkingStrategy>
+    <locales><locale>de_DE</locale></locales>
+    <fields><field>relatedDataSets.uuid</field></fields>
+    <orderings><ordering>title</ordering></orderings>
+</projectsQuery>';
+
             $webservice = new WebService;
             $datasets = $webservice->getJson('projects', $xmlProjects);
 
+            // Build final XML with the relatedDataSets
             $xml = "";
-            if (is_array($datasets['items'])) {
+            if (is_array($datasets)
+                && isset($datasets['items'])
+                && is_array($datasets['items'])
+            ) {
                 $xml .= "<uuids>";
                 foreach ($datasets['items'] as $d) {
-                    if (!empty($d)) {
-
-                        foreach ($d['relatedDataSets'] as $i) {
-                            $xml .= '<uuid>' . $i['uuid'] . '</uuid>';
+                    // "relatedDataSets" might be missing
+                    $relatedDataSets = self::getArrayValue($d, 'relatedDataSets', []);
+                    foreach ($relatedDataSets as $ds) {
+                        $uuid = self::getArrayValue($ds, 'uuid', '');
+                        if (!empty($uuid)) {
+                            $xml .= '<uuid>' . $uuid . '</uuid>';
                         }
                     }
                 }
                 $xml .= "</uuids>";
             }
+            return $xml;
         }
-        
-        return $xml;
-    }
 
+        // Default (not chooseSelector = 2)
+        return false;
+    }
 
     /**
      * query sub organisations for a unit
@@ -276,19 +303,25 @@ class CommonUtilities
     {
         $orgName = self::getNameForUuid($orgId);
         $xml = '<?xml version="1.0"?>
-				<organisationalUnitsQuery>
-					<size>300</size>
-					<fields><field>uuid</field></fields>
-					<orderings><ordering>type</ordering></orderings>
-					<returnUsedContent>true</returnUsedContent>
-					<navigationLink>true</navigationLink>
-                    <searchString>"' . $orgName . '"</searchString>
-				</organisationalUnitsQuery>';
+<organisationalUnitsQuery>
+    <size>300</size>
+    <fields><field>uuid</field></fields>
+    <orderings><ordering>type</ordering></orderings>
+    <returnUsedContent>true</returnUsedContent>
+    <navigationLink>true</navigationLink>
+    <searchString>"' . $orgName . '"</searchString>
+</organisationalUnitsQuery>';
         $webservice = new WebService;
         $subUnits = $webservice->getJson('organisational-units', $xml);
-        if ($subUnits['count'] > 1) {
+
+// Safely verify structure before returning
+        if (is_array($subUnits) && isset($subUnits['count'])
+            && $subUnits['count'] > 1
+            && isset($subUnits['items'])
+        ) {
             return $subUnits['items'];
         }
+        return [];
     }
 
     /*
@@ -298,21 +331,22 @@ class CommonUtilities
     public static function getNameForUuid($orgId)
     {
         $xml = '<?xml version="1.0"?>
-				<organisationalUnitsQuery>
-					<uuids><uuid>' . $orgId . '</uuid></uuids>
-					  <size>1</size>
-					  <offset>0</offset>
-					<locales><locale>de_DE</locale></locales>
-					<fields><field>name.text.value</field></fields>
-				</organisationalUnitsQuery>';
+<organisationalUnitsQuery>
+    <uuids><uuid>' . $orgId . '</uuid></uuids>
+    <size>1</size>
+    <offset>0</offset>
+    <locales><locale>de_DE</locale></locales>
+    <fields><field>name.text.value</field></fields>
+</organisationalUnitsQuery>';
         $webservice = new WebService;
         $orgName = $webservice->getJson('organisational-units', $xml);
-        if ($orgName['count'] == 1) {
-            return $orgName['items'][0]['name']['text'][0]['value'];
+
+        if (is_array($orgName) && ($orgName['count'] ?? 0) === 1) {
+            $items = $orgName['items'] ?? [];
+            if (isset($items[0]['name']['text'][0]['value'])) {
+                return $items[0]['name']['text'][0]['value'];
+            }
         }
+        return '';
     }
-
-
 }
-
-?>

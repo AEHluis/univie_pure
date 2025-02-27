@@ -1,10 +1,14 @@
 <?php
+
 /*
- * If you include the TypoScript this way, it will not be automatically loaded.
- * You MUST load it by adding the static include in the Web > Template module in the backend.
+ * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  */
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
     'tx_univiepure',
     'Configuration/TypoScript/setup.typoscript',
-    'pure: Static TS'
+    'T3LUH FIS: Static TypoScript'
 );

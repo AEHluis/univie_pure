@@ -5,25 +5,25 @@ namespace Univie\UniviePure\Endpoints;
 use Univie\UniviePure\Service\WebService;
 use Univie\UniviePure\Utility\CommonUtilities;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Univie\UniviePure\Utility\LanguageUtility;
 
 /*
- * (c) 2017 Christian Klettner <christian.klettner@univie.ac.at>, univie
- *          TYPO3-Team LUIS Uni-Hannover <typo3@luis.uni-hannover.de>, LUH
- *
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
  */
 
-class Persons
+class Persons extends Endpoints
 {
+
+    private readonly WebService $webservice;
+
+    public function __construct(WebService $webservice)
+    {
+        $this->webservice = $webservice;
+    }
+
     public function getProfile($uuid)
     {
         $xml = '<?xml version="1.0"?>
@@ -33,12 +33,12 @@ class Persons
 				<linkingStrategy>portalLinkingStrategy</linkingStrategy>';
 
         //set locale:
-        $xml .= CommonUtilities::getLocale();
+        $xml .= LanguageUtility::getLocale();
 
         $xml .= '</personsQuery>';
 
-        $webservice = new WebService;
-        $profile = $webservice->getJson('persons', $xml);
+
+        $profile = $this->webservice->getJson('persons', $xml);
 
         return $profile['items'][0]['rendering'][0]['value'];
 
@@ -53,12 +53,9 @@ class Persons
 				<linkingStrategy>portalLinkingStrategy</linkingStrategy>';
 
         //set locale:
-        $xml .= CommonUtilities::getLocale();
-
+        $xml .= LanguageUtility::getLocale();
         $xml .= '</personsQuery>';
-
-        $webservice = new WebService;
-        $portalUrl = $webservice->getJson('persons', $xml);
+        $portalUrl = $this->webservice->getJson('persons', $xml);
 
         return $portalUrl['items'][0]['info']['portalUrl'];
     }

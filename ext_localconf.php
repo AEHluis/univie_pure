@@ -1,56 +1,57 @@
 <?php
-defined('TYPO3') || die('Access denied.');
+defined('TYPO3') || die();
 
 use Univie\UniviePure\Controller\PureController;
 use Univie\UniviePure\Controller\PaginateController;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
-$pageRenderer = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
-$pageRenderer->loadRequireJsModule('TYPO3/CMS/UniviePure/CustomMultipleSideBySide');
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
+use TYPO3\CMS\Core\Cache\Backend\FileBackend;
+use TYPO3\CMS\Core\Log\Writer\FileWriter;
+use TYPO3\CMS\Core\Core\Environment;
+use Psr\Log\LogLevel;
 
 call_user_func(
     function () {
-
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Univie.UniviePure',
+        // Register plugin
+        ExtensionUtility::configurePlugin(
+            'UniviePure',
             'UniviePure',
             [
                 PureController::class => 'list,listHandler,show',
-                PaginateController::class => 'index,paginate'
+                PaginateController::class => 'index,paginate',
             ],
             // non-cacheable actions
             [
                 PureController::class => 'list,listHandler,show',
-                PaginateController::class  => 'index,paginate'
+                PaginateController::class => 'index,paginate',
             ]
         );
 
-        // wizards
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-            'mod {
-                wizards.newContentElement.wizardItems.plugins {
-                    elements {
-                        listoffers {
-                            iconIdentifier = univie_pure-plugin    
-                            title = LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.title
-                            description = LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.description
-                            tt_content_defValues {
-                                CType = list
-                                list_type = univiepure_univiepure
-                            }
-                        }
-                    }
-                    show = *
-                }               
-           }'
-        );
-        $iconRegistry = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-
-        $iconRegistry->registerIcon(
-            'univie_pure-plugin',
-            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-            ['source' => 'EXT:univie_pure/Resources/Public/Icons/fis.svg']
+        // Add PageTSConfig for wizard
+        ExtensionManagementUtility::addPageTSConfig(
+            '@import "EXT:univie_pure/Configuration/TSconfig/Page/Mod/Wizards/NewContentElement.tsconfig"'
         );
 
+        // Cache configuration
+        if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['univie_pure'])) {
+            $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['univie_pure'] = [
+                'frontend' => VariableFrontend::class,
+                'backend' => FileBackend::class,
+                'options' => [
+                    'defaultLifetime' => 86400 // 24 hours
+                ],
+                'groups' => ['pages', 'all']
+            ];
+        }
+
+        // Configure logging
+        $GLOBALS['TYPO3_CONF_VARS']['LOG']['Univie']['UniviePure']['writerConfiguration'] = [
+            LogLevel::ERROR => [
+                FileWriter::class => [
+                    'logFile' => Environment::getVarPath() . '/log/univie_pure_error.log'
+                ]
+            ]
+        ];
     }
 );

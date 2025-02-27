@@ -1,6 +1,13 @@
 <?php
 namespace Univie\UniviePure\Utility;
 
+/*
+ * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 class DotEnv
 {
     protected $path;
@@ -26,9 +33,18 @@ class DotEnv
                 continue;
             }
 
-            list($name, $value) = explode('=', $line, 2);
-            $name = trim($name);
-            $value = trim($value, "\x00..\x1F\"");
+            $parts = explode('=', $line, 2);
+            if (count($parts) !== 2) {
+                continue; // Skip invalid lines
+            }
+
+            $name = trim($parts[0]);
+            $value = trim($parts[1], "\x00..\x1F\"");
+
+            if (empty($name)) {
+                continue;
+            }
+
             $this->variables[$name] = $value;
 
             if (!array_key_exists($name, $_SERVER) && !array_key_exists($name, $_ENV)) {
@@ -39,6 +55,3 @@ class DotEnv
         }
     }
 }
-
-?>
-

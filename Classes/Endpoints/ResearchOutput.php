@@ -1,219 +1,225 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Univie\UniviePure\Endpoints;
 
 use Univie\UniviePure\Service\WebService;
 use Univie\UniviePure\Utility\CommonUtilities;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Univie\UniviePure\Utility\LanguageUtility;
 
 /*
- * (c) 2017 Christian Klettner <christian.klettner@univie.ac.at>, univie
- *          TYPO3-Team LUIS Uni-Hannover <typo3@luis.uni-hannover.de>, LUH
- *
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
  */
 
-class ResearchOutput
+class ResearchOutput extends Endpoints
 {
+    private readonly WebService $webservice;
+
+    public function __construct(WebService $webservice)
+    {
+        $this->webservice = $webservice;
+    }
 
     /**
-     * produce xml for the list query of research-output
-     * @return array $publications
+     * Produce XML for the list query of research-output
+     *
+     * @param array $settings Configuration settings
+     * @param int $currentPageNumber Current page number
+     * @return array Publication data
      */
-    public function getPublicationList($settings,$currentPageNumber)
+    public function getPublicationList(array $settings, int $currentPageNumber, string $lang): array
     {
-        if ($settings['pageSize'] == 0) {
+        // Set default page size if not provided
+        $pageSize = $this->getArrayValue($settings, 'pageSize', 20);
+        if ($pageSize == 0) {
             $settings['pageSize'] = 20;
         }
+
         $results_short = [];
         $results_portal = [];
-        if ($settings['rendering'] == "luhlong") {
-            foreach (['portal-short', 'detailsPortal'] as $i => $render) {
-                $settings['rendering'] = 'portal-short';
-                $results_short = $this->getRealPublicationList($settings,$currentPageNumber);
-                $settings['rendering'] = 'detailsPortal';
-                $results_portal = $this->getRealPublicationList($settings,$currentPageNumber);
-            }
-            if (array_key_exists('contributionToJournal',$results_short)){
+
+        // Handle special rendering case "luhlong"
+        if ($this->getArrayValue($settings, 'rendering') == "luhlong") {
+            // Get results with portal-short rendering
+            $settings['rendering'] = 'portal-short';
+            $results_short = $this->getRealPublicationList($settings, $currentPageNumber, $lang);
+
+            // Get results with detailsPortal rendering
+            $settings['rendering'] = 'detailsPortal';
+            $results_portal = $this->getRealPublicationList($settings, $currentPageNumber, $lang);
+
+            // Combine the results
+            if (is_array($results_short) && array_key_exists('contributionToJournal', $results_short)) {
                 foreach ($results_short['contributionToJournal'] as $i => $r) {
-                    $results_short['contributionToJournal'][$i]['rendering'] = $r['rendering'] . $results_portal['contributionToJournal'][$i]['rendering'];
+                    if (isset($results_portal['contributionToJournal'][$i]['rendering'])) {
+                        $results_short['contributionToJournal'][$i]['rendering'] =
+                            $r['rendering'] . $results_portal['contributionToJournal'][$i]['rendering'];
+                    }
                 }
             }
         } else {
-            $results_short = $this->getRealPublicationList($settings,$currentPageNumber);
+            $results_short = $this->getRealPublicationList($settings, $currentPageNumber, $lang);
         }
-        if (is_array($results_short)){
-            if ($results_short['count'] > 0){
-                if (array_key_exists("contributionToJournal",$results_short)){
-                    foreach ($results_short["contributionToJournal"] as $index=>$contributionToJournal) {
+
+        // Process and format the results
+        if (is_array($results_short) && $this->getArrayValue($results_short, 'count', 0) > 0) {
+            if (array_key_exists("contributionToJournal", $results_short)) {
+                foreach ($results_short["contributionToJournal"] as $index => $contributionToJournal) {
+                    if (isset($contributionToJournal["rendering"])) {
                         $new_render = $contributionToJournal["rendering"];
                         $new_render = preg_replace('#<h2 class="title">(.*?)</h2>#is', '<h4 class="title">$1</h4>', $new_render);
-                        $results_short["contributionToJournal"][$index]["rendering"] =$new_render;
+                        $results_short["contributionToJournal"][$index]["rendering"] = $new_render;
                     }
                 }
             }
         }
-        $offset = (((int)$currentPageNumber - 1) * (int)$settings['pageSize']);
-        $results_short['offset'] = $offset;
+
+        $results_short['offset'] = $this->calculateOffset((int)($settings['pageSize']), (int)($currentPageNumber));
 
         return $results_short;
-
     }
 
     /**
-     * produce xml for the list query of research-output
-     * @return array $publications
+     * Produce XML for the list query of research-output
+     *
+     * @param array $settings Configuration settings
+     * @param int $currentPageNumber Current page number
+     * @return array Publication data
      */
-    public function getRealPublicationList($settings,$currentPageNumber)
+    public function getRealPublicationList(array $settings, int $currentPageNumber, string $lang): array
     {
+        $xml = '<?xml version="1.0"?><researchOutputsQuery>';
 
-        $xml = '<?xml version="1.0"?>
-				<researchOutputsQuery>';
-        //getProjects
+        // Get projects XML if available
         $xml .= CommonUtilities::getProjectsXml($settings);
 
+        // Set page size
+        $xml .= CommonUtilities::getPageSize($this->getArrayValue($settings, 'pageSize', 20));
 
-        //set page size:
-        $xml .= CommonUtilities::getPageSize($settings['pageSize']);
-
-        //set offset:
-        $xml .= CommonUtilities::getOffset($settings['pageSize'],$currentPageNumber);
+        // Set offset
+        $xml .= CommonUtilities::getOffset($this->getArrayValue($settings, 'pageSize', 20), $currentPageNumber);
 
         $xml .= '<linkingStrategy>noLinkingStrategy</linkingStrategy>';
 
-        $xml .= CommonUtilities::getLocale();
+        // Add locale information
+        $xml .= LanguageUtility::getLocale();
 
-        $xml .= '<renderings><rendering>' . $settings['rendering'] . '</rendering></renderings>';
+        // Set rendering
+        $rendering = $this->getArrayValue($settings, 'rendering', 'portal-short');
+        $xml .= '<renderings><rendering>' . $rendering . '</rendering></renderings>';
+
+        // Handle publication type
         $pubtype = "";
-        //show publication type:
-        $settings['showPublicationType'] = 1;
-        if ($settings['showPublicationType'] == 1) {
+        if ($this->getArrayValue($settings, 'showPublicationType', 0) == 1) {
             $pubtype = $this->getFieldForPublicationType();
         }
 
+        // Add fields
         $xml .= '<fields>
                 ' . $pubtype . '
                     <field>uuid</field>
                     <field>renderings.*</field>
                     <field>publicationStatuses.*</field>
                     <field>personAssociations.*</field>';
-        //grouping:
-        if ($settings['groupByYear'] == 1) {
+
+        // Add grouping if enabled
+        if ($this->getArrayValue($settings, 'groupByYear', 0) == 1) {
             $xml .= $this->getFieldForGrouping();
         }
         $xml .= '</fields>';
 
-        //ordering:
-        if (!array_key_exists('researchOutputOrdering', $settings)
-            || strlen($settings['researchOutputOrdering']) == 0) {
-            $settings['researchOutputOrdering'] = '-publicationYear';
-        }//backwardscompatibility
-        $xml .= '<orderings><ordering>' . $settings['researchOutputOrdering'] . '</ordering></orderings>';
+        // Set ordering
+        $ordering = $this->getArrayValue($settings, 'researchOutputOrdering', '-publicationYear');
+        $xml .= '<orderings><ordering>' . $ordering . '</ordering></orderings>';
 
         $xml .= '<returnUsedContent>true</returnUsedContent>';
-
         $xml .= '<navigationLink>true</navigationLink>';
-        //classification scheme types:
-        if (($settings['narrowByPublicationType'] == 1) && ($settings['selectorPublicationType'] != '')) {
+
+        // Add research types if enabled
+        if (($this->getArrayValue($settings, 'narrowByPublicationType', 0) == 1) &&
+            ($this->getArrayValue($settings, 'selectorPublicationType', '') != '')) {
             $xml .= $this->getResearchTypesXml($settings['selectorPublicationType']);
         }
 
-        //peer-reviewed:
-        if ($settings['peerReviewedOnly'] == 1) {
+        // Add peer review filter if enabled
+        if ($this->getArrayValue($settings, 'peerReviewedOnly', 0) == 1) {
             $xml .= '<peerReviews><peerReview>PEER_REVIEW</peerReview></peerReviews>';
         }
 
-        //notPeerReviewedOrNotSetOnly:
-        if ($settings['notPeerReviewedOrNotSetOnly'] == 1) {
+        // Add not peer reviewed filter if enabled
+        if ($this->getArrayValue($settings, 'notPeerReviewedOrNotSetOnly', 0) == 1) {
             $xml .= '<peerReviews><peerReview>NOT_PEER_REVIEW</peerReview><peerReview>NOT_SET</peerReview></peerReviews>';
         }
 
-        //published before date:
-        if ($settings['publishedBeforeDate']) {
-            $xml .= '<publishedBeforeDate>' . $settings['publishedBeforeDate'] . '</publishedBeforeDate>';
-        }
-        //published after date:
-        if ($settings['publishedAfterDate']) {
-            $xml .= '<publishedAfterDate>' . $settings['publishedAfterDate'] . '</publishedAfterDate>';
+        // Add date filters if provided
+        $publishedBeforeDate = $this->getArrayValue($settings, 'publishedBeforeDate', '');
+        if ($publishedBeforeDate) {
+            $xml .= '<publishedBeforeDate>' . $publishedBeforeDate . '</publishedBeforeDate>';
         }
 
+        $publishedAfterDate = $this->getArrayValue($settings, 'publishedAfterDate', '');
+        if ($publishedAfterDate) {
+            $xml .= '<publishedAfterDate>' . $publishedAfterDate . '</publishedAfterDate>';
+        }
 
+        // Add workflow steps
         $xml .= '<workflowSteps>
-				    <workflowStep>approved</workflowStep>
+                    <workflowStep>approved</workflowStep>
                     <workflowStep>forApproval</workflowStep>
                     <workflowStep>forRevalidation</workflowStep>
                     <workflowStep>validated</workflowStep>
-				  </workflowSteps>';
+                  </workflowSteps>';
 
-        //either for organisations or for persons, both must not be submitted:
+        // Add persons or organisations XML
         $xml .= CommonUtilities::getPersonsOrOrganisationsXml($settings);
 
-        //search AND filter:
-        if ($settings['narrowBySearch'] || $settings['filter']) {
+        // Add search terms if provided
+        if ($this->getArrayValue($settings, 'narrowBySearch') || $this->getArrayValue($settings, 'filter')) {
             $xml .= $this->getSearchXml($settings);
         }
-
         $xml .= '</researchOutputsQuery>';
 
-        $webservice = new WebService;
-        $publications = $webservice->getJson('research-outputs', $xml);
-
-        $publications = $this->transformArray($publications, $settings);
-        return $publications;
-    }
-
-    /*
-     * Get the year for grouping
-     * @return string xml
-     */
-    public function getFieldForGrouping()
-    {
-        $xml = '<field>publicationStatuses.publicationDate.year</field>';
-        return $xml;
-    }
-
-    /*
-     * get the publication type (value, uri)
-     * @return string xml
-     */
-    public function getFieldForPublicationType()
-    {
-        $xml = '<field>publicationStatuses.publicationStatus.*</field>';
-        return $xml;
+        // Get and transform the publications data
+        $publications = $this->webservice->getJson('research-outputs', $xml);
+        return $this->transformArray($publications, $settings, $lang);
     }
 
     /**
-     * xml for search string
-     * @return string xml
+     * Get the year field for grouping
+     *
+     * @return string XML for year field
      */
-    public function getSearchXml($settings)
+    protected function getFieldForGrouping(): string
     {
-        $terms = $settings['narrowBySearch'];
-        //combine the backend filter and the frontend form:
-        if ($settings['filter']) {
-            $terms .= ' ' . $settings['filter'];
-        }
-        return '<searchString>' . trim($terms) . '</searchString>';
-
+        return '<field>publicationStatuses.publicationDate.year</field>';
     }
 
     /**
-     * query for classificationscheme
-     * @return string xml
+     * Get the publication type field
+     *
+     * @return string XML for publication type field
      */
-    public function getResearchTypesXml($researchTypes)
+    protected function getFieldForPublicationType(): string
     {
+        return '<field>publicationStatuses.publicationStatus.*</field>';
+    }
 
+
+    /**
+     * Generate XML for research types
+     *
+     * @param string $researchTypes Comma-separated list of research types
+     * @return string XML for research types
+     */
+    protected function getResearchTypesXml(string $researchTypes): string
+    {
         $xml = "<typeUris>";
         $types = explode(',', $researchTypes);
+
         foreach ((array)$types as $type) {
             if (strpos($type, "|")) {
                 $tmp = explode("|", $type);
@@ -221,18 +227,22 @@ class ResearchOutput
             }
             $xml .= '<typeUri>' . $type . '</typeUri>';
         }
+
         $xml .= "</typeUris>";
         return $xml;
     }
 
     /**
-     * result set for manually chosen persons
-     * @return string xml
+     * Generate XML for persons
+     *
+     * @param string $personsList Comma-separated list of persons
+     * @return string XML for persons
      */
-    public function getPersonsXml($personsList)
+    protected function getPersonsXml(string $personsList): string
     {
         $xml = '<forPersons>';
         $persons = explode(',', $personsList);
+
         foreach ((array)$persons as $person) {
             if (strpos($person, "|")) {
                 $tmp = explode("|", $person);
@@ -240,18 +250,22 @@ class ResearchOutput
             }
             $xml .= '<uuids>' . $person . '</uuids>';
         }
+
         $xml .= '</forPersons>';
         return $xml;
     }
 
     /**
-     * result set for organisational units
-     * @return string xml
+     * Generate XML for organisations
+     *
+     * @param string $organisationList Comma-separated list of organisations
+     * @return string XML for organisations
      */
-    public function getOrganisationsXml($organisationList)
+    protected function getOrganisationsXml(string $organisationList): string
     {
         $xml = '<forOrganisationalUnits><uuids>';
         $organisations = explode(',', $organisationList);
+
         foreach ((array)$organisations as $org) {
             if (strpos($org, "|")) {
                 $tmp = explode("|", $org);
@@ -259,158 +273,221 @@ class ResearchOutput
             }
             $xml .= '<uuid>' . $org . '</uuid>';
         }
+
         $xml .= '</uuids></forOrganisationalUnits>';
         return $xml;
     }
 
     /**
-     * restructure array: group by year
-     * @return array array
+     * Group publications by year
+     *
+     * @param array $publications The publications array to process
+     * @return array The grouped publications
      */
-    public function groupByYear($publications)
+    protected function groupByYear(array $publications): array
     {
-        $sortkey = $publications['contributionToJournal']['publicationStatuses']['publicationStatus']['publicationDate']['year'];
-        $array = [];
-        $array['count'] = $publications['count'];
+        // Initialize result array
+        $array = [
+            'count' => $this->getNestedArrayValue($publications, 'count', 0),
+            'contributionToJournal' => []
+        ];
+
+        // Get sort key safely
+        $sortkey = $this->getNestedArrayValue(
+            $publications,
+            'contributionToJournal.publicationStatuses.publicationStatus.publicationDate.year',
+            0
+        );
+
         $i = 0;
-        foreach ($publications as $contribution) {
-            $array['contributionToJournal'][$i]['year'] = $contribution['publicationStatuses']['publicationDate']['year'];
-            $array['contributionToJournal'][$i]['rendering'] = $contribution['rendering'][0]['value'];
-            $array['contributionToJournal'][$i]['uuid'] = $contribution['uuid'];
+
+        // Process each contribution
+        foreach ($publications as $key => $contribution) {
+            // Skip non-array items or special keys like 'count'
+            if (!is_array($contribution) || $key === 'count') {
+                continue;
+            }
+
+            // Get values safely
+            $year = $this->getNestedArrayValue(
+                $contribution,
+                'publicationStatuses.publicationDate.year',
+                'Unknown Year'
+            );
+
+            $rendering = $this->getNestedArrayValue(
+                $contribution,
+                'rendering.0.value',
+                ''
+            );
+
+            $uuid = $this->getNestedArrayValue(
+                $contribution,
+                'uuid',
+                ''
+            );
+
+            // Add to result array
+            $array['contributionToJournal'][$i] = [
+                'year' => $year,
+                'rendering' => $rendering,
+                'uuid' => $uuid
+            ];
+
             $i++;
         }
+
         return $array;
     }
 
-    /**
-     * restructure array
-     * @return array array
-     */
-    public function transformArray($publications, $settings)
+
+    protected function transformArray(array $publications, array $settings, string $lang): array
     {
-        $lang = ($GLOBALS['TSFE']->config['config']['language'] == 'de') ? 'de_DE' : 'en_GB';
+
 
         $array = [];
-        $array['count'] = $publications['count'];
+        $array['count'] = $this->getArrayValue($publications, 'count', 0);
         $i = 0;
 
-        if (is_array($publications) || is_object($publications)) {
-            if (array_key_exists('items', $publications)) {
-                foreach ($publications['items'] as $contribution) {
-                    $portalUri = $this->getAlternativeSinglePublication($contribution['uuid'], $lang)['items'][0]['info']['portalUrl'];
-                    $allowedToRender = false;
-                    $allowedToRenderLuhPubsOnly = false;
-                    if (array_key_exists("luhPubsOnly",$settings)){
-                        $luhPublsOnly_setting = intval($settings['luhPubsOnly']);
-                    }
+        if (!$this->arrayKeyExists('items', $publications)) {
+            return $array;
+        }
 
-                    if ($luhPublsOnly_setting == 1) {
-                        foreach ($contribution['personAssociations'] as $pA) {
-                            if (isset($pA['organisationalUnits'])) {
-                                $allowedToRenderLuhPubsOnly = true;
-                                break;
-                            }
-                        }
-                    }
+        // Process each contribution
+        foreach ($publications['items'] as $contribution) {
+            // Get portal URI for the publication
+            $singlePub = $this->getAlternativeSinglePublication($contribution['uuid'], $lang);
+            $portalUri = $this->getNestedArrayValue($singlePub, 'items.0.info.portalUrl', '');
 
-                    foreach ($contribution['publicationStatuses'] as $status) {
-                        if (
-                            ($status['publicationStatus']['uri'] == '/dk/atira/pure/researchoutput/status/published') ||
-                            ($status['publicationStatus']['uri'] == '/dk/atira/pure/researchoutput/status/inpress') ||
-                            ($status['publicationStatus']['uri'] == '/dk/atira/pure/researchoutput/status/epub')
-                        ) {
-                            if ($allowedToRenderLuhPubsOnly && ($luhPublsOnly_setting == 1)) {
-                                $allowedToRender = true;
-                            }
-                            if ($luhPublsOnly_setting != 1) {
-                                $allowedToRender = true;
-                            }
-                            if (array_key_exists('inPress', $settings)) {
-                                if ((!$settings['inPress']) && ($status['publicationStatus']['uri'] == '/dk/atira/pure/researchoutput/status/inpress')) {
-                                    $allowedToRender = false;
-                                }
-                            }
-                        }
+            // Check if publication should be rendered
+            $allowedToRender = false;
+            $allowedToRenderLuhPubsOnly = false;
+            $luhPublsOnly_setting = intval($this->getArrayValue($settings, 'luhPubsOnly', 0));
 
-                        if ($allowedToRender) {
-                            if ($status['current'] == 'true') {
-                                if ($settings['groupByYear']) {
-                                    $array['contributionToJournal'][$i]['year'] = $status['publicationDate']['year'];
-                                }
-                                if ($settings['showPublicationType']) {
-                                    $array['contributionToJournal'][$i]['publicationStatus']['value'] = $status['publicationStatus']['term']['text'][0]['value'];
-                                    $array['contributionToJournal'][$i]['publicationStatus']['uri'] = $status['publicationStatus']['uri'];
-                                }
-                            }
-                        }
+            // Check for LUH publications only
+            if ($luhPublsOnly_setting == 1) {
+                $personAssociations = $this->getArrayValue($contribution, 'personAssociations', []);
+                foreach ($personAssociations as $pA) {
+                    if ($this->arrayKeyExists('organisationalUnits', $pA)) {
+                        $allowedToRenderLuhPubsOnly = true;
+                        break;
                     }
-                    if ($allowedToRender) {
-                        $array['contributionToJournal'][$i]['rendering'] = $contribution['renderings'][0]['html'];
-                        $array['contributionToJournal'][$i]['uuid'] = $contribution['uuid'];
-                        $array['contributionToJournal'][$i]['portalUri'] = $portalUri;
-                        $i++;
-                    }
-
                 }
             }
+
+            // Check publication status
+            $publicationStatuses = $this->getArrayValue($contribution, 'publicationStatuses', []);
+            foreach ($publicationStatuses as $status) {
+                $statusUri = $this->getNestedArrayValue($status, 'publicationStatus.uri', '');
+                $isPublishedStatus = in_array($statusUri, [
+                    '/dk/atira/pure/researchoutput/status/published',
+                    '/dk/atira/pure/researchoutput/status/inpress',
+                    '/dk/atira/pure/researchoutput/status/epub'
+                ]);
+
+                if ($isPublishedStatus) {
+                    if ($allowedToRenderLuhPubsOnly && ($luhPublsOnly_setting == 1)) {
+                        $allowedToRender = true;
+                    }
+                    if ($luhPublsOnly_setting != 1) {
+                        $allowedToRender = true;
+                    }
+
+                    // Check for in-press filter
+                    $inPress = $this->getArrayValue($settings, 'inPress', true);
+                    if (!$inPress && $statusUri == '/dk/atira/pure/researchoutput/status/inpress') {
+                        $allowedToRender = false;
+                    }
+                }
+
+                if ($allowedToRender && $this->getArrayValue($status, 'current', '') === 'true') {
+                    // Add year for grouping if enabled
+                    if ($this->getArrayValue($settings, 'groupByYear', false)) {
+                        $array['contributionToJournal'][$i]['year'] =
+                            $this->getNestedArrayValue($status, 'publicationDate.year', '');
+                    }
+
+                    // Add publication status if enabled
+                    if ($this->getArrayValue($settings, 'showPublicationType', false)) {
+                        $array['contributionToJournal'][$i]['publicationStatus']['value'] =
+                            $this->getNestedArrayValue($status, 'publicationStatus.term.text.0.value', '');
+                        $array['contributionToJournal'][$i]['publicationStatus']['uri'] = $statusUri;
+                    }
+                }
+            }
+
+            // Add publication details if allowed to render
+            if ($allowedToRender) {
+                $array['contributionToJournal'][$i]['rendering'] =
+                    $this->getNestedArrayValue($contribution, 'renderings.0.html', '');
+                $array['contributionToJournal'][$i]['uuid'] =
+                    $this->getArrayValue($contribution, 'uuid', '');
+                $array['contributionToJournal'][$i]['portalUri'] = $portalUri;
+                $i++;
+            }
         }
+
         return $array;
     }
 
+
     /**
-     * query for single publication
-     * @return string xml
+     * Query for single publication using alternative response
+     *
+     * @param string $uuid Publication UUID
+     * @param string $lang Language code
+     * @return array Publication data
      */
-    public function getAlternativeSinglePublication($uuid, $lang='de_DE')
+    public function getAlternativeSinglePublication(string $uuid, string $lang = 'de_DE'): array
     {
-        $webservice = new WebService;
-        return $webservice->getAlternativeSingleResponse('research-outputs', $uuid,"json", $lang);
+        return $this->webservice->getAlternativeSingleResponse('research-outputs', $uuid, "json", $lang);
     }
 
     /**
-     * query for single publication
-     * @return string xml
+     * Query for single publication
+     *
+     * @param string $uuid Publication UUID
+     * @param string $lang Language code
+     * @return array|string|\SimpleXMLElement|null Publication data
      */
-    public function getSinglePublication($uuid, $lang='de_DE')
+    public function getSinglePublication(string $uuid, string $lang = 'de_DE')
     {
-        $webservice = new WebService;
-        return $webservice->getSingleResponse('research-outputs', $uuid);
+        return $this->webservice->getSingleResponse('research-outputs', $uuid);
     }
 
     /**
-     * query for bibtex response
-     * @return string bibtex
+     * Query for bibtex response
+     *
+     * @param string $uuid Publication UUID
+     * @param string $lang Language code
+     * @return array|string|\SimpleXMLElement|null Bibtex data
      */
-    public function getBibtex($uuid, $lang)
+    public function getBibtex(string $uuid, string $lang)
     {
-        $webservice = new WebService;
-        return $webservice->getSingleResponse('research-outputs', $uuid, 'xml', true, 'bibtex', $lang);
+        return $this->webservice->getSingleResponse('research-outputs', $uuid, 'xml', true, 'bibtex', $lang);
     }
 
     /**
-     * query for portalRenderings response
-     * @return string
+     * Query for portalRenderings response
+     *
+     * @param string $uuid Publication UUID
+     * @param string $lang Language code
+     * @return array|string|\SimpleXMLElement|null Portal rendering data
      */
-    public function getPortalRendering($uuid, $lang)
+    public function getPortalRendering(string $uuid, string $lang)
     {
-        $webservice = new WebService;
-        return $webservice->getSingleResponse('research-outputs', $uuid, 'xml', true, 'detailsPortal', $lang);
-
+        return $this->webservice->getSingleResponse('research-outputs', $uuid, 'xml', true, 'detailsPortal', $lang);
     }
 
     /**
-     * query for getStandardRendering response
-     * @return string
+     * Query for getStandardRendering response
+     *
+     * @param string $uuid Publication UUID
+     * @param string $lang Language code
+     * @return array|string|\SimpleXMLElement|null Standard rendering data
      */
-    public function getStandardRendering($uuid, $lang)
+    public function getStandardRendering(string $uuid, string $lang)
     {
-        $webservice = new WebService;
-        return $webservice->getSingleResponse('research-outputs', $uuid, 'xml', true, 'standard', $lang);
+        return $this->webservice->getSingleResponse('research-outputs', $uuid, 'xml', true, 'standard', $lang);
     }
-
-
-
 }
-
-?>
-

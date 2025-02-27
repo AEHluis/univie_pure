@@ -7,8 +7,25 @@ services:
   Univie\UniviePure\:
     resource: '../Classes/*'
 
-  Univie\UniviePure\Command\ImportFisCommand:
+  Univie\UniviePure\Service\WebService:
+    public: true
+    arguments:
+      $cache: '@cache.univie_pure'
+
+  cache.univie_pure:
+    class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+    factory: ['@TYPO3\CMS\Core\Cache\CacheManager', 'getCache']
+    arguments: ['univie_pure']
+
+  Univie\UniviePure\Cache\Warmup\UniviePureCacheWarmer:
+    public: true
     tags:
-      - name: 'console.command'
-        command: 'univie_pure:importfis'
-        schedulable: false
+      - 'cache.warmup'
+
+  Psr\Http\Client\ClientInterface:
+    class: GuzzleHttp\Client
+    arguments:
+      $config:
+        verify: false # 🔴 Disable SSL verification (for debugging)
+
+

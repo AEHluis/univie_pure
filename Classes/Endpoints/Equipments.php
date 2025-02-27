@@ -4,26 +4,24 @@ namespace Univie\UniviePure\Endpoints;
 use Univie\UniviePure\Service\WebService;
 use Univie\UniviePure\Utility\CommonUtilities;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Univie\UniviePure\Utility\LanguageUtility;
 
 /*
- * (c) TYPO3-Team LUIS Uni-Hannover <typo3@luis.uni-hannover.de>, LUH
- *
- * This file is part of the TYPO3 CMS porject.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
  */
 
-class Equipments
+class Equipments extends Endpoints
 {
 
+    private readonly WebService $webservice;
 
+    public function __construct(WebService $webservice)
+    {
+        $this->webservice = $webservice;
+    }
 
     /**
      * query for single Proj
@@ -31,8 +29,7 @@ class Equipments
      */
     public function getSingleEquipment($uuid,$lang='de_DE')
     {
-        $webservice = new WebService;
-        return $webservice->getAlternativeSingleResponse('equipments', $uuid,  "json",  $lang);
+        return $this->webservice->getAlternativeSingleResponse('equipments', $uuid,  "json",  $lang);
     }
 
     /**
@@ -51,7 +48,7 @@ class Equipments
 
         //set offset:
         $xml .= CommonUtilities::getOffset($settings['pageSize'], $currentPageNumber);
-        $xml .= CommonUtilities::getLocale();
+        $xml .= LanguageUtility::getLocale();
         $xml .= '<renderings><rendering>short</rendering></renderings>';
         $xml .= '<fields>
                     <field>renderings.*</field>
@@ -63,136 +60,177 @@ class Equipments
                     
                  </fields>';
         //search AND filter:
-        if ($settings['narrowBySearch'] || $settings['filter']) {
+        if ($this->getArrayValue($settings, 'narrowBySearch') || $this->getArrayValue($settings, 'filter')) {
             $xml .= $this->getSearchXml($settings);
         }
         $xml .= CommonUtilities::getPersonsOrOrganisationsXml($settings);
 
         $xml .= '</equipmentsQuery>';
-        $webservice = new WebService;
-        $view = $webservice->getXml('equipments', $xml);
+
+        $view = $this->webservice->getXml('equipments', $xml);
 
         if (is_array($view["items"])) {
             if ($view['count'] > 1) {
-                if (is_array($view["items"]["equipment"])) {
-                    foreach ($view["items"]["equipment"] as $index=>$items) {
+                $equipmentItems = $this->getNestedArrayValue($view, 'items.equipment', []);
+                if (is_array($equipmentItems)) {
+                    foreach ($equipmentItems as $index => $items) {
                         foreach ($items['renderings'] as $i=>$x) {
-                            $uuid = $view["items"]["equipment"][$index]["@attributes"]["uuid"];
-                            $new_render = $items["renderings"]['rendering'];
-                            $new_render = preg_replace('#<h2 class="title">(.*?)</h2>#is', '<h4 class="title">$1</h4>', $new_render);
-                            $new_render = preg_replace('#<p><\/p>#is', '', $new_render);
+                            // Get values safely using getNestedArrayValue
+                            $uuid = $this->getNestedArrayValue($view, "items.equipment.$index.@attributes.uuid", '');
+                            $rendering = $this->getNestedArrayValue($items, "renderings.rendering", '');
+                            $portalUri = $this->getNestedArrayValue($items, "info.portalUrl", '');
+
+                            // Transform the rendering HTML if it's not empty
+                            $new_render = !empty($rendering) ? $this->transformRenderingHtml($rendering, []) : '';
+
+                            // Assign values to the view array
                             $view["items"][$index]["renderings"][$i]['html'] = $new_render;
                             $view["items"][$index]["uuid"] = $uuid;
-                            $view["items"][$index]["portaluri"] = $items["info"]["portalUrl"];
-                            if(array_key_exists("name",$items["contactPersons"]["contactPerson"])){
-                                $view["items"][$index]["contactPerson"][] = $items["contactPersons"]["contactPerson"]["name"]["text"];
-                            }else{
-                                foreach ($items["contactPersons"]["contactPerson"] as $p) {
-                                    if(array_key_exists("name", $p)) {
-                                        $view["items"][$index]["contactPerson"][] = $p["name"]["text"];
+                            $view["items"][$index]["portaluri"] = $portalUri;
+
+                            // Handle contact persons
+                            $contactPersons = $this->getArrayValue($items, "contactPersons", []);
+                            $contactPerson = $this->getArrayValue($contactPersons, "contactPerson", []);
+
+                            // Initialize the contact person array if it doesn't exist
+                            if (!isset($view["items"][$index]["contactPerson"])) {
+                                $view["items"][$index]["contactPerson"] = [];
+                            }
+
+                            // Check if contactPerson is a single entry or an array of entries
+                            $name = $this->getNestedArrayValue($contactPerson, 'name.text', '');
+                            if (!empty($name)) {
+                                // Single contact person
+                                $view["items"][$index]["contactPerson"][] = $name;
+                            } elseif (is_array($contactPerson)) {
+                                // Multiple contact persons
+                                foreach ($contactPerson as $p) {
+                                    $personName = $this->getNestedArrayValue($p, 'name.text', '');
+                                    if (!empty($personName)) {
+                                        $view["items"][$index]["contactPerson"][] = $personName;
                                     }
                                 }
                             }
-                            if(is_array($items["emails"])) {
-                                if (array_key_exists("value", $items["emails"]["email"])) {
-                                    $view["items"][$index]["email"][] = strtolower($items["emails"]["email"]["value"]);
-                                } else {
-                                    foreach ($items["emails"]["email"] as $e) {
-                                        if (array_key_exists("value", $p)) {
-                                            $view["items"][$index]["email"][] = strtolower($p["value"]);
-                                        }
+
+                            // Initialize the email array if it doesn't exist
+                            if (!isset($view["items"][$index]["email"])) {
+                                $view["items"][$index]["email"] = [];
+                            }
+
+                            // Get emails safely
+                            $emails = $this->getNestedArrayValue($items, "emails.email", []);
+
+                            // Handle single email case
+                            $emailValue = $this->getNestedArrayValue($emails, "value", '');
+                            if (!empty($emailValue)) {
+                                $view["items"][$index]["email"][] = strtolower($emailValue);
+                            }
+                            // Handle multiple emails case
+                            elseif (is_array($emails)) {
+                                foreach ($emails as $e) {
+                                    $singleEmail = $this->getNestedArrayValue($e, "value", '');
+                                    if (!empty($singleEmail)) {
+                                        $view["items"][$index]["email"][] = strtolower($singleEmail);
                                     }
                                 }
                             }
-                            if(is_array($items["webAddresses"])) {
-                                if (array_key_exists("value", $items["webAddresses"]["webAddress"])) {
-                                    $view["items"][$index]["webAddress"][] = $items["webAddresses"]["webAddress"]["value"]["text"];
-                                } else {
-                                    foreach ($items["webAddresses"]["webAddress"] as $e) {
-                                        if (array_key_exists("value", $e)) {
-                                            $view["items"][$index]["webAddress"][] = $p["value"][1]["text"];
-                                        }
+
+                            // Initialize the webAddress array if it doesn't exist
+                            if (!isset($view["items"][$index]["webAddress"])) {
+                                $view["items"][$index]["webAddress"] = [];
+                            }
+
+                            // Get web addresses safely
+                            $webAddresses = $this->getNestedArrayValue($items, "webAddresses.webAddress", []);
+
+                            // Handle single web address case
+                            $webAddressText = $this->getNestedArrayValue($webAddresses, "value.text", '');
+                            if (!empty($webAddressText)) {
+                                $view["items"][$index]["webAddress"][] = $webAddressText;
+                            }
+                            // Handle multiple web addresses case
+                            elseif (is_array($webAddresses)) {
+                                foreach ($webAddresses as $e) {
+                                    // Original used $e["value"][1]["text"] for multiple addresses but $webAddress["value"]["text"] for single
+                                    // I'm using the consistent approach with getNestedArrayValue
+
+                                    // For the single case pattern
+                                    $singleWebAddressText = $this->getNestedArrayValue($e, "value.text", '');
+                                    if (!empty($singleWebAddressText)) {
+                                        $view["items"][$index]["webAddress"][] = $singleWebAddressText;
+                                    }
+
+                                    // For the multiple case pattern that used index 1
+                                    $multipleWebAddressText = $this->getNestedArrayValue($e, "value.1.text", '');
+                                    if (empty($singleWebAddressText) && !empty($multipleWebAddressText)) {
+                                        $view["items"][$index]["webAddress"][] = $multipleWebAddressText;
                                     }
                                 }
                             }
-                            if (array_key_exists('linkToPortal', $settings)){
-                                if ($settings['linkToPortal'] == 1){
-                                    $view["items"][$index]["portaluri"] = $items["info"]["portalUrl"];
-                                }
-                            }
+
+
+                            if ($this->arrayKeyExists('linkToPortal', $settings) && $settings['linkToPortal'] == 1) {
+                                $view["items"][$index]["portaluri"] = $this->getNestedArrayValue($items, 'info.portalUrl', '');                            }
                         }
                     }
                 }
             }
-        }else{
+        } else {
             if (is_array($view["items"])) {
                 if (is_array($view["items"]["equipment"])) {
-                    $uuid = $view["items"]["equipment"]["@attributes"]["uuid"];
-                    $new_render = $view["items"]["equipment"]["renderings"]['rendering'];
-                    $new_render = preg_replace('#<h2 class="title">(.*?)</h2>#is', '<h4 class="title">$1</h4>', $new_render);
-                    $new_render = preg_replace('#<p><\/p>#is', '', $new_render);
+                    // Get the UUID and rendering data safely
+                    $uuid = $this->getNestedArrayValue($view, 'items.equipment.@attributes.uuid', '');
+                    $rendering = $this->getNestedArrayValue($view, 'items.equipment.renderings.rendering', '');
+
+                    // Transform the rendering HTML if it's not empty
+                    $new_render = '';
+                    if (!empty($rendering)) {
+                        $new_render = $this->transformRenderingHtml($rendering, []);
+                    }
+
+                    // Assign values to the view array
                     $view["items"][0]["renderings"]["rendering"]['html'] = $new_render;
                     $view["items"][0]["uuid"] = $uuid;
-                    if(array_key_exists("name", $view["items"]["equipment"]["contactPersons"]["contactPerson"])){
-                        $view["items"][0]["contactPerson"][] = $view["items"]["equipment"]["contactPersons"]["contactPerson"]["name"]["text"];
-                    }else{
-                        foreach ($view["items"]["equipment"]["contactPersons"]["contactPerson"] as $p) {
-                            if(array_key_exists("name", $p)) {
-                                $view["items"][0]["contactPerson"][] = $p["name"]["text"];
+
+                    // Handle contact persons for single item
+                    $contactPersons = $this->getArrayValue($view["items"]["equipment"], "contactPersons", []);
+                    $contactPerson = $this->getArrayValue($contactPersons, "contactPerson", []);
+
+                    if($this->arrayKeyExists("name", $contactPerson)) {
+                        $view["items"][0]["contactPerson"][] = $contactPerson["name"]["text"];
+                    } else if(is_array($contactPerson)) {
+                        foreach ($contactPerson as $p) {
+                            // Safely get the name text and add it to the contact person array
+                            $nameText = $this->getNestedArrayValue($p, 'name.text', '');
+                            if (!empty($nameText)) {
+                                $view["items"][0]["contactPerson"][] = $nameText;
                             }
                         }
                     }
 
-                    if(array_key_exists("value",$view["items"]["equipment"]["emails"]["email"])){
-                        $view["items"][0]["email"] = strtolower($view["items"]["equipment"]["emails"]["email"]["value"]);
+                    // Handle emails for single item
+                    $emails = $this->getArrayValue($view["items"]["equipment"], "emails", []);
+                    $email = $this->getArrayValue($emails, "email", []);
+                    if($this->arrayKeyExists("value", $email)) {
+                        $view["items"][0]["email"] = strtolower($email["value"]);
                     }
-                    if(array_key_exists("value",$view["items"]["equipment"]["webAddresses"]["webAddress"])){
-                        $view["items"][0]["webAddress"] = $view["items"]["equipment"]["webAddresses"]["webAddress"]["value"];
+
+                    // Handle web addresses for single item
+                    $webAddresses = $this->getArrayValue($view["items"]["equipment"], "webAddresses", []);
+                    $webAddress = $this->getArrayValue($webAddresses, "webAddress", []);
+                    if($this->arrayKeyExists("value", $webAddress)) {
+                        $view["items"][0]["webAddress"] = $webAddress["value"];
                     }
-                    if ((array_key_exists('linkToPortal', $settings)) && ($settings['linkToPortal'] == 1)) {
-                        $view["items"][0]["portaluri"] = $view["items"]["equipment"]["info"]["portalUrl"];
-                    }
+
+                    if ($this->arrayKeyExists('linkToPortal', $settings) && $settings['linkToPortal'] == 1) {
+                        $view["items"][0]["portaluri"] = $this->getNestedArrayValue($view, 'items.equipment.info.portalUrl', '');                    }
                 }
             }
         }
         unset($view["items"]["equipment"]);
-        $offset = (((int)$currentPageNumber - 1) * (int)$settings['pageSize']);
-        $view['offset'] = $offset;
-
+        $view['offset'] = $this->calculateOffset((int)$settings['pageSize'], (int)$currentPageNumber);
 
         return $view;
-
-
-
-
     }
 
-
-    /**
-     * xml for search string
-     * @return string xml
-     */
-    public function getSearchXml($settings)
-    {
-        $terms = $settings['narrowBySearch'];
-        //combine the backend filter and the frontend form:
-        if ($settings['filter']) {
-            $terms .= ' ' . $settings['filter'];
-        }
-        return '<searchString>' . trim($terms) . '</searchString>';
-    }
-
-    /**
-     * set the ordering
-     * @return string xml
-     */
-    public function getOrderingXml($order)
-    {
-        if (!$order) {
-            $order = '-startDate';
-        }//default
-        return '<orderings><ordering>' . $order . '</ordering></orderings>';
-    }
 }
-
-?>

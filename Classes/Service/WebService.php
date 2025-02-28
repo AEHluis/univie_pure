@@ -255,6 +255,7 @@ class WebService
         }
 
         $xml = simplexml_load_string($response, null, LIBXML_NOCDATA);
+
         return json_decode(json_encode((array)$xml), true);
     }
 
@@ -267,9 +268,7 @@ class WebService
         if (str_contains($data, 'searchString')) {
             return $this->performRequest($uri, $data, $responseType);
         }
-        // WIP: ToDo: check if response is ok to store to cache
-        //return $this->cache->get($cacheIdentifier) ?? $this->performRequest($uri, $data, $responseType);
-        return $this->performRequest($uri, $data, $responseType);
+        return $this->cache->get($cacheIdentifier) ?? $this->performRequest($uri, $data, $responseType);
     }
 
     private function performRequest(Uri $uri, string $data, string $responseType): ?string

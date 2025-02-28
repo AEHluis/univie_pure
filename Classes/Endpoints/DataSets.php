@@ -2,6 +2,7 @@
 
 namespace Univie\UniviePure\Endpoints;
 
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Univie\UniviePure\Service\WebService;
 use Univie\UniviePure\Utility\CommonUtilities;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -41,9 +42,9 @@ class DataSets extends Endpoints
     public function getDataSetsList($settings, $currentPageNumber)
     {
 
-        if ($settings['pageSize'] == 0) {
-            $settings['pageSize'] = 20;
-        }
+        // Set default page size if not provided
+        $settings['pageSize'] = $this->getArrayValue($settings, 'pageSize', 20);
+
         $xml = '<?xml version="1.0"?><dataSetsQuery>';
         //set page size:
         $xml .= CommonUtilities::getProjectsForDatasetsXml($settings);
@@ -77,8 +78,15 @@ class DataSets extends Endpoints
         $xml .= '</dataSetsQuery>';
         $view = $this->webservice->getXml('datasets', $xml);
 
+        if (!$view){
+            return [
+                'error' => 'SERVER_NOT_AVAILABLE',
+                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
+            ];
+        }
+
         if (is_array($view)) {
-            if ($view["count"] > 1) {
+            if ($view["count"] > 0) {
                 if (array_key_exists("items", $view)) {
                     if (is_array($view["items"])) {
                         if (array_key_exists("dataSet", $view["items"])) {

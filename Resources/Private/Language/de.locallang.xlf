@@ -3,6 +3,10 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-19T13:00:54Z" product-name="univie_pure">
 		<header/>
 		<body>
+			<trans-unit id="error.server_unavailable">
+				<source>The FIS server is currently unavailable. Please try again later.</source>
+				<target>Der FIS-Server ist derzeit nicht verfügbar. Bitte versuchen Sie es später noch einmal.</target>
+			</trans-unit>
 			<trans-unit id="univiepur.title">
 				<source>T3LUH FIS</source>
 				<target>T3LUH FIS</target>

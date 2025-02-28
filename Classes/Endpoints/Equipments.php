@@ -1,6 +1,7 @@
 <?php
 namespace Univie\UniviePure\Endpoints;
 
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Univie\UniviePure\Service\WebService;
 use Univie\UniviePure\Utility\CommonUtilities;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -39,9 +40,9 @@ class Equipments extends Endpoints
     public function getEquipmentsList($settings,$currentPageNumber)
     {
 
-        if ($settings['pageSize'] == 0) {
-            $settings['pageSize'] = 20;
-        }
+        // Set default page size if not provided
+        $settings['pageSize'] = $this->getArrayValue($settings, 'pageSize', 20);
+
         $xml = '<?xml version="1.0"?><equipmentsQuery>';
         //set page size:
         $xml .= CommonUtilities::getPageSize($settings['pageSize']);
@@ -68,6 +69,12 @@ class Equipments extends Endpoints
         $xml .= '</equipmentsQuery>';
 
         $view = $this->webservice->getXml('equipments', $xml);
+        if (!$view){
+            return [
+                'error' => 'SERVER_NOT_AVAILABLE',
+                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
+            ];
+        }
 
         if (is_array($view["items"])) {
             if ($view['count'] > 1) {

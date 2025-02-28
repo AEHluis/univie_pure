@@ -7,6 +7,7 @@ namespace Univie\UniviePure\Endpoints;
 use Univie\UniviePure\Service\WebService;
 use Univie\UniviePure\Utility\CommonUtilities;
 use Univie\UniviePure\Utility\LanguageUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /*
  * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
@@ -34,10 +35,7 @@ class ResearchOutput extends Endpoints
     public function getPublicationList(array $settings, int $currentPageNumber, string $lang): array
     {
         // Set default page size if not provided
-        $pageSize = $this->getArrayValue($settings, 'pageSize', 20);
-        if ($pageSize == 0) {
-            $settings['pageSize'] = 20;
-        }
+        $settings['pageSize'] = $this->getArrayValue($settings, 'pageSize', 20);
 
         $results_short = [];
         $results_portal = [];
@@ -77,7 +75,6 @@ class ResearchOutput extends Endpoints
                 }
             }
         }
-
         $results_short['offset'] = $this->calculateOffset((int)($settings['pageSize']), (int)($currentPageNumber));
 
         return $results_short;
@@ -185,7 +182,14 @@ class ResearchOutput extends Endpoints
 
         // Get and transform the publications data
         $publications = $this->webservice->getJson('research-outputs', $xml);
-        return $this->transformArray($publications, $settings, $lang);
+        if ($publications) {
+            return $this->transformArray($publications, $settings, $lang);
+        } else {
+            return [
+                'error' => 'SERVER_NOT_AVAILABLE',
+                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
+            ];
+        }
     }
 
     /**

@@ -9,69 +9,75 @@
 	});
 	</script>
 	<div class="tx_univiepure" >
-		<div class="content-element-margin-small">
-			<f:if condition="{settings.showSearchForm}">
-				<f:then>
-					<div class="c-section">
-						<div class="c-events-search">
-							<div class="c-events-search__filter-wrap o-shaded--bg o-small-padding">
-
-								<f:form method="POST" class="form-horizontal" action="listHandler">
-									<div class="col-sm-8 col-xs-12  col-md-8" style="width:100%;display:flex;justify-content : flex-start; ">
-										<f:form.textfield id="filter" class="c-events-search__text" type="text" name="filter" value="{filter}" placeholder='<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.searchForm" />'/>
-										<f:form.button type="submit" value="" class="c-events-search__submit">
-											<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.searchSubmit" />
-										</f:form.button>
-									</div>
-								</f:form>
-							</div>
-						</div>
-					</div>
-				</f:then>
-			</f:if>
-
-			<f:if condition="{what_to_display} == 'PUBLICATIONS' ">
+		<f:if condition="{error}">
 			<f:then>
-					<f:if condition="{paginator.paginatedItems}">
+			</f:then>
+			<f:else>
+				<div class="content-element-margin-small">
+					<f:if condition="{settings.showSearchForm}">
 						<f:then>
-							<f:render partial="Pure/Publications" arguments="{pagination:pagination, paginator:paginator, publications:paginator.paginatedItems}"/>
+							<div class="c-section">
+								<div class="c-events-search">
+									<div class="c-events-search__filter-wrap o-shaded--bg o-small-padding">
+
+										<f:form method="POST" class="form-horizontal" action="listHandler">
+											<div class="col-sm-8 col-xs-12  col-md-8" style="width:100%;display:flex;justify-content : flex-start; ">
+												<f:form.textfield id="filter" class="c-events-search__text" type="text" name="filter" value="{filter}" placeholder='<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.searchForm" />'/>
+												<f:form.button type="submit" value="" class="c-events-search__submit">
+													<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.searchSubmit" />
+												</f:form.button>
+											</div>
+										</f:form>
+									</div>
+								</div>
+							</div>
 						</f:then>
 					</f:if>
-				</f:then>
-			</f:if>
 
-			<f:if condition="{what_to_display} == 'PROJECTS' ">
-				<f:then>
-					<f:if condition="{paginator.paginatedItems}">
-						<f:then>
-							<f:render partial="Pure/Projects" arguments="{pagination:pagination, projects:paginator.paginatedItems}"/>
+					<f:if condition="{what_to_display} == 'PUBLICATIONS' ">
+					<f:then>
+							<f:if condition="{paginator.paginatedItems}">
+								<f:then>
+									<f:render partial="Pure/Publications" arguments="{pagination:pagination, paginator:paginator, publications:paginator.paginatedItems}"/>
+								</f:then>
+							</f:if>
 						</f:then>
 					</f:if>
-				</f:then>
-			</f:if>
 
-
-			<f:if condition="{what_to_display} == 'EQUIPMENTS' ">
-				<f:then>
-					<f:if condition="{paginator.paginatedItems}">
+					<f:if condition="{what_to_display} == 'PROJECTS' ">
 						<f:then>
-							<f:render partial="Pure/Equipments" arguments="{pagination:pagination, equipments:paginator.paginatedItems}"/>
+							<f:if condition="{paginator.paginatedItems}">
+								<f:then>
+									<f:render partial="Pure/Projects" arguments="{pagination:pagination, projects:paginator.paginatedItems}"/>
+								</f:then>
+							</f:if>
 						</f:then>
 					</f:if>
-				</f:then>
-			</f:if>
 
-			<f:if condition="{what_to_display} == 'DATASETS' ">
-				<f:then>
-					<f:if condition="{paginator.paginatedItems}">
+
+					<f:if condition="{what_to_display} == 'EQUIPMENTS' ">
 						<f:then>
-							<f:render partial="Pure/DataSets" arguments="{pagination:pagination, dataSets:paginator.paginatedItems}"/>
+							<f:if condition="{paginator.paginatedItems}">
+								<f:then>
+									<f:render partial="Pure/Equipments" arguments="{pagination:pagination, equipments:paginator.paginatedItems}"/>
+								</f:then>
+							</f:if>
 						</f:then>
 					</f:if>
-				</f:then>
-			</f:if>
 
-		</div>
+					<f:if condition="{what_to_display} == 'DATASETS' ">
+						<f:then>
+							<f:if condition="{paginator.paginatedItems}">
+								<f:then>
+									<f:render partial="Pure/DataSets" arguments="{pagination:pagination, dataSets:paginator.paginatedItems}"/>
+								</f:then>
+							</f:if>
+						</f:then>
+					</f:if>
+
+				</div>
+			</f:else>
+		</f:if>
 	</div>
 
 </f:section>

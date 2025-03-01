@@ -7,6 +7,11 @@ use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Univie\UniviePure\Service\WebService;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
+
+
 
 /*
  * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
@@ -32,6 +37,12 @@ class ClassificationScheme
         $this->webService = GeneralUtility::makeInstance(WebService::class);
     }
 
+    // Add this method to your ClassificationScheme class
+    public function setLocale(string $locale): void
+    {
+        $this->locale = $locale;
+    }
+
     public function getOrganisations(&$config): void
     {
         $postData = trim('<?xml version="1.0"?>
@@ -53,6 +64,16 @@ class ClassificationScheme
         $organisations = $this->getOrganisationsFromCache($this->locale);
         if ($organisations === null || !$this->isValidOrganisationsData($organisations)) {
             $organisations = $this->webService->getJson('organisational-units', $postData);
+
+            if (!$organisations || !isset($organisations['items'])) {
+                $this->addFlashMessage(
+                    'Could not fetch organisations from the API. Please check your connection.',
+                    'Organisations Fetch Failed',
+                    ContextualFeedbackSeverity::WARNING->value
+                );
+                return;
+            }
+
             $this->storeOrganisationsToCache($organisations, $this->locale);
         }
 
@@ -85,6 +106,14 @@ class ClassificationScheme
 
         if ($persons === null || !$this->isValidPersonsData($persons)) {
             $persons = $this->webService->getJson('persons', $personXML);
+            if (!$persons || !isset($persons['items'])) {
+                $this->addFlashMessage(
+                    'Could not fetch Persondata from the API. Please check your connection.',
+                    'Persondata Fetch Failed',
+                    ContextualFeedbackSeverity::WARNING->value
+                );
+                return;
+            }
             $this->storePersonsToCache($persons);
         }
 
@@ -355,5 +384,23 @@ class ClassificationScheme
                 2
             ];
         }
+    }
+
+    /**
+     * Display a FlashMessage in the TYPO3 Backend.
+     */
+    protected function addFlashMessage(string $message, string $title, int $severity): void
+    {
+        $flashMessage = GeneralUtility::makeInstance(
+            FlashMessage::class,
+            $message,
+            $title,
+            $severity
+        );
+
+        /** @var FlashMessageService $flashMessageService */
+        $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
+        $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
+        $messageQueue->enqueue($flashMessage);
     }
 }

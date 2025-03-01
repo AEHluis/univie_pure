@@ -145,47 +145,47 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 case 'PUBLICATIONS':
                     $pub = $this->researchOutput;
                     $view = $pub->getPublicationList($this->settings, $currentPageNumber, $this->locale);
-                        /*
-                     * ArrayPaginator expects an array with all elements to calculate pagination in terms of currentPageNo. and
-                     * pageSize. We cannot provide this due to performance issues and web service timeouts.
-                     * So we initialize an array with the total amount of elements set to null.
-                     * Then we overwrite the results of the web service request at the current offset position.
-                     */
-                    $publications = array_fill(0, $view['count'], null);
-                    $contributionToJournal = $view["contributionToJournal"] ?? [];
-                    $contributionCount = is_array($contributionToJournal) ? count($contributionToJournal) : 0;
-                    array_splice($publications, $view['offset'], $contributionCount, $contributionToJournal);
-
-                    $paginator = new ArrayPaginator($publications, $currentPageNumber, $this->settings['pageSize']);
-                    $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
                     if (isset($view['error'])) {
                         $this->addFlashMessage($view['message'], 'Error', FlashMessage::ERROR);
                         $this->view->assign('error', $view['message']);
-                    } else {
-                        $this->view->assignMultiple([
-                            'what_to_display'   => $this->settings['what_to_display'],
-                            'pagination'        => $pagination,
-                            'initial_no_results'=> $this->settings['initialNoResults'],
-                            'paginator'         => $paginator,
-                        ]);
-                    }
+                    }else {
+                        /*
+                         * ArrayPaginator expects an array with all elements to calculate pagination in terms of currentPageNo. and
+                         * pageSize. We cannot provide this due to performance issues and web service timeouts.
+                         * So we initialize an array with the total amount of elements set to null.
+                         * Then we overwrite the results of the web service request at the current offset position.
+                         */
+                        $publications = array_fill(0, $view['count'], null);
+                        $contributionToJournal = $view["contributionToJournal"] ?? [];
+                        $contributionCount = is_array($contributionToJournal) ? count($contributionToJournal) : 0;
+                        array_splice($publications, $view['offset'], $contributionCount, $contributionToJournal);
+
+                        $paginator = new ArrayPaginator($publications, $currentPageNumber, $this->settings['pageSize']);
+                        $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
+
+                            $this->view->assignMultiple([
+                                'what_to_display'   => $this->settings['what_to_display'],
+                                'pagination'        => $pagination,
+                                'initial_no_results'=> $this->settings['initialNoResults'],
+                                'paginator'         => $paginator,
+                            ]);
+                        }
                     break;
 
                 case 'EQUIPMENTS':
 
                     $view = $this->equipments->getEquipmentsList($this->settings, $currentPageNumber);
-                    $equipmentsArray = array_fill(0, $view['count'], null);
-
-                    $items = (isset($view['items']) && is_array($view['items'])) ? $view['items'] : [];
-                    array_splice($equipmentsArray, $view['offset'], count($items), $items);
-
-                    $paginator = new ArrayPaginator($equipmentsArray, $currentPageNumber, $this->settings['pageSize']);
-                    $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
-
                     if (isset($view['error'])) {
                         $this->addFlashMessage($view['message'], 'Error', FlashMessage::ERROR);
                         $this->view->assign('error', $view['message']);
-                    }else {
+                    } else {
+                        $equipmentsArray = array_fill(0, $view['count'], null);
+                        $items = (isset($view['items']) && is_array($view['items'])) ? $view['items'] : [];
+                        array_splice($equipmentsArray, $view['offset'], count($items), $items);
+
+                        $paginator = new ArrayPaginator($equipmentsArray, $currentPageNumber, $this->settings['pageSize']);
+                        $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
+
                         $this->view->assignMultiple([
                             'what_to_display' => $this->settings['what_to_display'],
                             'pagination' => $pagination,
@@ -197,16 +197,17 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
                 case 'PROJECTS':
                     $view = $this->projects->getProjectsList($this->settings, $currentPageNumber);
-                    $projectsArray = array_fill(0, $view['count'], null);
-                    $items = (isset($view['items']) && is_array($view['items'])) ? $view['items'] : [];
-                    array_splice($projectsArray, $view['offset'], count($items), $items);
-
-                    $paginator = new ArrayPaginator($projectsArray, $currentPageNumber, $this->settings['pageSize']);
-                    $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
                     if (isset($view['error'])) {
                         $this->addFlashMessage($view['message'], 'Error', FlashMessage::ERROR);
                         $this->view->assign('error', $view['message']);
                     }else{
+                        $projectsArray = array_fill(0, $view['count'], null);
+                        $items = (isset($view['items']) && is_array($view['items'])) ? $view['items'] : [];
+                        array_splice($projectsArray, $view['offset'], count($items), $items);
+
+                        $paginator = new ArrayPaginator($projectsArray, $currentPageNumber, $this->settings['pageSize']);
+                        $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
+
                         $this->view->assignMultiple([
                             'what_to_display'   => $this->settings['what_to_display'],
                             'pagination'        => $pagination,
@@ -218,16 +219,17 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
                 case 'DATASETS':
                     $view = $this->dataSets->getDataSetsList($this->settings, $currentPageNumber);
-                    $dataSetsArray = array_fill(0, $view['count'], null);
-                    $items = (isset($view['items']) && is_array($view['items'])) ? $view['items'] : [];
-                    array_splice($dataSetsArray, $view['offset'], count($items), $items);
-
-                    $paginator = new ArrayPaginator($dataSetsArray, $currentPageNumber, $this->settings['pageSize']);
-                    $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
                     if (isset($view['error'])) {
                         $this->addFlashMessage($view['message'], 'Error', FlashMessage::ERROR);
                         $this->view->assign('error', $view['message']);
                     }else {
+                        $dataSetsArray = array_fill(0, $view['count'], null);
+                        $items = (isset($view['items']) && is_array($view['items'])) ? $view['items'] : [];
+                        array_splice($dataSetsArray, $view['offset'], count($items), $items);
+
+                        $paginator = new ArrayPaginator($dataSetsArray, $currentPageNumber, $this->settings['pageSize']);
+                        $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
+
                         $this->view->assignMultiple([
                             'what_to_display' => $this->settings['what_to_display'],
                             'pagination' => $pagination,

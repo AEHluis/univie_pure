@@ -36,12 +36,12 @@ call_user_func(
         // Cache configuration
         if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['univie_pure'])) {
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['univie_pure'] = [
-                'frontend' => VariableFrontend::class,
-                'backend' => FileBackend::class,
+                'frontend' => \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend::class,
+                'backend' => \TYPO3\CMS\Core\Cache\Backend\FileBackend::class,
                 'options' => [
                     'defaultLifetime' => 86400 // 24 hours
                 ],
-                'groups' => ['pages', 'all']
+                'groups' => ['univie_pure', 'all']
             ];
         }
 

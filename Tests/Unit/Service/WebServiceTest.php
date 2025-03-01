@@ -46,6 +46,7 @@ class WebServiceTest extends TestCase
         $this->loggerMock = $this->createMock(LoggerInterface::class);
         $this->extensionConfigurationMock = $this->createMock(ExtensionConfiguration::class);
 
+
         $this->webService = new WebService(
             $this->clientMock,
             $this->requestFactoryMock,
@@ -57,29 +58,6 @@ class WebServiceTest extends TestCase
         );
     }
 
-    public function testGetAlternativeSingleResponseReturnsCachedData(): void
-    {
-        $endpoint = 'testEndpoint';
-        $query = 'testQuery';
-        $responseType = 'json';
-        $lang = 'de_DE';
-
-        // Generate the same cache identifier as the WebService class
-        $cacheIdentifier = sha1(implode('|', array_filter([$endpoint, $query, $lang, $responseType, 'html'])));
-
-        $cachedData = json_encode(['data' => 'cached response']);
-
-        $this->cacheMock
-            ->expects($this->once()) // Ensure it is actually called once
-            ->method('get')
-            ->with($cacheIdentifier)
-            ->willReturn($cachedData);
-
-        $result = $this->webService->getAlternativeSingleResponse($endpoint, $query, $responseType, $lang);
-
-        $this->assertIsArray($result);
-        $this->assertEquals(['data' => 'cached response'], $result);
-    }
 
     public function testGetAlternativeSingleResponseHandlesApiRequest(): void
     {
@@ -124,6 +102,110 @@ class WebServiceTest extends TestCase
         $this->assertIsArray($result);
         $this->assertArrayHasKey('data', $result);
         $this->assertEquals('api response', $result['data']);
+    }
+
+    /**
+     * ✅ Test `fetchApiResponse`
+     */
+    public function testFetchApiResponseRetrievesCachedContent(): void
+    {
+        $endpoint = 'testEndpoint';
+        $params = ['param1' => 'value1'];
+        $responseType = 'json';
+        $cacheIdentifier = sha1(json_encode([$endpoint, json_encode($params), $responseType]));
+
+        $cachedResponse = json_encode(['data' => 'cached result']);
+
+        $this->cacheMock
+            ->expects($this->once())
+            ->method('get')
+            ->with($cacheIdentifier)
+            ->willReturn($cachedResponse);
+
+        $result = $this->webService->getAlternativeSingleResponse($endpoint, $params['param1'], $responseType);
+        $this->assertEquals(['data' => 'cached result'], $result);
+    }
+
+    /**
+     * ✅ Test `processResponse`
+     */
+    public function testProcessResponseHandlesJson(): void
+    {
+        $jsonContent = json_encode(['message' => 'Success']);
+        $result = $this->invokeMethod($this->webService, 'processResponse', [$jsonContent, 'json', true]);
+
+        $this->assertIsArray($result);
+        $this->assertEquals(['message' => 'Success'], $result);
+    }
+
+    public function testProcessResponseHandlesXml(): void
+    {
+        $xmlContent = '<?xml version="1.0"?><response><message>Success</message></response>';
+        $result = $this->invokeMethod($this->webService, 'processResponse', [$xmlContent, 'xml', true]);
+
+        $this->assertIsArray($result);
+        $this->assertEquals(['message' => 'Success'], $result);
+    }
+
+    /**
+     * ✅ Test `getCachedContent`
+     */
+    public function testGetCachedContentReturnsNullWhenCacheMisses(): void
+    {
+        $cacheIdentifier = 'testCacheKey';
+
+        $this->cacheMock
+            ->expects($this->once())
+            ->method('get')
+            ->with($cacheIdentifier)
+            ->willReturn(false);
+
+        $result = $this->invokeMethod($this->webService, 'getCachedContent', [$cacheIdentifier]);
+        $this->assertNull($result);
+    }
+
+    /**
+     * ✅ Test `checkReturnCodeErrorMsg`
+     */
+    public function testCheckReturnCodeErrorMsgLogsErrorOn500(): void
+    {
+        $result = ['data' => '500', 'title' => 'Server Error'];
+
+        $this->loggerMock
+            ->expects($this->once())
+            ->method('error')
+            ->with($this->stringContains('Server returned error'));
+
+        $this->invokeMethod($this->webService, 'checkReturnCodeErrorMsg', [$result]);
+    }
+
+    /**
+     * ✅ Test `logAndNotify`
+     */
+    public function testLogAndNotifyLogsErrorAndAddsFlashMessage(): void
+    {
+        $this->loggerMock
+            ->expects($this->once())
+            ->method('error')
+            ->with($this->equalTo('Test Error Message'));
+
+        $this->flashMessageServiceMock
+            ->expects($this->once())
+            ->method('getMessageQueueByIdentifier')
+            ->willReturn($this->createMock(\TYPO3\CMS\Core\Messaging\FlashMessageQueue::class));
+
+        $this->invokeMethod($this->webService, 'logAndNotify', ['Test Title', 'Test Error Message']);
+    }
+
+    /**
+     * Helper to invoke protected/private methods.
+     */
+    private function invokeMethod(object $object, string $methodName,  $parameters = [])
+    {
+        $reflection = new \ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+        return $method->invokeArgs($object, $parameters);
     }
 
 }

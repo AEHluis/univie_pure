@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Univie\UniviePure\Service;
 
-use TYPO3\CMS\Core\Messaging\ContextualFeedbackSeverity;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -32,14 +32,15 @@ class WebService
     private const MINIMUM_RESPONSE_SIZE = 350;
 
     public function __construct(
-        private readonly ClientInterface $client,
+        private readonly ClientInterface         $client,
         private readonly RequestFactoryInterface $requestFactory,
-        private readonly StreamFactoryInterface $streamFactory,
-        private readonly FrontendInterface $cache,
-        private readonly FlashMessageService $flashMessageService,
-        private readonly LoggerInterface $logger,
-        private readonly ExtensionConfiguration $extensionConfiguration
-    ) {
+        private readonly StreamFactoryInterface  $streamFactory,
+        private readonly FrontendInterface       $cache,
+        private readonly FlashMessageService     $flashMessageService,
+        private readonly LoggerInterface         $logger,
+        private readonly ExtensionConfiguration  $extensionConfiguration
+    )
+    {
         $this->initializeConfiguration();
     }
 
@@ -51,110 +52,27 @@ class WebService
     private function initializeConfiguration(): void
     {
         try {
-
             $dotEnv = new DotEnv(Environment::getPublicPath() . "/.env");
             $dotEnv->load();
-            $this->setServer($dotEnv->variables["PURE_URI"]);
-            $this->setApiKey($dotEnv->variables["PURE_APIKEY"]);
-            $this->setVersionPath($dotEnv->variables["PURE_ENDPOINT"]);
+            $this->setConfig('server', $dotEnv->variables["PURE_URI"]);
+            $this->setConfig('apiKey', $dotEnv->variables["PURE_APIKEY"]);
+            $this->setConfig('versionPath', $dotEnv->variables["PURE_ENDPOINT"]);
         } catch (ExtensionConfigurationExtensionNotConfiguredException $e) {
             $this->logger->error('Extension configuration not found', ['exception' => $e]);
         }
     }
-    private function setServer(?string $server): void
+
+
+    private function setConfig(string $key, ?string $value): void
     {
-        $this->server = strval($server);
+        $this->$key = strval($value);
     }
 
 
-    private function setApiKey(?string $apiKey): void
+    private function fetchApiResponse(string $endpoint, array $params, string $responseType, bool $decoded = true): array|string|\SimpleXMLElement|null
     {
-        $this->apiKey = strval($apiKey);
-    }
-
-
-    private function setVersionPath(?string $versionPath): void
-    {
-        $this->versionPath = strval($versionPath);
-    }
-
-    /**
-     * Alternative method to get a single response using query parameter instead of UUID
-     *
-     * @param string $endpoint API endpoint
-     * @param string $q Query parameter
-     * @param string $responseType Response format (json or xml)
-     * @param string $lang Language locale
-     * @return array|\SimpleXMLElement|null The response data
-     */
-    public function getAlternativeSingleResponse(
-        string $endpoint,
-        string $q,
-        string $responseType = "json",
-        string $lang = "de_DE"
-    ): array|\SimpleXMLElement|null {
-        $uri = new Uri($this->server . $this->versionPath . $endpoint);
-        $params = [
-            'q' => $q,
-            'locale' => $lang
-        ];
-        $uri = $uri->withQuery(http_build_query($params));
-
-        $cacheIdentifier = $this->generateCacheIdentifier($endpoint, $q, $lang, $responseType);
-
-        if ($cachedContent = $this->getCachedContent($cacheIdentifier)) {
-            return $this->processResponse($cachedContent, $responseType, true);
-        }
-
-        try {
-            $request = $this->requestFactory->createRequest('GET', $uri)
-                ->withHeader('api-key', $this->apiKey)
-                ->withHeader('Accept', 'application/' . $responseType)
-                ->withHeader('Content-Type', 'application/xml')
-                ->withHeader('charset', 'utf-8');
-
-            $response = $this->client->sendRequest($request);
-            $content = (string)$response->getBody();
-
-            if ($response->getStatusCode() === 200 && strlen($content) > self::MINIMUM_RESPONSE_SIZE) {
-                $this->cache->set($cacheIdentifier, $content, [], self::CACHE_LIFETIME);
-            }
-
-            if ($responseType === 'json') {
-                $result = json_decode($content, true);
-                $this->checkReturnCodeErrorMsg($result);
-                return $result;
-            } else {
-                if (strpos($content, "DOCTYPE HTML PUBLIC") === false) {
-                    // xml response FIS-server should return valid xml
-                    return simplexml_load_string($content, null, LIBXML_NOCDATA);
-                } else {
-                    // FIS-server has crashed and returns html with error messages...
-                    $this->checkReturnCodeErrorMsg(['data' => '500', 'title' => 'FIS-Server response Issue']);
-                    return null;
-                }
-            }
-        } catch (\Exception $e) {
-            $this->logger->error('API request failed', ['exception' => $e, 'uri' => (string)$uri]);
-            $this->addFlashMessage(
-                'API Error',
-                $e->getMessage(),
-                ContextualFeedbackSeverity::ERROR
-            );
-            return null;
-        }
-    }
-
-    public function getSingleResponse(
-        string $endpoint,
-        string $uuid,
-        string $responseType = 'json',
-        bool $decoded = true,
-        string $renderer = 'html',
-        ?string $lang = null
-    ): array|string|\SimpleXMLElement|null {
-        $uri = $this->buildUri($endpoint, $uuid, $renderer, $lang);
-        $cacheIdentifier = $this->generateCacheIdentifier($endpoint, $uuid, $lang, $responseType, $renderer);
+        $uri = (new Uri($this->server . $this->versionPath . $endpoint))->withQuery(http_build_query($params));
+        $cacheIdentifier = $this->generateCacheIdentifier($endpoint, json_encode($params), $responseType);
 
         if ($cachedContent = $this->getCachedContent($cacheIdentifier)) {
             return $this->processResponse($cachedContent, $responseType, $decoded);
@@ -166,6 +84,7 @@ class WebService
                 ->withHeader('Accept', 'application/' . $responseType)
                 ->withHeader('Content-Type', 'application/xml')
                 ->withHeader('charset', 'utf-8');
+
             $response = $this->client->sendRequest($request);
             $content = (string)$response->getBody();
 
@@ -176,36 +95,51 @@ class WebService
             return $this->processResponse($content, $responseType, $decoded);
         } catch (\Exception $e) {
             $this->logger->error('API request failed', ['exception' => $e, 'uri' => (string)$uri]);
-            $this->addFlashMessage(
-                'API Error',
-                $e->getMessage(),
-                ContextualFeedbackSeverity::ERROR
-            );
+            $this->addFlashMessage('API Error', $e->getMessage(), ContextualFeedbackSeverity::ERROR->value);
             return null;
         }
     }
 
-    /**
-     * Check return code and throw error message if needed
-     *
-     * @param array|null $result
-     * @return void
-     */
+
+    public function getAlternativeSingleResponse(
+        string $endpoint,
+        string $q,
+        string $responseType = "json",
+        string $lang = "de_DE"
+    ): array|\SimpleXMLElement|null
+    {
+        return $this->fetchApiResponse($endpoint, ['q' => $q, 'locale' => $lang], $responseType);
+    }
+
+
+    public function getSingleResponse(
+        string  $endpoint,
+        string  $uuid,
+        string  $responseType = 'json',
+        bool    $decoded = true,
+        string  $renderer = 'html',
+        ?string $lang = null
+    ): array|string|\SimpleXMLElement|null
+    {
+        $params = ['rendering' => strtoupper($renderer)];
+        if ($lang) {
+            $params['locale'] = $lang;
+        }
+        return $this->fetchApiResponse($endpoint . '/' . $uuid, $params, $responseType, $decoded);
+    }
+
+
     private function checkReturnCodeErrorMsg(?array $result): void
     {
-        if (!$result) {
-            return;
+        if ($result && isset($result['data']) && $result['data'] === '500') {
+            $this->logAndNotify('Server Error', 'The server returned an error response.', $result);
         }
+    }
 
-        if (isset($result['data']) && $result['data'] === '500') {
-            $title = $result['title'] ?? 'Server Error';
-            $this->addFlashMessage(
-                $title,
-                'The server returned an error response.',
-                ContextualFeedbackSeverity::ERROR
-            );
-            $this->logger->error('Server returned error', ['result' => $result]);
-        }
+    private function logAndNotify(string $title, string $message, array $logContext = []): void
+    {
+        $this->addFlashMessage($title, $message, ContextualFeedbackSeverity::ERROR->value);
+        $this->logger->error($message, $logContext);
     }
 
     private function getCachedContent(string $cacheIdentifier): ?string
@@ -214,7 +148,7 @@ class WebService
         return $result === false ? null : $result;
     }
 
-    private function processResponse(string $content, string $responseType, bool $decoded): array|string|\SimpleXMLElement|null
+    private function processResponse(string $content, string $responseType, bool $decoded): array|string|null
     {
         if (empty($content)) {
             return null;
@@ -231,7 +165,8 @@ class WebService
         } else {
             if (strpos($content, "DOCTYPE HTML PUBLIC") === false) {
                 // XML response - FIS-server should return valid XML
-                return simplexml_load_string($content, null, LIBXML_NOCDATA);
+                $xml = simplexml_load_string($content, null, LIBXML_NOCDATA);
+                return json_decode(json_encode((array)$xml), true);
             } else {
                 // FIS-server has crashed and returns HTML with error messages
                 $this->checkReturnCodeErrorMsg(['data' => '500', 'title' => 'FIS-Server response Issue']);
@@ -244,31 +179,29 @@ class WebService
     public function getJson(string $endpoint, string $data): ?array
     {
         $response = $this->executeRequest($endpoint, $data, 'json');
-        return $response ? json_decode($response, true) : null;
+        return $this->processResponse($response ?? '', 'json', true);
     }
 
-    public function getXml(string $endpoint, string $data): ?array
+    public function getXml(string $endpoint, string $data): array|\SimpleXMLElement|null
     {
         $response = $this->executeRequest($endpoint, $data, 'xml');
-        if (!$response) {
-            return null;
-        }
-
-        $xml = simplexml_load_string($response, null, LIBXML_NOCDATA);
-
-        return json_decode(json_encode((array)$xml), true);
+        return $this->processResponse($response ?? '', 'xml', true);
     }
 
-    private function executeRequest(string $endpoint, string $data, string $responseType): string|false|null
+    private function executeRequest(string $endpoint, string $data, string $responseType): ?string
     {
-        $uri = new Uri($this->server . $this->versionPath . $endpoint);
         $cacheIdentifier = sha1($endpoint . $data . $responseType);
 
-        // Skip cache for search requests
-        if (str_contains($data, 'searchString')) {
-            return $this->performRequest($uri, $data, $responseType);
+        if ($cachedResponse = $this->getCachedContent($cacheIdentifier)) {
+            return $cachedResponse;
         }
-        return $this->cache->get($cacheIdentifier) ?? $this->performRequest($uri, $data, $responseType);
+
+        $response = $this->performRequest(new Uri($this->server . $this->versionPath . $endpoint), $data, $responseType);
+        if ($response && strlen($response) > self::MINIMUM_RESPONSE_SIZE) {
+            $this->cache->set($cacheIdentifier, $response, [], self::CACHE_LIFETIME);
+        }
+
+        return $response;
     }
 
     private function performRequest(Uri $uri, string $data, string $responseType): ?string
@@ -319,7 +252,7 @@ class WebService
         return $uri;
     }
 
-    private function generateCacheIdentifier(string $endpoint, string $uuid, ?string $lang = null, string $responseType = 'json', string $renderer = 'html'): string
+    public function generateCacheIdentifier(string $endpoint, string $uuid, ?string $lang = null, string $responseType = 'json', string $renderer = 'html'): string
     {
         // Convert null values to empty strings to avoid TypeError
         $parts = [

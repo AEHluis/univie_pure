@@ -19,8 +19,14 @@ services:
 
   Univie\UniviePure\Cache\Warmup\UniviePureCacheWarmer:
     public: true
+    arguments:
+      $classificationScheme: '@Univie\UniviePure\Utility\ClassificationScheme'
+      $cache: '@cache.univie_pure'
+      $logManager: '@TYPO3\CMS\Core\Log\LogManager'
     tags:
-      - 'cache.warmup'
+      - name: event.listener
+        identifier: 'univie-pure-cache-warmer'
+        event: TYPO3\CMS\Core\Cache\Event\CacheWarmupEvent
 
   Psr\Http\Client\ClientInterface:
     class: GuzzleHttp\Client

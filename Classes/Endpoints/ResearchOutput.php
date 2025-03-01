@@ -442,7 +442,7 @@ class ResearchOutput extends Endpoints
      * @param string $lang Language code
      * @return array Publication data
      */
-    public function getAlternativeSinglePublication(string $uuid, string $lang = 'de_DE'): array
+    public function getAlternativeSinglePublication(string $uuid, string $lang = 'de_DE')
     {
         return $this->webservice->getAlternativeSingleResponse('research-outputs', $uuid, "json", $lang);
     }

@@ -19,6 +19,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Univie\UniviePure\Utility\DotEnv;
 
+
 /*
  * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
  *
@@ -49,7 +50,7 @@ class WebService
     private string $apiKey = '';
     private string $versionPath = '';
 
-    private function initializeConfiguration(): void
+    protected function initializeConfiguration(): void
     {
         try {
             $dotEnv = new DotEnv(Environment::getPublicPath() . "/.env");
@@ -63,7 +64,7 @@ class WebService
     }
 
 
-    private function setConfig(string $key, ?string $value): void
+    protected function setConfig(string $key, ?string $value): void
     {
         $this->$key = strval($value);
     }
@@ -95,7 +96,7 @@ class WebService
             return $this->processResponse($content, $responseType, $decoded);
         } catch (\Exception $e) {
             $this->logger->error('API request failed', ['exception' => $e, 'uri' => (string)$uri]);
-            $this->addFlashMessage('API Error', $e->getMessage(), ContextualFeedbackSeverity::ERROR->value);
+            $this->addFlashMessage('API Error', $e->getMessage(), ContextualFeedbackSeverity::ERROR);
             return null;
         }
     }
@@ -138,7 +139,7 @@ class WebService
 
     private function logAndNotify(string $title, string $message, array $logContext = []): void
     {
-        $this->addFlashMessage($title, $message, ContextualFeedbackSeverity::ERROR->value);
+        $this->addFlashMessage($title, $message, ContextualFeedbackSeverity::ERROR);
         $this->logger->error($message, $logContext);
     }
 
@@ -266,7 +267,7 @@ class WebService
         return sha1(implode('|', array_filter($parts, fn($part) => $part !== null)));
     }
 
-    private function addFlashMessage(string $title, string $message, int $severity): void
+    private function addFlashMessage(string $title, string $message, ContextualFeedbackSeverity $severity): void
     {
         $flashMessage = GeneralUtility::makeInstance(
             FlashMessage::class,

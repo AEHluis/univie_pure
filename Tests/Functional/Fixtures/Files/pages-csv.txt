@@ -1,0 +1,6 @@
+uid,pid,title,slug,doktype,is_siteroot,sys_language_uid
+1,0,"FIS Test Root Page",/,1,1,0
+2,1,"FIS Publications Page",/fis-publications,1,0,0
+3,1,"FIS Projects Page",/fis-projects,1,0,0
+4,1,"FIS Detail Page",/fis-detail,1,0,0
+5,1,"FIS Equipment Page",/fis-equipment,1,0,0

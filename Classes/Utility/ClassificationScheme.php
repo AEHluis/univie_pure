@@ -284,33 +284,53 @@ class ClassificationScheme
         }
     }
 
+
     public function sortClassification($unsorted): array
     {
-        $sorted = [];
-        $i = 0;
-        foreach ($unsorted['items'][0]['containedClassifications'] as $parent) {
-            if (!($parent['disabled'] ?? false) && $this->classificationHasChild($parent)) {
-                $sorted[$i]['uri'] = $parent['uri'];
-                $sorted[$i]['title'] = $parent['term']['text'][0]['value'] ?? 'Unknown title';
-                $j = 0;
-
-                if (isset($parent['classificationRelations'])) {
-                    foreach ($parent['classificationRelations'] as $child) {
-                        if ($child['relationType']['uri'] === '/dk/atira/pure/core/hierarchies/child') {
-                            $relatedUri = $child['relatedTo'][0]['uri'] ?? '';
-                            if (!$this->isChildEnabledOnRootLevel($unsorted, $relatedUri)) {
-                                $sorted[$i]['child'][$j]['uri'] = $child['relatedTo']['uri'];
-                                $sorted[$i]['child'][$j]['title'] = $child['relatedTo']['term']['text'][0]['value'];
-                                $j++;
-                            }
-                        }
-                    }
-                }
-                $i++;
-            }
+        if (!isset($unsorted['items'][0]['containedClassifications'])) {
+            return [];
         }
-        return $sorted;
+
+        return array_values(array_filter(
+            array_map(function($parent) use ($unsorted) {
+                if (($parent['disabled'] ?? false) || !$this->classificationHasChild($parent)) {
+                    return null;
+                }
+
+                $children = [];
+                if (isset($parent['classificationRelations'])) {
+                    $children = array_values(array_filter(
+                        array_map(function($relation) use ($unsorted) {
+                            if ($relation['relationType']['uri'] !== '/dk/atira/pure/core/hierarchies/child') {
+                                return null;
+                            }
+
+                            $relatedUri = $relation['relatedTo'][0]['uri'] ?? '';
+                            if ($this->isChildEnabledOnRootLevel($unsorted, $relatedUri)) {
+                                return null;
+                            }
+
+                            return [
+                                'uri' => $relation['relatedTo']['uri'] ?? '',
+                                'title' => $relation['relatedTo']['term']['text'][0]['value'] ?? ''
+                            ];
+                        }, $parent['classificationRelations'])
+                    ));
+                }
+
+                if (empty($children)) {
+                    return null;
+                }
+
+                return [
+                    'uri' => $parent['uri'],
+                    'title' => $parent['term']['text'][0]['value'] ?? 'Unknown title',
+                    'child' => $children
+                ];
+            }, $unsorted['items'][0]['containedClassifications'])
+        ));
     }
+
 
     private function classificationHasChild($parent): bool
     {

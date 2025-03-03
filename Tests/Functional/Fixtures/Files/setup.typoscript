@@ -1,0 +1,17 @@
+page = PAGE
+page.10 = FLUIDTEMPLATE
+page.10 {
+    templateName = Default
+    layoutRootPaths.10 = EXT:univie_pure/Tests/Functional/Fixtures/Frontend/Templates/Layouts/
+    partialRootPaths.10 = EXT:univie_pure/Tests/Functional/Fixtures/Frontend/Templates/Partials/
+    templateRootPaths.10 = EXT:univie_pure/Tests/Functional/Fixtures/Frontend/Templates/
+}
+
+plugin.tx_univiepure.view {
+    templateRootPaths.0 = EXT:univie_pure/Resources/Private/Templates/
+    partialRootPaths.0 = EXT:univie_pure/Resources/Private/Partials/
+    layoutRootPaths.0 = EXT:univie_pure/Resources/Private/Layouts/
+}
+
+# Include the actual extension TypoScript
+@import 'EXT:univie_pure/Configuration/TypoScript/setup.typoscript'

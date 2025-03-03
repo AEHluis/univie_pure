@@ -13,7 +13,8 @@
   "require": {
     "php": ">=8.2.0",
     "typo3/cms-core": "^12.4",
-    "georgringer/numbered-pagination": ">=1.0.1"
+    "georgringer/numbered-pagination": ">=1.0.1",
+    "goaop/framework": "^1.1"
   },
   "autoload": {
     "psr-4": {
@@ -30,7 +31,12 @@
     "typo3/coding-standards": "^0.7.1",
     "typo3/testing-framework": "^8.2",
     "php-mock/php-mock-phpunit": "^2.10",
-    "codeception/aspect-mock": "^0.5.1"
+    "codeception/aspect-mock": "^0.5.1",
+    "phpunit/php-code-coverage": "^10.1",
+    "typo3/cms-fluid-styled-content": "^12.4",
+    "typo3/cms-frontend": "^12.4",
+    "typo3/cms-install": "^12.4"
+
   },
   "config": {
     "allow-plugins": {

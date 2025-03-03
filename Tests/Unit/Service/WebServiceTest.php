@@ -19,6 +19,10 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Univie\UniviePure\Utility\DotEnv;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
+use PHPUnit\Framework\MockObject\Rule\AnyInvokedCount as AnyInvokedCountMatcher;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+
 
 class WebServiceTest extends TestCase
 {
@@ -33,11 +37,20 @@ class WebServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        // Use Reflection API to override getPublicPath()
-        $environmentReflection = new \ReflectionClass(Environment::class);
-        $publicPathProperty = $environmentReflection->getProperty('publicPath');
-        $publicPathProperty->setAccessible(true);
-        $publicPathProperty->setValue(null, './Tests/Unit/Service/');
+        // Use Reflection API to set Environment publicPath
+        // Updated to avoid using deprecated setAccessible
+        if (PHP_VERSION_ID >= 80100) {
+            // PHP 8.1+ approach
+            $publicPathReflection = new \ReflectionProperty(Environment::class, 'publicPath');
+            $publicPathReflection->setValue(null, './Tests/Unit/Service/');
+        } else {
+            // For older PHP versions
+            $environmentReflection = new \ReflectionClass(Environment::class);
+            $publicPathProperty = $environmentReflection->getProperty('publicPath');
+            $publicPathProperty->setAccessible(true);
+            $publicPathProperty->setValue(null, './Tests/Unit/Service/');
+        }
+
         $this->clientMock = $this->createMock(ClientInterface::class);
         $this->requestFactoryMock = $this->createMock(RequestFactoryInterface::class);
         $this->streamFactoryMock = $this->createMock(StreamFactoryInterface::class);
@@ -45,7 +58,6 @@ class WebServiceTest extends TestCase
         $this->flashMessageServiceMock = $this->createMock(FlashMessageService::class);
         $this->loggerMock = $this->createMock(LoggerInterface::class);
         $this->extensionConfigurationMock = $this->createMock(ExtensionConfiguration::class);
-
 
         $this->webService = new WebService(
             $this->clientMock,
@@ -57,7 +69,6 @@ class WebServiceTest extends TestCase
             $this->extensionConfigurationMock
         );
     }
-
 
     public function testGetAlternativeSingleResponseHandlesApiRequest(): void
     {
@@ -80,7 +91,7 @@ class WebServiceTest extends TestCase
         // Configure requestFactory to return our properly typed request
         $this->requestFactoryMock
             ->method('createRequest')
-            ->with('GET', $this->anything())
+            ->with('GET', $this->isType('object'))
             ->willReturn($requestMock);
 
         // Mock response and stream
@@ -105,29 +116,36 @@ class WebServiceTest extends TestCase
     }
 
     /**
-     * ✅ Test `fetchApiResponse`
+     * Test `fetchApiResponse` with cached content
      */
     public function testFetchApiResponseRetrievesCachedContent(): void
     {
         $endpoint = 'testEndpoint';
-        $params = ['param1' => 'value1'];
+        $q = 'value1';
         $responseType = 'json';
-        $cacheIdentifier = sha1(json_encode([$endpoint, json_encode($params), $responseType]));
+        $lang = 'de_DE';
+
+        // Use the actual method from WebService to generate the cache identifier
+        $cacheIdentifier = $this->webService->generateCacheIdentifier($endpoint, json_encode(['q' => $q, 'locale' => $lang]), $responseType);
 
         $cachedResponse = json_encode(['data' => 'cached result']);
 
+        // Set up cache mock to return our cached response
         $this->cacheMock
             ->expects($this->once())
             ->method('get')
             ->with($cacheIdentifier)
             ->willReturn($cachedResponse);
 
-        $result = $this->webService->getAlternativeSingleResponse($endpoint, $params['param1'], $responseType);
+        $result = $this->webService->getAlternativeSingleResponse($endpoint, $q, $responseType, $lang);
+
+        // Add assertions to prevent "risky test" warning
+        $this->assertIsArray($result);
         $this->assertEquals(['data' => 'cached result'], $result);
     }
 
     /**
-     * ✅ Test `processResponse`
+     * Test `processResponse`
      */
     public function testProcessResponseHandlesJson(): void
     {
@@ -148,7 +166,7 @@ class WebServiceTest extends TestCase
     }
 
     /**
-     * ✅ Test `getCachedContent`
+     * Test `getCachedContent`
      */
     public function testGetCachedContentReturnsNullWhenCacheMisses(): void
     {
@@ -165,47 +183,81 @@ class WebServiceTest extends TestCase
     }
 
     /**
-     * ✅ Test `checkReturnCodeErrorMsg`
+     * Test `checkReturnCodeErrorMsg`
      */
     public function testCheckReturnCodeErrorMsgLogsErrorOn500(): void
     {
+        // Create a result array that will trigger the error condition
         $result = ['data' => '500', 'title' => 'Server Error'];
 
+        // Expect the logger's error method to be called
         $this->loggerMock
             ->expects($this->once())
             ->method('error')
-            ->with($this->stringContains('Server returned error'));
+            ->with('The server returned an error response.', $this->isType('array'));
 
-        $this->invokeMethod($this->webService, 'checkReturnCodeErrorMsg', [$result]);
-    }
-
-    /**
-     * ✅ Test `logAndNotify`
-     */
-    public function testLogAndNotifyLogsErrorAndAddsFlashMessage(): void
-    {
-        $this->loggerMock
-            ->expects($this->once())
-            ->method('error')
-            ->with($this->equalTo('Test Error Message'));
+        // Expect the flash message service to be used
+        $queueMock = $this->createMock(\TYPO3\CMS\Core\Messaging\FlashMessageQueue::class);
+        $queueMock->expects($this->once())
+            ->method('enqueue')
+            ->with($this->isInstanceOf(\TYPO3\CMS\Core\Messaging\FlashMessage::class));
 
         $this->flashMessageServiceMock
             ->expects($this->once())
             ->method('getMessageQueueByIdentifier')
-            ->willReturn($this->createMock(\TYPO3\CMS\Core\Messaging\FlashMessageQueue::class));
+            ->willReturn($queueMock);
 
-        $this->invokeMethod($this->webService, 'logAndNotify', ['Test Title', 'Test Error Message']);
+        // Call the method using reflection
+        $this->invokeMethod($this->webService, 'checkReturnCodeErrorMsg', [$result]);
+    }
+
+    /**
+     * Test `logAndNotify`
+     */
+    public function testLogAndNotifyLogsErrorAndAddsFlashMessage(): void
+    {
+        // Create a mock queue
+        $queueMock = $this->createMock(FlashMessageQueue::class);
+        // For void methods, we don't set a return value, just expect it to be called
+        $queueMock->expects($this->once())
+            ->method('enqueue')
+            ->with($this->isInstanceOf(\TYPO3\CMS\Core\Messaging\FlashMessage::class));
+
+        $this->loggerMock
+            ->expects($this->once())
+            ->method('error')
+            ->with('Test Error Message', $this->isType('array'));
+
+        $this->flashMessageServiceMock
+            ->expects($this->once())
+            ->method('getMessageQueueByIdentifier')
+            ->willReturn($queueMock);
+
+        $this->invokeMethod($this->webService, 'logAndNotify', [
+            'Test Title',
+            'Test Error Message',
+            []  // Just pass an empty array for logContext, as the method now accepts ContextualFeedbackSeverity directly
+        ]);
+        // Add assertion to prevent "risky test" warning
+        $this->assertTrue(true);
     }
 
     /**
      * Helper to invoke protected/private methods.
      */
-    private function invokeMethod(object $object, string $methodName,  $parameters = [])
+    private function invokeMethod(object $object, string $methodName, array $parameters = [])
     {
-        $reflection = new \ReflectionClass(get_class($object));
-        $method = $reflection->getMethod($methodName);
-        $method->setAccessible(true);
-        return $method->invokeArgs($object, $parameters);
+        if (PHP_VERSION_ID >= 80100) {
+            // PHP 8.1+ approach
+            $reflection = new \ReflectionClass(get_class($object));
+            $method = $reflection->getMethod($methodName);
+            return $method->invokeArgs($object, $parameters);
+        } else {
+            // For older PHP versions
+            $reflection = new \ReflectionClass(get_class($object));
+            $method = $reflection->getMethod($methodName);
+            $method->setAccessible(true);
+            return $method->invokeArgs($object, $parameters);
+        }
     }
-
 }

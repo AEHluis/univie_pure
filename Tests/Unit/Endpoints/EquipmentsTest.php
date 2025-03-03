@@ -36,7 +36,7 @@ class TestEquipments extends Equipments {
      * Override getEquipmentsList() to use our fake WebService.
      * (This is a simplified version based on your original code.)
      */
-    public function getEquipmentsList($settings, $currentPageNumber) {
+    public function getEquipmentsList(array $settings, int $currentPageNumber): array {
         if ($settings['pageSize'] == 0) {
             $settings['pageSize'] = 20;
         }

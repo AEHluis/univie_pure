@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Univie\UniviePure\ViewHelpers\Pagination;
 
 use Psr\Http\Message\ServerRequestInterface;

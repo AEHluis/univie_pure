@@ -345,9 +345,18 @@ class ResearchOutput extends Endpoints
     }
 
 
+    /**
+     * Transform publication data array
+     *
+     * @param array $publications Publications data
+     * @param array $settings Configuration settings
+     * @param string $lang Language code
+     * @return array Transformed publication data
+     */
     protected function transformArray(array $publications, array $settings, string $lang): array
     {
-        $array = ['count' => $this->getArrayValue($publications, 'count', 0), 'contributionToJournal' => []];
+        $array = [];
+        $array['count'] = $this->getArrayValue($publications, 'count', 0);
         $i = 0;
 
         if (!$this->arrayKeyExists('items', $publications)) {
@@ -359,91 +368,76 @@ class ResearchOutput extends Endpoints
             $singlePub = $this->getAlternativeSinglePublication($contribution['uuid'] ?? '', $lang);
             $portalUri = $this->getNestedArrayValue($singlePub, 'items.0.info.portalUrl', '');
 
-            // Use a dedicated method to determine if publication should be rendered
-            if ($this->shouldRenderPublication($contribution, $settings)) {
-                $array['contributionToJournal'][$i] = [
-                    'rendering' => $this->getNestedArrayValue($contribution, 'renderings.0.html', ''),
-                    'uuid' => $this->getArrayValue($contribution, 'uuid', ''),
-                    'portalUri' => $portalUri
-                ];
+            // Check if publication should be rendered
+            $allowedToRender = false;
+            $allowedToRenderLuhPubsOnly = false;
+            $luhPublsOnly_setting = intval($this->getArrayValue($settings, 'luhPubsOnly', 0));
 
-                // Add year for grouping if enabled
-                if ($this->getArrayValue($settings, 'groupByYear', false)) {
-                    $array['contributionToJournal'][$i]['year'] = $this->getNestedArrayValue(
-                        $contribution,
-                        'publicationStatuses.0.publicationDate.year',
-                        ''
-                    );
+            // Check for LUH publications only
+            if ($luhPublsOnly_setting == 1) {
+                $personAssociations = $this->getArrayValue($contribution, 'personAssociations', []);
+                foreach ($personAssociations as $pA) {
+                    if ($this->arrayKeyExists('organisationalUnits', $pA)) {
+                        $allowedToRenderLuhPubsOnly = true;
+                        break;
+                    }
+                }
+            }
+
+            // Check publication status
+            $publicationStatuses = $this->getArrayValue($contribution, 'publicationStatuses', []);
+            foreach ($publicationStatuses as $status) {
+                $statusUri = $this->getNestedArrayValue($status, 'publicationStatus.uri', '');
+                $isPublishedStatus = in_array($statusUri, [
+                    '/dk/atira/pure/researchoutput/status/published',
+                    '/dk/atira/pure/researchoutput/status/inpress',
+                    '/dk/atira/pure/researchoutput/status/epub'
+                ]);
+
+                if ($isPublishedStatus) {
+                    if ($allowedToRenderLuhPubsOnly && ($luhPublsOnly_setting == 1)) {
+                        $allowedToRender = true;
+                    }
+                    if ($luhPublsOnly_setting != 1) {
+                        $allowedToRender = true;
+                    }
+
+                    // Check for in-press filter
+                    $inPress = $this->getArrayValue($settings, 'inPress', true);
+                    if (!$inPress && $statusUri == '/dk/atira/pure/researchoutput/status/inpress') {
+                        $allowedToRender = false;
+                    }
                 }
 
-                // Add publication status if enabled
-                if ($this->getArrayValue($settings, 'showPublicationType', false)) {
-                    $array['contributionToJournal'][$i]['publicationStatus'] = [
-                        'value' => $this->getNestedArrayValue(
-                            $contribution,
-                            'publicationStatuses.0.publicationStatus.term.text.0.value',
-                            ''
-                        ),
-                        'uri' => $this->getNestedArrayValue(
-                            $contribution,
-                            'publicationStatuses.0.publicationStatus.uri',
-                            ''
-                        )
-                    ];
-                }
+                if ($allowedToRender && $this->getArrayValue($status, 'current', '') === 'true') {
+                    // Add year for grouping if enabled
+                    if ($this->getArrayValue($settings, 'groupByYear', false)) {
+                        $array['contributionToJournal'][$i]['year'] =
+                            $this->getNestedArrayValue($status, 'publicationDate.year', '');
+                    }
 
+                    // Add publication status if enabled
+                    if ($this->getArrayValue($settings, 'showPublicationType', false)) {
+                        $array['contributionToJournal'][$i]['publicationStatus']['value'] =
+                            $this->getNestedArrayValue($status, 'publicationStatus.term.text.0.value', '');
+                        $array['contributionToJournal'][$i]['publicationStatus']['uri'] = $statusUri;
+                    }
+                }
+            }
+
+            // Add publication details if allowed to render
+            if ($allowedToRender) {
+                $array['contributionToJournal'][$i]['rendering'] =
+                    $this->getNestedArrayValue($contribution, 'renderings.0.html', '');
+                $array['contributionToJournal'][$i]['uuid'] =
+                    $this->getArrayValue($contribution, 'uuid', '');
+                $array['contributionToJournal'][$i]['portalUri'] = $portalUri;
                 $i++;
             }
         }
 
         return $array;
     }
-
-// New helper method to determine if a publication should be rendered
-    private function shouldRenderPublication(array $contribution, array $settings): bool
-    {
-        $luhPublsOnly = (int)$this->getArrayValue($settings, 'luhPubsOnly', 0) === 1;
-
-        // Check if LUH publication requirement is met
-        $isLuhPublication = false;
-        if ($luhPublsOnly) {
-            $personAssociations = $this->getArrayValue($contribution, 'personAssociations', []);
-            foreach ($personAssociations as $pA) {
-                if ($this->arrayKeyExists('organisationalUnits', $pA)) {
-                    $isLuhPublication = true;
-                    break;
-                }
-            }
-
-            if (!$isLuhPublication) {
-                return false;
-            }
-        }
-
-        // Check publication status
-        $publicationStatuses = $this->getArrayValue($contribution, 'publicationStatuses', []);
-        foreach ($publicationStatuses as $status) {
-            $statusUri = $this->getNestedArrayValue($status, 'publicationStatus.uri', '');
-            $isPublishedStatus = in_array($statusUri, [
-                '/dk/atira/pure/researchoutput/status/published',
-                '/dk/atira/pure/researchoutput/status/inpress',
-                '/dk/atira/pure/researchoutput/status/epub'
-            ]);
-
-            if ($isPublishedStatus && $this->getArrayValue($status, 'current', '') === 'true') {
-                // Check for in-press filter
-                if ($statusUri === '/dk/atira/pure/researchoutput/status/inpress' &&
-                    !$this->getArrayValue($settings, 'inPress', true)) {
-                    return false;
-                }
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
 
     /**
      * Query for single publication using alternative response

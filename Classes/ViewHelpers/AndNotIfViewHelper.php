@@ -1,4 +1,5 @@
 <?php
+
 namespace Univie\UniviePure\ViewHelpers;
 
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;

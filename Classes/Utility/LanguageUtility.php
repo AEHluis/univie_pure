@@ -56,7 +56,7 @@ class LanguageUtility
 
         if ($backendUser !== null && isset($backendUser->uc['lang'])) {
             // Map language code to locale
-            $locale = match($backendUser->uc['lang']) {
+            $locale = match ($backendUser->uc['lang']) {
                 'de' => 'de_DE',
                 'en' => 'en_GB',
                 default => 'de_DE'

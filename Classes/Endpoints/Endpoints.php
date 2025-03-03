@@ -9,7 +9,8 @@ namespace Univie\UniviePure\Endpoints;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class Endpoints {
+class Endpoints
+{
 
 
     protected function getNestedArrayValue($array, string $path, $default = null)

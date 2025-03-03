@@ -22,7 +22,7 @@ class ClassificationScheme
 {
     private const RESEARCHOUTPUT = '/dk/atira/pure/researchoutput/researchoutputtypes';
     private const PROJECTS = '/dk/atira/pure/upm/fundingprogramme';
-    private const CACHE_LIFETIME = 21600; // 6 hours in seconds
+    private const CACHE_LIFETIME = 86400; // 24 hours
 
     private string $locale;
     private FrontendInterface $cache;
@@ -290,7 +290,7 @@ class ClassificationScheme
         }
 
         return array_values(array_filter(
-            array_map(function($parent) use ($unsorted) {
+            array_map(function ($parent) use ($unsorted) {
                 if (($parent['disabled'] ?? false) || !$this->classificationHasChild($parent)) {
                     return null;
                 }
@@ -298,7 +298,7 @@ class ClassificationScheme
                 $children = [];
                 if (isset($parent['classificationRelations'])) {
                     $children = array_values(array_filter(
-                        array_map(function($relation) use ($unsorted) {
+                        array_map(function ($relation) use ($unsorted) {
                             if ($relation['relationType']['uri'] !== '/dk/atira/pure/core/hierarchies/child') {
                                 return null;
                             }
@@ -412,10 +412,11 @@ class ClassificationScheme
      * @param ContextualFeedbackSeverity $severity The severity of the message
      */
     protected function addFlashMessage(
-        string $message,
-        string $title,
+        string                     $message,
+        string                     $title,
         ContextualFeedbackSeverity $severity
-    ): void {
+    ): void
+    {
         $flashMessage = GeneralUtility::makeInstance(
             FlashMessage::class,
             $message,

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Univie\UniviePure\ViewHelpers\Pagination;
 
 use Closure;
@@ -36,10 +37,11 @@ class PaginateViewHelper extends AbstractViewHelper
     }
 
     public static function renderStatic(
-        array $arguments,
-        Closure $renderChildrenClosure,
+        array                     $arguments,
+        Closure                   $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ): string {
+    ): string
+    {
         if ($arguments['objects'] === null) {
             return $renderChildrenClosure();
         }

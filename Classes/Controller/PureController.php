@@ -1,4 +1,5 @@
 <?php
+
 namespace Univie\UniviePure\Controller;
 
 use Univie\UniviePure\Endpoints\DataSets;
@@ -54,12 +55,13 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function __construct(
         ConfigurationManagerInterface $configurationManager,
-        ResearchOutput $researchOutput,
-        Projects $projects,
-        Equipments $equipments,
-        DataSets $dataSets,
-        FlashMessageService $flashMessageService
-    ) {
+        ResearchOutput                $researchOutput,
+        Projects                      $projects,
+        Equipments                    $equipments,
+        DataSets                      $dataSets,
+        FlashMessageService           $flashMessageService
+    )
+    {
         $this->configurationManager = $configurationManager;
         $this->researchOutput = $researchOutput;
         $this->dataSets = $dataSets;
@@ -112,8 +114,8 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
         $arguments = [
             'currentPageNumber' => $currentPageNumber,
-            'filter'            => $filter,
-            'lang'              => $this->locale
+            'filter' => $filter,
+            'lang' => $this->locale
         ];
         $this->uriBuilder->reset()->setTargetPageUid($GLOBALS['TSFE']->id);
         $this->uriBuilder->reset()->setLanguage($this->locale);
@@ -142,7 +144,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->view->assign('filter', $filterValue);
         }
 
-        if(isset($this->settings['what_to_display'])){
+        if (isset($this->settings['what_to_display'])) {
             switch ($this->settings['what_to_display']) {
                 case 'PUBLICATIONS':
                     $pub = $this->researchOutput;
@@ -150,13 +152,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     if (isset($view['error'])) {
                         $this->addFlashMessage($view['message'], 'Error', ContextualFeedbackSeverity::ERROR);
                         $this->view->assign('error', $view['message']);
-                    }else {
-                        /*
-                         * ArrayPaginator expects an array with all elements to calculate pagination in terms of currentPageNo. and
-                         * pageSize. We cannot provide this due to performance issues and web service timeouts.
-                         * So we initialize an array with the total amount of elements set to null.
-                         * Then we overwrite the results of the web service request at the current offset position.
-                         */
+                    } else {
                         $publications = array_fill(0, $view['count'], null);
                         $contributionToJournal = $view["contributionToJournal"] ?? [];
                         $contributionCount = is_array($contributionToJournal) ? count($contributionToJournal) : 0;
@@ -166,10 +162,10 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
 
                         $this->view->assignMultiple([
-                            'what_to_display'   => $this->settings['what_to_display'],
-                            'pagination'        => $pagination,
-                            'initial_no_results'=> $this->settings['initialNoResults'],
-                            'paginator'         => $paginator,
+                            'what_to_display' => $this->settings['what_to_display'],
+                            'pagination' => $pagination,
+                            'initial_no_results' => $this->settings['initialNoResults'],
+                            'paginator' => $paginator,
                         ]);
                     }
                     break;
@@ -202,7 +198,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     if (isset($view['error'])) {
                         $this->addFlashMessage($view['message'], 'Error', ContextualFeedbackSeverity::ERROR);
                         $this->view->assign('error', $view['message']);
-                    }else{
+                    } else {
                         $projectsArray = array_fill(0, $view['count'], null);
                         $items = (isset($view['items']) && is_array($view['items'])) ? $view['items'] : [];
                         array_splice($projectsArray, $view['offset'], count($items), $items);
@@ -211,9 +207,9 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
 
                         $this->view->assignMultiple([
-                            'what_to_display'   => $this->settings['what_to_display'],
-                            'pagination'        => $pagination,
-                            'paginator'         => $paginator,
+                            'what_to_display' => $this->settings['what_to_display'],
+                            'pagination' => $pagination,
+                            'paginator' => $paginator,
                         ]);
                     }
 
@@ -224,7 +220,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     if (isset($view['error'])) {
                         $this->addFlashMessage($view['message'], 'Error', ContextualFeedbackSeverity::ERROR);
                         $this->view->assign('error', $view['message']);
-                    }else {
+                    } else {
                         $dataSetsArray = array_fill(0, $view['count'], null);
                         $items = (isset($view['items']) && is_array($view['items'])) ? $view['items'] : [];
                         array_splice($dataSetsArray, $view['offset'], count($items), $items);
@@ -245,7 +241,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $this->handleContentNotFound();
                     break;
             }
-        }else{
+        } else {
             $this->handleContentNotFound();
         }
 
@@ -291,9 +287,9 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
                 // Assign data to view
                 $this->view->assignMultiple([
-                    'publication'      => $view,
-                    'bibtex'           => $bibtex,
-                    'lang'             => $this->locale,
+                    'publication' => $view,
+                    'bibtex' => $bibtex,
+                    'lang' => $this->locale,
                     'showLinkToPortal' => CommonUtilities::getArrayValue($this->settings, 'linkToPortal', null),
                 ]);
                 break;

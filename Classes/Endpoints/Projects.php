@@ -1,5 +1,7 @@
 <?php
+
 namespace Univie\UniviePure\Endpoints;
+
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Univie\UniviePure\Service\WebService;
 use Univie\UniviePure\Utility\CommonUtilities;
@@ -26,9 +28,9 @@ class Projects extends Endpoints
      * query for single Proj
      * @return string xml
      */
-    public function getSingleProject($uuid,$lang='de_DE')
+    public function getSingleProject($uuid, $lang = 'de_DE')
     {
-        return $this->webservice->getAlternativeSingleResponse('projects', $uuid,  "json",  $lang);
+        return $this->webservice->getAlternativeSingleResponse('projects', $uuid, "json", $lang);
     }
 
 
@@ -76,23 +78,22 @@ class Projects extends Endpoints
         $xml .= '</projectsQuery>';
 
 
-
         $view = $this->webservice->getXml('projects', $xml);
-        if (!$view){
+        if (!$view) {
             return [
                 'error' => 'SERVER_NOT_AVAILABLE',
                 'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
             ];
         }
 
-        if (is_array($view)){
-            if($view["count"] > 0){
-                if (array_key_exists("items",$view)) {
+        if (is_array($view)) {
+            if ($view["count"] > 0) {
+                if (array_key_exists("items", $view)) {
                     if (is_array($view["items"])) {
-                        if (array_key_exists("project",$view["items"])) {
+                        if (array_key_exists("project", $view["items"])) {
                             if (is_array($view["items"]["project"])) {
                                 foreach ($view["items"]["project"] as $index => $items) {
-                                    if (array_key_exists("renderings",$items)) {
+                                    if (array_key_exists("renderings", $items)) {
                                         if (is_array($items["renderings"])) {
                                             foreach ($items['renderings'] as $i => $x) {
                                                 $uuid = $view["items"]["project"][$index]["@attributes"]["uuid"];
@@ -115,8 +116,8 @@ class Projects extends Endpoints
                     }
                 }
             }
-        }else{
-            if ($view){
+        } else {
+            if ($view) {
                 // Get the project data safely
                 $project = $this->getNestedArrayValue($view, 'items.project', []);
 

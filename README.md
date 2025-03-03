@@ -29,6 +29,11 @@ PURE_APIKEY=your-api-key
 PURE_ENDPOINT=/ws/api/524/
 ```
 
+### 4. Using Cache Warmup
+Before using the Plugin run this Cache Warmup. (i.e. in crontab every 24h)
+```
+php typo3/sysext/core/bin/typo3 cache:warmup --group univie_pure
+```
 ## Usage
 ### 1. Adding a Plugin to a Page
 1. In TYPO3 backend, go to a page where you want to display Pure data.

@@ -78,7 +78,7 @@ class DataSets extends Endpoints
         $xml .= '</dataSetsQuery>';
         $view = $this->webservice->getXml('datasets', $xml);
 
-        if (!$view){
+        if (!$view) {
             return [
                 'error' => 'SERVER_NOT_AVAILABLE',
                 'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')

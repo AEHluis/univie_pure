@@ -24,6 +24,10 @@ class EquipmentsFunctionalTest extends BaseFunctionalTestCase
      */
     protected $webServiceMock;
 
+    // Test data
+    protected array $listData;
+    protected array $singleData;
+
     /**
      * Setup specific to equipment tests
      */
@@ -36,23 +40,26 @@ class EquipmentsFunctionalTest extends BaseFunctionalTestCase
             'chooseSelector' => 'default'
         ];
 
+        // Define test data
+        $this->defineTestData();
+
         // Create WebService mock
         $this->webServiceMock = $this->createMock(WebService::class);
 
         // Configure mock responses
-        $this->configureMockResponses();
+        $this->configureMockWebService();
 
         // Initialize Equipments with the mocked WebService
         $this->equipments = new Equipments($this->webServiceMock);
     }
 
     /**
-     * Configure mock responses
+     * Define the test data
      */
-    protected function configureMockResponses(): void
+    protected function defineTestData(): void
     {
         // Define equipment list data
-        $listData = [
+        $this->listData = [
             'count' => 2,
             'offset' => 0,
             'items' => [
@@ -89,12 +96,8 @@ class EquipmentsFunctionalTest extends BaseFunctionalTestCase
             ]
         ];
 
-        // Configure getJson to return equipment list data
-        $this->webServiceMock->method('getJson')
-            ->willReturn($listData);
-
         // Define single equipment data
-        $singleData = [
+        $this->singleData = [
             'items' => [
                 [
                     'uuid' => 'equip-12345678-1234-1234-1234-123456789abc',
@@ -116,10 +119,32 @@ class EquipmentsFunctionalTest extends BaseFunctionalTestCase
                 ]
             ]
         ];
+    }
+
+    /**
+     * Configure mock responses
+     */
+    protected function configureMockWebService(): void
+    {
+        // Configure getJson to return equipment list data
+        $this->webServiceMock
+            ->method('getJson')
+            ->willReturn($this->listData);
+
+        // Configure getXml to return equipment list data (used by getEquipmentsList)
+        $this->webServiceMock
+            ->method('getXml')
+            ->willReturn($this->listData);
 
         // Configure getSingleResponse to return single equipment data
-        $this->webServiceMock->method('getSingleResponse')
-            ->willReturn($singleData);
+        $this->webServiceMock
+            ->method('getSingleResponse')
+            ->willReturn($this->singleData);
+
+        // Configure getAlternativeSingleResponse to return single equipment data
+        $this->webServiceMock
+            ->method('getAlternativeSingleResponse')
+            ->willReturn($this->singleData);
     }
 
     /**
@@ -146,7 +171,7 @@ class EquipmentsFunctionalTest extends BaseFunctionalTestCase
         ];
 
         // Call the method under test
-        $result = $this->equipments->getEquipmentsList($settings, 1, 'en_GB');
+        $result = $this->equipments->getEquipmentsList($settings, 1);
 
         // Debug output (uncomment if needed)
         // $this->debugDump($result);
@@ -175,7 +200,7 @@ class EquipmentsFunctionalTest extends BaseFunctionalTestCase
         ];
 
         // Call the method under test
-        $result = $this->equipments->getEquipmentsList($settings, 1, 'en_GB');
+        $result = $this->equipments->getEquipmentsList($settings, 1);
 
         // Debug output (uncomment if needed)
         // $this->debugDump($result);
@@ -198,7 +223,7 @@ class EquipmentsFunctionalTest extends BaseFunctionalTestCase
         ];
 
         // Call the method under test for page 2
-        $result = $this->equipments->getEquipmentsList($settings, 2, 'en_GB');
+        $result = $this->equipments->getEquipmentsList($settings, 2);
 
         // Assertions
         $this->assertIsArray($result);

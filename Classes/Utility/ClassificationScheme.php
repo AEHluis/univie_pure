@@ -11,8 +11,6 @@ use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 
-
-
 /*
  * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
  *
@@ -30,11 +28,11 @@ class ClassificationScheme
     private FrontendInterface $cache;
     private WebService $webService;
 
-    public function __construct()
+    public function __construct(WebService $webService = null)
     {
         $this->locale = LanguageUtility::getBackendLanguage();
         $this->cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('univie_pure');
-        $this->webService = GeneralUtility::makeInstance(WebService::class);
+        $this->webService = $webService ?? GeneralUtility::makeInstance(WebService::class);
     }
 
     // Add this method to your ClassificationScheme class
@@ -69,7 +67,7 @@ class ClassificationScheme
                 $this->addFlashMessage(
                     'Could not fetch organisations from the API. Please check your connection.',
                     'Organisations Fetch Failed',
-                    ContextualFeedbackSeverity::WARNING->value
+                    ContextualFeedbackSeverity::WARNING
                 );
                 return;
             }
@@ -110,7 +108,7 @@ class ClassificationScheme
                 $this->addFlashMessage(
                     'Could not fetch Persondata from the API. Please check your connection.',
                     'Persondata Fetch Failed',
-                    ContextualFeedbackSeverity::WARNING->value
+                    ContextualFeedbackSeverity::WARNING
                 );
                 return;
             }
@@ -408,9 +406,16 @@ class ClassificationScheme
 
     /**
      * Display a FlashMessage in the TYPO3 Backend.
+     *
+     * @param string $message The message to display
+     * @param string $title The title for the message
+     * @param ContextualFeedbackSeverity $severity The severity of the message
      */
-    protected function addFlashMessage(string $message, string $title, int $severity): void
-    {
+    protected function addFlashMessage(
+        string $message,
+        string $title,
+        ContextualFeedbackSeverity $severity
+    ): void {
         $flashMessage = GeneralUtility::makeInstance(
             FlashMessage::class,
             $message,

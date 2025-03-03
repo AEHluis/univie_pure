@@ -18,6 +18,7 @@ use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 
 /*
  * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
@@ -36,18 +37,17 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected $settings = [];
 
-
     private readonly ResearchOutput $researchOutput;
     private readonly Projects $projects;
     private readonly Equipments $equipments;
     private readonly DataSets $dataSets;
     protected string $locale;
+    private readonly FlashMessageService $flashMessageService;
 
     protected function getLocale(): string
     {
         return LanguageUtility::getLocale();
     }
-
 
     /**
      * Constructor – dependencies are injected here.
@@ -58,12 +58,14 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         Projects $projects,
         Equipments $equipments,
         DataSets $dataSets,
+        FlashMessageService $flashMessageService
     ) {
         $this->configurationManager = $configurationManager;
         $this->researchOutput = $researchOutput;
         $this->dataSets = $dataSets;
         $this->projects = $projects;
         $this->equipments = $equipments;
+        $this->flashMessageService = $flashMessageService;
         $this->locale = $this->getLocale();
     }
 
@@ -146,7 +148,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $pub = $this->researchOutput;
                     $view = $pub->getPublicationList($this->settings, $currentPageNumber, $this->locale);
                     if (isset($view['error'])) {
-                        $this->addFlashMessage($view['message'], 'Error', FlashMessage::ERROR);
+                        $this->addFlashMessage($view['message'], 'Error', ContextualFeedbackSeverity::ERROR);
                         $this->view->assign('error', $view['message']);
                     }else {
                         /*
@@ -163,20 +165,20 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         $paginator = new ArrayPaginator($publications, $currentPageNumber, $this->settings['pageSize']);
                         $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
 
-                            $this->view->assignMultiple([
-                                'what_to_display'   => $this->settings['what_to_display'],
-                                'pagination'        => $pagination,
-                                'initial_no_results'=> $this->settings['initialNoResults'],
-                                'paginator'         => $paginator,
-                            ]);
-                        }
+                        $this->view->assignMultiple([
+                            'what_to_display'   => $this->settings['what_to_display'],
+                            'pagination'        => $pagination,
+                            'initial_no_results'=> $this->settings['initialNoResults'],
+                            'paginator'         => $paginator,
+                        ]);
+                    }
                     break;
 
                 case 'EQUIPMENTS':
 
                     $view = $this->equipments->getEquipmentsList($this->settings, $currentPageNumber);
                     if (isset($view['error'])) {
-                        $this->addFlashMessage($view['message'], 'Error', FlashMessage::ERROR);
+                        $this->addFlashMessage($view['message'], 'Error', ContextualFeedbackSeverity::ERROR);
                         $this->view->assign('error', $view['message']);
                     } else {
                         $equipmentsArray = array_fill(0, $view['count'], null);
@@ -198,7 +200,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 case 'PROJECTS':
                     $view = $this->projects->getProjectsList($this->settings, $currentPageNumber);
                     if (isset($view['error'])) {
-                        $this->addFlashMessage($view['message'], 'Error', FlashMessage::ERROR);
+                        $this->addFlashMessage($view['message'], 'Error', ContextualFeedbackSeverity::ERROR);
                         $this->view->assign('error', $view['message']);
                     }else{
                         $projectsArray = array_fill(0, $view['count'], null);
@@ -220,7 +222,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 case 'DATASETS':
                     $view = $this->dataSets->getDataSetsList($this->settings, $currentPageNumber);
                     if (isset($view['error'])) {
-                        $this->addFlashMessage($view['message'], 'Error', FlashMessage::ERROR);
+                        $this->addFlashMessage($view['message'], 'Error', ContextualFeedbackSeverity::ERROR);
                         $this->view->assign('error', $view['message']);
                     }else {
                         $dataSetsArray = array_fill(0, $view['count'], null);
@@ -315,24 +317,5 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             ->pageNotFoundAction($GLOBALS['TYPO3_REQUEST'], '');
         throw new ImmediateResponseException($response, 1591428020);
     }
-
-    /**
-     * Recursively prints an array as an HTML unordered list.
-     */
-    private function printArrayList(array $array): string
-    {
-        $echo = "<ul>";
-        foreach ($array as $k => $v) {
-            if (is_array($v)) {
-                $echo .= "<li>" . $k . "</li>";
-                $echo .= $this->printArrayList($v);
-            } else {
-                $echo .= "<li>" . $v . "</li>";
-            }
-        }
-        $echo .= "</ul>";
-        return $echo;
-    }
-
 
 }

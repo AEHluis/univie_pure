@@ -24,6 +24,11 @@ class PublicationFunctionalTest extends BaseFunctionalTestCase
      */
     protected $webServiceMock;
 
+    // Test data
+    protected array $listData;
+    protected array $singleData;
+    protected array $alternativeData;
+
     /**
      * Setup specific to publication tests
      */
@@ -36,28 +41,8 @@ class PublicationFunctionalTest extends BaseFunctionalTestCase
             'chooseSelector' => 'default'
         ];
 
-        // Create WebService mock
-        $this->webServiceMock = $this->createMock(WebService::class);
-
-        // Configure methods to be mocked
-        $this->webServiceMock->method('getJson')->willReturn([]);
-        $this->webServiceMock->method('getSingleResponse')->willReturn([]);
-        $this->webServiceMock->method('getAlternativeSingleResponse')->willReturn([]);
-
-        // Configure mock responses
-        $this->configureMockResponses();
-
-        // Initialize ResearchOutput with mock
-        $this->researchOutput = new ResearchOutput($this->webServiceMock);
-    }
-
-    /**
-     * Configure mock responses
-     */
-    protected function configureMockResponses(): void
-    {
         // Define publication list data
-        $listData = [
+        $this->listData = [
             'count' => 2,
             'offset' => 0,
             'items' => [
@@ -136,12 +121,8 @@ class PublicationFunctionalTest extends BaseFunctionalTestCase
             ]
         ];
 
-        // Configure getJson to return publication list data
-        $this->webServiceMock->method('getJson')
-            ->willReturn($listData);
-
         // Define single publication data
-        $singleData = [
+        $this->singleData = [
             'items' => [
                 [
                     'type' => 'contributionToJournal',
@@ -182,12 +163,8 @@ class PublicationFunctionalTest extends BaseFunctionalTestCase
             ]
         ];
 
-        // Configure getSingleResponse to return single publication data
-        $this->webServiceMock->method('getSingleResponse')
-            ->willReturn($singleData);
-
         // Define alternative single publication data for portal URL
-        $alternativeData = [
+        $this->alternativeData = [
             'items' => [
                 [
                     'info' => [
@@ -197,9 +174,35 @@ class PublicationFunctionalTest extends BaseFunctionalTestCase
             ]
         ];
 
+        // Create WebService mock
+        $this->webServiceMock = $this->createMock(WebService::class);
+
+        // Configure mock methods with specific returns for each call
+        $this->configureMockWebService();
+
+        // Initialize ResearchOutput with mock
+        $this->researchOutput = new ResearchOutput($this->webServiceMock);
+    }
+
+    /**
+     * Configure the mock responses
+     */
+    protected function configureMockWebService(): void
+    {
+        // Configure getJson to return publication list data
+        $this->webServiceMock
+            ->method('getJson')
+            ->willReturn($this->listData);
+
+        // Configure getSingleResponse to return single publication data
+        $this->webServiceMock
+            ->method('getSingleResponse')
+            ->willReturn($this->singleData);
+
         // Configure getAlternativeSingleResponse to return alternative data
-        $this->webServiceMock->method('getAlternativeSingleResponse')
-            ->willReturn($alternativeData);
+        $this->webServiceMock
+            ->method('getAlternativeSingleResponse')
+            ->willReturn($this->alternativeData);
     }
 
     /**

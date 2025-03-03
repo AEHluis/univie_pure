@@ -218,16 +218,30 @@ class PublicationFunctionalTest extends BaseFunctionalTestCase
     }
 
     /**
+     * Returns common test settings with chooseSelector
+     *
+     * @param array $additionalSettings Additional settings to merge
+     * @return array
+     */
+    protected function getBaseSettings(array $additionalSettings = []): array
+    {
+        $settings = [
+            'pageSize' => 10,
+            'what_to_display' => 'PUBLICATIONS',
+            'rendering' => 'standard',
+            'chooseSelector' => 0,  // 0 = by unit, 1 = by person, 2 = by project
+        ];
+
+        return array_merge($settings, $additionalSettings);
+    }
+
+    /**
      * @test
      */
     public function getPublicationListReturnsExpectedResult(): void
     {
         // Test settings
-        $settings = [
-            'pageSize' => 10,
-            'what_to_display' => 'PUBLICATIONS',
-            'rendering' => 'standard'
-        ];
+        $settings = $this->getBaseSettings();
 
         // Call the method under test
         $result = $this->researchOutput->getPublicationList($settings, 1, 'en_GB');
@@ -250,11 +264,9 @@ class PublicationFunctionalTest extends BaseFunctionalTestCase
     public function getPublicationListWithPaginationReturnsExpectedResult(): void
     {
         // Test settings
-        $settings = [
+        $settings = $this->getBaseSettings([
             'pageSize' => 1,  // Set page size to 1 to test pagination
-            'what_to_display' => 'PUBLICATIONS',
-            'rendering' => 'standard'
-        ];
+        ]);
 
         // Call the method under test for page 2
         $result = $this->researchOutput->getPublicationList($settings, 2, 'en_GB');
@@ -271,12 +283,10 @@ class PublicationFunctionalTest extends BaseFunctionalTestCase
     public function getPublicationListWithFilteringAppliesFilters(): void
     {
         // Test settings with filtering
-        $settings = [
-            'pageSize' => 10,
-            'what_to_display' => 'PUBLICATIONS',
+        $settings = $this->getBaseSettings([
             'narrowBySearch' => 'test search',
             'peerReviewedOnly' => 1
-        ];
+        ]);
 
         // Call the method under test
         $result = $this->researchOutput->getPublicationList($settings, 1, 'en_GB');

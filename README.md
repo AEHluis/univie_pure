@@ -45,8 +45,12 @@ Public API documentation is available at:
 ## Development
 ### Running PHPUnit Tests
 ```sh
-.Build/vendor/phpunit/phpunit/phpunit --configuration Tests/phpunit.xml
+# Only Unit Tests
+ddev exec  .Build/vendor/phpunit/phpunit/phpunit -c Tests/phpunit.xml --testsuite "Unit Tests"
+# Only Functional Tests
+ddev exec  .Build/vendor/phpunit/phpunit/phpunit -c Tests/phpunit.xml --testsuite "Functional Tests"
 ```
+
 
 
 ## Contributing

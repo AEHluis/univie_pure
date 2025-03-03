@@ -70,6 +70,7 @@ class CommonUtilities
         return '<offset>' . $offset * (int)$pageSize . '</offset>';
     }
 
+
     /**
      * Either send a request for a unit or for persons
      * @return String xml
@@ -77,21 +78,29 @@ class CommonUtilities
     public static function getPersonsOrOrganisationsXml($settings)
     {
         $xml = "";
-        //either for organisations or for persons or for projects:
-        //If settings.chooseSelector equals 0 => organisational units, case 1 => persons, case 2 => projects:
-        switch ($settings['chooseSelector']) {
+        // If settings isn't an array, return empty string
+        if (!is_array($settings)) {
+            return $xml;
+        }
+
+        // Get the chooseSelector value with a default of -1
+        $chooseSelector = self::getArrayValue($settings, 'chooseSelector', -1);
+
+        // Based on chooseSelector value, generate appropriate XML
+        switch ($chooseSelector) {
             case 0:
-                //Resarch-output for organisations:
+                // Resarch-output for organisations:
                 $xml = self::getOrganisationsXml($settings);
                 break;
             case 1:
-                //Research-output for persons:
+                // Research-output for persons:
                 $xml = self::getPersonsXml($settings);
                 break;
+            // Default case returns empty string
         }
+
         return $xml;
     }
-
 
 
     /**

@@ -18,6 +18,7 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Core\Http\Stream;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 
 
 /**
@@ -56,9 +57,9 @@ class PureControllerTest extends UnitTestCase
     protected $dataSetsMock;
 
     /**
-     * @var LanguageUtility|MockObject
+     * @var FlashMessageService|MockObject
      */
-    protected $langMock;
+    protected $flashMessageServiceMock;
 
     /**
      * Set up the test environment.
@@ -73,9 +74,7 @@ class PureControllerTest extends UnitTestCase
         $this->projectsMock = $this->createMock(Projects::class);
         $this->equipmentsMock = $this->createMock(Equipments::class);
         $this->dataSetsMock = $this->createMock(DataSets::class);
-
-        // Create a custom language utility for testing
-        $this->langMock = new TestLanguageUtility();
+        $this->flashMessageServiceMock = $this->createMock(FlashMessageService::class);
 
         // Create a partial mock for PureController
         $this->subject = $this->getMockBuilder(PureController::class)
@@ -86,7 +85,7 @@ class PureControllerTest extends UnitTestCase
                 $this->projectsMock,
                 $this->equipmentsMock,
                 $this->dataSetsMock,
-                $this->langMock
+                $this->flashMessageServiceMock
             ])
             ->getMock();
 
@@ -105,9 +104,9 @@ class PureControllerTest extends UnitTestCase
                 'T3luh\T3luhlib\Utils\Page'
             );
         }
-
     }
 
+    // Rest of the code remains the same...
     /**
      * Clean up after each test.
      */
@@ -427,7 +426,7 @@ class PureControllerTest extends UnitTestCase
         // Set up ResearchOutput mock to return test data
         $this->researchOutputMock->expects($this->once())
             ->method('getPublicationList')
-            ->with($this->anything(), 1)
+            ->with($this->anything(), 1, $this->anything())
             ->willReturn($publicationData);
 
         // Mock the view

@@ -11,12 +11,6 @@ use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-// Define a mock class for CommonUtilities
-class CommonUtilitiesMock {
-    public static function getBackendLanguage(): string {
-        return 'en';
-    }
-}
 
 final class ClassificationSchemeTest extends UnitTestCase
 {

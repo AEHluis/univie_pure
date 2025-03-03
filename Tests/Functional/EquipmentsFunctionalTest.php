@@ -160,15 +160,29 @@ class EquipmentsFunctionalTest extends BaseFunctionalTestCase
     }
 
     /**
+     * Returns common test settings with chooseSelector
+     *
+     * @param array $additionalSettings Additional settings to merge
+     * @return array
+     */
+    protected function getBaseSettings(array $additionalSettings = []): array
+    {
+        $settings = [
+            'pageSize' => 10,
+            'rendering' => 'standard',
+            'chooseSelector' => 0,  // 0 = by unit, 1 = by person, 2 = by project
+        ];
+
+        return array_merge($settings, $additionalSettings);
+    }
+
+    /**
      * @test
      */
     public function getEquipmentsListReturnsExpectedResult(): void
     {
         // Test settings
-        $settings = [
-            'pageSize' => 10,
-            'rendering' => 'standard'
-        ];
+        $settings = $this->getBaseSettings();
 
         // Call the method under test
         $result = $this->equipments->getEquipmentsList($settings, 1);
@@ -193,11 +207,10 @@ class EquipmentsFunctionalTest extends BaseFunctionalTestCase
     public function getEquipmentsListWithFiltersAppliesFilters(): void
     {
         // Test settings with filtering
-        $settings = [
-            'pageSize' => 10,
+        $settings = $this->getBaseSettings([
             'narrowBySearch' => 'test search',
             'organizationalUnit' => 'Test Department'
-        ];
+        ]);
 
         // Call the method under test
         $result = $this->equipments->getEquipmentsList($settings, 1);
@@ -217,10 +230,9 @@ class EquipmentsFunctionalTest extends BaseFunctionalTestCase
     public function getEquipmentsListWithPaginationCalculatesOffsetCorrectly(): void
     {
         // Test settings
-        $settings = [
-            'pageSize' => 1,  // Set page size to 1 to test pagination
-            'rendering' => 'standard'
-        ];
+        $settings = $this->getBaseSettings([
+            'pageSize' => 1  // Set page size to 1 to test pagination
+        ]);
 
         // Call the method under test for page 2
         $result = $this->equipments->getEquipmentsList($settings, 2);

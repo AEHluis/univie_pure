@@ -33,7 +33,7 @@ class Persons extends Endpoints
 				<linkingStrategy>portalLinkingStrategy</linkingStrategy>';
 
         //set locale:
-        $xml .= LanguageUtility::getLocale();
+        $xml .= LanguageUtility::getLocale('xml');
 
         $xml .= '</personsQuery>';
 
@@ -53,7 +53,7 @@ class Persons extends Endpoints
 				<linkingStrategy>portalLinkingStrategy</linkingStrategy>';
 
         //set locale:
-        $xml .= LanguageUtility::getLocale();
+        $xml .= LanguageUtility::getLocale('xml');
         $xml .= '</personsQuery>';
         $portalUrl = $this->webservice->getJson('persons', $xml);
 

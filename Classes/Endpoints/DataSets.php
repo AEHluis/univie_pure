@@ -54,7 +54,7 @@ class DataSets extends Endpoints
         $xml .= CommonUtilities::getOffset($settings['pageSize'], $currentPageNumber);
         // $xml .= '<linkingStrategy>portalLinkingStrategy</linkingStrategy>';
 
-        $xml .= LanguageUtility::getLocale();
+        $xml .= LanguageUtility::getLocale('xml');
         if ($settings['rendering'] == 'extended') {
             $xml .= '<renderings><rendering>short</rendering><rendering>detailsPortal</rendering></renderings>';
         } else {

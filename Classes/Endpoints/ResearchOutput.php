@@ -103,7 +103,7 @@ class ResearchOutput extends Endpoints
         $xml .= '<linkingStrategy>noLinkingStrategy</linkingStrategy>';
 
         // Add locale information
-        $xml .= LanguageUtility::getLocale();
+        $xml .= LanguageUtility::getLocale('xml');
 
         // Set rendering
         $rendering = $this->getArrayValue($settings, 'rendering', 'portal-short');
@@ -460,7 +460,7 @@ class ResearchOutput extends Endpoints
      */
     public function getSinglePublication(string $uuid, string $lang = 'de_DE')
     {
-        return $this->webservice->getSingleResponse('research-outputs', $uuid);
+        return $this->webservice->getSingleResponse('research-outputs',$uuid,'json',true,null, $lang);
     }
 
     /**
@@ -484,7 +484,7 @@ class ResearchOutput extends Endpoints
      */
     public function getPortalRendering(string $uuid, string $lang)
     {
-        return $this->webservice->getSingleResponse('research-outputs', $uuid, 'xml', true, 'detailsPortal', $lang);
+        return $this->webservice->getSingleResponse('research-outputs', $uuid, 'xml', true, null, $lang);
     }
 
     /**

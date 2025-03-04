@@ -3,13 +3,72 @@
   <f:flashMessages  />
   <f:render partial="Pure/Properties" arguments="{publication:publication, lang:lang, showLinkToPortal:showLinkToPortal}" />
   <f:if condition="{settings.showBibtex}">
+
+    <script>
+      // Ultra simple accordion with ready state check
+      (function() {
+        function initAccordion() {
+          var title = document.querySelector('.accordion-title');
+          if (title) {
+            title.onclick = function(e) {
+              e.preventDefault();
+              var content = document.getElementById('bibtex-accordion');
+              if (content) {
+                content.style.display = content.style.display === 'none' ? 'block' : 'none';
+              }
+            };
+            console.log("Accordion initialized");
+          }
+        }
+
+        // Check if document is already loaded
+        if (document.readyState === 'complete') {
+          initAccordion();
+        } else {
+          window.addEventListener('load', initAccordion);
+        }
+      })();
+    </script>
+    <style>
+      /* Basic styling */
+
+      .accordion-item {
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        list-style-type: none;
+      }
+
+      .accordion-title {
+        display: block;
+        padding: 10px;
+        background-color: #f5f5f5;
+        color: #333;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .accordion-title:hover {
+        background-color: #e5e5e5;
+      }
+
+      .accordion-content {
+        padding: 15px;
+        background-color: #fff;
+        border-top: 1px solid #ddd;
+      }
+
+      /* Animation */
+      .accordion-content {
+        transition: height 0.3s ease-out;
+      }
+    </style>
     <div class="c-section" style="width:100%">
       <ul class="accordion c-accordion" data-accordion="insxal-accordion" data-allow-all-closed="true" data-multi-expand="false" role="tablist">
         <li class="accordion-item c-accordion__item" data-accordion-item="">
           <a href="#" class="accordion-title c-accordion__headline c-headline--medium u-text--hyphens" aria-controls="bibtex-accordion" role="tab" id="bibtex-accordion-label" aria-expanded="false" aria-selected="false">BibTeX</a>
           <div class="accordion-content c-accordion__content" data-tab-content="" role="tabpanel" aria-labelledby="bibtex-accordion-label" aria-hidden="true" id="bibtex-accordion" style="display: none;">
             <div id="c2881" class="c-section__element">
-              {bibtex -> f:format.raw()}
+              <f:format.raw>{bibtex}</f:format.raw>
             </div>
           </div>
         </li>

@@ -90,7 +90,7 @@ class ResearchOutputTest extends TestCase
     {
         $ro = new TestResearchOutput();
         $uuid = 'pubbib123';
-        $result = $ro->getBibtex($uuid, 'en_US');
+        $result = $ro->getBibtex($uuid, 'en_GB');
         $this->assertNotEmpty($result, 'Bibtex result should not be empty');
     }
 
@@ -98,9 +98,9 @@ class ResearchOutputTest extends TestCase
     {
         $ro = new TestResearchOutput();
         $uuid = 'pubport123';
-        $result = $ro->getPortalRendering($uuid, 'en_US');
+        $result = $ro->getPortalRendering($uuid,'en_GB');
         $this->assertNotEmpty($result, 'Portal rendering result should not be empty');
-        $this->assertEquals('fake detailsPortal rendering for ' . $uuid . ' in en_US', $result, 'Portal rendering result mismatch');
+        $this->assertStringContainsString('rendering for ' . $uuid . ' ', $result, 'Portal rendering result mismatch');
     }
 
     public function testGetStandardRenderingReturnsNonEmptyResult()

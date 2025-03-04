@@ -43,13 +43,17 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     private readonly Equipments $equipments;
     private readonly DataSets $dataSets;
     protected string $locale;
+    protected string $localeShort;
     private readonly FlashMessageService $flashMessageService;
 
     protected function getLocale(): string
     {
-        return LanguageUtility::getLocale();
+        return LanguageUtility::getLocale('xml');
     }
-
+    protected function getLocaleShort(): string
+    {
+        return LanguageUtility::getLocale(null);
+    }
     /**
      * Constructor – dependencies are injected here.
      */
@@ -69,6 +73,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->equipments = $equipments;
         $this->flashMessageService = $flashMessageService;
         $this->locale = $this->getLocale();
+        $this->localeShort = $this->getLocaleShort();
     }
 
     /**
@@ -255,12 +260,13 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function showAction(): ResponseInterface
     {
+
         $arguments = $this->request->getArguments();
         switch ($arguments['what2show'] ?? '') {
             case 'publ':
                 $pub = $this->researchOutput;
                 $uuid = CommonUtilities::getArrayValue($arguments, 'uuid', '');
-                $locale = is_object($this->locale) ? (string)$this->locale : $this->locale;
+                $locale = $this->localeShort;
 
                 // Only proceed if we have a valid UUID
                 if (empty($uuid)) {
@@ -269,8 +275,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
                 // Get bibtex data
                 $bibtexXml = $pub->getBibtex($uuid, $locale);
-                $bibtex = isset($bibtexXml->renderings[0]->rendering) ? (string)$bibtexXml->renderings[0]->rendering : '';
-
+                $bibtex = CommonUtilities::getNestedArrayValue($bibtexXml,'renderings.rendering','') ;
                 // Get publication data
                 $view = $pub->getSinglePublication($uuid);
 

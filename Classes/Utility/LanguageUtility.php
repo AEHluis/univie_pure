@@ -22,7 +22,7 @@ class LanguageUtility
      *
      * @return string XML formatted locale string
      */
-    public static function getLocale(): string
+    public static function getLocale(?string $type='xml'): string
     {
         $lang = 'de_DE'; // Default fallback
 
@@ -33,9 +33,19 @@ class LanguageUtility
                 $lang = $languageCode === 'de' ? 'de_DE' : 'en_GB';
             }
         }
+        if ($type=='xml'){
+            return '<locales><locale>' . $lang . '</locale></locales>';
+        }
+        if ($type=='json'){
+            return json_encode(['locales' => ['locale' => $lang]]);
+        }
+        else{
+            return $lang;
+        }
 
-        return '<locales><locale>' . $lang . '</locale></locales>';
     }
+
+
 
     /**
      * Get backend user locale

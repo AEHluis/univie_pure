@@ -50,7 +50,7 @@ class Equipments extends Endpoints
 
         //set offset:
         $xml .= CommonUtilities::getOffset($settings['pageSize'], $currentPageNumber);
-        $xml .= LanguageUtility::getLocale();
+        $xml .= LanguageUtility::getLocale('xml');
         $xml .= '<renderings><rendering>short</rendering></renderings>';
         $xml .= '<fields>
                 <field>renderings.*</field>

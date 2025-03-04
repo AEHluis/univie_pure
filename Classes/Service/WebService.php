@@ -17,6 +17,7 @@ use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Univie\UniviePure\Utility\CommonUtilities;
 use Univie\UniviePure\Utility\DotEnv;
 
 
@@ -72,8 +73,24 @@ class WebService
 
     private function fetchApiResponse(string $endpoint, array $params, string $responseType, bool $decoded = true): array|string|\SimpleXMLElement|null
     {
+        if (CommonUtilities::getArrayValue($params,'rendering','') == 'BIBTEX'){
+            $locale = $params['locale']; // Store locale value
+            unset($params['locale']);    // Remove from params array
+
+        }
+        // Build the URI with query parameters from $params
         $uri = (new Uri($this->server . $this->versionPath . $endpoint))->withQuery(http_build_query($params));
-        $cacheIdentifier = $this->generateCacheIdentifier($endpoint, json_encode($params), $responseType);
+
+        // Add locale as a separate parameter if it was removed
+        if (isset($locale)) {
+            $uri = $uri->withQuery($uri->getQuery() . '&locale=' . $locale);
+        }
+        // Update cache identifier to include the locale if it was removed from params
+        $cacheIdentifier = $this->generateCacheIdentifier(
+            $endpoint,
+            json_encode(isset($locale) ? array_merge($params, ['locale' => $locale]) : $params),
+            $responseType
+        );
 
         if ($cachedContent = $this->getCachedContent($cacheIdentifier)) {
             return $this->processResponse($cachedContent, $responseType, $decoded);
@@ -118,14 +135,28 @@ class WebService
         string  $uuid,
         string  $responseType = 'json',
         bool    $decoded = true,
-        string  $renderer = 'html',
+        ?string  $renderer = null,
         ?string $lang = null
     ): array|string|\SimpleXMLElement|null
     {
-        $params = ['rendering' => strtoupper($renderer)];
+        $params = [];
+
+        // Handle renderer parameter correctly based on type
+        if ($renderer === 'bibtex') {
+            $params['rendering'] = 'BIBTEX';
+        } elseif ($renderer === 'detailsPortal') {
+            $params['rendering'] = 'detailsPortal';
+        } elseif ($renderer === 'standard') {
+            $params['rendering'] = 'standard';
+        } elseif ($renderer != null) {
+            $params['rendering'] = strtoupper($renderer);
+        }
+
+        // Add language parameter if provided
         if ($lang) {
             $params['locale'] = $lang;
         }
+
         return $this->fetchApiResponse($endpoint . '/' . $uuid, $params, $responseType, $decoded);
     }
 
@@ -236,21 +267,6 @@ class WebService
             $this->logger->error('Request failed', ['exception' => $e, 'uri' => (string)$uri]);
             return null;
         }
-    }
-
-    private function buildUri(string $endpoint, string $uuid, string $renderer, ?string $lang): Uri
-    {
-        $uri = new Uri($this->server . $this->versionPath . $endpoint . '/' . $uuid);
-
-        if ($renderer !== 'html') {
-            $params = ['rendering' => strtoupper($renderer)];
-            if ($lang) {
-                $params['locale'] = $lang;
-            }
-            $uri = $uri->withQuery(http_build_query($params));
-        }
-
-        return $uri;
     }
 
     public function generateCacheIdentifier(string $endpoint, string $uuid, ?string $lang = null, string $responseType = 'json', string $renderer = 'html'): string

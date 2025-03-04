@@ -41,7 +41,7 @@ class TestProjects extends Projects
         $xml = '<?xml version="1.0"?><projectsQuery>';
         $xml .= CommonUtilities::getPageSize($settings['pageSize']);
         $xml .= CommonUtilities::getOffset($settings['pageSize'], $currentPageNumber);
-        $xml .= LanguageUtility::getLocale();
+        $xml .= LanguageUtility::getLocale('xml');
         $xml .= '<renderings><rendering>short</rendering></renderings>';
         $xml .= '<fields>
         <field>renderings.*</field>

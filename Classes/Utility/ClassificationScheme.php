@@ -28,7 +28,7 @@ class ClassificationScheme
     private FrontendInterface $cache;
     private WebService $webService;
 
-    public function __construct(WebService $webService = null)
+    public function __construct(?WebService $webService = null)
     {
         $this->locale = LanguageUtility::getBackendLanguage();
         $this->cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('univie_pure');

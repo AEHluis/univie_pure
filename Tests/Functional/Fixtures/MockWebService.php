@@ -133,7 +133,7 @@ class MockWebService extends WebService
         string $uuid,
         string $responseType = 'json',
         bool $decoded = true,
-        string $renderer = 'html',
+        ?string $renderer = null,
         ?string $lang = null
     ): \SimpleXMLElement|array|string|null {
         $key = $endpoint . '/' . $uuid;

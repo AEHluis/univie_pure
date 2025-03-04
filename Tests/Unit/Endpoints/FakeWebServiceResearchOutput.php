@@ -53,7 +53,7 @@ class FakeWebServiceResearchOutput extends \Univie\UniviePure\Service\WebService
         string $uuid,
         string $responseType = 'xml',
         bool $decoded = true,
-        string $renderer = 'standard',
+        ?string $renderer = null,
         ?string $lang = 'de_DE'
     ): array|string|\SimpleXMLElement|null {
         if ($endpoint === 'research-outputs') {

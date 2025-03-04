@@ -94,7 +94,7 @@ class TestResearchOutput extends ResearchOutput
     public function getPortalRendering($uuid, $lang)
     {
         $webservice = $this->createWebService();
-        return $webservice->getSingleResponse('research-outputs', $uuid, 'xml', true, 'detailsPortal', $lang);
+        return $webservice->getSingleResponse('research-outputs', $uuid, 'xml', true, null, $lang);
     }
 
     /**
@@ -140,7 +140,7 @@ class TestResearchOutput extends ResearchOutput
         $xml .= CommonUtilities::getPageSize($settings['pageSize']);
         $xml .= CommonUtilities::getOffset($settings['pageSize'], $currentPageNumber);
         $xml .= '<linkingStrategy>noLinkingStrategy</linkingStrategy>';
-        $xml .= LanguageUtility::getLocale();
+        $xml .= LanguageUtility::getLocale('xml');
         $xml .= '<renderings><rendering>' . $settings['rendering'] . '</renderings>';
         $pubtype = "";
         $settings['showPublicationType'] = 1;

@@ -78,7 +78,7 @@ class PureControllerTest extends UnitTestCase
 
         // Create a partial mock for PureController
         $this->subject = $this->getMockBuilder(PureController::class)
-            ->onlyMethods(['handleContentNotFound', 'htmlResponse', 'redirectToUri', 'getLocale'])
+            ->onlyMethods(['handleContentNotFound', 'htmlResponse', 'redirectToUri', 'getLocale', 'getLocaleShort'])
             ->setConstructorArgs([
                 $this->configurationManagerMock,
                 $this->researchOutputMock,
@@ -89,13 +89,23 @@ class PureControllerTest extends UnitTestCase
             ])
             ->getMock();
 
+        // Set up the getLocale and getLocaleShort methods to return 'en'
+        $this->subject->method('getLocale')->willReturn('en');
+        $this->subject->method('getLocaleShort')->willReturn('en');
 
-        // Inject the mock methods into the controller
+        // Inject the locale and localeShort properties into the controller
         $reflection = new \ReflectionClass($this->subject);
+
         $localeProperty = $reflection->getProperty('locale');
         $localeProperty->setAccessible(true);
         $localeProperty->setValue($this->subject, 'en');
 
+        // Add this line to initialize the localeShort property
+        if ($reflection->hasProperty('localeShort')) {
+            $localeShortProperty = $reflection->getProperty('localeShort');
+            $localeShortProperty->setAccessible(true);
+            $localeShortProperty->setValue($this->subject, 'en');
+        }
 
         // Check if the class_alias is already defined to avoid redeclaration
         if (!class_exists('T3luh\T3luhlib\Utils\Page', false)) {
@@ -106,7 +116,7 @@ class PureControllerTest extends UnitTestCase
         }
     }
 
-    // Rest of the code remains the same...
+    // Rest of the test class remains unchanged
     /**
      * Clean up after each test.
      */
@@ -326,9 +336,12 @@ class PureControllerTest extends UnitTestCase
         ];
 
         // Mock the bibtex response
-        $bibtexXml = new \stdClass();
-        $bibtexXml->renderings = [new \stdClass()];
-        $bibtexXml->renderings[0]->rendering = '@article{Test2023, title={Test Publication}}';
+        $bibtexXml = [
+            'renderings' => [
+                'rendering' => '@article{Test2023, title={Test Publication}}'
+            ]
+        ];
+
 
         // Set up ResearchOutput mock to return test data
         $this->researchOutputMock->expects($this->once())

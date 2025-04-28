@@ -13,6 +13,11 @@ use Univie\UniviePure\Utility\LanguageUtility;
 class UniviePureCacheWarmer
 {
     private array $supportedLanguages = ['de_DE', 'en_GB'];
+    
+    public static function getIdentifier(): string
+    {
+        return 'univie-pure-cache-warmer';
+    }
     public function __construct(
         private readonly ClassificationScheme $classificationScheme,
         private readonly FrontendInterface $cache,

@@ -190,7 +190,7 @@ class CommonUtilities
         $xmlProjects = '<?xml version="1.0"?><projectsQuery><uuids>';
         $projects = explode(',', $selectorProjects);
         foreach ($projects as $proj) {
-            // If user appended “|something”, strip that off
+            // If user appended "|something", strip that off
             if (strpos($proj, '|') !== false) {
                 $proj = explode('|', $proj)[0];
             }
@@ -212,22 +212,24 @@ class CommonUtilities
 
         // 5) Build the final return XML with related research outputs
         $xml = '';
-        if (is_array($publications)
-            && isset($publications['items'])
-            && is_array($publications['items'])
-        ) {
-            $xml .= '<uuids>';
+        if (is_array($publications) && isset($publications['items'])) {
+            $hasResearchOutputs = false;
+            $xmlTemp = "";
             foreach ($publications['items'] as $researchOutputs) {
-                // “relatedResearchOutputs” may not exist or might be empty
-                $related = self::getArrayValue($researchOutputs, 'relatedResearchOutputs', []);
-                foreach ($related as $researchOutput) {
-                    $uuid = self::getArrayValue($researchOutput, 'uuid', '');
-                    if (!empty($uuid)) {
-                        $xml .= '<uuid>' . $uuid . '</uuid>';
+                if (!empty($researchOutputs) && isset($researchOutputs['relatedResearchOutputs'])) {
+                    foreach ($researchOutputs['relatedResearchOutputs'] as $researchOutput) {
+                        $xmlTemp .= '<uuid>' . $researchOutput['uuid'] . '</uuid>';
+                        $hasResearchOutputs = true;
                     }
                 }
             }
-            $xml .= '</uuids>';
+
+            if ($hasResearchOutputs) {
+                $xml .= "<uuids>" . $xmlTemp . "</uuids>";
+            } else {
+                // Force no results by providing a non-existent UUID when no research outputs exist
+                $xml .= "<uuids><uuid>NO_RESEARCH_OUTPUTS_FOUND</uuid></uuids>";
+            }
         }
         return $xml;
     }
@@ -280,22 +282,24 @@ class CommonUtilities
 
             // Build final XML with the relatedDataSets
             $xml = "";
-            if (is_array($datasets)
-                && isset($datasets['items'])
-                && is_array($datasets['items'])
-            ) {
-                $xml .= "<uuids>";
+            if (is_array($datasets) && isset($datasets['items'])) {
+                $hasDatasets = false;
+                $xmlTemp = "";
                 foreach ($datasets['items'] as $d) {
-                    // "relatedDataSets" might be missing
-                    $relatedDataSets = self::getArrayValue($d, 'relatedDataSets', []);
-                    foreach ($relatedDataSets as $ds) {
-                        $uuid = self::getArrayValue($ds, 'uuid', '');
-                        if (!empty($uuid)) {
-                            $xml .= '<uuid>' . $uuid . '</uuid>';
+                    if (!empty($d) && isset($d['relatedDataSets'])) {
+                        foreach ($d['relatedDataSets'] as $i) {
+                            $xmlTemp .= '<uuid>' . $i['uuid'] . '</uuid>';
+                            $hasDatasets = true;
                         }
                     }
                 }
-                $xml .= "</uuids>";
+
+                if ($hasDatasets) {
+                    $xml .= "<uuids>" . $xmlTemp . "</uuids>";
+                } else {
+                    // Force no results by providing a non-existent UUID when no datasets exist
+                    $xml .= "<uuids><uuid>NO_DATASETS_FOUND</uuid></uuids>";
+                }
             }
             return $xml;
         }

@@ -256,10 +256,8 @@
                             <displayCond>FIELD:settings.chooseSelector:=:1</displayCond>
                             <config>
                                 <type>select</type>
-                                <renderType>selectSingle</renderType>
 
                                 <items type="array"></items>
-
                                 <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getPersons
                                 </itemsProcFunc>
                                 <size>15</size>
@@ -298,7 +296,6 @@
 
                             <config>
                                 <type>select</type>
-                                <renderType>selectSingle</renderType>
 
                                 <itemsProcFunc>
                                     Univie\UniviePure\Utility\ClassificationScheme->getProjects

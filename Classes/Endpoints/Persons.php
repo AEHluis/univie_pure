@@ -26,9 +26,11 @@ class Persons extends Endpoints
 
     public function getProfile($uuid)
     {
+        // Ensure UUID is a string and escape it for XML
+        $escapedUuid = htmlspecialchars((string)$uuid, ENT_QUOTES, 'UTF-8');
         $xml = '<?xml version="1.0"?>
 				<personsQuery>
-				<uuids>' . $uuid . '</uuids>
+				<uuids>' . $escapedUuid . '</uuids>
 				<rendering>short</rendering>
 				<linkingStrategy>portalLinkingStrategy</linkingStrategy>';
 
@@ -39,34 +41,27 @@ class Persons extends Endpoints
 
         $profile = $this->webservice->getJson('persons', $xml);
 
-        if (
-            is_array($profile)
-            && isset($profile['items'][0]['rendering'][0]['value'])
-        ) {
-            return $profile['items'][0]['rendering'][0]['value'];
-        }
-        return null;
+        // Use getNestedArrayValue for safer access
+        $renderingValue = $this->getNestedArrayValue($profile, 'items.0.rendering.0.value');
+        return $renderingValue; // Corrected: return the found value
     }
 
     public function getPortalUrl($uuid)
     {
+        // Ensure UUID is a string and escape it for XML
+        $escapedUuid = htmlspecialchars((string)$uuid, ENT_QUOTES, 'UTF-8');
         $xml = '<?xml version="1.0"?>
 				<personsQuery>
-				<uuids>' . $uuid . '</uuids>
+				<uuids>' . $escapedUuid . '</uuids>
 				<fields>info.portalUrl</fields>
 				<linkingStrategy>portalLinkingStrategy</linkingStrategy>';
 
         //set locale:
         $xml .= LanguageUtility::getLocale('xml');
         $xml .= '</personsQuery>';
-        $portalUrl = $this->webservice->getJson('persons', $xml);
+        $portalUrlData = $this->webservice->getJson('persons', $xml);
 
-        if (
-            is_array($portalUrl)
-            && isset($portalUrl['items'][0]['info']['portalUrl'])
-        ) {
-            return $portalUrl['items'][0]['info']['portalUrl'];
-        }
-        return null;
+        // Use getNestedArrayValue for safer and cleaner access
+        return $this->getNestedArrayValue($portalUrlData, 'items.0.info.portalUrl');
     }
 }

@@ -99,83 +99,10 @@ class Equipments extends Endpoints
                             $view["items"][$index]["uuid"] = $uuid;
                             $view["items"][$index]["portaluri"] = $portalUri;
 
-                            // Handle contact persons
-                            $contactPersons = $this->getArrayValue($items, "contactPersons", []);
-                            $contactPerson = $this->getArrayValue($contactPersons, "contactPerson", []);
-
-                            // Initialize the contact person array if it doesn't exist
-                            if (!isset($view["items"][$index]["contactPerson"])) {
-                                $view["items"][$index]["contactPerson"] = [];
-                            }
-
-                            // Check if contactPerson is a single entry or an array of entries
-                            $name = $this->getNestedArrayValue($contactPerson, 'name.text', '');
-                            if (!empty($name)) {
-                                // Single contact person
-                                $view["items"][$index]["contactPerson"][] = $name;
-                            } elseif (is_array($contactPerson)) {
-                                // Multiple contact persons
-                                foreach ($contactPerson as $p) {
-                                    $personName = $this->getNestedArrayValue($p, 'name.text', '');
-                                    if (!empty($personName)) {
-                                        $view["items"][$index]["contactPerson"][] = $personName;
-                                    }
-                                }
-                            }
-
-                            // Initialize the email array if it doesn't exist
-                            if (!isset($view["items"][$index]["email"])) {
-                                $view["items"][$index]["email"] = [];
-                            }
-
-                            // Get emails safely
-                            $emails = $this->getNestedArrayValue($items, "emails.email", []);
-
-                            // Handle single email case
-                            $emailValue = $this->getNestedArrayValue($emails, "value", '');
-                            if (!empty($emailValue)) {
-                                $view["items"][$index]["email"][] = strtolower($emailValue);
-                            } // Handle multiple emails case
-                            elseif (is_array($emails)) {
-                                foreach ($emails as $e) {
-                                    $singleEmail = $this->getNestedArrayValue($e, "value", '');
-                                    if (!empty($singleEmail)) {
-                                        $view["items"][$index]["email"][] = strtolower($singleEmail);
-                                    }
-                                }
-                            }
-
-                            // Initialize the webAddress array if it doesn't exist
-                            if (!isset($view["items"][$index]["webAddress"])) {
-                                $view["items"][$index]["webAddress"] = [];
-                            }
-
-                            // Get web addresses safely
-                            $webAddresses = $this->getNestedArrayValue($items, "webAddresses.webAddress", []);
-
-                            // Handle single web address case
-                            $webAddressText = $this->getNestedArrayValue($webAddresses, "value.text", '');
-                            if (!empty($webAddressText)) {
-                                $view["items"][$index]["webAddress"][] = $webAddressText;
-                            } // Handle multiple web addresses case
-                            elseif (is_array($webAddresses)) {
-                                foreach ($webAddresses as $e) {
-                                    // Original used $e["value"][1]["text"] for multiple addresses but $webAddress["value"]["text"] for single
-                                    // I'm using the consistent approach with getNestedArrayValue
-
-                                    // For the single case pattern
-                                    $singleWebAddressText = $this->getNestedArrayValue($e, "value.text", '');
-                                    if (!empty($singleWebAddressText)) {
-                                        $view["items"][$index]["webAddress"][] = $singleWebAddressText;
-                                    }
-
-                                    // For the multiple case pattern that used index 1
-                                    $multipleWebAddressText = $this->getNestedArrayValue($e, "value.1.text", '');
-                                    if (empty($singleWebAddressText) && !empty($multipleWebAddressText)) {
-                                        $view["items"][$index]["webAddress"][] = $multipleWebAddressText;
-                                    }
-                                }
-                            }
+                            // Process data using helper methods
+                            $this->processContactPersons($items, $index, $view);
+                            $this->processEmails($items, $index, $view);
+                            $this->processWebAddresses($items, $index, $view);
 
 
                             if ($this->arrayKeyExists('linkToPortal', $settings) && $settings['linkToPortal'] == 1) {
@@ -204,19 +131,7 @@ class Equipments extends Endpoints
 
                     // Handle contact persons for single item
                     $contactPersons = $this->getArrayValue($view["items"]["equipment"], "contactPersons", []);
-                    $contactPerson = $this->getArrayValue($contactPersons, "contactPerson", []);
-
-                    if ($this->arrayKeyExists("name", $contactPerson)) {
-                        $view["items"][0]["contactPerson"][] = $contactPerson["name"]["text"];
-                    } else if (is_array($contactPerson)) {
-                        foreach ($contactPerson as $p) {
-                            // Safely get the name text and add it to the contact person array
-                            $nameText = $this->getNestedArrayValue($p, 'name.text', '');
-                            if (!empty($nameText)) {
-                                $view["items"][0]["contactPerson"][] = $nameText;
-                            }
-                        }
-                    }
+                    $this->processContactPersonsSingle($contactPersons, $view);
 
                     // Handle emails for single item
                     $emails = $this->getArrayValue($view["items"]["equipment"], "emails", []);
@@ -242,6 +157,91 @@ class Equipments extends Endpoints
         $view['offset'] = $this->calculateOffset((int)$settings['pageSize'], (int)$currentPageNumber);
 
         return $view;
+    }
+
+    private function processContactPersons(array $items, int $index, array &$view): void
+    {
+        $contactPersons = $this->getArrayValue($items, "contactPersons", []);
+        $contactPerson = $this->getArrayValue($contactPersons, "contactPerson", []);
+
+        if (!isset($view["items"][$index]["contactPerson"])) {
+            $view["items"][$index]["contactPerson"] = [];
+        }
+
+        $name = $this->getNestedArrayValue($contactPerson, 'name.text', '');
+        if (!empty($name)) {
+            $view["items"][$index]["contactPerson"][] = $name;
+        } elseif (is_array($contactPerson)) {
+            foreach ($contactPerson as $p) {
+                $personName = $this->getNestedArrayValue($p, 'name.text', '');
+                if (!empty($personName)) {
+                    $view["items"][$index]["contactPerson"][] = $personName;
+                }
+            }
+        }
+    }
+
+    private function processEmails(array $items, int $index, array &$view): void
+    {
+        if (!isset($view["items"][$index]["email"])) {
+            $view["items"][$index]["email"] = [];
+        }
+
+        $emails = $this->getNestedArrayValue($items, "emails.email", []);
+
+        $emailValue = $this->getNestedArrayValue($emails, "value", '');
+        if (!empty($emailValue)) {
+            $view["items"][$index]["email"][] = strtolower($emailValue);
+        } elseif (is_array($emails)) {
+            foreach ($emails as $e) {
+                $singleEmail = $this->getNestedArrayValue($e, "value", '');
+                if (!empty($singleEmail)) {
+                    $view["items"][$index]["email"][] = strtolower($singleEmail);
+                }
+            }
+        }
+    }
+
+    private function processWebAddresses(array $items, int $index, array &$view): void
+    {
+        if (!isset($view["items"][$index]["webAddress"])) {
+            $view["items"][$index]["webAddress"] = [];
+        }
+
+        $webAddresses = $this->getNestedArrayValue($items, "webAddresses.webAddress", []);
+
+        $webAddressText = $this->getNestedArrayValue($webAddresses, "value.text", '');
+        if (!empty($webAddressText)) {
+            $view["items"][$index]["webAddress"][] = $webAddressText;
+        } elseif (is_array($webAddresses)) {
+            foreach ($webAddresses as $e) {
+                $singleWebAddressText = $this->getNestedArrayValue($e, "value.text", '');
+                if (!empty($singleWebAddressText)) {
+                    $view["items"][$index]["webAddress"][] = $singleWebAddressText;
+                }
+
+                $multipleWebAddressText = $this->getNestedArrayValue($e, "value.1.text", '');
+                if (empty($singleWebAddressText) && !empty($multipleWebAddressText)) {
+                    $view["items"][$index]["webAddress"][] = $multipleWebAddressText;
+                }
+            }
+        }
+    }
+
+    private function processContactPersonsSingle(array $contactPersons, array &$view): void
+    {
+        $contactPerson = $this->getArrayValue($contactPersons, "contactPerson", []);
+
+        if ($this->arrayKeyExists("name", $contactPerson)) {
+            $view["items"][0]["contactPerson"][] = $contactPerson["name"]["text"];
+        } elseif (is_array($contactPerson)) {
+            foreach ($contactPerson as $p) {
+                $nameText = $this->getNestedArrayValue($p, 'name.text', '');
+                if (!empty($nameText)) {
+                    $view["items"][0]["contactPerson"][] = $nameText;
+                }
+            }
+        }
     }
 
 }

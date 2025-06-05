@@ -47,7 +47,7 @@ class ClassificationScheme
             <organisationalUnitsQuery>
             <size>999999</size>
             <locales>
-            <locale>' . $this->locale . '</locale>
+            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
             </locales>
             <fields>
             <field>uuid</field>
@@ -131,7 +131,7 @@ class ClassificationScheme
             <projectsQuery>
             <size>999999</size>
             <locales>
-            <locale>' . $this->locale . '</locale>
+            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
             </locales>
             <fields>
             <field>uuid</field>
@@ -360,7 +360,7 @@ class ClassificationScheme
     {
         $xml = '<?xml version="1.0"?>
             <personsQuery>
-            <searchString>' . htmlspecialchars($email) . '</searchString>
+            <searchString>' . htmlspecialchars($email, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>
             <locales>
             <locale>' . $this->locale . '</locale>
             </locales>

@@ -56,7 +56,7 @@ class CommonUtilities
         if ($pageSize == 0 || $pageSize === null) {
             $pageSize = 20;
         }
-        return '<size>' . $pageSize . '</size>';
+        return '<size>' . (int)$pageSize . '</size>';
     }
 
     /**
@@ -67,7 +67,7 @@ class CommonUtilities
     {
         $offset = $currentPage;
         $offset = ($offset - 1 < 0) ? 0 : $offset - 1;
-        return '<offset>' . $offset * (int)$pageSize . '</offset>';
+        return '<offset>' . (int)($offset * (int)$pageSize) . '</offset>';
     }
 
 
@@ -123,14 +123,16 @@ class CommonUtilities
             if (strpos($org, '|') !== false) {
                 $org = explode('|', $org)[0];
             }
-            $xml .= '<uuid>' . $org . '</uuid>';
+            $sanitizedOrgUuid = htmlspecialchars($org, ENT_QUOTES | ENT_XML1, 'UTF-8');
+            $xml .= '<uuid>' . $sanitizedOrgUuid . '</uuid>';
             // check for sub units
             if (self::getArrayValue($settings, 'includeSubUnits', 0) == 1) {
                 $subUnits = self::getSubUnits($org);
                 if (is_array($subUnits) && count($subUnits) > 1) {
                     foreach ($subUnits as $subUnit) {
                         if (self::getArrayValue($subUnit, 'uuid') !== $org) {
-                            $xml .= '<uuid>' . $subUnit['uuid'] . '</uuid>';
+                            $sanitizedSubUnitUuid = htmlspecialchars($subUnit['uuid'], ENT_QUOTES | ENT_XML1, 'UTF-8');
+                            $xml .= '<uuid>' . $sanitizedSubUnitUuid . '</uuid>';
                         }
                     }
                 }
@@ -159,7 +161,8 @@ class CommonUtilities
             if (strpos($person, '|') !== false) {
                 $person = explode('|', $person)[0];
             }
-            $xml .= '<uuid>' . $person . '</uuid>';
+            $sanitizedPersonUuid = htmlspecialchars($person, ENT_QUOTES | ENT_XML1, 'UTF-8');
+            $xml .= '<uuid>' . $sanitizedPersonUuid . '</uuid>';
         }
         $xml .= '</uuids></forPersons>';
         return $xml;
@@ -195,7 +198,8 @@ class CommonUtilities
                 $proj = explode('|', $proj)[0];
             }
             if (!empty($proj)) {
-                $xmlProjects .= '<uuid>' . $proj . '</uuid>';
+                $sanitizedProjUuid = htmlspecialchars($proj, ENT_QUOTES | ENT_XML1, 'UTF-8');
+                $xmlProjects .= '<uuid>' . $sanitizedProjUuid . '</uuid>';
             }
         }
         $xmlProjects .= '</uuids>
@@ -218,7 +222,8 @@ class CommonUtilities
             foreach ($publications['items'] as $researchOutputs) {
                 if (!empty($researchOutputs) && isset($researchOutputs['relatedResearchOutputs'])) {
                     foreach ($researchOutputs['relatedResearchOutputs'] as $researchOutput) {
-                        $xmlTemp .= '<uuid>' . $researchOutput['uuid'] . '</uuid>';
+                        $sanitizedResearchUuid = htmlspecialchars($researchOutput['uuid'], ENT_QUOTES | ENT_XML1, 'UTF-8');
+                        $xmlTemp .= '<uuid>' . $sanitizedResearchUuid . '</uuid>';
                         $hasResearchOutputs = true;
                     }
                 }
@@ -265,7 +270,8 @@ class CommonUtilities
                     $project = explode("|", $project)[0];
                 }
                 if (!empty($project)) {
-                    $xmlProjects .= '<uuid>' . $project . '</uuid>';
+                    $sanitizedProjectUuid = htmlspecialchars($project, ENT_QUOTES | ENT_XML1, 'UTF-8');
+                    $xmlProjects .= '<uuid>' . $sanitizedProjectUuid . '</uuid>';
                 }
             }
 
@@ -288,7 +294,8 @@ class CommonUtilities
                 foreach ($datasets['items'] as $d) {
                     if (!empty($d) && isset($d['relatedDataSets'])) {
                         foreach ($d['relatedDataSets'] as $i) {
-                            $xmlTemp .= '<uuid>' . $i['uuid'] . '</uuid>';
+                            $sanitizedDatasetUuid = htmlspecialchars($i['uuid'], ENT_QUOTES | ENT_XML1, 'UTF-8');
+                            $xmlTemp .= '<uuid>' . $sanitizedDatasetUuid . '</uuid>';
                             $hasDatasets = true;
                         }
                     }
@@ -322,7 +329,7 @@ class CommonUtilities
     <orderings><ordering>type</ordering></orderings>
     <returnUsedContent>true</returnUsedContent>
     <navigationLink>true</navigationLink>
-    <searchString>"' . $orgName . '"</searchString>
+    <searchString>"' . htmlspecialchars($orgName, ENT_QUOTES | ENT_XML1, 'UTF-8') . '"</searchString>
 </organisationalUnitsQuery>';
         $webservice = new WebService;
         $subUnits = $webservice->getJson('organisational-units', $xml);
@@ -345,7 +352,7 @@ class CommonUtilities
     {
         $xml = '<?xml version="1.0"?>
 <organisationalUnitsQuery>
-    <uuids><uuid>' . $orgId . '</uuid></uuids>
+    <uuids><uuid>' . htmlspecialchars($orgId, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</uuid></uuids>
     <size>1</size>
     <offset>0</offset>
     <locales><locale>de_DE</locale></locales>

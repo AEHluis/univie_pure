@@ -58,7 +58,9 @@ class Endpoints
             $terms .= ' ' . $filter;
         }
 
-        return '<searchString>' . trim($terms) . '</searchString>';
+        // Sanitize for XML to prevent XML injection
+        $sanitizedTerms = htmlspecialchars(trim($terms), ENT_QUOTES | ENT_XML1, 'UTF-8');
+        return '<searchString>' . $sanitizedTerms . '</searchString>';
     }
 
 
@@ -67,7 +69,9 @@ class Endpoints
         if (empty($order)) {
             $order = $default;
         }
-        return '<orderings><ordering>' . $order . '</ordering></orderings>';
+        // Sanitize for XML to prevent XML injection
+        $sanitizedOrder = htmlspecialchars($order, ENT_QUOTES | ENT_XML1, 'UTF-8');
+        return '<orderings><ordering>' . $sanitizedOrder . '</ordering></orderings>';
     }
 
 

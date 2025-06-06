@@ -15,6 +15,10 @@
 				<source>T3LUH FIS research information system</source>
 				<target>T3LUH FIS Forschungsinformationssystem</target>
 			</trans-unit>
+			<trans-unit id="university_name">
+				<source>Leibniz University Hannover</source>
+				<target>Leibniz Universität Hannover</target>
+			</trans-unit>
 			<trans-unit id="univiepur.publication.publication">
 				<source>Publication</source>
 				<target>Publikation</target>

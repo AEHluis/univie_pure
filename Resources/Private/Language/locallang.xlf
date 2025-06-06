@@ -15,6 +15,9 @@
 			<trans-unit id="univiepur.publication.publication">
 				<source>Publication</source>
 			</trans-unit>
+			<trans-unit id="university_name">
+				<source>Leibniz University Hannover</source>
+			</trans-unit>
 			<trans-unit id="univiepur.publication.abstract">
 				<source>Abstract</source>
 			</trans-unit>

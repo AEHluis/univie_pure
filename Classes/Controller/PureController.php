@@ -6,7 +6,6 @@ use Univie\UniviePure\Endpoints\DataSets;
 use Univie\UniviePure\Endpoints\ResearchOutput;
 use Univie\UniviePure\Endpoints\Projects;
 use Univie\UniviePure\Endpoints\Equipments;
-use T3luh\T3luhlib\Utils\Page;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Univie\UniviePure\Utility\LanguageUtility;
 use Univie\UniviePure\Utility\CommonUtilities;
@@ -20,6 +19,17 @@ use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Http\ServerRequestFactory;
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Localization\LocalizationFactory;
+use TYPO3\CMS\Core\Localization\Locales;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Frontend\Page\PageRepository;
+
+
 
 /*
  * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
@@ -287,7 +297,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 // Update page title if available
                 $titleValue = CommonUtilities::getNestedArrayValue($view, 'title.value', '');
                 if (!empty($titleValue)) {
-                    Page::updatePageTitle($titleValue);
+                    $this->updatePageTitle($titleValue);
                 }
 
                 // Assign data to view
@@ -319,4 +329,59 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         throw new ImmediateResponseException($response, 1591428020);
     }
 
+
+    function updatePageTitle(string $title): void
+    {
+        $concatenatedTitles = [$title];
+
+        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
+        $context = GeneralUtility::makeInstance(Context::class);
+
+        if (!$context->hasAspect('frontend.page')) {
+            return; // Kontext nicht verfügbar – kein Fehler werfen
+        }
+
+        $currentPageId = $context->getAspect('frontend.page')->get('id');
+
+        $currentSite = $siteFinder->getSiteByPageId((int)$currentPageId);
+        $rootLineTitle = $currentSite->getConfiguration()['rootPageTitle'] ?? 'Home';
+
+        $languageService = self::getLanguageService();
+        $universityName = $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:university_name');
+
+        $concatenatedTitles[] = $rootLineTitle;
+        $concatenatedTitles[] = $universityName;
+        $concatenatedTitles = array_unique($concatenatedTitles);
+        $pageTitle = trim(implode(" – ", $concatenatedTitles));
+
+        $GLOBALS['TSFE']->getPageRenderer()->setTitle($pageTitle);
+        $GLOBALS['TSFE']->indexedDocTitle = $pageTitle;
+    }
+    
+     /**
+     * Get the TYPO3 language service.
+     *
+     * @return LanguageService
+     */
+    protected function getLanguageService(): LanguageService
+    {
+        if (isset($GLOBALS['LANG'])) {
+            return $GLOBALS['LANG'];
+        }
+        
+        // In TYPO3 12, use the language service from request or create with required parameters
+        $context = GeneralUtility::makeInstance(Context::class);
+        $languageAspect = $context->getAspect('language');
+        $localizationFactory = GeneralUtility::makeInstance(LocalizationFactory::class);
+        
+        // Create language service with proper constructor arguments
+        $languageService = new LanguageService(
+            GeneralUtility::makeInstance(Locales::class),
+            $localizationFactory,
+            GeneralUtility::makeInstance(CacheManager::class)->getCache('runtime')
+        );
+        $languageService->init($languageAspect->get('id'));
+        
+        return $languageService;
+    }
 }

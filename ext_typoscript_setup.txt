@@ -1,1 +1,0 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:univie_pure/Configuration/TypoScript/setup.txt">

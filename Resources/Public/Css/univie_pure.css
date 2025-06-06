@@ -1,0 +1,144 @@
+/* default styles for extension "tx_univiepure" */
+
+.tx_univiepure {
+    margin: 0.5rem;
+}
+
+.rendering_dataset_long > .tx_univiepure .contenttable tr {
+    width: max-content;
+    display: inherit;
+}
+
+.tx-univie-pure .eogroup {
+    margin-bottom: 2rem;
+}
+
+.type_family_sep::after {
+    content: '\00a0';
+}
+
+/* anti webscraper (at)-sign in e-mail adresses*/
+.fa-fa::before {
+    content: '\0040';
+}
+
+.tx-univie-pure p.type {
+    margin-bottom: 0;
+}
+
+.tx-univie-pure p.equipment-person {
+    margin-bottom: 0;
+}
+
+
+.tx-univie-pure h3 {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    hyphens: auto;
+}
+
+.tx-univie-pure .subheader {
+    font-size: 1rem;
+    line-height: 1rem;
+    font-weight: 600;
+    hyphens: auto;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+}
+
+.tx-univie-pure h4 {
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    hyphens: auto;
+}
+
+.tx-univie-pure .c-search__item {
+
+    margin-bottom: 1.4rem;
+}
+
+.tx-univie-pure table.contenttable > tbody {
+    background-color: #e6e6e6;
+}
+
+div.projects > div > h2 {
+    font-size: inherit;
+    text-rendering: optimizeLegibility;
+    text-align: left;
+    margin-bottom: 0;
+    line-height: 1.2;
+}
+
+.rendering.rendering_upmproject.rendering_short.rendering_upmproject_short p {
+    margin-bottom: 0;
+}
+
+.rendering.rendering_researchoutput > span.title {
+    font-weight: bold;
+}
+
+.rendering.rendering_researchoutput > span.harvard_title {
+    font-weight: bold;
+}
+
+.rendering.rendering_researchoutput > p.type {
+    display: inline-block;
+    width: 100%;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.rendering.rendering_equipment.rendering_short.rendering_equipment_short span {
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+.c-pagination__totalResults {
+    text-decoration: none !important;
+    float: left;
+    color: #000;
+    font-weight: 400 !important;
+}
+
+.o-small-padding {
+    padding: 0.5rem;
+}
+
+.tx-univie-pure .subheader {
+    color: #0a0a0a;
+}
+
+.tx-univie-pure dl {
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    margin: 0
+}
+
+.tx-univie-pure dt {
+    float: left;
+    width: 30%;
+    padding: 0;
+    margin: 0
+}
+
+.tx-univie-pure dd {
+    float: left;
+    width: 70%;
+    padding: 0;
+    margin: 0
+}
+
+#typo3-ucris-projects-suggest {
+    width: 100%;
+}
+
+.tx-univie-pure .typo3-TCEforms-suggest-resultlist {
+    list-style: none;
+}
+
+.tx-univie-pure .typo3-TCEforms-suggest-resultlist > li {
+    background-color: #e6e6e6;
+}

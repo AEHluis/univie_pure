@@ -69,6 +69,7 @@ class ResearchOutput extends Endpoints
                 foreach ($results_short["contributionToJournal"] as $index => $contributionToJournal) {
                     if (isset($contributionToJournal["rendering"])) {
                         $new_render = $contributionToJournal["rendering"];
+                        // Use preg_replace for h2 to h4 transformation
                         $new_render = preg_replace('#<h2 class="title">(.*?)</h2>#is', '<h4 class="title">$1</h4>', $new_render);
                         $results_short["contributionToJournal"][$index]["rendering"] = $new_render;
                     }
@@ -212,7 +213,6 @@ class ResearchOutput extends Endpoints
         return '<field>publicationStatuses.publicationStatus.*</field>';
     }
 
-
     /**
      * Generate XML for research types
      *
@@ -282,68 +282,6 @@ class ResearchOutput extends Endpoints
         return $xml;
     }
 
-    /**
-     * Group publications by year
-     *
-     * @param array $publications The publications array to process
-     * @return array The grouped publications
-     */
-    protected function groupByYear(array $publications): array
-    {
-        // Initialize result array
-        $array = [
-            'count' => $this->getNestedArrayValue($publications, 'count', 0),
-            'contributionToJournal' => []
-        ];
-
-        // Get sort key safely
-        $sortkey = $this->getNestedArrayValue(
-            $publications,
-            'contributionToJournal.publicationStatuses.publicationStatus.publicationDate.year',
-            0
-        );
-
-        $i = 0;
-
-        // Process each contribution
-        foreach ($publications as $key => $contribution) {
-            // Skip non-array items or special keys like 'count'
-            if (!is_array($contribution) || $key === 'count') {
-                continue;
-            }
-
-            // Get values safely
-            $year = $this->getNestedArrayValue(
-                $contribution,
-                'publicationStatuses.publicationDate.year',
-                'Unknown Year'
-            );
-
-            $rendering = $this->getNestedArrayValue(
-                $contribution,
-                'rendering.0.value',
-                ''
-            );
-
-            $uuid = $this->getNestedArrayValue(
-                $contribution,
-                'uuid',
-                ''
-            );
-
-            // Add to result array
-            $array['contributionToJournal'][$i] = [
-                'year' => $year,
-                'rendering' => $rendering,
-                'uuid' => $uuid
-            ];
-
-            $i++;
-        }
-
-        return $array;
-    }
-
 
     /**
      * Transform publication data array
@@ -365,10 +303,11 @@ class ResearchOutput extends Endpoints
 
         foreach ($publications['items'] as $contribution) {
             // Get portal URI for the publication
-            $singlePub = $this->getAlternativeSinglePublication($contribution['uuid'] ?? '', $lang);
+            // This is done once per contribution, outside the status loop for efficiency
+            $singlePub = $this->getAlternativeSinglePublication($this->getArrayValue($contribution, 'uuid', ''), $lang);
             $portalUri = $this->getNestedArrayValue($singlePub, 'items.0.info.portalUrl', '');
 
-            // Check if publication should be rendered
+            // Initialize rendering status for this contribution
             $allowedToRender = false;
             $allowedToRenderLuhPubsOnly = false;
             $luhPublsOnly_setting = intval($this->getArrayValue($settings, 'luhPubsOnly', 0));
@@ -384,7 +323,12 @@ class ResearchOutput extends Endpoints
                 }
             }
 
-            // Check publication status
+            // Variables to hold info from the "current" status
+            $currentPublicationYear = '';
+            $currentPublicationStatusValue = '';
+            $currentPublicationStatusUri = '';
+
+            // Process publication statuses
             $publicationStatuses = $this->getArrayValue($contribution, 'publicationStatuses', []);
             foreach ($publicationStatuses as $status) {
                 $statusUri = $this->getNestedArrayValue($status, 'publicationStatus.uri', '');
@@ -394,44 +338,50 @@ class ResearchOutput extends Endpoints
                     '/dk/atira/pure/researchoutput/status/epub'
                 ]);
 
+                // Determine if this publication is generally allowed to render based on its statuses
                 if ($isPublishedStatus) {
                     if ($allowedToRenderLuhPubsOnly && ($luhPublsOnly_setting == 1)) {
                         $allowedToRender = true;
                     }
-                    if ($luhPublsOnly_setting != 1) {
+                    // If not restricted to LUH pubs, or if it passes the LUH check
+                    if ($luhPublsOnly_setting != 1 || ($luhPublsOnly_setting == 1 && $allowedToRenderLuhPubsOnly)) {
                         $allowedToRender = true;
                     }
 
-                    // Check for in-press filter
+                    // Apply in-press filter (can override previous $allowedToRender)
                     $inPress = $this->getArrayValue($settings, 'inPress', true);
                     if (!$inPress && $statusUri == '/dk/atira/pure/researchoutput/status/inpress') {
                         $allowedToRender = false;
                     }
                 }
 
-                if ($allowedToRender && $this->getArrayValue($status, 'current', '') === 'true') {
-                    // Add year for grouping if enabled
-                    if ($this->getArrayValue($settings, 'groupByYear', false)) {
-                        $array['contributionToJournal'][$i]['year'] =
-                            $this->getNestedArrayValue($status, 'publicationDate.year', '');
+                // Capture details from the *current* status, regardless of $allowedToRender yet
+                if ($this->getArrayValue($status, 'current', '') == 'true') {
+                    $currentPublicationYear = $this->getNestedArrayValue($status, 'publicationDate.year', '');
+                    // Adjust status value based on language
+                    if ($lang === 'de_DE') {
+                        $currentPublicationStatusValue = $this->getNestedArrayValue($status, 'publicationStatus.term.text.1.value', '');
+                    } else {
+                        $currentPublicationStatusValue = $this->getNestedArrayValue($status, 'publicationStatus.term.text.0.value', '');
                     }
-
-                    // Add publication status if enabled
-                    if ($this->getArrayValue($settings, 'showPublicationType', false)) {
-                        $array['contributionToJournal'][$i]['publicationStatus']['value'] =
-                            $this->getNestedArrayValue($status, 'publicationStatus.term.text.0.value', '');
-                        $array['contributionToJournal'][$i]['publicationStatus']['uri'] = $statusUri;
-                    }
+                    $currentPublicationStatusUri = $statusUri;
                 }
             }
 
-            // Add publication details if allowed to render
+            // Add publication details to the final array ONLY if allowed to render
             if ($allowedToRender) {
-                $array['contributionToJournal'][$i]['rendering'] =
-                    $this->getNestedArrayValue($contribution, 'renderings.0.html', '');
-                $array['contributionToJournal'][$i]['uuid'] =
-                    $this->getArrayValue($contribution, 'uuid', '');
+                $array['contributionToJournal'][$i]['rendering'] = $this->getNestedArrayValue($contribution, 'renderings.0.html', '');
+                $array['contributionToJournal'][$i]['uuid'] = $this->getArrayValue($contribution, 'uuid', '');
                 $array['contributionToJournal'][$i]['portalUri'] = $portalUri;
+
+                // Assign the captured year and status details here, if the settings enable them
+                if ($this->getArrayValue($settings, 'groupByYear', false)) {
+                    $array['contributionToJournal'][$i]['year'] = $currentPublicationYear;
+                }
+                if ($this->getArrayValue($settings, 'showPublicationType', false)) {
+                    $array['contributionToJournal'][$i]['publicationStatus']['value'] = $currentPublicationStatusValue;
+                    $array['contributionToJournal'][$i]['publicationStatus']['uri'] = $currentPublicationStatusUri;
+                }
                 $i++;
             }
         }

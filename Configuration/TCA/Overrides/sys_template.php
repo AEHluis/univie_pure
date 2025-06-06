@@ -8,7 +8,7 @@
  */
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-    'tx_univiepure',
+    'univie_pure',
     'Configuration/TypoScript/setup.typoscript',
-    'T3LUH FIS: Static TypoScript'
+    'T3LUH FIS - TypoScript'
 );

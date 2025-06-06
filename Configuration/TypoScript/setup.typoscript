@@ -1,19 +1,42 @@
-
-plugin.tx_univiepure.view{
-	templateRootPaths{
-		0 = EXT:univie_pure/Resources/Private/Templates/
-	}
-	partialRootPaths {
-		0 = EXT:univie_pure/Resources/Private/Partials/
-	}
-	layoutRootPaths {
-		0 = EXT:univie_pure/Resources/Private/Layouts/
-	}
-	widget {
-        TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
-            templateRootPath = {$plugin.tx_univie_pure.view.templateRootPath}
-        }
+# Main plugin configuration for "univie_pure"
+plugin.tx_univiepure_univiepure {
+    view {
+        templateRootPath = {$plugin.tx_univiepure_univiepure.view.templateRootPath}
+        partialRootPath = {$plugin.tx_univiepure_univiepure.view.partialRootPath}
+        layoutRootPath = {$plugin.tx_univiepure_univiepure.view.layoutRootPath}
     }
+
+    persistence {
+        storagePid = {$plugin.tx_univiepure_univiepure.persistence.storagePid}
+    }
+
+    features {
+        # uncomment the following line to enable the new Property Mapper.
+        # rewrittenPropertyMapper = 1
+    }
+
+    settings {
+        # You can define any default settings for your plugin here.
+        # These will be used if not overridden by FlexForm settings.
+    }
+
+    # _CSS_DEFAULT_STYLE has been removed. Manage CSS via Fluid assets in templates.
+}
+
+# Plugin registration
+tt_content.list.20.univiepure_univiepure = USER
+tt_content.list.20.univiepure_univiepure {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+
+    vendorName = Univie
+    extensionName = UniviePure
+    pluginName = UniviePure
+
+    view =< plugin.tx_univiepure_univiepure.view
+    persistence =< plugin.tx_univiepure_univiepure.persistence
+    features =< plugin.tx_univiepure_univiepure.features
+
+    settings =< plugin.tx_univiepure_univiepure.settings
 }
 
 

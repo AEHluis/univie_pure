@@ -28,6 +28,14 @@ call_user_func(
             ]
         );
 
+        // TypoScript
+        ExtensionManagementUtility::addTypoScriptConstants(
+            '@import "EXT:univie_pure/Configuration/TypoScript/constants.typoscript"'
+        );
+        ExtensionManagementUtility::addTypoScriptSetup(
+            '@import "EXT:univie_pure/Configuration/TypoScript/setup.typoscript"'
+        );
+
         // Add PageTSConfig for wizard
         ExtensionManagementUtility::addPageTSConfig(
             '@import "EXT:univie_pure/Configuration/TSconfig/Page/Mod/Wizards/NewContentElement.tsconfig"'

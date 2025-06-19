@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Univie\UniviePure\Endpoints;
 
 use Univie\UniviePure\Service\WebService;
-use Univie\UniviePure\Utility\CommonUtilities;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Univie\UniviePure\Utility\LanguageUtility;
 
 /*
@@ -16,7 +16,6 @@ use Univie\UniviePure\Utility\LanguageUtility;
 
 class Persons extends Endpoints
 {
-
     private readonly WebService $webservice;
 
     public function __construct(WebService $webservice)
@@ -24,32 +23,41 @@ class Persons extends Endpoints
         $this->webservice = $webservice;
     }
 
-    public function getProfile($uuid)
+    /**
+     * Retrieves the profile rendering for a given person UUID.
+     *
+     * @param string $uuid The UUID of the person
+     * @return string|null The HTML rendering of the profile, or null
+     */
+    public function getProfile(string $uuid): ?string
     {
         // Ensure UUID is a string and escape it for XML
-        $escapedUuid = htmlspecialchars((string)$uuid, ENT_QUOTES, 'UTF-8');
+        $escapedUuid = htmlspecialchars($uuid, ENT_QUOTES, 'UTF-8');
         $xml = '<?xml version="1.0"?>
 				<personsQuery>
 				<uuids>' . $escapedUuid . '</uuids>
 				<rendering>short</rendering>
 				<linkingStrategy>portalLinkingStrategy</linkingStrategy>';
-
         //set locale:
         $xml .= LanguageUtility::getLocale('xml');
-
         $xml .= '</personsQuery>';
 
         $profile = $this->webservice->getJson('persons', $xml);
-
-        // Use getNestedArrayValue for safer access
         $renderingValue = $this->getNestedArrayValue($profile, 'items.0.rendering.0.value');
-        return $renderingValue; // Corrected: return the found value
+
+        return is_string($renderingValue) ? $renderingValue : null;
     }
 
-    public function getPortalUrl($uuid)
+    /**
+     * Retrieves the portal URL for a given person UUID.
+     *
+     * @param string $uuid The UUID of the person.
+     * @return string|null The portal URL, or null if not found.
+     */
+    public function getPortalUrl(string $uuid): ?string
     {
         // Ensure UUID is a string and escape it for XML
-        $escapedUuid = htmlspecialchars((string)$uuid, ENT_QUOTES, 'UTF-8');
+        $escapedUuid = htmlspecialchars($uuid, ENT_QUOTES, 'UTF-8');
         $xml = '<?xml version="1.0"?>
 				<personsQuery>
 				<uuids>' . $escapedUuid . '</uuids>
@@ -59,9 +67,11 @@ class Persons extends Endpoints
         //set locale:
         $xml .= LanguageUtility::getLocale('xml');
         $xml .= '</personsQuery>';
-        $portalUrlData = $this->webservice->getJson('persons', $xml);
 
-        // Use getNestedArrayValue for safer and cleaner access
-        return $this->getNestedArrayValue($portalUrlData, 'items.0.info.portalUrl');
+        $portalUrlData = $this->webservice->getJson('persons', $xml);
+        $portalUrl = $this->getNestedArrayValue($portalUrlData, 'items.0.info.portalUrl');
+
+        // Ensure the returned value is a string or null
+        return is_string($portalUrl) ? $portalUrl : null;
     }
 }

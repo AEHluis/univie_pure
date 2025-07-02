@@ -484,13 +484,15 @@ final class ClassificationSchemeTest extends UnitTestCase
         $subject->getItemsToChoose($config, $PA);
 
         // Assert the result
-        $this->assertCount(3, $config['items']);
+        $this->assertCount(4, $config['items']);
         $this->assertEquals('Translated: LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectBlank', $config['items'][0][0]);
         $this->assertEquals(-1, $config['items'][0][1]);
         $this->assertEquals('Translated: LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit', $config['items'][1][0]);
         $this->assertEquals(0, $config['items'][1][1]);
         $this->assertEquals('Translated: LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson', $config['items'][2][0]);
         $this->assertEquals(1, $config['items'][2][1]);
+        $this->assertEquals('Translated: LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPersonWithOrganization', $config['items'][3][0]);
+        $this->assertEquals(3, $config['items'][3][1]);
     }
 
 
@@ -532,9 +534,9 @@ final class ClassificationSchemeTest extends UnitTestCase
         $subject->getItemsToChoose($config, $PA);
 
         // Assert the result
-        $this->assertCount(4, $config['items']);
-        $this->assertEquals('Translated: LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByProject', $config['items'][3][0]);
-        $this->assertEquals(2, $config['items'][3][1]);
+        $this->assertCount(5, $config['items']);
+        $this->assertEquals('Translated: LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByProject', $config['items'][4][0]);
+        $this->assertEquals(2, $config['items'][4][1]);
     }
 
     #[Test]

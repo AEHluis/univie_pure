@@ -72,6 +72,9 @@
 			<trans-unit id="flexform.common.selectByPerson">
 				<source>Show list of chosen endpoint for person(s):</source>
 			</trans-unit>
+			<trans-unit id="flexform.common.selectByPersonWithOrganization">
+				<source>Show list of chosen endpoint for person(s) with organization:</source>
+			</trans-unit>
 			<trans-unit id="flexform.common.selectByProject">
 				<source>Show list of chosen endpoint for project(s):</source>
 			</trans-unit>

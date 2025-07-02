@@ -96,6 +96,10 @@ class CommonUtilities
                 // Research-output for persons:
                 $xml = self::getPersonsXml($settings);
                 break;
+            case 3:
+                // Research-output for persons with organization:
+                $xml = self::getPersonsWithOrganizationXml($settings);
+                break;
             // Default case returns empty string
         }
 
@@ -157,6 +161,32 @@ class CommonUtilities
 
         $xml = '<forPersons><uuids>';
         $persons = explode(',', $selectorPersons);
+        foreach ((array)$persons as $person) {
+            if (strpos($person, '|') !== false) {
+                $person = explode('|', $person)[0];
+            }
+            $sanitizedPersonUuid = htmlspecialchars($person, ENT_QUOTES | ENT_XML1, 'UTF-8');
+            $xml .= '<uuid>' . $sanitizedPersonUuid . '</uuid>';
+        }
+        $xml .= '</uuids></forPersons>';
+        return $xml;
+    }
+
+    /**
+     * Persons with organization query
+     * @return String xml
+     */
+    public static function getPersonsWithOrganizationXml($settings)
+    {
+        $selectorPersonsWithOrganization = self::getArrayValue($settings, 'selectorPersonsWithOrganization', '');
+        $narrowBySearch = self::getArrayValue($settings, 'narrowBySearch', '');
+
+        if ($selectorPersonsWithOrganization === '' && $narrowBySearch !== '') {
+            return '';
+        }
+
+        $xml = '<forPersons><uuids>';
+        $persons = explode(',', $selectorPersonsWithOrganization);
         foreach ((array)$persons as $person) {
             if (strpos($person, '|') !== false) {
                 $person = explode('|', $person)[0];

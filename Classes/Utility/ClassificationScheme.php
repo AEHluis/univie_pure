@@ -125,6 +125,73 @@ class ClassificationScheme
         }
     }
 
+    public function getPersonsByOrganization(&$config): void
+    {
+        $personXML = trim('<?xml version="1.0"?>
+            <personsQuery>
+            <size>999999</size>
+            <fields>
+            <field>uuid</field>
+            <field>name.*</field>
+            <field>honoraryStaffOrganisationAssociations.*</field>
+            </fields>
+            <orderings>
+            <ordering>lastName</ordering>
+            </orderings>
+            <employmentStatus>ACTIVE</employmentStatus>
+            </personsQuery>');
+
+        $persons = $this->getPersonsByOrganizationFromCache();
+
+        if ($persons === null || !$this->isValidPersonsData($persons)) {
+            $persons = $this->webService->getJson('persons', $personXML);
+            if (!$persons || !isset($persons['items'])) {
+                $this->addFlashMessage(
+                    'Could not fetch Person data with organization associations from the API. Please check your connection.',
+                    'Person Organization Data Fetch Failed',
+                    ContextualFeedbackSeverity::WARNING
+                );
+                return;
+            }
+            $this->storePersonsByOrganizationToCache($persons);
+        }
+
+        if (is_array($persons) && isset($persons['items'])) {
+            foreach ($persons['items'] as $person) {
+                $personName = $person['name']['lastName'] . ', ' . $person['name']['firstName'];
+                $organizationNames = $this->getActiveOrganizationNames($person);
+                
+                if (!empty($organizationNames)) {
+                    $displayName = $personName . ' (' . implode(', ', $organizationNames) . ')';
+                } else {
+                    $displayName = $personName;
+                }
+                
+                $config['items'][] = [
+                    $displayName,
+                    $person['uuid']
+                ];
+            }
+        }
+    }
+
+    private function getActiveOrganizationNames(array $person): array
+    {
+        $organizationNames = [];
+        
+        if (isset($person['honoraryStaffOrganisationAssociations'])) {
+            foreach ($person['honoraryStaffOrganisationAssociations'] as $association) {
+                if (!isset($association['endDate'])) {
+                    if (isset($association['organisationalUnit']['name']['text'][0]['value'])) {
+                        $organizationNames[] = $association['organisationalUnit']['name']['text'][0]['value'];
+                    }
+                }
+            }
+        }
+        
+        return array_unique($organizationNames);
+    }
+
     public function getProjects(&$config): void
     {
         $projectsXML = trim('<?xml version="1.0"?>
@@ -221,6 +288,11 @@ class ClassificationScheme
         return $this->getFromCache($this->getCacheIdentifier('getPersons'));
     }
 
+    public function getPersonsByOrganizationFromCache()
+    {
+        return $this->getFromCache($this->getCacheIdentifier('getPersonsByOrganization'));
+    }
+
     public function getProjectsFromCache(string $lang)
     {
         return $this->getFromCache($this->getCacheIdentifier('getProjects', $lang));
@@ -239,6 +311,11 @@ class ClassificationScheme
     public function storePersonsToCache($data): void
     {
         $this->setToCache($this->getCacheIdentifier('getPersons'), $data);
+    }
+
+    public function storePersonsByOrganizationToCache($data): void
+    {
+        $this->setToCache($this->getCacheIdentifier('getPersonsByOrganization'), $data);
     }
 
     public function storeProjectsToCache($data, string $locale): void
@@ -391,6 +468,10 @@ class ClassificationScheme
         $config['items'][] = [
             $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
             1
+        ];
+        $config['items'][] = [
+            $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPersonWithOrganization'),
+            3
         ];
 
         $settings = $config['flexParentDatabaseRow']['pi_flexform'];

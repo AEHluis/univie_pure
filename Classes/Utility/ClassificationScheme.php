@@ -182,14 +182,28 @@ class ClassificationScheme
         if (isset($person['honoraryStaffOrganisationAssociations'])) {
             foreach ($person['honoraryStaffOrganisationAssociations'] as $association) {
                 if (!isset($association['endDate'])) {
-                    if (isset($association['organisationalUnit']['name']['text'][0]['value'])) {
-                        $organizationNames[] = $association['organisationalUnit']['name']['text'][0]['value'];
+                    if (isset($association['organisationalUnit']['name']['text'])) {
+                        // TYPO3 Backend language detection
+                        $locale = ($GLOBALS['BE_USER']->uc['lang'] == 'de') ? 'de_DE' : 'en_GB';
+                        
+                        // Find organizational unit name in appropriate language
+                        $orgName = $association['organisationalUnit']['name']['text'][0]['value']; // fallback
+                        foreach ($association['organisationalUnit']['name']['text'] as $text) {
+                            if (isset($text['locale']) && $text['locale'] === $locale) {
+                                $orgName = $text['value'];
+                                break;
+                            }
+                        }
+                        
+                        if (!in_array($orgName, $organizationNames)) {
+                            $organizationNames[] = $orgName;
+                        }
                     }
                 }
             }
         }
         
-        return array_unique($organizationNames);
+        return $organizationNames;
     }
 
     public function getProjects(&$config): void

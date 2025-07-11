@@ -133,7 +133,10 @@ class ClassificationScheme
             <fields>
             <field>uuid</field>
             <field>name.*</field>
-            <field>honoraryStaffOrganisationAssociations.*</field>
+            <field>honoraryStaffOrganisationAssociations.uuid</field>
+            <field>honoraryStaffOrganisationAssociations.period.*</field>
+            <field>honoraryStaffOrganisationAssociations.organisationalUnit.uuid</field>
+            <field>honoraryStaffOrganisationAssociations.organisationalUnit.name.*</field>
             </fields>
             <orderings>
             <ordering>lastName</ordering>
@@ -179,25 +182,27 @@ class ClassificationScheme
     {
         $organizationNames = [];
         
-        if (isset($person['honoraryStaffOrganisationAssociations'])) {
+        if (isset($person['honoraryStaffOrganisationAssociations']) && is_array($person['honoraryStaffOrganisationAssociations'])) {
             foreach ($person['honoraryStaffOrganisationAssociations'] as $association) {
-                if (!isset($association['endDate'])) {
-                    if (isset($association['organisationalUnit']['name']['text'])) {
-                        // TYPO3 Backend language detection
-                        $locale = ($GLOBALS['BE_USER']->uc['lang'] == 'de') ? 'de_DE' : 'en_GB';
-                        
-                        // Find organizational unit name in appropriate language
-                        $orgName = $association['organisationalUnit']['name']['text'][0]['value']; // fallback
-                        foreach ($association['organisationalUnit']['name']['text'] as $text) {
-                            if (isset($text['locale']) && $text['locale'] === $locale) {
-                                $orgName = $text['value'];
-                                break;
-                            }
+                // Check if association is active (no endDate or endDate is in the future)
+                $isActive = !isset($association['period']['endDate']) || 
+                           strtotime($association['period']['endDate']) > time();
+                
+                if ($isActive && isset($association['organisationalUnit']['name']['text'])) {
+                    // TYPO3 Backend language detection
+                    $locale = ($GLOBALS['BE_USER']->uc['lang'] == 'de') ? 'de_DE' : 'en_GB';
+                    
+                    // Find organizational unit name in appropriate language
+                    $orgName = $association['organisationalUnit']['name']['text'][0]['value']; // fallback
+                    foreach ($association['organisationalUnit']['name']['text'] as $text) {
+                        if (isset($text['locale']) && $text['locale'] === $locale) {
+                            $orgName = $text['value'];
+                            break;
                         }
-                        
-                        if (!in_array($orgName, $organizationNames)) {
-                            $organizationNames[] = $orgName;
-                        }
+                    }
+                    
+                    if (!in_array($orgName, $organizationNames)) {
+                        $organizationNames[] = $orgName;
                     }
                 }
             }

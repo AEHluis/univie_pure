@@ -54,7 +54,7 @@ class WebService
     protected function initializeConfiguration(): void
     {
         try {
-            $dotEnv = new DotEnv(Environment::getPublicPath() . "/.env");
+            $dotEnv = new DotEnv(Environment::getProjectPath() . "/.env");
             $dotEnv->load();
             $this->setConfig('server', $dotEnv->variables["PURE_URI"]);
             $this->setConfig('apiKey', $dotEnv->variables["PURE_APIKEY"]);

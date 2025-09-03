@@ -332,6 +332,10 @@
 				<source>T3LUH FIS</source>
 				<target>T3LUH FIS</target>
 			</trans-unit>
+			<trans-unit id="tt_content.list_type.univiepure_univiepure">
+				<source>T3LUH FIS</source>
+				<target>T3LUH FIS</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

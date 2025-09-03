@@ -65,6 +65,14 @@ class Equipments extends Endpoints
             $xml .= $this->getSearchXml($settings);
         }
 
+        //Important WorkflowSteps must be first and then getPersonsOrOrganisationsXml
+        //workflow steps - only show approved and forApproval, exclude entries in progress
+        $xml .= '<workflowSteps>
+                    <workflowStep>approved</workflowStep>
+                    <workflowStep>forApproval</workflowStep>
+                    <workflowStep>validated</workflowStep>
+                 </workflowSteps>';
+
         // Add persons or organizations
         $xml .= CommonUtilities::getPersonsOrOrganisationsXml($settings);
         $xml .= '</equipmentsQuery>';

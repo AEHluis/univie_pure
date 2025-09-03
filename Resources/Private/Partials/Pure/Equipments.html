@@ -18,11 +18,11 @@
                                         key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.contactPerson"/>
                             </span>
                             <span class="type_classification">
-
+                                <f:if condition="{item.contactPerson -> f:count()} > 0">
                                     <f:for each="{item.contactPerson}" as="p" iteration="Iter">
                                         <f:format.raw>{p}</f:format.raw><f:if condition="{Iter.isLast}"><f:else>, </f:else></f:if>
                                     </f:for>
-
+                                </f:if>
                             </span>
                         </p>
                         </f:spaceless>
@@ -38,6 +38,7 @@
                                         key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.contactMail"/>
                             </span>
                             <span class="type_classification">
+                                <f:if condition="{item.email -> f:count()} > 0">
                                 <f:for each="{item.email}" as="e" iteration="Iter">
                                     <f:link.email class="c-link c-link--inline"  email="{e}">
 
@@ -46,6 +47,7 @@
                                     </f:link.email>
                                     <f:if condition="{Iter.isLast}"><f:else>, </f:else></f:if>
                                 </f:for>
+                                </f:if>
                             </span>
                         </p>
                         </f:spaceless>
@@ -61,10 +63,12 @@
                                         key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.webAddress"/>
                             </span>
                             <span class="type_classification">
+                                <f:if condition="{item.webAddress -> f:count()} > 0">
                                 <f:for each="{item.webAddress}" as="w" iteration="Iter">
                                     <f:link.external uri="{w}" target="_blank"
                                                      class="c-link--extern u-icon-after u-icon-after--new-tab">{w}</f:link.external><f:if condition="{Iter.isLast}"><f:else>, </f:else></f:if>
                                 </f:for>
+                                </f:if>
                             </span>
                         </p>
                         </f:spaceless>

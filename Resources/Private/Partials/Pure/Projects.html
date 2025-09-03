@@ -5,21 +5,24 @@
     <f:if condition="{item.renderings.rendering.html}">
         <div class="c-search__item">
             <f:format.html>{item.renderings.rendering.html}</f:format.html>
-            <f:if condition="{item.link}">
+            <f:if condition="{item.links}">
                 <p class="type">
                     <span class="type_family">URL<span class="type_family_sep">: </span></span>
                     <span class="type_classification">
-						<f:if condition="{item.link.description.text}">
-							<f:then>
-								<f:link.external uri="{item.link.url}" target="_blank" class="c-link--extern"><strong>{item.link.description.text}</strong></f:link.external>
-							</f:then>
-							<f:else>
-								<f:link.external uri="{item.link.url}" target="_blank" class="c-link--extern">
-									<strong>{item.link.url}</strong>
-								</f:link.external>
-							</f:else>
-						</f:if>
-					</span>
+                        <f:for each="{item.links}" as="link" iteration="Iter">
+                            <f:if condition="{link.description.text}">
+                                <f:then>
+                                    <f:link.external uri="{link.url}" target="_blank" class="c-link--extern"><strong>{link.description.text}</strong></f:link.external>
+                                </f:then>
+                                <f:else>
+                                    <f:link.external uri="{link.url}" target="_blank" class="c-link--extern">
+                                        <strong>{link.url}</strong>
+                                    </f:link.external>
+                                </f:else>
+                            </f:if>
+                            <f:if condition="{Iter.isLast}"><f:else><br/></f:else></f:if>
+                        </f:for>
+                    </span>
                 </p>
             </f:if>
             <f:if condition="{settings.showDescription}">

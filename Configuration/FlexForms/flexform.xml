@@ -187,6 +187,20 @@
                             </config>
                         </TCEforms>
                     </settings.pager.insertAbove>
+                    
+                    <settings.pager.insertBelow>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.pager.insertBelow
+                            </label>
+                            <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS
+                            </displayCond>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.pager.insertBelow>
 
                     <settings.initialNoResults>
                         <TCEforms>

@@ -101,7 +101,17 @@ class Projects extends Endpoints
                                                 $new_render = $this->transformRenderingHtml($new_render, []);
                                                 $view["items"][$index]["renderings"][$i]['html'] = $new_render;
                                                 $view["items"][$index]["uuid"] = $uuid;
-                                                $view["items"][$index]["link"] = $this->getNestedArrayValue($items, 'links.link', '');
+                                                // Extract links array for template iteration
+                                                if (isset($items['links']['link'])) {
+                                                    // Ensure links is always an array for template iteration
+                                                    if (isset($items['links']['link'][0])) {
+                                                        // Multiple links - already an array
+                                                        $view["items"][$index]["links"] = $items['links']['link'];
+                                                    } else {
+                                                        // Single link - wrap in array
+                                                        $view["items"][$index]["links"] = [$items['links']['link']];
+                                                    }
+                                                }
                                                 $view["items"][$index]["description"] = $this->getNestedArrayValue($items, 'descriptions.description.value.text', '');
 
                                                 if ((array_key_exists('linkToPortal', $settings)) && ($settings['linkToPortal'] == 1)) {
@@ -136,7 +146,17 @@ class Projects extends Endpoints
                 $view["items"][0]["uuid"] = $uuid;
 
                 // Assign additional data
-                $view["items"][0]["link"] = $this->getNestedArrayValue($project, 'links.link', '');
+                // Extract links array for template iteration
+                if (isset($project['links']['link'])) {
+                    // Ensure links is always an array for template iteration
+                    if (isset($project['links']['link'][0])) {
+                        // Multiple links - already an array
+                        $view["items"][0]["links"] = $project['links']['link'];
+                    } else {
+                        // Single link - wrap in array
+                        $view["items"][0]["links"] = [$project['links']['link']];
+                    }
+                }
                 $view["items"][0]["description"] = $this->getNestedArrayValue($project, 'descriptions.description.value.text', '');
 
                 // Add portal URI if setting is enabled

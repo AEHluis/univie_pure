@@ -43,9 +43,10 @@ class ClassificationScheme
 
     public function getOrganisations(&$config): void
     {
+        // For AJAX dynamic loading, only load minimal items initially
         $postData = trim('<?xml version="1.0"?>
             <organisationalUnitsQuery>
-            <size>999999</size>
+            <size>5</size>
             <locales>
             <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
             </locales>
@@ -87,9 +88,10 @@ class ClassificationScheme
 
     public function getPersons(&$config): void
     {
+        // For AJAX dynamic loading, only load minimal items initially  
         $personXML = trim('<?xml version="1.0"?>
             <personsQuery>
-            <size>999999</size>
+            <size>5</size>
             <fields>
             <field>uuid</field>
             <field>name.*</field>
@@ -127,9 +129,10 @@ class ClassificationScheme
 
     public function getPersonsByOrganization(&$config): void
     {
+        // For AJAX dynamic loading, only load minimal items initially
         $personXML = trim('<?xml version="1.0"?>
             <personsQuery>
-            <size>999999</size>
+            <size>5</size>
             <fields>
             <field>uuid</field>
             <field>name.*</field>
@@ -213,9 +216,10 @@ class ClassificationScheme
 
     public function getProjects(&$config): void
     {
+        // For AJAX dynamic loading, only load minimal items initially
         $projectsXML = trim('<?xml version="1.0"?>
             <projectsQuery>
-            <size>999999</size>
+            <size>5</size>
             <locales>
             <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
             </locales>

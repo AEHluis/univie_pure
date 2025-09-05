@@ -72,13 +72,13 @@ class Equipments extends Endpoints
                     <workflowStep>forApproval</workflowStep>
                     <workflowStep>validated</workflowStep>
                  </workflowSteps>';
-
+	 
         // Add persons or organizations
         $xml .= CommonUtilities::getPersonsOrOrganisationsXml($settings);
         $xml .= '</equipmentsQuery>';
 
-        // Get response from the web service
-        $view = $this->webservice->getXml('equipments', $xml);
+	// Get response from the web service
+	$view = $this->webservice->getXml('equipments', $xml);
 
         // Handle unavailable server or empty response
         if (!$view || !is_array($view)) {
@@ -88,131 +88,105 @@ class Equipments extends Endpoints
             ];
         }
 
-        $processedItems = [];
-        // Get the list of equipment items. The API might return a single item directly or an array of items.
-        $equipmentItems = $this->getNestedArrayValue($view, 'items.equipment', []);
-
-        // If it's a single item not wrapped in an array, wrap it for consistent processing.
-        // This heuristic checks if it's an associative array and not an empty array,
-        // and doesn't appear to be a numerically indexed list.
-        if (is_array($equipmentItems) && !empty($equipmentItems) && !array_is_list($equipmentItems)) {
-            $equipmentItems = [$equipmentItems];
-        } elseif (!is_array($equipmentItems)) {
-            // If it's not an array at all (e.g., null from API for no results), treat as an empty list.
-            $equipmentItems = [];
+        // Process equipment items like Projects endpoint does
+        if (isset($view['count']) && $view['count'] > 0 && isset($view['items']['equipment'])) {
+            $equipmentItems = $view['items']['equipment'];
+            
+            // Check if we have a single equipment or multiple
+            if (isset($equipmentItems['@attributes'])) {
+                // Single equipment - wrap it in an array
+                $equipmentItems = [$equipmentItems];
+            }
+            
+            // Process each equipment item in place
+            foreach ($equipmentItems as $index => $item) {
+                // Process renderings
+                $rendering = $this->getNestedArrayValue($item, 'renderings.rendering', '');
+                $new_render = '';
+                if (is_array($rendering)) {
+                    $new_render = implode(" ", $rendering);
+                } else {
+                    $new_render = $rendering;
+                }
+                $new_render = $this->transformRenderingHtml(mb_convert_encoding($new_render, "UTF-8"), []);
+                
+                // Update the view items array directly
+                $view['items'][$index]['renderings']['rendering']['html'] = $new_render;
+                $view['items'][$index]['uuid'] = $this->getNestedArrayValue($item, '@attributes.uuid', '');
+                
+                // Process contact persons
+                $contactPersons = [];
+                $contactPersonData = $this->getNestedArrayValue($item, 'contactPersons.contactPerson', []);
+                if (isset($contactPersonData['name'])) {
+                    // Single contact person
+                    $name = $this->getNestedArrayValue($contactPersonData, 'name.text', '');
+                    if (!empty($name)) {
+                        $contactPersons[] = $name;
+                    }
+                } elseif (is_array($contactPersonData)) {
+                    // Multiple contact persons
+                    foreach ($contactPersonData as $person) {
+                        $name = $this->getNestedArrayValue($person, 'name.text', '');
+                        if (!empty($name)) {
+                            $contactPersons[] = $name;
+                        }
+                    }
+                }
+                if (!empty($contactPersons)) {
+                    $view['items'][$index]['contactPerson'] = $contactPersons;
+                }
+                
+                // Process emails
+                $emails = [];
+                $emailData = $this->getNestedArrayValue($item, 'emails.email', []);
+                if (isset($emailData['value'])) {
+                    // Single email
+                    $emails[] = strtolower($emailData['value']);
+                } elseif (is_array($emailData)) {
+                    // Multiple emails
+                    foreach ($emailData as $email) {
+                        if (isset($email['value'])) {
+                            $emails[] = strtolower($email['value']);
+                        }
+                    }
+                }
+                if (!empty($emails)) {
+                    $view['items'][$index]['email'] = $emails;
+                }
+                
+                // Process web addresses
+                $webAddresses = [];
+                $webData = $this->getNestedArrayValue($item, 'webAddresses.webAddress', []);
+                if (isset($webData['value'])) {
+                    // Single web address
+                    $webAddresses[] = $this->getNestedArrayValue($webData, 'value.text', '');
+                } elseif (is_array($webData)) {
+                    // Multiple web addresses
+                    foreach ($webData as $web) {
+                        $text = $this->getNestedArrayValue($web, 'value.text', '');
+                        if (!empty($text)) {
+                            $webAddresses[] = $text;
+                        }
+                    }
+                }
+                if (!empty($webAddresses)) {
+                    $view['items'][$index]['webAddress'] = $webAddresses;
+                }
+                
+                // Add portal URI if enabled
+                if ($this->getArrayValue($settings, 'linkToPortal') == 1) {
+                    $view['items'][$index]['portaluri'] = $this->getNestedArrayValue($item, 'info.portalUrl', '');
+                }
+            }
+            
+            // Remove the original equipment key to clean up the structure
+            unset($view['items']['equipment']);
         }
 
-        foreach ($equipmentItems as $index => $item) {
-            $currentProcessedItem = [];
-
-            // Process renderings
-            // Safely get rendering content, which might be an array itself if multiple styles are returned
-            $rendering = $this->getNestedArrayValue($item, 'renderings.rendering', '');
-            $new_render = '';
-            if (is_array($rendering)) {
-                $new_render = implode(" ", $rendering);
-            } else {
-                $new_render = $rendering;
-            }
-            $new_render = $this->transformRenderingHtml(mb_convert_encoding($new_render, "UTF-8"), []);
-            $currentProcessedItem['renderings'][0]['html'] = $new_render;
-
-            // Assign UUID and portal URI
-            $currentProcessedItem['uuid'] = $this->getNestedArrayValue($item, '@attributes.uuid', '');
-            $currentProcessedItem['portaluri'] = $this->getNestedArrayValue($item, 'info.portalUrl', '');
-
-            // Ensure the target array for processing functions is initialized
-            if (!isset($processedItems[$index])) {
-                $processedItems[$index] = [];
-            }
-            // Process contact persons, emails, web addresses, which modify $processedItems by reference
-            $this->processContactPersons($item, $index, $processedItems);
-            $this->processEmails($item, $index, $processedItems);
-            $this->processWebAddresses($item, $index, $processedItems);
-
-            // Merge current item's general details with what was added by the processing functions
-            $processedItems[$index] = array_merge($processedItems[$index], $currentProcessedItem);
-
-            if ($this->getArrayValue($settings, 'linkToPortal') == 1) {
-                $processedItems[$index]['portaluri'] = $this->getNestedArrayValue($item, 'info.portalUrl', '');
-            }
-        }
-
-        // Update the main $view array with processed data
-        $view['count'] = $this->getArrayValue($view, 'count', 0);
-        $view['items'] = $processedItems; // 'items' now consistently holds the processed list
-
+        // Set offset for pagination
         $view['offset'] = $this->calculateOffset((int)$settings['pageSize'], (int)$currentPageNumber);
 
         return $view;
     }
 
-    private function processContactPersons(array $item, int $index, array &$view): void
-    {
-        $contactPersons = $this->getArrayValue($item, "contactPersons", []);
-        $contactPerson = $this->getArrayValue($contactPersons, "contactPerson", []);
-
-        if (!isset($view[$index]["contactPerson"])) {
-            $view[$index]["contactPerson"] = [];
-        }
-
-        $name = $this->getNestedArrayValue($contactPerson, 'name.text', '');
-        if (!empty($name)) {
-            $view[$index]["contactPerson"][] = $name;
-        } elseif (is_array($contactPerson)) {
-            foreach ($contactPerson as $p) {
-                $personName = $this->getNestedArrayValue($p, 'name.text', '');
-                if (!empty($personName)) {
-                    $view[$index]["contactPerson"][] = $personName;
-                }
-            }
-        }
-    }
-
-    private function processEmails(array $item, int $index, array &$view): void
-    {
-        if (!isset($view[$index]["email"])) {
-            $view[$index]["email"] = [];
-        }
-
-        $emails = $this->getNestedArrayValue($item, "emails.email", []);
-
-        $emailValue = $this->getNestedArrayValue($emails, "value", '');
-        if (!empty($emailValue)) {
-            $view[$index]["email"][] = strtolower($emailValue);
-        } elseif (is_array($emails)) {
-            foreach ($emails as $e) {
-                $singleEmail = $this->getNestedArrayValue($e, "value", '');
-                if (!empty($singleEmail)) {
-                    $view[$index]["email"][] = strtolower($singleEmail);
-                }
-            }
-        }
-    }
-
-    private function processWebAddresses(array $item, int $index, array &$view): void
-    {
-        if (!isset($view[$index]["webAddress"])) {
-            $view[$index]["webAddress"] = [];
-        }
-
-        $webAddresses = $this->getNestedArrayValue($item, "webAddresses.webAddress", []);
-
-        $webAddressText = $this->getNestedArrayValue($webAddresses, "value.text", '');
-        if (!empty($webAddressText)) {
-            $view[$index]["webAddress"][] = $webAddressText;
-        } elseif (is_array($webAddresses)) {
-            foreach ($webAddresses as $e) {
-                $singleWebAddressText = $this->getNestedArrayValue($e, "value.text", '');
-                if (!empty($singleWebAddressText)) {
-                    $view[$index]["webAddress"][] = $singleWebAddressText;
-                }
-
-                $multipleWebAddressText = $this->getNestedArrayValue($e, "value.1.text", '');
-                if (empty($singleWebAddressText) && !empty($multipleWebAddressText)) {
-                    $view[$index]["webAddress"][] = $multipleWebAddressText;
-                }
-            }
-        }
-    }
 }

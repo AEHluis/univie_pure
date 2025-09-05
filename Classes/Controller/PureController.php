@@ -17,7 +17,6 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Context\Context;
@@ -54,7 +53,6 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     private readonly DataSets $dataSets;
     protected string $locale;
     protected string $localeShort;
-    private readonly FlashMessageService $flashMessageService;
 
     protected function getLocale(): string
     {
@@ -72,8 +70,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         ResearchOutput                $researchOutput,
         Projects                      $projects,
         Equipments                    $equipments,
-        DataSets                      $dataSets,
-        FlashMessageService           $flashMessageService
+        DataSets                      $dataSets
     )
     {
         $this->configurationManager = $configurationManager;
@@ -81,7 +78,6 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->dataSets = $dataSets;
         $this->projects = $projects;
         $this->equipments = $equipments;
-        $this->flashMessageService = $flashMessageService;
         $this->locale = $this->getLocale();
         $this->localeShort = $this->getLocaleShort();
     }

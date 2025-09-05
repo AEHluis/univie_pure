@@ -1,4 +1,6 @@
-<f:render partial="Pure/Paginate/Index" arguments="{pagination:pagination}"/>
+<f:if condition="{settings.pager.insertAbove}">
+    <f:render partial="Pure/Paginate/Pagination" arguments="{pagination:pagination}"/>
+</f:if>
 <f:if condition="{settings.groupByYear}">
     <f:then>
         <f:groupedFor each="{publications}" as="publicationlist"
@@ -72,6 +74,10 @@
              </div>
         </f:for>
     </f:else>
+</f:if>
+
+<f:if condition="{settings.pager.insertBelow}">
+    <f:render partial="Pure/Paginate/Pagination" arguments="{pagination:pagination}"/>
 </f:if>
 
 <script>

@@ -32,6 +32,6 @@ services:
     class: GuzzleHttp\Client
     arguments:
       $config:
-        verify: true # 🔴
+        verify: false # 🔴 Disable SSL verification (for debugging only!)
 
 

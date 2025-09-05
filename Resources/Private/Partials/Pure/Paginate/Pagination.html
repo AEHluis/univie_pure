@@ -1,0 +1,65 @@
+<div class="c-pagination">
+    <f:if condition="{pagination.previousPageNumber} && {pagination.previousPageNumber} >= {pagination.firstPageNumber}">
+        <f:then>
+                <span class="first">
+                    <f:link.action action="{action}" arguments="{currentPageNumber: 1}"
+                                   title="{f:translate(key: 'pagination.first')}">
+                        <span class="c-pagination__item c-pagination__first">First</span></f:link.action>
+                </span>
+            <span class="previous">
+                    <f:link.action action="{action}"
+                                   arguments="{currentPageNumber: pagination.previousPageNumber}"
+                                   title="{f:translate(key: 'pagination.previous')}">
+                        <span class="c-pagination__item c-pagination__previous"></span></f:link.action>
+                </span>
+        </f:then>
+        <f:else>
+                <span class="first">
+                        <span class="c-pagination__item c-pagination__first" style="color:grey">First</span>
+                </span>
+            <span class="previous">
+                        <span class="c-pagination__item c-pagination__previous" style="color:grey"></span>
+                </span>
+        </f:else>
+    </f:if>
+
+    <span class="c-pagination__pages">
+            <f:for each="{pagination.allPageNumbers}" as="page">
+                <f:if condition="{page} == {pagination.paginator.currentPageNumber}">
+                    <f:then>
+                        <span class="c-pagination__item c-pagination__item--is-active">{page}</span>
+                    </f:then>
+                    <f:else>
+                        <span>
+                            <f:link.action class="c-pagination__item" action="{action}"
+                                           arguments="{currentPageNumber: page}">{page}</f:link.action>
+                        </span>
+                    </f:else>
+                </f:if>
+            </f:for>
+        </span>
+
+    <f:if condition="{pagination.nextPageNumber} && {pagination.nextPageNumber} <= {pagination.lastPageNumber}">
+        <f:then>
+                <span class="next">
+                    <f:link.action action="{action}" arguments="{currentPageNumber: pagination.nextPageNumber}"
+                                   title="{f:translate(key: 'pagination.next')}">
+                        <span class="c-pagination__item c-pagination__next"></span></f:link.action>
+                </span>
+            <span class="last">
+                    <f:link.action action="{action}" arguments="{currentPageNumber: pagination.lastPageNumber}"
+                                   title="{f:translate(key: 'pagination.last')}">
+                        <span class="c-pagination__item c-pagination__last">Last</span>
+                    </f:link.action>
+                </span>
+        </f:then>
+        <f:else>
+                <span class="next">
+                        <span class="c-pagination__item c-pagination__next" style="color:grey"></span>
+                </span>
+            <span class="last">
+                        <span class="c-pagination__item c-pagination__last" style="color:grey"></span>
+                </span>
+        </f:else>
+    </f:if>
+</div>

@@ -1,4 +1,6 @@
-<f:render partial="Pure/Paginate/Index" arguments="{pagination:pagination}"/>
+<f:if condition="{settings.pager.insertAbove}">
+    <f:render partial="Pure/Paginate/Pagination" arguments="{pagination:pagination}"/>
+</f:if>
 <div class="c-search__list"></div>
 <f:for each="{dataSets}" as="item">
     <f:if condition="{item.renderings.rendering.html}">
@@ -8,3 +10,7 @@
     </f:if>
 </f:for>
 </div>
+
+<f:if condition="{settings.pager.insertBelow}">
+    <f:render partial="Pure/Paginate/Pagination" arguments="{pagination:pagination}"/>
+</f:if>

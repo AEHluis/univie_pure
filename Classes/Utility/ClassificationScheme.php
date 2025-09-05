@@ -84,6 +84,13 @@ class ClassificationScheme
                 ];
             }
         }
+        
+        // Add hint for users to search
+        $searchHint = $this->locale === 'de_DE' ? 
+            '→ Suchen für mehr...' : 
+            '→ Search for more...';
+        $config['items'][] = ['─────────────────────', '--div--'];
+        $config['items'][] = [$searchHint, ''];
     }
 
     public function getPersons(&$config): void
@@ -125,6 +132,13 @@ class ClassificationScheme
                 ];
             }
         }
+        
+        // Add hint for users to search  
+        $searchHint = $this->locale === 'de_DE' ?
+            '→ Suchen für mehr...' :
+            '→ Search for more...';
+        $config['items'][] = ['─────────────────────', '--div--'];
+        $config['items'][] = [$searchHint, ''];
     }
 
     public function getPersonsByOrganization(&$config): void
@@ -179,6 +193,13 @@ class ClassificationScheme
                 ];
             }
         }
+        
+        // Add hint for users to search
+        $searchHint = $this->locale === 'de_DE' ?
+            '→ Suchen für mehr...' :
+            '→ Search for more...';
+        $config['items'][] = ['─────────────────────', '--div--'];
+        $config['items'][] = [$searchHint, ''];
     }
 
     private function getActiveOrganizationNames(array $person): array
@@ -252,6 +273,13 @@ class ClassificationScheme
                 $config['items'][] = [$title, $project['uuid']];
             }
         }
+        
+        // Add hint for users to search
+        $searchHint = $this->locale === 'de_DE' ?
+            '→ Suchen für mehr...' :
+            '→ Search for more...';
+        $config['items'][] = ['─────────────────────', '--div--'];
+        $config['items'][] = [$searchHint, ''];
     }
 
     public function getTypesFromPublications(&$config): void

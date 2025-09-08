@@ -132,8 +132,8 @@
             // Mark as initialized
             field.dataset.dynamicSelectInit = 'true';
             
-            // Store original options (first 5)
-            const originalOptions = Array.from(availableSelect.options).slice(0, 5);
+            // Store original options (first 8)
+            const originalOptions = Array.from(availableSelect.options).slice(0, 8);
             
             // Setup search handler
             this.setupSearchHandler(field, availableSelect, endpoint, originalOptions);

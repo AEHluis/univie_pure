@@ -56,7 +56,7 @@ class ClassificationScheme
         // For AJAX dynamic loading, only load minimal items initially
         $postData = trim('<?xml version="1.0"?>
             <organisationalUnitsQuery>
-            <size>5</size>
+            <size>8</size>
             <locales>
             <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
             </locales>

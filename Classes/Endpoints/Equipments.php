@@ -70,7 +70,6 @@ class Equipments extends Endpoints
         $xml .= '<workflowSteps>
                     <workflowStep>approved</workflowStep>
                     <workflowStep>forApproval</workflowStep>
-                    <workflowStep>validated</workflowStep>
                  </workflowSteps>';
 	 
         // Add persons or organizations

@@ -4,8 +4,6 @@
  */
 (function() {
     'use strict';
-    
-    console.log('[DynamicMultiSelect] Script loaded');
 
     function DynamicMultiSelect() {
         // Try to get AJAX URLs from TYPO3 settings
@@ -26,8 +24,6 @@
             };
         }
         
-        console.log('[DynamicMultiSelect] AJAX URLs:', this.ajaxUrls);
-        console.log('[DynamicMultiSelect] Available AJAX routes:', TYPO3.settings ? Object.keys(TYPO3.settings.ajaxUrls || {}) : 'none');
         
         this.init();
     }
@@ -49,11 +45,8 @@
     };
     
     DynamicMultiSelect.prototype.setupFields = function() {
-        console.log('[DynamicMultiSelect] Setting up fields...');
-        
         // Find all multiselect filter textfields
         const filterFields = document.querySelectorAll('.t3js-formengine-multiselect-filter-textfield');
-        console.log('[DynamicMultiSelect] Found filter fields:', filterFields.length);
         
         filterFields.forEach((field, index) => {
             // Skip if already initialized
@@ -63,7 +56,6 @@
             
             const wrapper = field.closest('.form-multigroup-wrap');
             if (!wrapper) {
-                console.log('[DynamicMultiSelect] No wrapper found for field', index);
                 return;
             }
             
@@ -72,7 +64,6 @@
                                   wrapper.querySelector('select[size]:not([data-formengine-input-name*="_list"])');
             
             if (!availableSelect) {
-                console.log('[DynamicMultiSelect] No available select found for field', index);
                 return;
             }
             
@@ -85,47 +76,79 @@
             const selectedSelect = wrapper.querySelector('.t3js-formengine-select-selecteditems');
             const dataFieldName = selectedSelect ? selectedSelect.getAttribute('data-formengine-input-name') : '';
             
-            // Look for hidden inputs that contain the actual field name
-            const allHiddenInputs = wrapper.querySelectorAll('input[type="hidden"]');
+            // Look for the actual field name in various places
             let fieldIdentifier = dataFieldName || '';
             
-            // Search through hidden inputs for field names
+            // Method 1: Check data-formengine-input-name on various elements
+            const elementsWithDataAttr = wrapper.querySelectorAll('[data-formengine-input-name]');
+            elementsWithDataAttr.forEach(elem => {
+                const name = elem.getAttribute('data-formengine-input-name') || '';
+                if (name) {
+                    fieldIdentifier += ' ' + name;
+                }
+            });
+            
+            // Method 2: Look for hidden inputs that contain the actual field name
+            const allHiddenInputs = wrapper.querySelectorAll('input[type="hidden"]');
             allHiddenInputs.forEach(input => {
                 const inputName = input.name || '';
                 const inputId = input.id || '';
-                if (inputName.includes('selector') || inputId.includes('selector')) {
+                // Look for Pure extension specific field patterns
+                if (inputName.includes('selector') || inputId.includes('selector') || 
+                    inputName.includes('Person') || inputName.includes('Project') || 
+                    inputName.includes('Organisation') ||
+                    inputName.includes('[settings][selector')) {
                     fieldIdentifier += ' ' + inputName + ' ' + inputId;
-                    console.log('[DynamicMultiSelect] Found hidden input:', inputName, inputId);
                 }
             });
+            
+            // Method 3: Check the name attribute of the select elements themselves
+            const availableSelectName = availableSelect.getAttribute('name') || '';
+            const selectedSelectName = selectedSelect ? selectedSelect.getAttribute('name') || '' : '';
+            if (availableSelectName || selectedSelectName) {
+                fieldIdentifier += ' ' + availableSelectName + ' ' + selectedSelectName;
+            }
             
             // Also check the label text
             const labelElement = wrapper.closest('.form-group')?.querySelector('label.t3js-formengine-label');
             const labelText = labelElement ? labelElement.textContent.trim() : '';
             
-            console.log('[DynamicMultiSelect] Field context:', {
-                fieldIdentifier: fieldIdentifier,
-                labelText: labelText,
-                selectId: availableSelect.id,
-                formSectionClass: formSection?.className
-            });
             
             let endpoint = null;
             
+            // Convert field identifier and label to lowercase for case-insensitive matching
+            const fieldIdentifierLower = fieldIdentifier.toLowerCase();
+            const labelTextLower = labelText.toLowerCase();
+            
+            
             // Check field identifier or use label text as fallback
-            if (fieldIdentifier.includes('selectorOrganisations') || labelText.includes('organisation')) {
+            // Support both English and German labels
+            if (fieldIdentifierLower.includes('selectororganisations') || 
+                fieldIdentifierLower.includes('organisation') ||
+                labelTextLower.includes('organisation')) {
                 endpoint = 'organizations';
-            } else if (fieldIdentifier.includes('selectorPersonsWithOrganization')) {
+            } else if (fieldIdentifierLower.includes('selectorpersonswithorganization')) {
                 endpoint = 'personsWithOrg';
-            } else if (fieldIdentifier.includes('selectorPersons') || labelText.includes('person')) {
+            } else if (fieldIdentifierLower.includes('selectorpersons') || 
+                       fieldIdentifierLower.includes('person') ||
+                       labelTextLower.includes('person') || 
+                       labelTextLower.includes('personen')) {
                 endpoint = 'persons';
-            } else if (fieldIdentifier.includes('selectorProjects') || labelText.includes('project')) {
+            } else if (fieldIdentifierLower.includes('selectorprojects') || 
+                       fieldIdentifierLower.includes('project') ||
+                       labelTextLower.includes('project') || 
+                       labelTextLower.includes('projekt')) {
                 endpoint = 'projects';
             }
             
-            console.log('[DynamicMultiSelect] Selected endpoint:', endpoint);
+            // Additional check: Make sure this is a Pure extension field
+            // by verifying the field identifier contains settings.selector
+            const isPureField = fieldIdentifierLower.includes('settings') && 
+                               (fieldIdentifierLower.includes('selectororganisations') || 
+                                fieldIdentifierLower.includes('selectorpersons') || 
+                                fieldIdentifierLower.includes('selectorprojects'));
             
-            if (!endpoint) {
+            if (!endpoint || !isPureField) {
                 return;
             }
             
@@ -146,7 +169,6 @@
         // Create search handler
         const handleSearch = (event) => {
             const searchTerm = event.target.value.trim();
-            console.log('[DynamicMultiSelect] Search term:', searchTerm);
             
             clearTimeout(searchTimeout);
             
@@ -170,35 +192,47 @@
         field._dynamicSearchHandler = handleSearch;
         field.addEventListener('input', handleSearch);
         
-        console.log('[DynamicMultiSelect] Search handler attached to field');
     };
     
     DynamicMultiSelect.prototype.performSearch = function(searchTerm, selectElement, endpoint) {
         const url = this.ajaxUrls[endpoint];
         
         if (!url) {
-            console.error('[DynamicMultiSelect] No URL for endpoint:', endpoint);
+            console.error('[Pure AJAX] No URL for endpoint:', endpoint);
             return;
         }
         
-        console.log('[DynamicMultiSelect] Performing search:', url, searchTerm);
         
-        // Get CSRF token from page
+        // Get CSRF token - try multiple methods
         let csrfToken = '';
-        const tokenField = document.querySelector('input[name="__trustedProperties"]');
-        if (tokenField) {
-            csrfToken = tokenField.value;
+        
+        // Method 1: From ModuleData if available
+        if (typeof TYPO3 !== 'undefined' && TYPO3.settings && TYPO3.settings.ajaxUrls && TYPO3.settings.ajaxUrls._token) {
+            csrfToken = TYPO3.settings.ajaxUrls._token;
+        }
+        
+        // Method 2: From hidden form field
+        if (!csrfToken) {
+            const tokenField = document.querySelector('input[name="__trustedProperties"]');
+            if (tokenField) {
+                csrfToken = tokenField.value;
+            }
+        }
+        
+        // Method 3: From URL parameter in existing AJAX URLs
+        if (!csrfToken && url.includes('token=')) {
+            const tokenMatch = url.match(/token=([^&]+)/);
+            if (tokenMatch) {
+                csrfToken = tokenMatch[1];
+            }
         }
         
         // Create form data
         const formData = new FormData();
         formData.append('searchTerm', searchTerm);
         
-        // Build full URL with token if needed
+        // Build full URL - the URL from TYPO3.settings should already include the token
         let fullUrl = url;
-        if (csrfToken && !url.includes('token=')) {
-            fullUrl = url + (url.includes('?') ? '&' : '?') + 'token=' + csrfToken;
-        }
         
         // Perform AJAX request
         fetch(fullUrl, {
@@ -210,20 +244,32 @@
             credentials: 'same-origin'
         })
         .then(response => {
-            console.log('[DynamicMultiSelect] Response status:', response.status);
+            
             if (!response.ok) {
-                throw new Error('HTTP ' + response.status);
+                // Try to get error details
+                return response.text().then(text => {
+                    throw new Error('HTTP ' + response.status + ': ' + text.substring(0, 200));
+                });
             }
             return response.json();
         })
         .then(data => {
-            console.log('[DynamicMultiSelect] Search results:', data);
+            // Check if we got an error response
+            if (data.error) {
+                console.error('[Pure AJAX] API Error:', data.error);
+                return;
+            }
+            
             if (data.results) {
                 this.updateOptions(selectElement, data.results);
+            } else {
+                this.updateOptions(selectElement, []);
             }
         })
         .catch(error => {
-            console.error('[DynamicMultiSelect] Search error:', error);
+            console.error('[Pure AJAX] Search error:', error);
+            // Show empty results on error
+            this.updateOptions(selectElement, []);
         });
     };
     
@@ -253,16 +299,13 @@
             selectElement.appendChild(option);
         });
         
-        console.log('[DynamicMultiSelect] Updated options:', results.length);
     };
     
     // Initialize when TYPO3 is ready
     function initWhenReady() {
         if (typeof TYPO3 !== 'undefined' && TYPO3.settings && TYPO3.settings.ajaxUrls) {
-            console.log('[DynamicMultiSelect] TYPO3 ready, initializing...');
             new DynamicMultiSelect();
         } else {
-            console.log('[DynamicMultiSelect] Waiting for TYPO3...');
             setTimeout(initWhenReady, 100);
         }
     }

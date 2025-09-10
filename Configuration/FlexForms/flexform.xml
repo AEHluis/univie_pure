@@ -293,7 +293,7 @@
                                 <type>select</type>
 
                                 <items type="array"></items>
-                                <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getPersonsByOrganization
+                                <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getPersons
                                 </itemsProcFunc>
                                 <size>15</size>
                                 <autoSizeMax>25</autoSizeMax>

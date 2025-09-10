@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Univie\UniviePure\Utility;
 
-use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Univie\UniviePure\Service\WebService;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
@@ -22,17 +22,102 @@ class ClassificationScheme
 {
     private const RESEARCHOUTPUT = '/dk/atira/pure/researchoutput/researchoutputtypes';
     private const PROJECTS = '/dk/atira/pure/upm/fundingprogramme';
-    private const CACHE_LIFETIME = 86400; // 24 hours
 
     private string $locale;
-    private FrontendInterface $cache;
     private WebService $webService;
 
     public function __construct(?WebService $webService = null)
     {
-        $this->locale = LanguageUtility::getBackendLanguage();
-        $this->cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('univie_pure');
+        $this->locale = $this->getBackendUserLocale();
         $this->webService = $webService ?? GeneralUtility::makeInstance(WebService::class);
+    }
+    
+    /**
+     * Get the current backend user's locale using TYPO3 v12.4 best practices
+     * Maps TYPO3 backend language to Pure API locale format
+     */
+    protected function getBackendUserLocale(): string
+    {
+        try {
+            // Method 1: TYPO3 v12.4 recommended - LanguageServiceFactory
+            $languageServiceFactory = GeneralUtility::makeInstance(LanguageServiceFactory::class);
+            $languageService = $languageServiceFactory->createFromUserPreferences($GLOBALS['BE_USER']);
+            $lang = $languageService->lang ?? '';
+            
+            // Method 2: Fallback to direct BE_USER access
+            if (empty($lang)) {
+                $lang = $GLOBALS['BE_USER']->uc['lang'] ?? '';
+            }
+            
+            // Default to German for this system if nothing found
+            if (empty($lang)) {
+                $lang = 'de'; // Set German as default for this University system
+            }
+            
+        } catch (\Exception $e) {
+            // Fallback in case of any errors
+            $lang = 'de';
+        }
+        
+        // Map TYPO3 language codes to Pure API locale format
+        $localeMap = [
+            'de' => 'de_DE',
+            'en' => 'en_GB',
+            'default' => 'de_DE' // German default for University system
+        ];
+        
+        return $localeMap[$lang] ?? $localeMap['default'];
+    }
+    
+    /**
+     * Get localized search hint text
+     */
+    protected function getSearchHintText(): string
+    {
+        return $this->locale === 'de_DE' ? 
+            '→ Suchen für mehr...' : 
+            '→ Search for more...';
+    }
+    
+    /**
+     * Extract localized name/title from Pure API response structure
+     * Same logic as in AjaxController for consistency
+     */
+    private function extractLocalizedName(array $nameData, string $locale): string
+    {
+        // If there's no text field, return empty
+        if (!isset($nameData['text']) || !is_array($nameData['text'])) {
+            return '';
+        }
+        
+        $texts = $nameData['text'];
+        $fallbackValue = '';
+        
+        // Look for the text entry with matching locale
+        foreach ($texts as $text) {
+            if (!is_array($text) || !isset($text['value'])) {
+                continue;
+            }
+            
+            // Store first value as fallback
+            if (empty($fallbackValue)) {
+                $fallbackValue = $text['value'];
+            }
+            
+            // If locale matches, return this value
+            // Try exact match first, then partial match (e.g., 'de' in 'de_DE')
+            if (isset($text['locale'])) {
+                $textLocale = $text['locale'];
+                if ($textLocale === $locale || 
+                    (strpos($locale, '_') !== false && strpos($textLocale, substr($locale, 0, 2)) === 0) ||
+                    (strpos($textLocale, '_') !== false && strpos($locale, substr($textLocale, 0, 2)) === 0)) {
+                    return $text['value'];
+                }
+            }
+        }
+        
+        // Return fallback if no locale match found
+        return $fallbackValue;
     }
 
     // Add this method to your ClassificationScheme class
@@ -70,20 +155,21 @@ class ClassificationScheme
             <returnUsedContent>true</returnUsedContent>
             </organisationalUnitsQuery>');
 
-        $organisations = $this->getOrganisationsFromCache($this->locale);
-        if ($organisations === null || !$this->isValidOrganisationsData($organisations)) {
-            $organisations = $this->webService->getJson('organisational-units', $postData);
+        // Fetch fresh data for reliable language switching (only 8 items)
+        $organisations = $this->webService->getJson('organisational-units', $postData);
+        
+        // Debug: Log actual API response count
+        if ($organisations && isset($organisations['items'])) {
+            error_log('[Pure Debug] Organizations API returned: ' . count($organisations['items']) . ' items (requested 8)');
+        }
 
-            if (!$organisations || !isset($organisations['items'])) {
-                $this->addFlashMessage(
-                    'Could not fetch organisations from the API. Please check your connection.',
-                    'Organisations Fetch Failed',
-                    ContextualFeedbackSeverity::WARNING
-                );
-                return;
-            }
-
-            $this->storeOrganisationsToCache($organisations, $this->locale);
+        if (!$organisations || !isset($organisations['items'])) {
+            $this->addFlashMessage(
+                'Could not fetch organisations from the API. Please check your connection.',
+                'Organisations Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            return;
         }
 
         // Add selected items first (highest priority)
@@ -96,27 +182,33 @@ class ClassificationScheme
         if (is_array($organisations) && isset($organisations['items'])) {
             foreach ($organisations['items'] as $org) {
                 if (!in_array($org['uuid'], $existingUuids)) {
-                    $name = $org['name']['text']['0']['value'];
-                    $config['items'][] = [$name, $org['uuid']];
-                    
-                    // Cache the name for future use
-                    $this->setCachedItemName($org['uuid'], 'org', $name);
+                    $name = $this->extractLocalizedName($org['name'] ?? [], $this->locale);
+                    if (!empty($name)) {
+                        $config['items'][] = [$name, $org['uuid']];
+                        
+                    }
                 }
             }
         }
         
         // Add hint for users to search
-        $searchHint = $this->locale === 'de_DE' ? 
-            '→ Suchen für mehr...' : 
-            '→ Search for more...';
+        $searchHint = $this->getSearchHintText();
         $config['items'][] = ['─────────────────────', '--div--'];
         $config['items'][] = [$searchHint, ''];
+        
+        // Debug: Log final item count (excluding separators)
+        $actualItemCount = count($config['items']) - 2; // Minus separator and hint
+        error_log('[Pure Debug] Organizations final dropdown items: ' . $actualItemCount);
     }
 
     public function getPersons(&$config): void
     {
         // Always load ALL selected items to ensure they remain available
-        $selectedUuids = $this->getCurrentlySelectedUuids('selectorPersons');
+        // Handle both field names since this method is used for both selectors
+        $selectedUuids = array_merge(
+            $this->getCurrentlySelectedUuids('selectorPersons'),
+            $this->getCurrentlySelectedUuids('selectorPersonsWithOrganization')
+        );
         
         // Fetch real names for selected items
         $selectedItems = [];
@@ -124,77 +216,13 @@ class ClassificationScheme
             $selectedItems = $this->getSelectedItemsWithRealNames($selectedUuids, 'person');
         }
         
-        // For AJAX dynamic loading, only load minimal items initially  
+        // For AJAX dynamic loading, only load minimal items initially (8 items like organizations)
         $personXML = trim('<?xml version="1.0"?>
             <personsQuery>
-            <size>5</size>
-            <fields>
-            <field>uuid</field>
-            <field>name.*</field>
-            </fields>
-            <orderings>
-            <ordering>lastName</ordering>
-            </orderings>
-            <employmentStatus>ACTIVE</employmentStatus>
-            </personsQuery>');
-
-        $persons = $this->getPersonsFromCache();
-
-        if ($persons === null || !$this->isValidPersonsData($persons)) {
-            $persons = $this->webService->getJson('persons', $personXML);
-            if (!$persons || !isset($persons['items'])) {
-                $this->addFlashMessage(
-                    'Could not fetch Persondata from the API. Please check your connection.',
-                    'Persondata Fetch Failed',
-                    ContextualFeedbackSeverity::WARNING
-                );
-                return;
-            }
-            $this->storePersonsToCache($persons);
-        }
-
-        // Add selected items first (highest priority)
-        foreach ($selectedItems as $item) {
-            $config['items'][] = $item;
-        }
-        
-        // Then add fresh items from API (avoiding duplicates)
-        $existingUuids = array_column($selectedItems, 1);
-        if (is_array($persons) && isset($persons['items'])) {
-            foreach ($persons['items'] as $person) {
-                if (!in_array($person['uuid'], $existingUuids)) {
-                    $name = $person['name']['lastName'] . ', ' . $person['name']['firstName'];
-                    $config['items'][] = [$name, $person['uuid']];
-                    
-                    // Cache the name for future use
-                    $this->setCachedItemName($person['uuid'], 'person', $name);
-                }
-            }
-        }
-        
-        // Add hint for users to search  
-        $searchHint = $this->locale === 'de_DE' ?
-            '→ Suchen für mehr...' :
-            '→ Search for more...';
-        $config['items'][] = ['─────────────────────', '--div--'];
-        $config['items'][] = [$searchHint, ''];
-    }
-
-    public function getPersonsByOrganization(&$config): void
-    {
-        // Always load ALL selected items to ensure they remain available
-        $selectedUuids = $this->getCurrentlySelectedUuids('selectorPersonsWithOrganization');
-        
-        // Fetch real names for selected items
-        $selectedItems = [];
-        if (!empty($selectedUuids)) {
-            $selectedItems = $this->getSelectedItemsWithRealNames($selectedUuids, 'person');
-        }
-        
-        // For AJAX dynamic loading, only load minimal items initially
-        $personXML = trim('<?xml version="1.0"?>
-            <personsQuery>
-            <size>5</size>
+            <size>8</size>
+            <locales>
+            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
+            </locales>
             <fields>
             <field>uuid</field>
             <field>name.*</field>
@@ -209,19 +237,21 @@ class ClassificationScheme
             <employmentStatus>ACTIVE</employmentStatus>
             </personsQuery>');
 
-        $persons = $this->getPersonsByOrganizationFromCache();
-
-        if ($persons === null || !$this->isValidPersonsData($persons)) {
-            $persons = $this->webService->getJson('persons', $personXML);
-            if (!$persons || !isset($persons['items'])) {
-                $this->addFlashMessage(
-                    'Could not fetch Person data with organization associations from the API. Please check your connection.',
-                    'Person Organization Data Fetch Failed',
-                    ContextualFeedbackSeverity::WARNING
-                );
-                return;
-            }
-            $this->storePersonsByOrganizationToCache($persons);
+        // Fetch fresh data for reliable language switching (8 items)
+        $persons = $this->webService->getJson('persons', $personXML);
+        
+        // Debug: Log actual API response count
+        if ($persons && isset($persons['items'])) {
+            error_log('[Pure Debug] Persons API returned: ' . count($persons['items']) . ' items (requested 8)');
+        }
+        
+        if (!$persons || !isset($persons['items'])) {
+            $this->addFlashMessage(
+                'Could not fetch Person data with organization associations from the API. Please check your connection.',
+                'Person Organization Data Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            return;
         }
 
         // Add selected items first (highest priority)
@@ -244,17 +274,12 @@ class ClassificationScheme
                     }
                     
                     $config['items'][] = [$displayName, $person['uuid']];
-                    
-                    // Cache the name for future use
-                    $this->setCachedItemName($person['uuid'], 'person', $displayName);
                 }
             }
         }
         
         // Add hint for users to search
-        $searchHint = $this->locale === 'de_DE' ?
-            '→ Suchen für mehr...' :
-            '→ Search for more...';
+        $searchHint = $this->getSearchHintText();
         $config['items'][] = ['─────────────────────', '--div--'];
         $config['items'][] = [$searchHint, ''];
     }
@@ -269,18 +294,9 @@ class ClassificationScheme
                 $isActive = !isset($association['period']['endDate']) || 
                            strtotime($association['period']['endDate']) > time();
                 
-                if ($isActive && isset($association['organisationalUnit']['name']['text'])) {
-                    // TYPO3 Backend language detection
-                    $locale = ($GLOBALS['BE_USER']->uc['lang'] == 'de') ? 'de_DE' : 'en_GB';
-                    
-                    // Find organizational unit name in appropriate language
-                    $orgName = $association['organisationalUnit']['name']['text'][0]['value']; // fallback
-                    foreach ($association['organisationalUnit']['name']['text'] as $text) {
-                        if (isset($text['locale']) && $text['locale'] === $locale) {
-                            $orgName = $text['value'];
-                            break;
-                        }
-                    }
+                if ($isActive && isset($association['organisationalUnit']['name'])) {
+                    // Use the extractLocalizedName method for consistent locale handling
+                    $orgName = $this->extractLocalizedName($association['organisationalUnit']['name'], $this->locale);
                     
                     if (!in_array($orgName, $organizationNames)) {
                         $organizationNames[] = $orgName;
@@ -303,10 +319,10 @@ class ClassificationScheme
             $selectedItems = $this->getSelectedItemsWithRealNames($selectedUuids, 'project');
         }
         
-        // For AJAX dynamic loading, only load minimal items initially
+        // For AJAX dynamic loading, only load minimal items initially (8 items like organizations)
         $projectsXML = trim('<?xml version="1.0"?>
             <projectsQuery>
-            <size>5</size>
+            <size>8</size>
             <locales>
             <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
             </locales>
@@ -323,23 +339,23 @@ class ClassificationScheme
             </workflowSteps>
             </projectsQuery>');
 
-        $projects = $this->getProjectsFromCache($this->locale);
-
-        if ($projects === null || !$this->isValidProjectsData($projects)) {
-            $projects = $this->webService->getJson('projects', $projectsXML);
-            $this->storeProjectsToCache($projects, $this->locale);
-        }
-
-        if (is_array($projects) && isset($projects['items'])) {
-            foreach ($projects['items'] as $project) {
-                $title = $project['title']['text'][0]['value'];
-                if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
-                    $title = $project['acronym'] . ' - ' . $title;
-                }
-                $config['items'][] = [$title, $project['uuid']];
-            }
+        // Fetch fresh data for reliable language switching (8 items)
+        $projects = $this->webService->getJson('projects', $projectsXML);
+        
+        // Debug: Log actual API response count
+        if ($projects && isset($projects['items'])) {
+            error_log('[Pure Debug] Projects API returned: ' . count($projects['items']) . ' items (requested 8)');
         }
         
+        if (!$projects || !isset($projects['items'])) {
+            $this->addFlashMessage(
+                'Could not fetch projects from the API. Please check your connection.',
+                'Projects Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            return;
+        }
+
         // Add selected items first (highest priority)
         foreach ($selectedItems as $item) {
             $config['items'][] = $item;
@@ -350,22 +366,22 @@ class ClassificationScheme
         if (is_array($projects) && isset($projects['items'])) {
             foreach ($projects['items'] as $project) {
                 if (!in_array($project['uuid'], $existingUuids)) {
-                    $title = $project['title']['text'][0]['value'];
+                    $title = $this->extractLocalizedName($project['title'] ?? [], $this->locale);
+                    if (empty($title)) {
+                        $title = 'Unknown Project';
+                    }
+                    
                     if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
                         $title = $project['acronym'] . ' - ' . $title;
                     }
                     $config['items'][] = [$title, $project['uuid']];
                     
-                    // Cache the name for future use
-                    $this->setCachedItemName($project['uuid'], 'project', $title);
                 }
             }
         }
         
         // Add hint for users to search
-        $searchHint = $this->locale === 'de_DE' ?
-            '→ Suchen für mehr...' :
-            '→ Search for more...';
+        $searchHint = $this->getSearchHintText();
         $config['items'][] = ['─────────────────────', '--div--'];
         $config['items'][] = [$searchHint, ''];
     }
@@ -377,19 +393,15 @@ class ClassificationScheme
             <size>99999</size>
             <offset>0</offset>
             <locales>
-            <locale>' . $this->locale . '</locale>
+            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
             </locales>
             <returnUsedContent>true</returnUsedContent>
             <navigationLink>true</navigationLink> 
             <baseUri>' . self::RESEARCHOUTPUT . '</baseUri>
             </classificationSchemesQuery>');
 
-        $publicationTypes = $this->getTypesFromPublicationsFromCache();
-
-        if ($publicationTypes === null || !$this->isValidPublicationTypesData($publicationTypes)) {
-            $publicationTypes = $this->webService->getJson('classification-schemes', $classificationXML);
-            $this->storeTypesFromPublicationsToCache($publicationTypes);
-        }
+        // Fetch fresh publication types data
+        $publicationTypes = $this->webService->getJson('classification-schemes', $classificationXML);
 
         if (is_array($publicationTypes)) {
             $sorted = $this->sortClassification($publicationTypes);
@@ -397,90 +409,7 @@ class ClassificationScheme
         }
     }
 
-    public function getCacheIdentifier(string $key, string $locale = ''): string
-    {
-        return sha1($key . $locale);
-    }
 
-    public function getFromCache(string $identifier)
-    {
-        return $this->cache->has($identifier) ? $this->cache->get($identifier) : null;
-    }
-
-    public function setToCache(string $identifier, $data): void
-    {
-        $this->cache->set($identifier, $data, [], self::CACHE_LIFETIME);
-    }
-
-    public function getTypesFromPublicationsFromCache()
-    {
-        return $this->getFromCache($this->getCacheIdentifier('getTypesFromPublications'));
-    }
-
-    public function getOrganisationsFromCache(string $lang)
-    {
-        return $this->getFromCache($this->getCacheIdentifier('getOrganisations', $lang));
-    }
-
-    public function getPersonsFromCache()
-    {
-        return $this->getFromCache($this->getCacheIdentifier('getPersons'));
-    }
-
-    public function getPersonsByOrganizationFromCache()
-    {
-        return $this->getFromCache($this->getCacheIdentifier('getPersonsByOrganization'));
-    }
-
-    public function getProjectsFromCache(string $lang)
-    {
-        return $this->getFromCache($this->getCacheIdentifier('getProjects', $lang));
-    }
-
-    public function storeTypesFromPublicationsToCache($data): void
-    {
-        $this->setToCache($this->getCacheIdentifier('getTypesFromPublications'), $data);
-    }
-
-    public function storeOrganisationsToCache($data, string $locale): void
-    {
-        $this->setToCache($this->getCacheIdentifier('getOrganisations', $locale), $data);
-    }
-
-    public function storePersonsToCache($data): void
-    {
-        $this->setToCache($this->getCacheIdentifier('getPersons'), $data);
-    }
-
-    public function storePersonsByOrganizationToCache($data): void
-    {
-        $this->setToCache($this->getCacheIdentifier('getPersonsByOrganization'), $data);
-    }
-
-    public function storeProjectsToCache($data, string $locale): void
-    {
-        $this->setToCache($this->getCacheIdentifier('getProjects', $locale), $data);
-    }
-
-    public function isValidOrganisationsData($data): bool
-    {
-        return is_array($data) && isset($data['items']) && count($data['items']) >= 1;
-    }
-
-    public function isValidPersonsData($data): bool
-    {
-        return is_array($data) && isset($data['items']) && count($data['items']) >= 1;
-    }
-
-    public function isValidProjectsData($data): bool
-    {
-        return is_array($data) && isset($data['items']) && count($data['items']) >= 1;
-    }
-
-    public function isValidPublicationTypesData($data): bool
-    {
-        return is_array($data) && isset($data['items']) && count($data['items']) >= 3;
-    }
 
     public function sorted2items($sorted, &$config): void
     {
@@ -596,31 +525,90 @@ class ClassificationScheme
     {
         $languageService = $GLOBALS['LANG'];
 
+        // Always start with a blank option
         $config['items'][] = [
             $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectBlank'),
             -1
         ];
-        $config['items'][] = [
-            $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
-            0
-        ];
-        $config['items'][] = [
-            $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
-            1
-        ];
-        $config['items'][] = [
-            $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPersonWithOrganization'),
-            3
-        ];
-
+        
+        // Get the current display type
         $settings = $config['flexParentDatabaseRow']['pi_flexform'];
         $whatToDisplay = $settings['data']['sDEF']['lDEF']['settings.what_to_display']['vDEF'][0] ?? '';
-
-        if ($whatToDisplay === 'PUBLICATIONS' || $whatToDisplay === 'DATASETS') {
-            $config['items'][] = [
-                $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByProject'),
-                2
-            ];
+        
+        // Configure options based on display type
+        switch ($whatToDisplay) {
+            case 'PUBLICATIONS':
+                // Publications: Organizations, Persons, Projects
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
+                    0
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
+                    1
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByProject'),
+                    2
+                ];
+                // Note: PersonWithOrganization (3) is intentionally not shown for cleaner UI
+                break;
+                
+            case 'PROJECTS':
+                // Projects: Organizations, Persons (no projects)
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
+                    0
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
+                    1
+                ];
+                break;
+                
+            case 'EQUIPMENTS':
+                // Equipment: Organizations, Persons (no projects)
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
+                    0
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
+                    1
+                ];
+                break;
+                
+            case 'DATASETS':
+                // Datasets: Organizations, Persons, Projects
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
+                    0
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
+                    1
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByProject'),
+                    2
+                ];
+                break;
+                
+            default:
+                // Default: show all options for safety
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
+                    0
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
+                    1
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByProject'),
+                    2
+                ];
+                break;
         }
     }
 
@@ -703,87 +691,6 @@ class ClassificationScheme
     }
 
     /**
-     * Get cached display name for an item
-     */
-    protected function getCachedItemName(string $uuid, string $type): ?string
-    {
-        $cacheKey = "item_name_{$type}_{$uuid}";
-        return $this->getFromCache($this->getCacheIdentifier($cacheKey));
-    }
-
-    /**
-     * Cache display name for an item
-     */
-    protected function setCachedItemName(string $uuid, string $type, string $name): void
-    {
-        $cacheKey = "item_name_{$type}_{$uuid}";
-        $this->setToCache($this->getCacheIdentifier($cacheKey), $name);
-    }
-
-    /**
-     * Add selected items that are not already in the config
-     */
-    protected function addSelectedItemsToConfig(&$config, array $selectedItems, string $type): void
-    {
-        if (empty($selectedItems)) {
-            return;
-        }
-
-        // Get existing item values to avoid duplicates
-        $existingValues = [];
-        foreach ($config['items'] as $item) {
-            if (isset($item[1])) {
-                $existingValues[] = $item[1];
-            }
-        }
-
-        // Add missing selected items by fetching them from API
-        $missingItems = array_diff($selectedItems, $existingValues);
-        if (!empty($missingItems)) {
-            $this->fetchMissingItems($config, $missingItems, $type);
-        }
-    }
-
-    /**
-     * Fetch missing selected items from API
-     */
-    protected function fetchMissingItems(&$config, array $uuids, string $type): void
-    {
-        foreach ($uuids as $uuid) {
-            if (empty($uuid)) continue;
-            
-            try {
-                // Fetch individual item by UUID
-                switch ($type) {
-                    case 'organisations':
-                        $item = $this->fetchOrganizationByUuid($uuid);
-                        if ($item) {
-                            $config['items'][] = [$item['name'], $uuid];
-                        }
-                        break;
-                    
-                    case 'persons':
-                        $item = $this->fetchPersonByUuid($uuid);
-                        if ($item) {
-                            $config['items'][] = [$item['name'], $uuid];
-                        }
-                        break;
-                    
-                    case 'projects':
-                        $item = $this->fetchProjectByUuid($uuid);
-                        if ($item) {
-                            $config['items'][] = [$item['title'], $uuid];
-                        }
-                        break;
-                }
-            } catch (\Exception $e) {
-                // If fetch fails, add placeholder
-                $config['items'][] = ['[' . $uuid . ']', $uuid];
-            }
-        }
-    }
-
-    /**
      * Fetch organization by UUID using search
      */
     protected function fetchOrganizationByUuid(string $uuid): ?array
@@ -805,9 +712,10 @@ class ClassificationScheme
         $result = $this->webService->getJson('organisational-units', $postData);
         
         if (is_array($result) && isset($result['items'][0])) {
-            return [
-                'name' => $result['items'][0]['name']['text']['0']['value']
-            ];
+            $name = $this->extractLocalizedName($result['items'][0]['name'] ?? [], $this->locale);
+            if (!empty($name)) {
+                return ['name' => $name];
+            }
         }
         
         return null;
@@ -877,7 +785,12 @@ class ClassificationScheme
         
         if (is_array($result) && isset($result['items'][0])) {
             $project = $result['items'][0];
-            $title = $project['title']['text'][0]['value'];
+            $title = $this->extractLocalizedName($project['title'] ?? [], $this->locale);
+            
+            if (empty($title)) {
+                $title = 'Unknown Project';
+            }
+            
             if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
                 $title = $project['acronym'] . ' - ' . $title;
             }
@@ -895,17 +808,10 @@ class ClassificationScheme
     {
         $items = [];
         
-        // First try to get names from cache
+        // Fetch real names from API for all selected items
         foreach ($uuids as $uuid) {
             if (empty($uuid)) continue;
             
-            $cachedName = $this->getCachedItemName($uuid, $type);
-            if ($cachedName) {
-                $items[] = [$cachedName, $uuid];
-                continue;
-            }
-            
-            // If not cached, try to fetch from API
             try {
                 $realName = null;
                 switch ($type) {
@@ -913,7 +819,6 @@ class ClassificationScheme
                         $item = $this->fetchOrganizationByUuid($uuid);
                         if ($item) {
                             $realName = $item['name'];
-                            $this->setCachedItemName($uuid, $type, $realName);
                         }
                         break;
                     
@@ -921,7 +826,6 @@ class ClassificationScheme
                         $item = $this->fetchPersonByUuid($uuid);
                         if ($item) {
                             $realName = $item['name'];
-                            $this->setCachedItemName($uuid, $type, $realName);
                         }
                         break;
                     
@@ -929,7 +833,6 @@ class ClassificationScheme
                         $item = $this->fetchProjectByUuid($uuid);
                         if ($item) {
                             $realName = $item['title'];
-                            $this->setCachedItemName($uuid, $type, $realName);
                         }
                         break;
                 }

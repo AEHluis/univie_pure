@@ -304,10 +304,58 @@
     // Initialize when TYPO3 is ready
     function initWhenReady() {
         if (typeof TYPO3 !== 'undefined' && TYPO3.settings && TYPO3.settings.ajaxUrls) {
+            // Add CSS styles inline since external CSS loading has issues
+            addInlineStyles();
             new DynamicMultiSelect();
         } else {
             setTimeout(initWhenReady, 100);
         }
+    }
+    
+    // Add inline styles for form layout
+    function addInlineStyles() {
+        if (document.getElementById('univie-pure-backend-styles')) {
+            return; // Already added
+        }
+        
+        const style = document.createElement('style');
+        style.id = 'univie-pure-backend-styles';
+        style.textContent = `
+            /* Override TYPO3 backend form styles for multiselect fields */
+            .form-multigroup-wrap {
+                display: block !important;
+                flex: none !important;
+                flex-direction: column !important;
+            }
+            
+            .form-multigroup-wrap .form-wizards-wrap {
+                width: 100% !important;
+            }
+        .form-multigroup-wrap .form-multigroup-item {
+	   display: block !important;
+                width: 100% !important;
+	}
+
+            .form-multigroup-wrap .form-wizards-element {
+                display: block !important;
+                width: 100% !important;
+                margin-bottom: 5px;
+                max-width: 100% !important;
+            }
+            
+            /* More specific selectors for TYPO3 v12 backend forms */
+            .t3-form-field-container .form-multigroup-wrap {
+                display: block !important;
+                flex: none !important;
+            }
+            
+            .t3-form-field-container .form-multigroup-wrap .form-wizards-element {
+                display: block !important;
+                width: 100% !important;
+                margin-bottom: 5px;
+            }
+        `;
+        document.head.appendChild(style);
     }
     
     // Start initialization

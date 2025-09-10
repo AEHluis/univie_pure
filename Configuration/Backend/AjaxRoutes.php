@@ -11,12 +11,6 @@ return [
         'target' => \Univie\UniviePure\Controller\AjaxController::class . '::searchOrganizationsAction',
     ],
 
-    // Persons suggest  
-    'univie_pure_search_persons' => [
-        'path' => '/univie_pure/search/persons',
-        'target' => \Univie\UniviePure\Controller\AjaxController::class . '::searchPersonsAction',
-    ],
-
     // Persons with organization suggest
     'univie_pure_search_persons_with_org' => [
         'path' => '/univie_pure/search/persons-with-org', 

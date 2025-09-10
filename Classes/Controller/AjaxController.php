@@ -7,9 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use Univie\UniviePure\Service\WebService;
 
@@ -20,6 +17,14 @@ use Univie\UniviePure\Service\WebService;
 class AjaxController
 {
     protected WebService $webService;
+    
+    private const MIN_SEARCH_LENGTH = 3;
+    private const SEARCH_SIZE = 20;
+    private const LOCALE_MAP = [
+        'de' => 'de_DE',
+        'en' => 'en_GB',
+        'default' => 'de_DE'
+    ];
 
     public function __construct()
     {
@@ -33,45 +38,51 @@ class AjaxController
     protected function getBackendUserLocale(): string
     {
         try {
-            // Method 1: TYPO3 v12.4 recommended - Context API
-            $context = GeneralUtility::makeInstance(Context::class);
-            
-            // Method 2: LanguageServiceFactory (best practice for v12.4)
             $languageServiceFactory = GeneralUtility::makeInstance(LanguageServiceFactory::class);
             $languageService = $languageServiceFactory->createFromUserPreferences($GLOBALS['BE_USER']);
-            $lang = $languageService->lang ?? '';
-            
-            // Method 3: Fallback to direct BE_USER access
-            if (empty($lang)) {
-                $lang = $GLOBALS['BE_USER']->uc['lang'] ?? '';
-            }
-            
-            // Default to German for this system if nothing found
-            if (empty($lang)) {
-                $lang = 'de'; // Set German as default for this University system
-            }
-            
+            $lang = $languageService->lang ?? 'de';
         } catch (\Exception $e) {
-            // Fallback in case of any errors
             $lang = 'de';
         }
         
-        // Map TYPO3 language codes to Pure API locale format
-        $localeMap = [
-            'de' => 'de_DE',
-            'en' => 'en_GB',
-            'default' => 'de_DE' // German default for University system
-        ];
-        
-        return $localeMap[$lang] ?? $localeMap['default'];
+        return self::LOCALE_MAP[$lang] ?? self::LOCALE_MAP['default'];
     }
     
     /**
-     * Get the backend user authentication object
+     * Build XML query for Pure API
      */
-    protected function getBackendUserAuthentication(): ?BackendUserAuthentication
+    protected function buildXmlQuery(string $queryType, string $searchTerm, string $locale, array $fields, array $additionalElements = []): string
     {
-        return $GLOBALS['BE_USER'] ?? null;
+        $xml = '<?xml version="1.0"?>';
+        $xml .= '<' . $queryType . '>';
+        $xml .= '<size>' . self::SEARCH_SIZE . '</size>';
+        $xml .= '<offset>0</offset>';
+        $xml .= '<locales><locale>' . htmlspecialchars($locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale></locales>';
+        
+        // Add fields
+        $xml .= '<fields>';
+        foreach ($fields as $field) {
+            $xml .= '<field>' . htmlspecialchars($field, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</field>';
+        }
+        $xml .= '</fields>';
+        
+        // Add additional elements (ordering, filters, etc.)
+        foreach ($additionalElements as $key => $value) {
+            if (is_array($value)) {
+                $xml .= '<' . $key . '>';
+                foreach ($value as $item) {
+                    $xml .= '<' . rtrim($key, 's') . '>' . htmlspecialchars($item, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</' . rtrim($key, 's') . '>';
+                }
+                $xml .= '</' . $key . '>';
+            } else {
+                $xml .= '<' . $key . '>' . htmlspecialchars($value, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</' . $key . '>';
+            }
+        }
+        
+        $xml .= '<searchString>' . htmlspecialchars($searchTerm, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>';
+        $xml .= '</' . $queryType . '>';
+        
+        return trim($xml);
     }
 
     /**
@@ -82,29 +93,22 @@ class AjaxController
         $parsedBody = $request->getParsedBody();
         $searchTerm = trim($parsedBody['searchTerm'] ?? '');
         
-        if (strlen($searchTerm) < 3) {
+        if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
             return new JsonResponse(['results' => []]);
         }
 
         $locale = $this->getBackendUserLocale();
         
-        $postData = trim('<?xml version="1.0"?>
-            <organisationalUnitsQuery>
-            <size>20</size>
-            <offset>0</offset>
-            <locales>
-            <locale>' . htmlspecialchars($locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
-            </locales>
-            <fields>
-            <field>uuid</field>
-            <field>name.text.value</field>
-            </fields>
-            <orderings>
-            <ordering>name</ordering>
-            </orderings>
-            <returnUsedContent>true</returnUsedContent>
-            <searchString>' . htmlspecialchars($searchTerm, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>
-            </organisationalUnitsQuery>');
+        $postData = $this->buildXmlQuery(
+            'organisationalUnitsQuery',
+            $searchTerm,
+            $locale,
+            ['uuid', 'name.text.value'],
+            [
+                'orderings' => ['name'],
+                'returnUsedContent' => 'true'
+            ]
+        );
 
         $organisations = $this->webService->getJson('organisational-units', $postData);
         
@@ -130,52 +134,6 @@ class AjaxController
         return new JsonResponse(['results' => $results]);
     }
 
-    /**
-     * Search persons via AJAX
-     */
-    public function searchPersonsAction(ServerRequestInterface $request): ResponseInterface
-    {
-        $parsedBody = $request->getParsedBody();
-        $searchTerm = trim($parsedBody['searchTerm'] ?? '');
-        
-        if (strlen($searchTerm) < 3) {
-            return new JsonResponse(['results' => []]);
-        }
-
-        $locale = $this->getBackendUserLocale();
-        
-        $personXML = trim('<?xml version="1.0"?>
-            <personsQuery>
-            <size>20</size>
-            <offset>0</offset>
-            <locales>
-            <locale>' . htmlspecialchars($locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
-            </locales>
-            <fields>
-            <field>uuid</field>
-            <field>name.*</field>
-            </fields>
-            <orderings>
-            <ordering>lastName</ordering>
-            </orderings>
-            <employmentStatus>ACTIVE</employmentStatus>
-            <searchString>' . htmlspecialchars($searchTerm, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>
-            </personsQuery>');
-
-        $persons = $this->webService->getJson('persons', $personXML);
-        $results = [];
-
-        if (is_array($persons) && isset($persons['items'])) {
-            foreach ($persons['items'] as $person) {
-                $results[] = [
-                    'value' => $person['uuid'],
-                    'label' => $person['name']['lastName'] . ', ' . $person['name']['firstName']
-                ];
-            }
-        }
-
-        return new JsonResponse(['results' => $results]);
-    }
 
     /**
      * Search persons with organization via AJAX
@@ -185,35 +143,31 @@ class AjaxController
         $parsedBody = $request->getParsedBody();
         $searchTerm = trim($parsedBody['searchTerm'] ?? '');
         
-        if (strlen($searchTerm) < 3) {
+        if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
             return new JsonResponse(['results' => []]);
         }
 
         $locale = $this->getBackendUserLocale();
         
-        $personXML = trim('<?xml version="1.0"?>
-            <personsQuery>
-            <size>20</size>
-            <offset>0</offset>
-            <locales>
-            <locale>' . htmlspecialchars($locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
-            </locales>
-            <fields>
-            <field>uuid</field>
-            <field>name.*</field>
-            <field>honoraryStaffOrganisationAssociations.uuid</field>
-            <field>honoraryStaffOrganisationAssociations.period.*</field>
-            <field>honoraryStaffOrganisationAssociations.organisationalUnit.uuid</field>
-            <field>honoraryStaffOrganisationAssociations.organisationalUnit.name.*</field>
-            </fields>
-            <orderings>
-            <ordering>lastName</ordering>
-            </orderings>
-            <employmentStatus>ACTIVE</employmentStatus>
-            <searchString>' . htmlspecialchars($searchTerm, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>
-            </personsQuery>');
+        $postData = $this->buildXmlQuery(
+            'personsQuery',
+            $searchTerm,
+            $locale,
+            [
+                'uuid',
+                'name.*',
+                'honoraryStaffOrganisationAssociations.uuid',
+                'honoraryStaffOrganisationAssociations.period.*',
+                'honoraryStaffOrganisationAssociations.organisationalUnit.uuid',
+                'honoraryStaffOrganisationAssociations.organisationalUnit.name.*'
+            ],
+            [
+                'orderings' => ['lastName'],
+                'employmentStatus' => 'ACTIVE'
+            ]
+        );
 
-        $persons = $this->webService->getJson('persons', $personXML);
+        $persons = $this->webService->getJson('persons', $postData);
         $results = [];
 
         if (is_array($persons) && isset($persons['items'])) {
@@ -245,34 +199,24 @@ class AjaxController
         $parsedBody = $request->getParsedBody();
         $searchTerm = trim($parsedBody['searchTerm'] ?? '');
         
-        if (strlen($searchTerm) < 3) {
+        if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
             return new JsonResponse(['results' => []]);
         }
 
         $locale = $this->getBackendUserLocale();
         
-        $projectXML = trim('<?xml version="1.0"?>
-            <projectsQuery>
-            <size>20</size>
-            <offset>0</offset>
-            <locales>
-            <locale>' . htmlspecialchars($locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
-            </locales>
-            <fields>
-            <field>uuid</field>
-            <field>title.*</field>
-            <field>acronym</field>
-            </fields>
-            <orderings>
-            <ordering>title</ordering>
-            </orderings>
-            <workflowSteps>
-            <workflowStep>validated</workflowStep>
-            </workflowSteps>
-            <searchString>' . htmlspecialchars($searchTerm, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>
-            </projectsQuery>');
+        $postData = $this->buildXmlQuery(
+            'projectsQuery',
+            $searchTerm,
+            $locale,
+            ['uuid', 'title.*', 'acronym'],
+            [
+                'orderings' => ['title'],
+                'workflowSteps' => ['validated']
+            ]
+        );
 
-        $projects = $this->webService->getJson('projects', $projectXML);
+        $projects = $this->webService->getJson('projects', $postData);
         $results = [];
 
         if (is_array($projects) && isset($projects['items'])) {

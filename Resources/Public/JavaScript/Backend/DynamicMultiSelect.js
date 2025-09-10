@@ -10,7 +10,6 @@
         if (TYPO3.settings && TYPO3.settings.ajaxUrls) {
             this.ajaxUrls = {
                 organizations: TYPO3.settings.ajaxUrls.univie_pure_search_organizations,
-                persons: TYPO3.settings.ajaxUrls.univie_pure_search_persons,
                 personsWithOrg: TYPO3.settings.ajaxUrls.univie_pure_search_persons_with_org,
                 projects: TYPO3.settings.ajaxUrls.univie_pure_search_projects
             };
@@ -18,7 +17,6 @@
             // Fallback to direct URLs
             this.ajaxUrls = {
                 organizations: '/typo3/ajax/univie_pure/search/organizations',
-                persons: '/typo3/ajax/univie_pure/search/persons',
                 personsWithOrg: '/typo3/ajax/univie_pure/search/persons-with-org',
                 projects: '/typo3/ajax/univie_pure/search/projects'
             };
@@ -112,40 +110,29 @@
             // Also check the label text
             const labelElement = wrapper.closest('.form-group')?.querySelector('label.t3js-formengine-label');
             const labelText = labelElement ? labelElement.textContent.trim() : '';
-            
-            
-            let endpoint = null;
-            
             // Convert field identifier and label to lowercase for case-insensitive matching
             const fieldIdentifierLower = fieldIdentifier.toLowerCase();
             const labelTextLower = labelText.toLowerCase();
             
+            // Determine endpoint based on field type
+            let endpoint = null;
+            let fieldType = null;
             
-            // Check field identifier or use label text as fallback
-            // Support both English and German labels
-            if (fieldIdentifierLower.includes('selectororganisations') || 
-                fieldIdentifierLower.includes('organisation') ||
-                labelTextLower.includes('organisation')) {
+            if (fieldIdentifierLower.includes('organisation') || labelTextLower.includes('organisation')) {
                 endpoint = 'organizations';
-            } else if (fieldIdentifierLower.includes('selectorpersons') || 
-                       fieldIdentifierLower.includes('person') ||
-                       labelTextLower.includes('person') || 
-                       labelTextLower.includes('personen')) {
-                // Always use personsWithOrg endpoint for better search results
+                fieldType = 'organisations';
+            } else if (fieldIdentifierLower.includes('person') || labelTextLower.includes('person') || labelTextLower.includes('personen')) {
                 endpoint = 'personsWithOrg';
-            } else if (fieldIdentifierLower.includes('selectorprojects') || 
-                       fieldIdentifierLower.includes('project') ||
-                       labelTextLower.includes('project') || 
-                       labelTextLower.includes('projekt')) {
+                fieldType = 'persons';
+            } else if (fieldIdentifierLower.includes('project') || labelTextLower.includes('project') || labelTextLower.includes('projekt')) {
                 endpoint = 'projects';
+                fieldType = 'projects';
             }
             
-            // Additional check: Make sure this is a Pure extension field
-            // by verifying the field identifier contains settings.selector
+            // Verify this is a Pure extension field
             const isPureField = fieldIdentifierLower.includes('settings') && 
-                               (fieldIdentifierLower.includes('selectororganisations') || 
-                                fieldIdentifierLower.includes('selectorpersons') || 
-                                fieldIdentifierLower.includes('selectorprojects'));
+                               fieldIdentifierLower.includes('selector') && 
+                               fieldType !== null;
             
             if (!endpoint || !isPureField) {
                 return;

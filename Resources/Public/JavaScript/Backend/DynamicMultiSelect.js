@@ -127,13 +127,12 @@
                 fieldIdentifierLower.includes('organisation') ||
                 labelTextLower.includes('organisation')) {
                 endpoint = 'organizations';
-            } else if (fieldIdentifierLower.includes('selectorpersonswithorganization')) {
-                endpoint = 'personsWithOrg';
             } else if (fieldIdentifierLower.includes('selectorpersons') || 
                        fieldIdentifierLower.includes('person') ||
                        labelTextLower.includes('person') || 
                        labelTextLower.includes('personen')) {
-                endpoint = 'persons';
+                // Always use personsWithOrg endpoint for better search results
+                endpoint = 'personsWithOrg';
             } else if (fieldIdentifierLower.includes('selectorprojects') || 
                        fieldIdentifierLower.includes('project') ||
                        labelTextLower.includes('project') || 

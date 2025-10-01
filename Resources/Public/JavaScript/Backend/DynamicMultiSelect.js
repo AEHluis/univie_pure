@@ -130,16 +130,17 @@
             }
             
             // Verify this is a Pure extension field
-            const isPureField = fieldIdentifierLower.includes('settings') && 
-                               fieldIdentifierLower.includes('selector') && 
+            const isPureField = fieldIdentifierLower.includes('settings') &&
+                               fieldIdentifierLower.includes('selector') &&
                                fieldType !== null;
-            
+
             if (!endpoint || !isPureField) {
                 return;
             }
-            
-            // Mark as initialized
+
+            // Mark as initialized and add univie-pure marker to wrapper
             field.dataset.dynamicSelectInit = 'true';
+            wrapper.setAttribute('data-univie-pure-field', 'true');
             
             // Store original options (first 8)
             const originalOptions = Array.from(availableSelect.options).slice(0, 8);
@@ -307,35 +308,36 @@
         const style = document.createElement('style');
         style.id = 'univie-pure-backend-styles';
         style.textContent = `
-            /* Override TYPO3 backend form styles for multiselect fields */
-            .form-multigroup-wrap {
+            /* Override TYPO3 backend form styles for multiselect fields - ONLY for univie_pure extension */
+            .form-multigroup-wrap[data-univie-pure-field="true"] {
                 display: block !important;
                 flex: none !important;
                 flex-direction: column !important;
             }
-            
-            .form-multigroup-wrap .form-wizards-wrap {
+
+            .form-multigroup-wrap[data-univie-pure-field="true"] .form-wizards-wrap {
                 width: 100% !important;
             }
-        .form-multigroup-wrap .form-multigroup-item {
-	   display: block !important;
-                width: 100% !important;
-	}
 
-            .form-multigroup-wrap .form-wizards-element {
+            .form-multigroup-wrap[data-univie-pure-field="true"] .form-multigroup-item {
+                display: block !important;
+                width: 100% !important;
+            }
+
+            .form-multigroup-wrap[data-univie-pure-field="true"] .form-wizards-element {
                 display: block !important;
                 width: 100% !important;
                 margin-bottom: 5px;
                 max-width: 100% !important;
             }
-            
+
             /* More specific selectors for TYPO3 v12 backend forms */
-            .t3-form-field-container .form-multigroup-wrap {
+            .t3-form-field-container .form-multigroup-wrap[data-univie-pure-field="true"] {
                 display: block !important;
                 flex: none !important;
             }
-            
-            .t3-form-field-container .form-multigroup-wrap .form-wizards-element {
+
+            .t3-form-field-container .form-multigroup-wrap[data-univie-pure-field="true"] .form-wizards-element {
                 display: block !important;
                 width: 100% !important;
                 margin-bottom: 5px;

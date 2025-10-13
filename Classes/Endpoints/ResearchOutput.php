@@ -304,8 +304,9 @@ class ResearchOutput extends Endpoints
         foreach ($publications['items'] as $contribution) {
             // Get portal URI for the publication
             // This is done once per contribution, outside the status loop for efficiency
-            $singlePub = $this->getAlternativeSinglePublication($this->getArrayValue($contribution, 'uuid', ''), $lang);
-            $portalUri = $this->getNestedArrayValue($singlePub, 'items.0.info.portalUrl', '');
+            $langPlain = preg_match('/<locale>(.*?)<\/locale>/', $lang, $matches) ? $matches[1] : $lang;
+            $singlePub = $this->getSinglePublication($this->getArrayValue($contribution, 'uuid', ''), $langPlain);
+            $portalUri = $this->getNestedArrayValue($singlePub, 'info.portalUrl', '');
 
             // Initialize rendering status for this contribution
             $allowedToRender = false;

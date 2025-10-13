@@ -53,14 +53,19 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     private readonly DataSets $dataSets;
     protected string $locale;
     protected string $localeShort;
+    protected string $localeXml;
 
     protected function getLocale(): string
     {
-        return LanguageUtility::getLocale('xml');
+        return LanguageUtility::getLocale(null); // Plain string like "de_DE"
     }
     protected function getLocaleShort(): string
     {
         return LanguageUtility::getLocale(null);
+    }
+    protected function getLocaleXml(): string
+    {
+        return LanguageUtility::getLocale('xml'); // XML for API calls only
     }
     /**
      * Constructor – dependencies are injected here.
@@ -78,8 +83,9 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->dataSets = $dataSets;
         $this->projects = $projects;
         $this->equipments = $equipments;
-        $this->locale = $this->getLocale();
+        $this->locale = $this->getLocale(); // Plain string for URLs
         $this->localeShort = $this->getLocaleShort();
+        $this->localeXml = $this->getLocaleXml(); // XML for API requests
     }
 
     /**
@@ -102,6 +108,18 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     private function clean_string(string $content): string
     {
         $content = strtolower($content);
+        // Maximum length to prevent DoS
+        $content = substr($content, 0, 500);
+
+        // Remove control characters and potential injection patterns
+        $content = filter_var($content, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
+
+        // Normalize whitespace
+        $content = preg_replace('/\s+/', ' ', trim($content));
+
+        // Remove potentially dangerous characters
+        $content = preg_replace('/[<>"\';&\x00-\x1F\x7F]/u', '', $content);
+
         $content = preg_replace("/\(([^()]*+|(?R))*\)/", " ", $content);
         $content = preg_replace('/[^\p{L}\p{N} .–_]/u', " ", urldecode($content));
         return $content;
@@ -126,12 +144,31 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $arguments = [
             'currentPageNumber' => $currentPageNumber,
             'filter' => $filter,
-            'lang' => $this->locale
+            'lang' => $this->locale // Plain locale string for URL parameter
         ];
         $this->uriBuilder->reset()->setTargetPageUid($GLOBALS['TSFE']->id);
-        $this->uriBuilder->reset()->setLanguage($this->locale);
+        // Note: setLanguage() expects language ID, not locale string
+        // The current language is already set by TYPO3 request, so we don't need to set it again
         $uri = $this->uriBuilder->uriFor('list', $arguments, 'Pure');
         return $this->redirectToUri($uri);
+    }
+
+    /**
+     * Validate and sanitize locale parameter
+     *
+     * @param string $locale The locale string to validate
+     * @return string Validated locale or default
+     */
+    private function validateLocale(string $locale): string
+    {
+        // Only allow specific locale formats (e.g., "de_DE", "en_GB")
+        // This prevents XML injection and other malicious input
+        if (preg_match('/^[a-z]{2}_[A-Z]{2}$/', $locale)) {
+            return $locale;
+        }
+
+        // If invalid, return default locale
+        return 'de_DE';
     }
 
     /**
@@ -147,6 +184,11 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             : 1);
         $paginationMaxLinks = 10;
 
+        // Validate locale parameter if present
+        $locale = $this->locale;
+        if ($this->request->hasArgument('lang')) {
+            $locale = $this->validateLocale($this->request->getArgument('lang'));
+        }
 
         // Process filter from request
         if ($this->request->hasArgument('filter')) {
@@ -159,7 +201,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             switch ($this->settings['what_to_display']) {
                 case 'PUBLICATIONS':
                     $pub = $this->researchOutput;
-                    $view = $pub->getPublicationList($this->settings, $currentPageNumber, $this->locale);
+                    $view = $pub->getPublicationList($this->settings, $currentPageNumber, $locale);
                     if (isset($view['error'])) {
                         $this->addFlashMessage($view['message'], 'Error', ContextualFeedbackSeverity::ERROR);
                         $this->view->assign('error', $view['message']);

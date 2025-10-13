@@ -288,7 +288,7 @@ class ResearchOutput extends Endpoints
      *
      * @param array $publications Publications data
      * @param array $settings Configuration settings
-     * @param string $lang Language code
+     * @param string $lang Language code (plain format like "de_DE", not XML)
      * @return array Transformed publication data
      */
     protected function transformArray(array $publications, array $settings, string $lang): array
@@ -303,9 +303,8 @@ class ResearchOutput extends Endpoints
 
         foreach ($publications['items'] as $contribution) {
             // Get portal URI for the publication
-            // This is done once per contribution, outside the status loop for efficiency
-            $langPlain = preg_match('/<locale>(.*?)<\/locale>/', $lang, $matches) ? $matches[1] : $lang;
-            $singlePub = $this->getSinglePublication($this->getArrayValue($contribution, 'uuid', ''), $langPlain);
+            // Language should already be plain format (e.g., "de_DE")
+            $singlePub = $this->getSinglePublication($this->getArrayValue($contribution, 'uuid', ''), $lang);
             $portalUri = $this->getNestedArrayValue($singlePub, 'info.portalUrl', '');
 
             // Initialize rendering status for this contribution

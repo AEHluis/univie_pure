@@ -26,6 +26,26 @@ class Equipments extends Endpoints
     }
 
     /**
+     * Safely initialize nested array structure
+     *
+     * @param array $array The array to modify
+     * @param string $path Dot-separated path (e.g., 'items.0.renderings.rendering')
+     * @return array Modified array with initialized structure
+     */
+    private function initializeNestedArray(array &$array, string $path): void
+    {
+        $keys = explode('.', $path);
+        $current = &$array;
+
+        foreach ($keys as $key) {
+            if (!isset($current[$key]) || !is_array($current[$key])) {
+                $current[$key] = [];
+            }
+            $current = &$current[$key];
+        }
+    }
+
+    /**
      * query for single equipment
      * @return string xml
      */
@@ -79,17 +99,28 @@ class Equipments extends Endpoints
 	// Get response from the web service
 	$view = $this->webservice->getXml('equipments', $xml);
 
-        // Handle unavailable server or empty response
+        // Comprehensive validation of API response
         if (!$view || !is_array($view)) {
             return [
                 'error' => 'SERVER_NOT_AVAILABLE',
-                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
+                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure'),
+                'count' => 0,
+                'items' => [],
+                'offset' => 0
             ];
         }
 
+        // Initialize default structure to prevent undefined array key errors
+        if (!isset($view['items']) || !is_array($view['items'])) {
+            $view['items'] = [];
+        }
+        if (!isset($view['count']) || !is_numeric($view['count'])) {
+            $view['count'] = 0;
+        }
+
         // Process equipment items like Projects endpoint does
-        if (isset($view['count']) && $view['count'] > 0 && isset($view['items']['equipment'])) {
-            $equipmentItems = $view['items']['equipment'];
+        $equipmentItems = $this->getNestedArrayValue($view, 'items.equipment', null);
+        if ($this->getArrayValue($view, 'count', 0) > 0 && $equipmentItems !== null) {
             
             // Check if we have a single equipment or multiple
             if (isset($equipmentItems['@attributes'])) {
@@ -99,17 +130,31 @@ class Equipments extends Endpoints
             
             // Process each equipment item in place
             foreach ($equipmentItems as $index => $item) {
-                // Process renderings
+                // Skip invalid items
+                if (!is_array($item)) {
+                    continue;
+                }
+
+                // Process renderings with type safety
                 $rendering = $this->getNestedArrayValue($item, 'renderings.rendering', '');
                 $new_render = '';
                 if (is_array($rendering)) {
+                    // Filter out non-string values before imploding
+                    $rendering = array_filter($rendering, 'is_string');
                     $new_render = implode(" ", $rendering);
-                } else {
+                } elseif (is_string($rendering)) {
                     $new_render = $rendering;
                 }
-                $new_render = $this->transformRenderingHtml(mb_convert_encoding($new_render, "UTF-8"), []);
-                
-                // Update the view items array directly
+
+                // Ensure we have valid UTF-8 string before processing
+                if (!empty($new_render)) {
+                    $new_render = $this->transformRenderingHtml(mb_convert_encoding($new_render, "UTF-8"), []);
+                }
+
+                // Initialize nested structure safely using helper method
+                $this->initializeNestedArray($view, "items.$index.renderings.rendering");
+
+                // Update the view items array safely
                 $view['items'][$index]['renderings']['rendering']['html'] = $new_render;
                 $view['items'][$index]['uuid'] = $this->getNestedArrayValue($item, '@attributes.uuid', '');
                 
@@ -140,12 +185,16 @@ class Equipments extends Endpoints
                 $emailData = $this->getNestedArrayValue($item, 'emails.email', []);
                 if (isset($emailData['value'])) {
                     // Single email
-                    $emails[] = strtolower($emailData['value']);
+                    $emailValue = $this->getArrayValue($emailData, 'value', '');
+                    if (!empty($emailValue)) {
+                        $emails[] = strtolower($emailValue);
+                    }
                 } elseif (is_array($emailData)) {
                     // Multiple emails
                     foreach ($emailData as $email) {
-                        if (isset($email['value'])) {
-                            $emails[] = strtolower($email['value']);
+                        $emailValue = $this->getArrayValue($email, 'value', '');
+                        if (!empty($emailValue)) {
+                            $emails[] = strtolower($emailValue);
                         }
                     }
                 }
@@ -156,34 +205,51 @@ class Equipments extends Endpoints
                 // Process web addresses
                 $webAddresses = [];
                 $webData = $this->getNestedArrayValue($item, 'webAddresses.webAddress', []);
-                if (isset($webData['value'])) {
-                    // Single web address
-                    $webAddresses[] = $this->getNestedArrayValue($webData, 'value.text', '');
-                } elseif (is_array($webData)) {
-                    // Multiple web addresses
-                    foreach ($webData as $web) {
-                        $text = $this->getNestedArrayValue($web, 'value.text', '');
+                if (!empty($webData) && is_array($webData)) {
+                    // Check if single web address (has 'value' key directly)
+                    if (isset($webData['value'])) {
+                        $text = $this->getNestedArrayValue($webData, 'value.text', '');
                         if (!empty($text)) {
                             $webAddresses[] = $text;
+                        }
+                    } else {
+                        // Multiple web addresses
+                        foreach ($webData as $web) {
+                            if (is_array($web)) {
+                                $text = $this->getNestedArrayValue($web, 'value.text', '');
+                                if (!empty($text)) {
+                                    $webAddresses[] = $text;
+                                }
+                            }
                         }
                     }
                 }
                 if (!empty($webAddresses)) {
                     $view['items'][$index]['webAddress'] = $webAddresses;
                 }
-                
+
                 // Add portal URI if enabled
                 if ($this->getArrayValue($settings, 'linkToPortal') == 1) {
-                    $view['items'][$index]['portaluri'] = $this->getNestedArrayValue($item, 'info.portalUrl', '');
+                    $portalUri = $this->getNestedArrayValue($item, 'info.portalUrl', '');
+                    if (!empty($portalUri)) {
+                        $view['items'][$index]['portaluri'] = $portalUri;
+                    }
                 }
             }
-            
+
             // Remove the original equipment key to clean up the structure
-            unset($view['items']['equipment']);
+            if (isset($view['items']['equipment'])) {
+                unset($view['items']['equipment']);
+            }
         }
 
-        // Set offset for pagination
-        $view['offset'] = $this->calculateOffset((int)$settings['pageSize'], (int)$currentPageNumber);
+        // Set offset for pagination - ensure $view is still an array
+        if (is_array($view)) {
+            $view['offset'] = $this->calculateOffset(
+                (int)$this->getArrayValue($settings, 'pageSize', 20),
+                (int)$currentPageNumber
+            );
+        }
 
         return $view;
     }

@@ -143,32 +143,14 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
         $arguments = [
             'currentPageNumber' => $currentPageNumber,
-            'filter' => $filter,
-            'lang' => $this->locale // Plain locale string for URL parameter
+            'filter' => $filter
+            // Note: 'lang' parameter removed - TYPO3 handles locale via site configuration
         ];
         $this->uriBuilder->reset()->setTargetPageUid($GLOBALS['TSFE']->id);
         // Note: setLanguage() expects language ID, not locale string
         // The current language is already set by TYPO3 request, so we don't need to set it again
         $uri = $this->uriBuilder->uriFor('list', $arguments, 'Pure');
         return $this->redirectToUri($uri);
-    }
-
-    /**
-     * Validate and sanitize locale parameter
-     *
-     * @param string $locale The locale string to validate
-     * @return string Validated locale or default
-     */
-    private function validateLocale(string $locale): string
-    {
-        // Only allow specific locale formats (e.g., "de_DE", "en_GB")
-        // This prevents XML injection and other malicious input
-        if (preg_match('/^[a-z]{2}_[A-Z]{2}$/', $locale)) {
-            return $locale;
-        }
-
-        // If invalid, return default locale
-        return 'de_DE';
     }
 
     /**
@@ -184,11 +166,8 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             : 1);
         $paginationMaxLinks = 10;
 
-        // Validate locale parameter if present
+        // Use locale from TYPO3 site language (not from URL parameter)
         $locale = $this->locale;
-        if ($this->request->hasArgument('lang')) {
-            $locale = $this->validateLocale($this->request->getArgument('lang'));
-        }
 
         // Process filter from request
         if ($this->request->hasArgument('filter')) {

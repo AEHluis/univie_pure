@@ -12,7 +12,7 @@ $EM_CONF[$_EXTKEY] = array(
     'version' => '12.6.524',
     'constraints' => array(
         'depends' => array(
-            'php' => '8.1.0-8.4.99',
+            'php' => '8.2.0-8.4.99',
             'typo3' => '12.0.0-12.99.99',
             'numbered_pagination' => '2.0.1-2.99.99',
         ),

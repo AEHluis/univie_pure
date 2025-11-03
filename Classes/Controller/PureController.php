@@ -146,7 +146,10 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'filter' => $filter
             // Note: 'lang' parameter removed - TYPO3 handles locale via site configuration
         ];
-        $this->uriBuilder->reset()->setTargetPageUid($GLOBALS['TSFE']->id);
+
+        // Get current page ID from request (TYPO3 12 compatible)
+        $currentPageId = $this->request->getAttribute('routing')->getPageId();
+        $this->uriBuilder->reset()->setTargetPageUid($currentPageId);
         // Note: setLanguage() expects language ID, not locale string
         // The current language is already set by TYPO3 request, so we don't need to set it again
         $uri = $this->uriBuilder->uriFor('list', $arguments, 'Pure');
@@ -355,7 +358,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $context = GeneralUtility::makeInstance(Context::class);
 
         if (!$context->hasAspect('frontend.page')) {
-            return; // Kontext nicht verfügbar – kein Fehler werfen
+            return; // Context not available – no error
         }
 
         $currentPageId = $context->getAspect('frontend.page')->get('id');
@@ -371,8 +374,14 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $concatenatedTitles = array_unique($concatenatedTitles);
         $pageTitle = trim(implode(" – ", $concatenatedTitles));
 
-        $GLOBALS['TSFE']->getPageRenderer()->setTitle($pageTitle);
-        $GLOBALS['TSFE']->indexedDocTitle = $pageTitle;
+        // TYPO3 12 compatible: Get PageRenderer from request
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer->setTitle($pageTitle);
+
+        // Set indexed title for search engines (TYPO3 12 compatible)
+        if (isset($GLOBALS['TSFE']) && method_exists($GLOBALS['TSFE'], 'getPageRenderer')) {
+            $GLOBALS['TSFE']->indexedDocTitle = $pageTitle;
+        }
     }
     
      /**

@@ -2,7 +2,6 @@
 defined('TYPO3') || die();
 
 use Univie\UniviePure\Controller\PureController;
-use Univie\UniviePure\Controller\PaginateController;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
@@ -19,12 +18,10 @@ call_user_func(
             'UniviePure',
             [
                 PureController::class => 'list,listHandler,show',
-                PaginateController::class => 'index,paginate',
             ],
             // non-cacheable actions
             [
                 PureController::class => 'list,listHandler,show',
-                PaginateController::class => 'index,paginate',
             ]
         );
 

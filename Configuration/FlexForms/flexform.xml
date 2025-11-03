@@ -255,7 +255,6 @@
                                 <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getOrganisations
                                 </itemsProcFunc>
                                 <size>10</size>
-                                <autoSizeMax>20</autoSizeMax>
                                 <maxitems>9999</maxitems>
                                 <minitems>0</minitems>
                                 <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>
@@ -275,7 +274,6 @@
                                 <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getPersons
                                 </itemsProcFunc>
                                 <size>15</size>
-                                <autoSizeMax>25</autoSizeMax>
                                 <maxitems>20000</maxitems>
                                 <minitems>0</minitems>
                                 <renderType>selectMultipleSideBySide</renderType>
@@ -296,7 +294,6 @@
                                 <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getPersons
                                 </itemsProcFunc>
                                 <size>15</size>
-                                <autoSizeMax>25</autoSizeMax>
                                 <maxitems>20000</maxitems>
                                 <minitems>0</minitems>
                                 <renderType>selectMultipleSideBySide</renderType>
@@ -462,7 +459,6 @@
                                     Univie\UniviePure\Utility\ClassificationScheme->getTypesFromPublications
                                 </itemsProcFunc>
                                 <size>10</size>
-                                <autoSizeMax>20</autoSizeMax>
                                 <maxitems>9999</maxitems>
                                 <minitems>0</minitems>
                                 <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>

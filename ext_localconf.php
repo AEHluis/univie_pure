@@ -37,10 +37,6 @@ call_user_func(
         ExtensionManagementUtility::addPageTSConfig(
             '@import "EXT:univie_pure/Configuration/TSconfig/Page/Mod/Wizards/NewContentElement.tsconfig"'
         );
-        
-        // Hook to add backend JavaScript
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess']['univie_pure'] = 
-            \Univie\UniviePure\Hooks\BackendJavaScriptHook::class . '->addJavaScript';
 
         // Cache configuration
         if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['univie_pure'])) {

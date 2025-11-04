@@ -52,7 +52,6 @@ class DataSets extends Endpoints
         $xml .= CommonUtilities::getPageSize($settings['pageSize']);
         //set offset:
         $xml .= CommonUtilities::getOffset($settings['pageSize'], $currentPageNumber);
-        // $xml .= '<linkingStrategy>portalLinkingStrategy</linkingStrategy>';
 
         $xml .= LanguageUtility::getLocale('xml');
         if ($settings['rendering'] == 'extended') {

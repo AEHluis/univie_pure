@@ -49,7 +49,6 @@ class Projects extends Endpoints
 
         //set offset:
         $xml .= CommonUtilities::getOffset($settings['pageSize'], $currentPageNumber);
-        //$xml .= '<linkingStrategy>portalLinkingStrategy</linkingStrategy>';
         $xml .= LanguageUtility::getLocale('xml');
         $xml .= '<renderings><rendering>short</rendering></renderings>';
         $xml .= '<fields>

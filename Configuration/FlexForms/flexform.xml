@@ -17,7 +17,7 @@
                         <TCEforms>
                             <onChange>reload</onChange>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display
                             </label>
                             <config>
                                 <type>select</type>
@@ -26,41 +26,41 @@
 
                                     <numIndex index="-1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectBlank
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectBlank
                                         </numIndex>
                                         <numIndex index="-1"></numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.detail
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display.detail
                                         </numIndex>
                                         <numIndex index="1">DETAIL</numIndex>
                                     </numIndex>
 
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.publications
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display.publications
                                         </numIndex>
                                         <numIndex index="1">PUBLICATIONS</numIndex>
                                     </numIndex>
 
                                     <numIndex index="5" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.projects
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display.projects
                                         </numIndex>
                                         <numIndex index="1">PROJECTS</numIndex>
                                     </numIndex>
 
                                     <numIndex index="6" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.equipments
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display.equipments
                                         </numIndex>
                                         <numIndex index="1">EQUIPMENTS</numIndex>
                                     </numIndex>
 
                                     <numIndex index="7" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.data_sets
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display.data_sets
                                         </numIndex>
                                         <numIndex index="1">DATASETS</numIndex>
                                     </numIndex>
@@ -77,7 +77,7 @@
                     <settings.showBibtex>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.showBibtex
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.showBibtex
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:DETAIL</displayCond>
                             <config>
@@ -89,7 +89,7 @@
                     <settings.linkToPortal>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.linkToPortal
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.linkToPortal
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:DETAIL,PROJECTS,PUBLICATIONS,EQUIPMENTS
                             </displayCond>
@@ -101,38 +101,26 @@
                     </settings.linkToPortal>
                     <settings.singlePid>
                         <TCEforms>
-                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.singlePid
+                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.singlePid
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS</displayCond>
                             <config>
-                                <type>input</type>
-                                <size>7</size>
+                                <type>group</type>
                                 <allowed>pages</allowed>
-                                <wizards type="array">
-                                    <link type="array">
-                                        <type>popup</type>
-                                        <title>LLL:EXT:cms/locallang_ttc.xlf:header_link_formlabel</title>
-                                        <params type="array">
-                                            <blindLinkOptions>url,mail,spec,file,folder</blindLinkOptions>
-                                        </params>
-                                        <icon>link_popup.gif</icon>
-                                        <module type="array">
-                                            <name>wizard_element_browser</name>
-                                            <urlParameters type="array">
-                                                <mode>wizard</mode>
-                                                <act>file</act>
-                                            </urlParameters>
-                                        </module>
-                                        <JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1
-                                        </JSopenParams>
-                                    </link>
-                                </wizards>
+                                <maxitems>1</maxitems>
+                                <minitems>0</minitems>
+                                <size>1</size>
+                                <suggestOptions>
+                                    <default>
+                                        <searchWholePhrase>true</searchWholePhrase>
+                                    </default>
+                                </suggestOptions>
                             </config>
                         </TCEforms>
                     </settings.singlePid>
                     <settings.pageSize>
                         <TCEforms>
-                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.pageSize
+                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.pageSize
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS
                             </displayCond>
@@ -149,7 +137,7 @@
                     <settings.showSearchForm>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.showSearchForm
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.showSearchForm
                             </label>
 
 
@@ -165,7 +153,7 @@
                     <settings.showDescription>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.showDescription
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.showDescription
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:PROJECTS</displayCond>
                             <config>
@@ -177,7 +165,7 @@
                     <settings.pager.insertAbove>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.pager.insertAbove
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.pager.insertAbove
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS
                             </displayCond>
@@ -191,7 +179,7 @@
                     <settings.pager.insertBelow>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.pager.insertBelow
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.pager.insertBelow
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS
                             </displayCond>
@@ -205,7 +193,7 @@
                     <settings.initialNoResults>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.initialnoResults
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.initialnoResults
                             </label>
                             <displayCond>FIELD:settings.what_to_display:=:PUBLICATIONS</displayCond>
                             <config>
@@ -223,7 +211,7 @@
             <ROOT>
                 <TCEforms>
                     <sheetTitle>
-                        LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.settings
+                        LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.settings
                     </sheetTitle>
                     <displayCond>FIELD:sDEF.settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS</displayCond>
                 </TCEforms>
@@ -232,7 +220,7 @@
                     <settings.chooseSelector>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.ChooseSelector
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.ChooseSelector
                             </label>
                             <onChange>reload</onChange>
                             <config>
@@ -246,7 +234,7 @@
                     <settings.selectorOrganisations>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectOrganisation
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectOrganisation
                             </label>
                             <displayCond>FIELD:settings.chooseSelector:=:0</displayCond>
                             <config>
@@ -264,7 +252,7 @@
                     <settings.selectorPersons>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectPerson
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectPerson
                             </label>
                             <displayCond>FIELD:settings.chooseSelector:=:1</displayCond>
                             <config>
@@ -284,7 +272,7 @@
                     <settings.selectorPersonsWithOrganization>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectPerson
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectPerson
                             </label>
                             <displayCond>FIELD:settings.chooseSelector:=:3</displayCond>
                             <config>
@@ -304,7 +292,7 @@
                     <settings.luhPubsOnly>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.luhPubsOnly
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.luhPubsOnly
                             </label>
                             <displayCond>
                                 <and>
@@ -322,7 +310,7 @@
                     <settings.selectorProjects>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectProject
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectProject
                             </label>
                             <displayCond>FIELD:settings.chooseSelector:=:2</displayCond>
 
@@ -350,7 +338,7 @@
         <Equipments>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.equipments
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments
                     </sheetTitle>
                     <displayCond>FIELD:sDEF.settings.what_to_display:=:EQUIPMENTS</displayCond>
                 </TCEforms>
@@ -359,12 +347,12 @@
                     <settings.narrowBySearch>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.equipments.narrowBySearch
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.narrowBySearch
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.searchPlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>
@@ -377,7 +365,7 @@
         <DataSets>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.data_sets
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.data_sets
                     </sheetTitle>
                     <displayCond>FIELD:sDEF.settings.what_to_display:=:DATASETS</displayCond>
                 </TCEforms>
@@ -386,12 +374,12 @@
                     <settings.narrowBySearch>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.data_sets.narrowBySearch
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.data_sets.narrowBySearch
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.searchPlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>
@@ -400,7 +388,7 @@
                     <settings.rendering>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.data_sets.rendering
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.data_sets.rendering
                             </label>
                             <config>
                                 <type>select</type>
@@ -429,7 +417,7 @@
         <Publication>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications
                     </sheetTitle>
                     <displayCond>FIELD:sDEF.settings.what_to_display:=:PUBLICATIONS</displayCond>
                 </TCEforms>
@@ -438,7 +426,7 @@
                     <settings.narrowByPublicationType>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.narrowByPublicationType
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.narrowByPublicationType
                             </label>
                             <onChange>reload</onChange>
                             <config>
@@ -449,7 +437,7 @@
                     <settings.selectorPublicationType>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.selectPublicationType
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.selectPublicationType
                             </label>
                             <displayCond>FIELD:settings.narrowByPublicationType:REQ:true</displayCond>
                             <config>
@@ -469,7 +457,7 @@
                     <settings.peerReviewedOnly>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.peerReviewedOnly
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.peerReviewedOnly
                             </label>
                             <config>
                                 <type>check</type>
@@ -478,7 +466,7 @@
                     </settings.peerReviewedOnly>
                     <settings.inPress>
                         <TCEforms>
-                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.inPress
+                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.inPress
                             </label>
                             <config>
                                 <type>check</type>
@@ -489,7 +477,7 @@
                     <settings.notPeerReviewedOrNotSetOnly>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.notPeerReviewedOrNotSetOnly
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.notPeerReviewedOrNotSetOnly
                             </label>
                             <config>
                                 <type>check</type>
@@ -500,12 +488,12 @@
                     <settings.narrowBySearch>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.narrowBySearch
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.narrowBySearch
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.searchPlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>
@@ -515,12 +503,12 @@
                     <settings.publishedAfterDate>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedAfterDate
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.publishedAfterDate
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedAfterPlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.publishedAfterPlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>
@@ -530,12 +518,12 @@
                     <settings.publishedBeforeDate>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedBeforeDate
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.publishedBeforeDate
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedBeforePlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.publishedBeforePlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>
@@ -546,7 +534,7 @@
                     <settings.groupByYear>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.groupByYear
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.groupByYear
                             </label>
                             <config>
                                 <type>check</type>
@@ -558,7 +546,7 @@
                     <settings.researchOutputOrdering>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering
                             </label>
                             <config>
                                 <type>select</type>
@@ -567,62 +555,62 @@
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationYearAndAuthor-desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.publicationYearAndAuthor-desc
                                         </numIndex>
                                         <numIndex index="1">-publicationYearAndAuthor</numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationYearAndAuthor-asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.publicationYearAndAuthor-asc
                                         </numIndex>
                                         <numIndex index="1">publicationYearAndAuthor</numIndex>
                                     </numIndex>
 
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.year-desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.year-desc
                                         </numIndex>
                                         <numIndex index="1">-publicationYear</numIndex>
                                     </numIndex>
                                     <numIndex index="3" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.year-asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.year-asc
                                         </numIndex>
                                         <numIndex index="1">publicationYear</numIndex>
                                     </numIndex>
                                     <numIndex index="4" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.authorLastName-asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.authorLastName-asc
                                         </numIndex>
                                         <numIndex index="1">authorLastName</numIndex>
                                     </numIndex>
                                     <numIndex index="5" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.authorLastName-desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.authorLastName-desc
                                         </numIndex>
                                         <numIndex index="1">-authorLastName</numIndex>
                                     </numIndex>
                                     <numIndex index="6" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.title-asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.title-asc
                                         </numIndex>
                                         <numIndex index="1">title</numIndex>
                                     </numIndex>
                                     <numIndex index="7" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.title-desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.title-desc
                                         </numIndex>
                                         <numIndex index="1">-title</numIndex>
                                     </numIndex>
                                     <numIndex index="8" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationDate-asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.publicationDate-asc
                                         </numIndex>
                                         <numIndex index="1">publicationDate</numIndex>
                                     </numIndex>
                                     <numIndex index="9" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationDate-desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.publicationDate-desc
                                         </numIndex>
                                         <numIndex index="1">-publicationDate</numIndex>
                                     </numIndex>
@@ -634,7 +622,7 @@
                     <settings.rendering>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.rendering
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.rendering
                             </label>
                             <config>
                                 <type>select</type>
@@ -690,7 +678,7 @@
         <Projects>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects
                     </sheetTitle>
                     <displayCond>FIELD:sDEF.settings.what_to_display:=:PROJECTS</displayCond>
                 </TCEforms>
@@ -699,7 +687,7 @@
                     <settings.orderProjects>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.orderProjects
                             </label>
                             <config>
                                 <type>select</type>
@@ -707,25 +695,25 @@
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.startDate.desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.orderProjects.startDate.desc
                                         </numIndex>
                                         <numIndex index="1">-startDate</numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.startDate.asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.orderProjects.startDate.asc
                                         </numIndex>
                                         <numIndex index="1">startDate</numIndex>
                                     </numIndex>
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.title.asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.orderProjects.title.asc
                                         </numIndex>
                                         <numIndex index="1">title</numIndex>
                                     </numIndex>
                                     <numIndex index="3" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.title.desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.orderProjects.title.desc
                                         </numIndex>
                                         <numIndex index="1">-title</numIndex>
                                     </numIndex>
@@ -736,7 +724,7 @@
                     <settings.filterProjects>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.filterProjects
                             </label>
                             <config>
                                 <type>select</type>
@@ -745,25 +733,25 @@
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.none
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.filterProjects.none
                                         </numIndex>
                                         <numIndex index="1"></numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.not-started
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.filterProjects.not-started
                                         </numIndex>
                                         <numIndex index="1">NOT_STARTED</numIndex>
                                     </numIndex>
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.running
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.filterProjects.running
                                         </numIndex>
                                         <numIndex index="1">RUNNING</numIndex>
                                     </numIndex>
                                     <numIndex index="3" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.finished
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.filterProjects.finished
                                         </numIndex>
                                         <numIndex index="1">FINISHED</numIndex>
                                     </numIndex>
@@ -774,12 +762,12 @@
                     <settings.narrowBySearch>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.narrowBySearch
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.narrowBySearch
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.searchPlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>

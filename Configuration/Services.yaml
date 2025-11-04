@@ -12,9 +12,87 @@ services:
     arguments:
       $cache: '@cache.univie_pure'
 
+  # OpenAPI Services
+
+  # CSL (Citation Style Language) Services
+  Univie\UniviePure\Service\CslDataTransformer:
+    public: false
+
+  Univie\UniviePure\Service\CslRenderingService:
+    public: false
+    arguments:
+      $cache: '@cache.univie_pure'
+      $logger: '@logger.univie_pure'
+      $dataTransformer: '@Univie\UniviePure\Service\CslDataTransformer'
+
+  # Rendering Service (transforms OpenAPI JSON to HTML)
+  Univie\UniviePure\Service\RenderingService:
+    public: false
+    arguments:
+      $cache: '@cache.univie_pure'
+      $logger: '@logger.univie_pure'
+      $cslRenderingService: '@Univie\UniviePure\Service\CslRenderingService'
+
+  Univie\UniviePure\Service\OpenApi\OpenApiClient:
+    public: false
+    arguments:
+      $httpClient: '@Psr\Http\Client\ClientInterface'
+      $requestFactory: '@Psr\Http\Message\RequestFactoryInterface'
+      $streamFactory: '@Psr\Http\Message\StreamFactoryInterface'
+      $cache: '@cache.univie_pure'
+      $logger: '@logger.univie_pure'
+      $authenticator: '@Univie\UniviePure\Service\OpenApi\OpenApiAuthenticator'
+      $responseParser: '@Univie\UniviePure\Service\OpenApi\OpenApiResponseParser'
+
+  Univie\UniviePure\Service\OpenApi\OpenApiAuthenticator:
+    public: false
+    arguments:
+      $httpClient: '@Psr\Http\Client\ClientInterface'
+      $registry: '@TYPO3\CMS\Core\Registry'
+      $logger: '@logger.univie_pure'
+
+  Univie\UniviePure\Service\OpenApi\OpenApiResponseParser:
+    public: false
+    arguments:
+      $logger: '@logger.univie_pure'
+
+  Univie\UniviePure\Service\OpenApi\MigrationHelper:
+    public: false
+
+  Univie\UniviePure\Service\OpenApi\OpenApiService:
+    public: false
+    arguments:
+      $client: '@Univie\UniviePure\Service\OpenApi\OpenApiClient'
+      $parser: '@Univie\UniviePure\Service\OpenApi\OpenApiResponseParser'
+      $migrationHelper: '@Univie\UniviePure\Service\OpenApi\MigrationHelper'
+      $renderingService: '@Univie\UniviePure\Service\RenderingService'
+
+  Univie\UniviePure\Service\XmlApiService:
+    public: false
+    arguments:
+      $webService: '@Univie\UniviePure\Service\WebService'
+
+  Univie\UniviePure\Service\ApiServiceFactory:
+    public: true
+    arguments:
+      $xmlApiService: '@Univie\UniviePure\Service\XmlApiService'
+      $openApiService: '@Univie\UniviePure\Service\OpenApi\OpenApiService'
+      $logger: '@logger.univie_pure'
+
+  # Alias for easier dependency injection
+  Univie\UniviePure\Service\ApiServiceInterface:
+    alias: Univie\UniviePure\Service\ApiServiceFactory
+    public: true
+
   cache.univie_pure:
     class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
     factory: ['@TYPO3\CMS\Core\Cache\CacheManager', 'getCache']
+    arguments: ['univie_pure']
+
+  # Logger for Pure API services
+  logger.univie_pure:
+    class: Psr\Log\LoggerInterface
+    factory: ['@TYPO3\CMS\Core\Log\LogManager', 'getLogger']
     arguments: ['univie_pure']
 
   Univie\UniviePure\Cache\Warmup\UniviePureCacheWarmer:
@@ -33,5 +111,11 @@ services:
     arguments:
       $config:
         verify: false # 🔴 Disable SSL verification (for debugging only!)
+
+  Univie\UniviePure\EventListener\BackendJavaScriptEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'univie-pure-backend-javascript'
+        event: TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent
 
 

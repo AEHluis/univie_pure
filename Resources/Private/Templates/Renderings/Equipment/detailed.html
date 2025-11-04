@@ -1,0 +1,152 @@
+<div class="pure-equipment pure-equipment-detailed">
+    <f:if condition="{data.title}">
+        <h2 class="equipment-title">
+            {data.title}
+        </h2>
+    </f:if>
+
+    <div class="equipment-meta">
+        <f:if condition="{data.type}">
+            <div class="equipment-type">
+                <strong>Type:</strong> <span class="badge">{data.type.term}</span>
+            </div>
+        </f:if>
+
+        <f:if condition="{data.model}">
+            <div class="equipment-model">
+                <strong>Model:</strong> {data.model}
+            </div>
+        </f:if>
+
+        <f:if condition="{data.manufacturer}">
+            <div class="equipment-manufacturer">
+                <strong>Manufacturer:</strong> {data.manufacturer}
+            </div>
+        </f:if>
+
+        <f:if condition="{data.acquisitionDate}">
+            <div class="equipment-acquired">
+                <strong>Acquisition Date:</strong>
+                <time datetime="{data.acquisitionDate}">{data.acquisitionDate -> f:format.date(format: 'd.m.Y')}</time>
+            </div>
+        </f:if>
+    </div>
+
+    <f:if condition="{data.descriptions}">
+        <div class="equipment-description">
+            <h3>Description</h3>
+            <f:for each="{data.descriptions}" as="description">
+                <f:format.nl2br>{description.value}</f:format.nl2br>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.managingOrganisationalUnit}">
+        <div class="equipment-organization">
+            <h3>Managing Unit</h3>
+            <p>{data.managingOrganisationalUnit.name}</p>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.owners}">
+        <div class="equipment-owners">
+            <h3>Owners</h3>
+            <ul>
+                <f:for each="{data.owners}" as="owner">
+                    <li>
+                        <f:if condition="{owner.person}">
+                            {owner.person.name.firstName} {owner.person.name.lastName}
+                        </f:if>
+                        <f:if condition="{owner.organisationalUnit}">
+                            {owner.organisationalUnit.name}
+                        </f:if>
+                    </li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.location}">
+        <div class="equipment-location">
+            <h3>Location</h3>
+            <f:if condition="{data.location.building}">
+                <div><strong>Building:</strong> {data.location.building}</div>
+            </f:if>
+            <f:if condition="{data.location.room}">
+                <div><strong>Room:</strong> {data.location.room}</div>
+            </f:if>
+            <f:if condition="{data.location.address}">
+                <div class="address">
+                    <f:if condition="{data.location.address.street}">
+                        <div>{data.location.address.street}</div>
+                    </f:if>
+                    <f:if condition="{data.location.address.city}">
+                        <div>{data.location.address.postalCode} {data.location.address.city}</div>
+                    </f:if>
+                </div>
+            </f:if>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.specifications}">
+        <div class="equipment-specifications">
+            <h3>Technical Specifications</h3>
+            <f:for each="{data.specifications}" as="spec">
+                <div class="specification">
+                    <strong>{spec.name}:</strong> {spec.value}
+                </div>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.capabilities}">
+        <div class="equipment-capabilities">
+            <h3>Capabilities</h3>
+            <ul>
+                <f:for each="{data.capabilities}" as="capability">
+                    <li>{capability}</li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.webAddress}">
+        <div class="equipment-web">
+            <h3>More Information</h3>
+            <p><a href="{data.webAddress}" target="_blank">{data.webAddress}</a></p>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.ids}">
+        <div class="equipment-identifiers">
+            <h3>Identifiers</h3>
+            <ul>
+                <f:for each="{data.ids}" as="id">
+                    <li><strong>{id.type.term}:</strong> {id.value}</li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.relatedProjects}">
+        <div class="equipment-projects">
+            <h3>Related Projects</h3>
+            <ul>
+                <f:for each="{data.relatedProjects}" as="project">
+                    <li>{project.title}</li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.relatedPublications}">
+        <div class="equipment-publications">
+            <h3>Publications Using This Equipment</h3>
+            <ul>
+                <f:for each="{data.relatedPublications}" as="pub">
+                    <li>{pub.title}</li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+</div>

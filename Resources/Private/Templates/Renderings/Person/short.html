@@ -1,0 +1,52 @@
+<div class="pure-person pure-person-short">
+    <f:if condition="{data.name}">
+        <h3 class="person-name">
+            <f:if condition="{data.name.firstName}">
+                {data.name.firstName}
+            </f:if>
+            {data.name.lastName}
+        </h3>
+    </f:if>
+
+    <f:if condition="{data.titles}">
+        <div class="person-titles">
+            <f:for each="{data.titles}" as="title">
+                <span class="title">{title.value}</span>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.jobDescription}">
+        <div class="person-job">
+            {data.jobDescription}
+        </div>
+    </f:if>
+
+    <f:if condition="{data.organisationalUnits}">
+        <div class="person-units">
+            <f:for each="{data.organisationalUnits}" as="unit">
+                <span class="unit">{unit.name}</span>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.emails}">
+        <div class="person-email">
+            <f:for each="{data.emails}" as="email" iteration="iterator">
+                <f:if condition="{iterator.isFirst}">
+                    <a href="mailto:{email.value}">{email.value}</a>
+                </f:if>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.profileInformations}">
+        <f:for each="{data.profileInformations}" as="profile">
+            <f:if condition="{profile.type.uri} == '/dk/atira/pure/person/personsources/orcid'">
+                <div class="person-orcid">
+                    ORCID: <a href="https://orcid.org/{profile.id}" target="_blank">{profile.id}</a>
+                </div>
+            </f:if>
+        </f:for>
+    </f:if>
+</div>

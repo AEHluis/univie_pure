@@ -1,0 +1,131 @@
+<div class="pure-person pure-person-detailed">
+    <f:if condition="{data.name}">
+        <h2 class="person-name">
+            <f:if condition="{data.name.firstName}">
+                {data.name.firstName}
+            </f:if>
+            {data.name.lastName}
+        </h2>
+    </f:if>
+
+    <f:if condition="{data.titles}">
+        <div class="person-titles">
+            <f:for each="{data.titles}" as="title">
+                <span class="title">{title.value}</span>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.jobDescription}">
+        <div class="person-job">
+            <strong>Position:</strong> {data.jobDescription}
+        </div>
+    </f:if>
+
+    <f:if condition="{data.organisationalUnits}">
+        <div class="person-units">
+            <h3>Organizational Units</h3>
+            <ul>
+                <f:for each="{data.organisationalUnits}" as="unit">
+                    <li>{unit.name}</li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+
+    <div class="person-contact">
+        <h3>Contact Information</h3>
+        <f:if condition="{data.emails}">
+            <div class="person-emails">
+                <strong>Email:</strong>
+                <f:for each="{data.emails}" as="email" iteration="iterator">
+                    <f:if condition="{iterator.isFirst}">
+                        <a href="mailto:{email.value}">{email.value}</a>
+                    </f:if>
+                </f:for>
+            </div>
+        </f:if>
+
+        <f:if condition="{data.phoneNumbers}">
+            <div class="person-phones">
+                <strong>Phone:</strong>
+                <f:for each="{data.phoneNumbers}" as="phone" iteration="iterator">
+                    <f:if condition="{iterator.isFirst}">
+                        {phone.value}
+                    </f:if>
+                </f:for>
+            </div>
+        </f:if>
+    </div>
+
+    <f:if condition="{data.profileInformations}">
+        <div class="person-profiles">
+            <h3>Academic Profiles</h3>
+            <f:for each="{data.profileInformations}" as="profile">
+                <f:if condition="{profile.type.uri} == '/dk/atira/pure/person/personsources/orcid'">
+                    <div class="profile-orcid">
+                        <strong>ORCID:</strong> <a href="https://orcid.org/{profile.id}" target="_blank">{profile.id}</a>
+                    </div>
+                </f:if>
+                <f:if condition="{profile.type.uri} == '/dk/atira/pure/person/personsources/scopus'">
+                    <div class="profile-scopus">
+                        <strong>Scopus Author ID:</strong> {profile.id}
+                    </div>
+                </f:if>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.keywordGroups}">
+        <div class="person-keywords">
+            <h3>Research Interests</h3>
+            <f:for each="{data.keywordGroups}" as="group">
+                <f:if condition="{group.keywords}">
+                    <div class="keyword-group">
+                        <f:for each="{group.keywords}" as="keyword" iteration="iterator">
+                            <span class="keyword">{keyword.freeKeyword}<f:if condition="{iterator.isLast} == 0">, </f:if></span>
+                        </f:for>
+                    </div>
+                </f:if>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.staffOrganisationAssociations}">
+        <div class="person-associations">
+            <h3>Affiliations</h3>
+            <ul>
+                <f:for each="{data.staffOrganisationAssociations}" as="assoc">
+                    <li>
+                        <strong>{assoc.organisationalUnit.name}</strong>
+                        <f:if condition="{assoc.jobTitle}">
+                            - {assoc.jobTitle}
+                        </f:if>
+                        <f:if condition="{assoc.period}">
+                            <span class="period">
+                                ({assoc.period.startDate} -
+                                <f:if condition="{assoc.period.endDate}" then="{assoc.period.endDate}" else="present" />)
+                            </span>
+                        </f:if>
+                    </li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.externalPositions}">
+        <div class="person-external-positions">
+            <h3>External Positions</h3>
+            <ul>
+                <f:for each="{data.externalPositions}" as="position">
+                    <li>
+                        {position.jobTitle}
+                        <f:if condition="{position.organisationalUnit}">
+                            at {position.organisationalUnit.name}
+                        </f:if>
+                    </li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+</div>

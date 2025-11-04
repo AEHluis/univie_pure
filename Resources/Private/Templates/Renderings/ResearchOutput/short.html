@@ -1,0 +1,27 @@
+<div class="rendering_researchoutput">
+    <f:if condition="{data.title}">
+        <h4 class="title">{data.title}</h4>
+    </f:if>
+
+    <f:if condition="{data.contributors}">
+        <span class="authors">
+            <f:for each="{data.contributors}" as="contributor" iteration="iterator">
+                <f:if condition="{contributor.name.lastName}">
+                    {contributor.name.lastName}, <f:if condition="{contributor.name.firstName}"><f:then>{contributor.name.firstName -> f:format.substring(length: 1)}.</f:then></f:if><f:if condition="{iterator.isLast}"><f:else>; </f:else></f:if>
+                </f:if>
+            </f:for>
+        </span>
+    </f:if>
+
+    <f:if condition="{data.journal}">
+        <span class="journal">
+            {data.journal.title}<f:if condition="{data.journal.volume}">, vol. {data.journal.volume}</f:if><f:if condition="{data.publicationYear}">, {data.publicationYear}</f:if><f:if condition="{data.journal.pages}">, pp. {data.journal.pages}</f:if>
+        </span>
+    </f:if>
+
+    <f:if condition="{data.doi}">
+        <span class="doi">
+            <a href="https://doi.org/{data.doi}" target="_blank" class="c-link--extern">DOI: {data.doi}</a>
+        </span>
+    </f:if>
+</div>

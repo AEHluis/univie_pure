@@ -1,0 +1,39 @@
+<div class="pure-dataset pure-dataset-short">
+    <f:if condition="{data.title}">
+        <h3 class="dataset-title">
+            {data.title}
+        </h3>
+    </f:if>
+
+    <f:if condition="{data.type}">
+        <div class="dataset-type">
+            <span class="badge">{data.type.term}</span>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.creators}">
+        <div class="dataset-creators">
+            <f:for each="{data.creators}" as="creator" iteration="iterator">
+                {creator.name.firstName} {creator.name.lastName}<f:if condition="{iterator.isLast} == 0">, </f:if>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.publicationYear}">
+        <div class="dataset-year">
+            ({data.publicationYear})
+        </div>
+    </f:if>
+
+    <f:if condition="{data.doi}">
+        <div class="dataset-doi">
+            DOI: <a href="https://doi.org/{data.doi}" target="_blank">{data.doi}</a>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.managingOrganisationalUnit}">
+        <div class="dataset-unit">
+            {data.managingOrganisationalUnit.name}
+        </div>
+    </f:if>
+</div>

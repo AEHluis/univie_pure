@@ -1,0 +1,39 @@
+<div class="pure-organisation pure-organisation-short">
+    <f:if condition="{data.name}">
+        <h3 class="organisation-name">
+            {data.name}
+        </h3>
+    </f:if>
+
+    <f:if condition="{data.type}">
+        <div class="organisation-type">
+            <span class="badge">{data.type.term}</span>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.parentUnit}">
+        <div class="organisation-parent">
+            Part of: {data.parentUnit.name}
+        </div>
+    </f:if>
+
+    <f:if condition="{data.period}">
+        <f:if condition="{data.period.startDate}">
+            <div class="organisation-period">
+                Since <time datetime="{data.period.startDate}">{data.period.startDate -> f:format.date(format: 'Y')}</time>
+            </div>
+        </f:if>
+    </f:if>
+
+    <f:if condition="{data.addresses}">
+        <f:for each="{data.addresses}" as="address" iteration="iterator">
+            <f:if condition="{iterator.isFirst}">
+                <div class="organisation-location">
+                    <f:if condition="{address.city}">
+                        {address.city}<f:if condition="{address.country}">, {address.country}</f:if>
+                    </f:if>
+                </div>
+            </f:if>
+        </f:for>
+    </f:if>
+</div>

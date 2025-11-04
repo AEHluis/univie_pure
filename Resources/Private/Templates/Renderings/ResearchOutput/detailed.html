@@ -1,0 +1,97 @@
+<div class="rendering_researchoutput rendering_researchoutput--detailed">
+    <f:if condition="{data.title}">
+        <h2 class="title">{data.title}</h2>
+    </f:if>
+
+    <f:if condition="{data.contributors}">
+        <div class="authors">
+            <h3><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.authors" default="Authors" />:</h3>
+            <ul>
+                <f:for each="{data.contributors}" as="contributor">
+                    <li>
+                        <f:if condition="{contributor.name}">
+                            {contributor.name.firstName} {contributor.name.lastName}
+                            <f:if condition="{contributor.role}">
+                                ({contributor.role})
+                            </f:if>
+                        </f:if>
+                    </li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+
+    <div class="publication-info">
+        <f:if condition="{data.type}">
+            <p><strong><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.type" default="Type" />:</strong> {data.type}</p>
+        </f:if>
+
+        <f:if condition="{data.journal}">
+            <p>
+                <strong><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.journal" default="Journal" />:</strong>
+                {data.journal.title}
+                <f:if condition="{data.journal.volume}">
+                    , Volume {data.journal.volume}
+                </f:if>
+                <f:if condition="{data.journal.issue}">
+                    , Issue {data.journal.issue}
+                </f:if>
+                <f:if condition="{data.journal.pages}">
+                    , Pages {data.journal.pages}
+                </f:if>
+            </p>
+        </f:if>
+
+        <f:if condition="{data.publicationYear}">
+            <p><strong><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.year" default="Year" />:</strong> {data.publicationYear}</p>
+        </f:if>
+
+        <f:if condition="{data.publisher}">
+            <p><strong><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publisher" default="Publisher" />:</strong> {data.publisher}</p>
+        </f:if>
+
+        <f:if condition="{data.doi}">
+            <p>
+                <strong>DOI:</strong>
+                <a href="https://doi.org/{data.doi}" target="_blank" class="c-link--extern">
+                    {data.doi}
+                </a>
+            </p>
+        </f:if>
+
+        <f:if condition="{data.isbn}">
+            <p><strong>ISBN:</strong> {data.isbn}</p>
+        </f:if>
+
+        <f:if condition="{data.abstract}">
+            <div class="abstract">
+                <h3><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.abstract" default="Abstract" /></h3>
+                <p><f:format.nl2br>{data.abstract}</f:format.nl2br></p>
+            </div>
+        </f:if>
+
+        <f:if condition="{data.keywords}">
+            <div class="keywords">
+                <strong><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.keywords" default="Keywords" />:</strong>
+                <f:for each="{data.keywords}" as="keyword" iteration="iterator">
+                    {keyword}<f:if condition="{iterator.isLast}"><f:else>, </f:else></f:if>
+                </f:for>
+            </div>
+        </f:if>
+
+        <f:if condition="{data.publicationStatus}">
+            <p class="status">
+                <strong><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.status" default="Status" />:</strong>
+                {data.publicationStatus.value}
+            </p>
+        </f:if>
+
+        <f:if condition="{data.portalUrl}">
+            <div class="portal-link">
+                <a href="{data.portalUrl}" target="_blank" class="c-button u-icon-after u-icon-after--new-tab">
+                    <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" default="View in Research Portal" />
+                </a>
+            </div>
+        </f:if>
+    </div>
+</div>

@@ -8,6 +8,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Hook to add JavaScript to TYPO3 backend
+ *
+ * @deprecated This class is deprecated and no longer used.
+ * The functionality has been migrated to BackendJavaScriptEventListener
+ * which uses PSR-14 events instead of the deprecated render-preProcess hook.
+ * This class will be removed in a future version.
  */
 class BackendJavaScriptHook
 {

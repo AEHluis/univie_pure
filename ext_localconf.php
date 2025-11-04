@@ -2,6 +2,7 @@
 defined('TYPO3') || die();
 
 use Univie\UniviePure\Controller\PureController;
+use Univie\UniviePure\Utility\LibraryLoader;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
@@ -12,6 +13,8 @@ use Psr\Log\LogLevel;
 
 call_user_func(
     function () {
+        // Load bundled PHP libraries (citeproc-php for CSL citation rendering)
+        LibraryLoader::loadCiteProc();
         // Register plugin
         ExtensionUtility::configurePlugin(
             'UniviePure',
@@ -37,10 +40,6 @@ call_user_func(
         ExtensionManagementUtility::addPageTSConfig(
             '@import "EXT:univie_pure/Configuration/TSconfig/Page/Mod/Wizards/NewContentElement.tsconfig"'
         );
-        
-        // Hook to add backend JavaScript
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess']['univie_pure'] = 
-            \Univie\UniviePure\Hooks\BackendJavaScriptHook::class . '->addJavaScript';
 
         // Cache configuration
         if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['univie_pure'])) {

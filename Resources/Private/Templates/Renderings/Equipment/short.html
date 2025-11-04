@@ -1,0 +1,37 @@
+<div class="pure-equipment pure-equipment-short">
+    <f:if condition="{data.title}">
+        <h3 class="equipment-title">
+            {data.title}
+        </h3>
+    </f:if>
+
+    <f:if condition="{data.type}">
+        <div class="equipment-type">
+            <span class="badge">{data.type.term}</span>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.model}">
+        <div class="equipment-model">
+            Model: {data.model}
+        </div>
+    </f:if>
+
+    <f:if condition="{data.manufacturer}">
+        <div class="equipment-manufacturer">
+            by {data.manufacturer}
+        </div>
+    </f:if>
+
+    <f:if condition="{data.managingOrganisationalUnit}">
+        <div class="equipment-unit">
+            {data.managingOrganisationalUnit.name}
+        </div>
+    </f:if>
+
+    <f:if condition="{data.acquisitionDate}">
+        <div class="equipment-date">
+            Acquired: <time datetime="{data.acquisitionDate}">{data.acquisitionDate -> f:format.date(format: 'Y')}</time>
+        </div>
+    </f:if>
+</div>

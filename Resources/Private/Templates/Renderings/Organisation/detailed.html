@@ -1,0 +1,127 @@
+<div class="pure-organisation pure-organisation-detailed">
+    <f:if condition="{data.name}">
+        <h2 class="organisation-name">
+            {data.name}
+        </h2>
+    </f:if>
+
+    <div class="organisation-meta">
+        <f:if condition="{data.type}">
+            <div class="organisation-type">
+                <strong>Type:</strong> <span class="badge">{data.type.term}</span>
+            </div>
+        </f:if>
+
+        <f:if condition="{data.period}">
+            <div class="organisation-period">
+                <strong>Active Period:</strong>
+                <f:if condition="{data.period.startDate}">
+                    <time datetime="{data.period.startDate}">{data.period.startDate -> f:format.date(format: 'd.m.Y')}</time>
+                </f:if>
+                <f:if condition="{data.period.endDate}">
+                    - <time datetime="{data.period.endDate}">{data.period.endDate -> f:format.date(format: 'd.m.Y')}</time>
+                </f:if>
+                <f:if condition="{data.period.endDate} == ''">
+                    - present
+                </f:if>
+            </div>
+        </f:if>
+    </div>
+
+    <f:if condition="{data.parentUnit}">
+        <div class="organisation-parent">
+            <h3>Part of</h3>
+            <p>{data.parentUnit.name}</p>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.descriptions}">
+        <div class="organisation-description">
+            <h3>Description</h3>
+            <f:for each="{data.descriptions}" as="description">
+                <f:format.nl2br>{description.value}</f:format.nl2br>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.addresses}">
+        <div class="organisation-addresses">
+            <h3>Address</h3>
+            <f:for each="{data.addresses}" as="address">
+                <div class="address">
+                    <f:if condition="{address.street}">
+                        <div>{address.street}</div>
+                    </f:if>
+                    <f:if condition="{address.postalCode} || {address.city}">
+                        <div>
+                            <f:if condition="{address.postalCode}">{address.postalCode} </f:if>
+                            {address.city}
+                        </div>
+                    </f:if>
+                    <f:if condition="{address.country}">
+                        <div>{address.country}</div>
+                    </f:if>
+                </div>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.emails}">
+        <div class="organisation-emails">
+            <h3>Contact</h3>
+            <f:for each="{data.emails}" as="email">
+                <div><a href="mailto:{email.value}">{email.value}</a></div>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.phoneNumbers}">
+        <div class="organisation-phones">
+            <f:if condition="{data.emails} == ''">
+                <h3>Contact</h3>
+            </f:if>
+            <f:for each="{data.phoneNumbers}" as="phone">
+                <div>Phone: {phone.value}</div>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.webAddresses}">
+        <div class="organisation-web">
+            <h3>Website</h3>
+            <f:for each="{data.webAddresses}" as="web">
+                <div><a href="{web.value}" target="_blank">{web.value}</a></div>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.ids}">
+        <div class="organisation-identifiers">
+            <h3>Identifiers</h3>
+            <ul>
+                <f:for each="{data.ids}" as="id">
+                    <li><strong>{id.type.term}:</strong> {id.value}</li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.profileInformations}">
+        <div class="organisation-profiles">
+            <h3>External Profiles</h3>
+            <ul>
+                <f:for each="{data.profileInformations}" as="profile">
+                    <li>
+                        <strong>{profile.type.term}:</strong>
+                        <f:if condition="{profile.url}">
+                            <a href="{profile.url}" target="_blank">{profile.id}</a>
+                        </f:if>
+                        <f:if condition="{profile.url} == ''">
+                            {profile.id}
+                        </f:if>
+                    </li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+</div>

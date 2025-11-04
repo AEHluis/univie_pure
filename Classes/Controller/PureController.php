@@ -345,7 +345,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function handleContentNotFound(): void
     {
         $response = GeneralUtility::makeInstance(ErrorController::class)
-            ->pageNotFoundAction($GLOBALS['TYPO3_REQUEST'], '');
+            ->pageNotFoundAction($this->request, '');
         throw new ImmediateResponseException($response, 1591428020);
     }
 

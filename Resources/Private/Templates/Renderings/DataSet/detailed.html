@@ -1,0 +1,160 @@
+<div class="pure-dataset pure-dataset-detailed">
+    <f:if condition="{data.title}">
+        <h2 class="dataset-title">
+            {data.title}
+        </h2>
+    </f:if>
+
+    <div class="dataset-meta">
+        <f:if condition="{data.type}">
+            <div class="dataset-type">
+                <strong>Type:</strong> <span class="badge">{data.type.term}</span>
+            </div>
+        </f:if>
+
+        <f:if condition="{data.publicationYear}">
+            <div class="dataset-year">
+                <strong>Publication Year:</strong> {data.publicationYear}
+            </div>
+        </f:if>
+
+        <f:if condition="{data.workflowStep}">
+            <div class="dataset-status">
+                <strong>Status:</strong> {data.workflowStep}
+            </div>
+        </f:if>
+    </div>
+
+    <f:if condition="{data.creators}">
+        <div class="dataset-creators">
+            <h3>Creators</h3>
+            <ul>
+                <f:for each="{data.creators}" as="creator">
+                    <li>
+                        {creator.name.firstName} {creator.name.lastName}
+                        <f:if condition="{creator.organisationalUnits}">
+                            <span class="unit">({creator.organisationalUnits.0.name})</span>
+                        </f:if>
+                    </li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.descriptions}">
+        <div class="dataset-description">
+            <h3>Description</h3>
+            <f:for each="{data.descriptions}" as="description">
+                <f:format.nl2br>{description.value}</f:format.nl2br>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.doi}">
+        <div class="dataset-doi">
+            <h3>Digital Object Identifier</h3>
+            <p>
+                DOI: <a href="https://doi.org/{data.doi}" target="_blank">{data.doi}</a>
+            </p>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.electronicVersions}">
+        <div class="dataset-versions">
+            <h3>Access</h3>
+            <f:for each="{data.electronicVersions}" as="version">
+                <div class="version">
+                    <f:if condition="{version.link}">
+                        <a href="{version.link}" target="_blank" class="btn btn-primary">
+                            <f:if condition="{version.accessType}">
+                                {version.accessType.term}:
+                            </f:if>
+                            Access Dataset
+                        </a>
+                    </f:if>
+                    <f:if condition="{version.licenseType}">
+                        <div class="license">License: {version.licenseType.term}</div>
+                    </f:if>
+                </div>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.managingOrganisationalUnit}">
+        <div class="dataset-organization">
+            <h3>Managing Unit</h3>
+            <p>{data.managingOrganisationalUnit.name}</p>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.producer}">
+        <div class="dataset-producer">
+            <h3>Producer</h3>
+            <p>{data.producer}</p>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.temporalCoverage}">
+        <div class="dataset-temporal">
+            <h3>Temporal Coverage</h3>
+            <p>
+                <f:if condition="{data.temporalCoverage.startDate}">
+                    <time datetime="{data.temporalCoverage.startDate}">
+                        {data.temporalCoverage.startDate -> f:format.date(format: 'd.m.Y')}
+                    </time>
+                </f:if>
+                <f:if condition="{data.temporalCoverage.endDate}">
+                    - <time datetime="{data.temporalCoverage.endDate}">
+                        {data.temporalCoverage.endDate -> f:format.date(format: 'd.m.Y')}
+                    </time>
+                </f:if>
+            </p>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.geographicalCoverage}">
+        <div class="dataset-geographical">
+            <h3>Geographical Coverage</h3>
+            <f:for each="{data.geographicalCoverage}" as="location">
+                <p>{location}</p>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.keywordGroups}">
+        <div class="dataset-keywords">
+            <h3>Keywords</h3>
+            <f:for each="{data.keywordGroups}" as="group">
+                <f:if condition="{group.keywords}">
+                    <div class="keyword-group">
+                        <f:for each="{group.keywords}" as="keyword" iteration="iterator">
+                            <span class="keyword">{keyword.freeKeyword}<f:if condition="{iterator.isLast} == 0">, </f:if></span>
+                        </f:for>
+                    </div>
+                </f:if>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.relatedProjects}">
+        <div class="dataset-projects">
+            <h3>Related Projects</h3>
+            <ul>
+                <f:for each="{data.relatedProjects}" as="project">
+                    <li>{project.title}</li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.relatedPublications}">
+        <div class="dataset-publications">
+            <h3>Related Publications</h3>
+            <ul>
+                <f:for each="{data.relatedPublications}" as="pub">
+                    <li>{pub.title}</li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+</div>

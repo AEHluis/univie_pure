@@ -1,0 +1,125 @@
+<div class="pure-project pure-project-detailed">
+    <f:if condition="{data.title}">
+        <h2 class="project-title">
+            {data.title}
+        </h2>
+    </f:if>
+
+    <div class="project-meta">
+        <f:if condition="{data.type}">
+            <div class="project-type">
+                <strong>Type:</strong> <span class="badge">{data.type.term}</span>
+            </div>
+        </f:if>
+
+        <f:if condition="{data.status}">
+            <div class="project-status">
+                <strong>Status:</strong> <span class="status-{data.status}">{data.status}</span>
+            </div>
+        </f:if>
+
+        <f:if condition="{data.period}">
+            <div class="project-period">
+                <strong>Period:</strong>
+                <f:if condition="{data.period.startDate}">
+                    <time datetime="{data.period.startDate}">{data.period.startDate -> f:format.date(format: 'd.m.Y')}</time>
+                </f:if>
+                <f:if condition="{data.period.endDate}">
+                    - <time datetime="{data.period.endDate}">{data.period.endDate -> f:format.date(format: 'd.m.Y')}</time>
+                </f:if>
+                <f:if condition="{data.period.endDate} == ''">
+                    - ongoing
+                </f:if>
+            </div>
+        </f:if>
+    </div>
+
+    <f:if condition="{data.descriptions}">
+        <div class="project-description">
+            <h3>Description</h3>
+            <f:for each="{data.descriptions}" as="description">
+                <f:if condition="{description.type.uri} == '/dk/atira/pure/project/descriptions/description'">
+                    <f:format.nl2br>{description.value}</f:format.nl2br>
+                </f:if>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.participants}">
+        <div class="project-participants">
+            <h3>Participants</h3>
+
+            <f:for each="{data.participants}" as="participant">
+                <f:if condition="{participant.role.uri} == '/dk/atira/pure/project/roles/project/pi'">
+                    <div class="participant-group">
+                        <h4>Principal Investigator</h4>
+                        <ul>
+                            <li>
+                                {participant.name.firstName} {participant.name.lastName}
+                                <f:if condition="{participant.organisationalUnits}">
+                                    <span class="unit">({participant.organisationalUnits.0.name})</span>
+                                </f:if>
+                            </li>
+                        </ul>
+                    </div>
+                </f:if>
+            </f:for>
+
+            <f:for each="{data.participants}" as="participant">
+                <f:if condition="{participant.role.uri} != '/dk/atira/pure/project/roles/project/pi'">
+                    <div class="participant-group">
+                        <h4>Team Members</h4>
+                        <ul>
+                            <li>
+                                {participant.name.firstName} {participant.name.lastName}
+                                <f:if condition="{participant.role}">
+                                    <span class="role">({participant.role.term})</span>
+                                </f:if>
+                            </li>
+                        </ul>
+                    </div>
+                </f:if>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.managingOrganisationalUnit}">
+        <div class="project-organization">
+            <h3>Managing Unit</h3>
+            <p>{data.managingOrganisationalUnit.name}</p>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.keywordGroups}">
+        <div class="project-keywords">
+            <h3>Keywords</h3>
+            <f:for each="{data.keywordGroups}" as="group">
+                <f:if condition="{group.keywords}">
+                    <div class="keyword-group">
+                        <f:for each="{group.keywords}" as="keyword" iteration="iterator">
+                            <span class="keyword">{keyword.freeKeyword}<f:if condition="{iterator.isLast} == 0">, </f:if></span>
+                        </f:for>
+                    </div>
+                </f:if>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.relatedProjects}">
+        <div class="project-related">
+            <h3>Related Projects</h3>
+            <ul>
+                <f:for each="{data.relatedProjects}" as="related">
+                    <li>{related.title}</li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.externalId}">
+        <div class="project-identifiers">
+            <h3>Identifiers</h3>
+            <p><strong>Project ID:</strong> {data.externalId}</p>
+        </div>
+    </f:if>
+</div>

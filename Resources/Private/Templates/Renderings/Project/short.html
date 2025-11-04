@@ -1,0 +1,47 @@
+<div class="pure-project pure-project-short">
+    <f:if condition="{data.title}">
+        <h3 class="project-title">
+            {data.title}
+        </h3>
+    </f:if>
+
+    <f:if condition="{data.type}">
+        <div class="project-type">
+            <span class="badge">{data.type.term}</span>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.status}">
+        <div class="project-status">
+            Status: <span class="status-{data.status}">{data.status}</span>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.period}">
+        <div class="project-period">
+            <f:if condition="{data.period.startDate}">
+                <time datetime="{data.period.startDate}">{data.period.startDate -> f:format.date(format: 'Y')}</time>
+            </f:if>
+            <f:if condition="{data.period.endDate}">
+                - <time datetime="{data.period.endDate}">{data.period.endDate -> f:format.date(format: 'Y')}</time>
+            </f:if>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.participants}">
+        <div class="project-participants">
+            <strong>Principal Investigator:</strong>
+            <f:for each="{data.participants}" as="participant">
+                <f:if condition="{participant.role.uri} == '/dk/atira/pure/project/roles/project/pi'">
+                    {participant.name.firstName} {participant.name.lastName}
+                </f:if>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.managingOrganisationalUnit}">
+        <div class="project-unit">
+            {data.managingOrganisationalUnit.name}
+        </div>
+    </f:if>
+</div>

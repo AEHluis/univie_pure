@@ -105,28 +105,11 @@
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS</displayCond>
                             <config>
-                                <type>input</type>
-                                <size>7</size>
+                                <type>group</type>
                                 <allowed>pages</allowed>
-                                <wizards type="array">
-                                    <link type="array">
-                                        <type>popup</type>
-                                        <title>LLL:EXT:cms/locallang_ttc.xlf:header_link_formlabel</title>
-                                        <params type="array">
-                                            <blindLinkOptions>url,mail,spec,file,folder</blindLinkOptions>
-                                        </params>
-                                        <icon>link_popup.gif</icon>
-                                        <module type="array">
-                                            <name>wizard_element_browser</name>
-                                            <urlParameters type="array">
-                                                <mode>wizard</mode>
-                                                <act>file</act>
-                                            </urlParameters>
-                                        </module>
-                                        <JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1
-                                        </JSopenParams>
-                                    </link>
-                                </wizards>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
+                                <minitems>0</minitems>
                             </config>
                         </TCEforms>
                     </settings.singlePid>
@@ -639,46 +622,7 @@
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-
-                                <items type="array">
-                                    <numIndex index="0" type="array">
-                                        <numIndex index="0">Vancouver</numIndex>
-                                        <numIndex index="1">vancouver</numIndex>
-                                    </numIndex>
-                                    <numIndex index="1" type="array">
-                                        <numIndex index="0">Harvard</numIndex>
-                                        <numIndex index="1">harvard</numIndex>
-                                    </numIndex>
-                                    <numIndex index="2" type="array">
-                                        <numIndex index="0">Apa</numIndex>
-                                        <numIndex index="1">apa</numIndex>
-                                    </numIndex>
-                                    <numIndex index="3" type="array">
-                                        <numIndex index="0">MLA</numIndex>
-                                        <numIndex index="1">mla</numIndex>
-                                    </numIndex>
-                                    <numIndex index="4" type="array">
-                                        <numIndex index="0">CBE</numIndex>
-                                        <numIndex index="1">cbe</numIndex>
-                                    </numIndex>
-                                    <numIndex index="5" type="array">
-                                        <numIndex index="0">Author</numIndex>
-                                        <numIndex index="1">author</numIndex>
-                                    </numIndex>
-                                    <numIndex index="6" type="array">
-                                        <numIndex index="0">Authorlist</numIndex>
-                                        <numIndex index="1">authorlist</numIndex>
-                                    </numIndex>
-                                    <numIndex index="7" type="array">
-                                        <numIndex index="0">Standard</numIndex>
-                                        <numIndex index="1">standard</numIndex>
-                                    </numIndex>
-                                    <numIndex index="8" type="array">
-                                        <numIndex index="0">Langformat für Dissertationen inkl. Betreuerangabe
-                                        </numIndex>
-                                        <numIndex index="1">luhlong</numIndex>
-                                    </numIndex>
-                                </items>
+                                <itemsProcFunc>Univie\UniviePure\Utility\FlexFormHelper->getCslStyles</itemsProcFunc>
                                 <default>standard</default>
                             </config>
                         </TCEforms>

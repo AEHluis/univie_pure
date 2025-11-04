@@ -645,10 +645,20 @@ class ClassificationScheme
     protected function getCurrentlySelectedUuids(string $fieldName): array
     {
         $uuids = [];
-        
+
+        // Get PSR-7 request
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? null;
+        if (!$request) {
+            return [];
+        }
+
+        // Get parsed body (POST data) and query params (GET data)
+        $parsedBody = $request->getParsedBody();
+        $queryParams = $request->getQueryParams();
+
         // Method 1: Check POST data (form submission)
-        if (!empty($_POST['data']['tt_content'])) {
-            foreach ($_POST['data']['tt_content'] as $uid => $record) {
+        if (!empty($parsedBody['data']['tt_content']) && is_array($parsedBody['data']['tt_content'])) {
+            foreach ($parsedBody['data']['tt_content'] as $uid => $record) {
                 if (isset($record['pi_flexform']['data']['Common']['lDEF']["settings.$fieldName"]['vDEF'])) {
                     $values = $record['pi_flexform']['data']['Common']['lDEF']["settings.$fieldName"]['vDEF'];
                     if (is_array($values)) {
@@ -659,22 +669,22 @@ class ClassificationScheme
                 }
             }
         }
-        
+
         // Method 2: Check GET parameters (edit mode)
-        if (empty($uuids) && !empty($_GET['edit']['tt_content'])) {
-            $editUid = key($_GET['edit']['tt_content']);
+        if (empty($uuids) && !empty($queryParams['edit']['tt_content']) && is_array($queryParams['edit']['tt_content'])) {
+            $editUid = key($queryParams['edit']['tt_content']);
             if ($editUid) {
                 // Load the record from database
                 $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
                     ->getQueryBuilderForTable('tt_content');
-                    
+
                 $record = $queryBuilder
                     ->select('pi_flexform')
                     ->from('tt_content')
                     ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($editUid, \PDO::PARAM_INT)))
                     ->executeQuery()
                     ->fetchAssociative();
-                    
+
                 if ($record && !empty($record['pi_flexform'])) {
                     $flexFormData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($record['pi_flexform']);
                     if ($flexFormData && isset($flexFormData['data']['Common']['lDEF']["settings.$fieldName"]['vDEF'])) {
@@ -686,7 +696,7 @@ class ClassificationScheme
                 }
             }
         }
-        
+
         return array_filter(array_unique($uuids));
     }
 

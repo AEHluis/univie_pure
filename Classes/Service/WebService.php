@@ -19,6 +19,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Univie\UniviePure\Utility\CommonUtilities;
 use Univie\UniviePure\Utility\DotEnv;
+use Univie\UniviePure\Service\Cache\UnifiedCacheManager;
 
 
 /*
@@ -40,7 +41,8 @@ class WebService
         private readonly FrontendInterface       $cache,
         private readonly FlashMessageService     $flashMessageService,
         private readonly LoggerInterface         $logger,
-        private readonly ExtensionConfiguration  $extensionConfiguration
+        private readonly ExtensionConfiguration  $extensionConfiguration,
+        private readonly UnifiedCacheManager     $cacheManager
     )
     {
         $this->initializeConfiguration();
@@ -85,11 +87,23 @@ class WebService
         if (isset($locale)) {
             $uri = $uri->withQuery($uri->getQuery() . '&locale=' . $locale);
         }
-        // Update cache identifier to include the locale if it was removed from params
-        $cacheIdentifier = $this->generateCacheIdentifier(
-            $endpoint,
-            json_encode(isset($locale) ? array_merge($params, ['locale' => $locale]) : $params),
-            $responseType
+
+        // Use unified cache key generation
+        $allParams = isset($locale) ? array_merge($params, ['locale' => $locale]) : $params;
+        $resourceInfo = $this->cacheManager->parseEndpoint($endpoint, $allParams);
+
+        $cacheIdentifier = $this->cacheManager->generateCacheKey(
+            UnifiedCacheManager::LAYER_XML,
+            $resourceInfo['type'],
+            $resourceInfo['uuid'],
+            array_merge($allParams, ['responseType' => $responseType])
+        );
+
+        // Get cache tags
+        $cacheTags = $this->cacheManager->getCacheTags(
+            UnifiedCacheManager::LAYER_XML,
+            $resourceInfo['type'],
+            $resourceInfo['uuid']
         );
 
         if ($cachedContent = $this->getCachedContent($cacheIdentifier)) {
@@ -107,7 +121,8 @@ class WebService
             $content = (string)$response->getBody();
 
             if ($response->getStatusCode() === 200 && strlen($content) > self::MINIMUM_RESPONSE_SIZE) {
-                $this->cache->set($cacheIdentifier, $content, [], self::CACHE_LIFETIME);
+                // Store with cache tags for selective clearing
+                $this->cache->set($cacheIdentifier, $content, $cacheTags, self::CACHE_LIFETIME);
             }
 
             return $this->processResponse($content, $responseType, $decoded);
@@ -222,7 +237,25 @@ class WebService
 
     private function executeRequest(string $endpoint, string $data, string $responseType): ?string
     {
-        $cacheIdentifier = sha1($endpoint . $data . $responseType);
+        // Parse XML data to extract search parameters (for better cache key generation)
+        $params = $this->parseXmlQueryData($data);
+
+        // Use unified cache key generation
+        $resourceInfo = $this->cacheManager->parseEndpoint($endpoint, $params);
+
+        $cacheIdentifier = $this->cacheManager->generateCacheKey(
+            UnifiedCacheManager::LAYER_XML,
+            $resourceInfo['type'],
+            $resourceInfo['uuid'],
+            array_merge($params, ['responseType' => $responseType, 'xmlHash' => substr(sha1($data), 0, 8)])
+        );
+
+        // Get cache tags
+        $cacheTags = $this->cacheManager->getCacheTags(
+            UnifiedCacheManager::LAYER_XML,
+            $resourceInfo['type'],
+            $resourceInfo['uuid']
+        );
 
         if ($cachedResponse = $this->getCachedContent($cacheIdentifier)) {
             return $cachedResponse;
@@ -230,7 +263,8 @@ class WebService
 
         $response = $this->performRequest(new Uri($this->server . $this->versionPath . $endpoint), $data, $responseType);
         if ($response && strlen($response) > self::MINIMUM_RESPONSE_SIZE) {
-            $this->cache->set($cacheIdentifier, $response, [], self::CACHE_LIFETIME);
+            // Store with cache tags for selective clearing
+            $this->cache->set($cacheIdentifier, $response, $cacheTags, self::CACHE_LIFETIME);
         }
 
         return $response;
@@ -296,5 +330,56 @@ class WebService
         $this->flashMessageService
             ->getMessageQueueByIdentifier()
             ->enqueue($flashMessage);
+    }
+
+    /**
+     * Parse XML query data to extract search parameters
+     *
+     * Attempts to extract key parameters from XML query for better cache key generation.
+     * Falls back to empty array if parsing fails.
+     *
+     * @param string $xmlData XML query string
+     * @return array Extracted parameters
+     */
+    private function parseXmlQueryData(string $xmlData): array
+    {
+        $params = [];
+
+        try {
+            $xml = @simplexml_load_string($xmlData);
+
+            if ($xml === false) {
+                return $params;
+            }
+
+            // Extract common query parameters
+            if (isset($xml->searchString)) {
+                $params['searchString'] = (string)$xml->searchString;
+            }
+
+            if (isset($xml->size)) {
+                $params['size'] = (int)$xml->size;
+            }
+
+            if (isset($xml->offset)) {
+                $params['offset'] = (int)$xml->offset;
+            }
+
+            // Extract locale if present
+            if (isset($xml->locales->locale)) {
+                $params['locale'] = (string)$xml->locales->locale;
+            }
+
+            // Extract rendering if present
+            if (isset($xml->renderings->rendering)) {
+                $params['rendering'] = (string)$xml->renderings->rendering;
+            }
+
+        } catch (\Exception $e) {
+            // If parsing fails, return empty params (will still cache, just with less specific key)
+            $this->logger->debug('Failed to parse XML query data for cache key', ['error' => $e->getMessage()]);
+        }
+
+        return $params;
     }
 }

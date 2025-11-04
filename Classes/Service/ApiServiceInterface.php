@@ -30,6 +30,18 @@ interface ApiServiceInterface
     public function getPerson(string $uuid, array $params = []): ?array;
 
     /**
+     * Get multiple persons by UUIDs in a single bulk query
+     *
+     * Efficiently fetches multiple persons by their UUIDs in a single API call,
+     * avoiding N+1 query problems in backend forms.
+     *
+     * @param array $uuids Array of person UUIDs
+     * @param array $params Additional parameters (fields, rendering, etc.)
+     * @return array Array of person data (same format as getPersons)
+     */
+    public function getPersonsByUuids(array $uuids, array $params = []): array;
+
+    /**
      * Get list of research outputs (publications)
      *
      * @param array $params Query parameters (search, filters, pagination, etc.)
@@ -73,6 +85,18 @@ interface ApiServiceInterface
     public function getProject(string $uuid, array $params = []): ?array;
 
     /**
+     * Get multiple projects by UUIDs in a single bulk query
+     *
+     * Efficiently fetches multiple projects by their UUIDs in a single API call,
+     * avoiding N+1 query problems in backend forms.
+     *
+     * @param array $uuids Array of project UUIDs
+     * @param array $params Additional parameters (fields, rendering, etc.)
+     * @return array Array of project data (same format as getProjects)
+     */
+    public function getProjectsByUuids(array $uuids, array $params = []): array;
+
+    /**
      * Get list of organisational units
      *
      * @param array $params Query parameters (search, filters, pagination, etc.)
@@ -88,6 +112,18 @@ interface ApiServiceInterface
      * @return array|null Organisational unit data or null if not found
      */
     public function getOrganisationalUnit(string $uuid, array $params = []): ?array;
+
+    /**
+     * Get multiple organisational units by UUIDs in a single bulk query
+     *
+     * Efficiently fetches multiple organisational units by their UUIDs in a single API call,
+     * avoiding N+1 query problems in backend forms.
+     *
+     * @param array $uuids Array of organisational unit UUIDs
+     * @param array $params Additional parameters (fields, rendering, etc.)
+     * @return array Array of organisational unit data (same format as getOrganisationalUnits)
+     */
+    public function getOrganisationalUnitsByUuids(array $uuids, array $params = []): array;
 
     /**
      * Get list of data sets

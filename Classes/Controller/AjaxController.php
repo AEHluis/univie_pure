@@ -8,7 +8,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
-use Univie\UniviePure\Service\WebService;
+use Univie\UniviePure\Service\ApiServiceFactory;
+use Univie\UniviePure\Service\ApiServiceInterface;
 
 /**
  * AJAX Controller for dynamic loading of Pure data in backend forms
@@ -16,8 +17,8 @@ use Univie\UniviePure\Service\WebService;
  */
 class AjaxController
 {
-    protected WebService $webService;
-    
+    protected ApiServiceInterface $apiService;
+
     private const MIN_SEARCH_LENGTH = 3;
     private const SEARCH_SIZE = 20;
     private const LOCALE_MAP = [
@@ -26,9 +27,10 @@ class AjaxController
         'default' => 'de_DE'
     ];
 
-    public function __construct()
+    public function __construct(ApiServiceFactory $apiServiceFactory)
     {
-        $this->webService = GeneralUtility::makeInstance(WebService::class);
+        // Use configured API (respects PURE_API_VERSION environment variable)
+        $this->apiService = $apiServiceFactory->create();
     }
     
     /**
@@ -44,45 +46,8 @@ class AjaxController
         } catch (\Exception $e) {
             $lang = 'de';
         }
-        
+
         return self::LOCALE_MAP[$lang] ?? self::LOCALE_MAP['default'];
-    }
-    
-    /**
-     * Build XML query for Pure API
-     */
-    protected function buildXmlQuery(string $queryType, string $searchTerm, string $locale, array $fields, array $additionalElements = []): string
-    {
-        $xml = '<?xml version="1.0"?>';
-        $xml .= '<' . $queryType . '>';
-        $xml .= '<size>' . self::SEARCH_SIZE . '</size>';
-        $xml .= '<offset>0</offset>';
-        $xml .= '<locales><locale>' . htmlspecialchars($locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale></locales>';
-        
-        // Add fields
-        $xml .= '<fields>';
-        foreach ($fields as $field) {
-            $xml .= '<field>' . htmlspecialchars($field, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</field>';
-        }
-        $xml .= '</fields>';
-        
-        // Add additional elements (ordering, filters, etc.)
-        foreach ($additionalElements as $key => $value) {
-            if (is_array($value)) {
-                $xml .= '<' . $key . '>';
-                foreach ($value as $item) {
-                    $xml .= '<' . rtrim($key, 's') . '>' . htmlspecialchars($item, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</' . rtrim($key, 's') . '>';
-                }
-                $xml .= '</' . $key . '>';
-            } else {
-                $xml .= '<' . $key . '>' . htmlspecialchars($value, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</' . $key . '>';
-            }
-        }
-        
-        $xml .= '<searchString>' . htmlspecialchars($searchTerm, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>';
-        $xml .= '</' . $queryType . '>';
-        
-        return trim($xml);
     }
 
     /**
@@ -92,38 +57,35 @@ class AjaxController
     {
         $parsedBody = $request->getParsedBody();
         $searchTerm = trim($parsedBody['searchTerm'] ?? '');
-        
+
         if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
             return new JsonResponse(['results' => []]);
         }
 
         $locale = $this->getBackendUserLocale();
-        
-        $postData = $this->buildXmlQuery(
-            'organisationalUnitsQuery',
-            $searchTerm,
-            $locale,
-            ['uuid', 'name.text.value'],
-            [
-                'orderings' => ['name'],
-                'returnUsedContent' => 'true'
-            ]
-        );
 
-        $organisations = $this->webService->getJson('organisational-units', $postData);
-        
+        // Use unified API interface (respects PURE_API_VERSION environment variable)
+        $organisations = $this->apiService->getOrganisationalUnits([
+            'searchString' => $searchTerm,
+            'locale' => $locale,
+            'size' => self::SEARCH_SIZE,
+            'fields' => ['uuid', 'name.text.value'],
+            'ordering' => 'name',
+            'returnUsedContent' => 'true'
+        ]);
+
         $results = [];
 
         if (is_array($organisations) && isset($organisations['items'])) {
             foreach ($organisations['items'] as $org) {
                 // Get the best available name for current locale
                 $label = $this->extractLocalizedName($org['name'] ?? [], $locale);
-                
+
                 // Skip if no label found
                 if (empty($label)) {
                     continue;
                 }
-                
+
                 $results[] = [
                     'value' => $org['uuid'],
                     'label' => $label
@@ -142,18 +104,19 @@ class AjaxController
     {
         $parsedBody = $request->getParsedBody();
         $searchTerm = trim($parsedBody['searchTerm'] ?? '');
-        
+
         if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
             return new JsonResponse(['results' => []]);
         }
 
         $locale = $this->getBackendUserLocale();
-        
-        $postData = $this->buildXmlQuery(
-            'personsQuery',
-            $searchTerm,
-            $locale,
-            [
+
+        // Use unified API interface (respects PURE_API_VERSION environment variable)
+        $persons = $this->apiService->getPersons([
+            'searchString' => $searchTerm,
+            'locale' => $locale,
+            'size' => self::SEARCH_SIZE,
+            'fields' => [
                 'uuid',
                 'name.*',
                 'honoraryStaffOrganisationAssociations.uuid',
@@ -161,26 +124,23 @@ class AjaxController
                 'honoraryStaffOrganisationAssociations.organisationalUnit.uuid',
                 'honoraryStaffOrganisationAssociations.organisationalUnit.name.*'
             ],
-            [
-                'orderings' => ['lastName'],
-                'employmentStatus' => 'ACTIVE'
-            ]
-        );
+            'ordering' => 'lastName',
+            'employmentStatus' => 'ACTIVE'
+        ]);
 
-        $persons = $this->webService->getJson('persons', $postData);
         $results = [];
 
         if (is_array($persons) && isset($persons['items'])) {
             foreach ($persons['items'] as $person) {
                 $personName = $person['name']['lastName'] . ', ' . $person['name']['firstName'];
                 $organizationNames = $this->getActiveOrganizationNames($person, $locale);
-                
+
                 if (!empty($organizationNames)) {
                     $displayName = $personName . ' (' . implode(', ', $organizationNames) . ')';
                 } else {
                     $displayName = $personName;
                 }
-                
+
                 $results[] = [
                     'value' => $person['uuid'],
                     'label' => $displayName
@@ -198,41 +158,39 @@ class AjaxController
     {
         $parsedBody = $request->getParsedBody();
         $searchTerm = trim($parsedBody['searchTerm'] ?? '');
-        
+
         if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
             return new JsonResponse(['results' => []]);
         }
 
         $locale = $this->getBackendUserLocale();
-        
-        $postData = $this->buildXmlQuery(
-            'projectsQuery',
-            $searchTerm,
-            $locale,
-            ['uuid', 'title.*', 'acronym'],
-            [
-                'orderings' => ['title'],
-                'workflowSteps' => ['validated']
-            ]
-        );
 
-        $projects = $this->webService->getJson('projects', $postData);
+        // Use unified API interface (respects PURE_API_VERSION environment variable)
+        $projects = $this->apiService->getProjects([
+            'searchString' => $searchTerm,
+            'locale' => $locale,
+            'size' => self::SEARCH_SIZE,
+            'fields' => ['uuid', 'title.*', 'acronym'],
+            'ordering' => 'title',
+            'workflowSteps' => ['validated']
+        ]);
+
         $results = [];
 
         if (is_array($projects) && isset($projects['items'])) {
             foreach ($projects['items'] as $project) {
                 // Get the best available title for current locale
                 $title = $this->extractLocalizedName($project['title'] ?? [], $locale);
-                
+
                 if (empty($title)) {
                     $title = 'Unknown Project';
                 }
-                
+
                 // Add acronym if available and not already in title
                 if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
                     $title = $project['acronym'] . ' - ' . $title;
                 }
-                
+
                 $results[] = [
                     'value' => $project['uuid'],
                     'label' => $title

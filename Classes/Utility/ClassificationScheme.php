@@ -6,7 +6,8 @@ namespace Univie\UniviePure\Utility;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Univie\UniviePure\Service\WebService;
+use Univie\UniviePure\Service\ApiServiceFactory;
+use Univie\UniviePure\Service\ApiServiceInterface;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -24,12 +25,13 @@ class ClassificationScheme
     private const PROJECTS = '/dk/atira/pure/upm/fundingprogramme';
 
     private string $locale;
-    private WebService $webService;
+    private ApiServiceInterface $apiService;
 
-    public function __construct(?WebService $webService = null)
+    public function __construct(ApiServiceFactory $apiServiceFactory)
     {
         $this->locale = $this->getBackendUserLocale();
-        $this->webService = $webService ?? GeneralUtility::makeInstance(WebService::class);
+        // Use configured API (respects PURE_API_VERSION environment variable)
+        $this->apiService = $apiServiceFactory->create();
     }
     
     /**
@@ -131,33 +133,22 @@ class ClassificationScheme
         // Always load ALL selected items to ensure they remain available
         // This is the only reliable way in TYPO3 to preserve selections
         $selectedUuids = $this->getCurrentlySelectedUuids('selectorOrganisations');
-        
+
         // Fetch real names for selected items
         $selectedItems = [];
         if (!empty($selectedUuids)) {
             $selectedItems = $this->getSelectedItemsWithRealNames($selectedUuids, 'org');
         }
-        
-        // For AJAX dynamic loading, only load minimal items initially
-        $postData = trim('<?xml version="1.0"?>
-            <organisationalUnitsQuery>
-            <size>8</size>
-            <locales>
-            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
-            </locales>
-            <fields>
-            <field>uuid</field>
-            <field>name.text.value</field>
-            </fields>
-            <orderings>
-            <ordering>name</ordering>
-            </orderings>
-            <returnUsedContent>true</returnUsedContent>
-            </organisationalUnitsQuery>');
 
-        // Fetch fresh data for reliable language switching (only 8 items)
-        $organisations = $this->webService->getJson('organisational-units', $postData);
-        
+        // Use unified API interface (respects PURE_API_VERSION environment variable)
+        $organisations = $this->apiService->getOrganisationalUnits([
+            'size' => 8,
+            'locale' => $this->locale,
+            'fields' => ['uuid', 'name.text.value'],
+            'ordering' => 'name',
+            'returnUsedContent' => 'true'
+        ]);
+
         // Debug: Log actual API response count
         if ($organisations && isset($organisations['items'])) {
             error_log('[Pure Debug] Organizations API returned: ' . count($organisations['items']) . ' items (requested 8)');
@@ -176,7 +167,7 @@ class ClassificationScheme
         foreach ($selectedItems as $item) {
             $config['items'][] = $item;
         }
-        
+
         // Then add fresh items from API (avoiding duplicates)
         $existingUuids = array_column($selectedItems, 1);
         if (is_array($organisations) && isset($organisations['items'])) {
@@ -185,17 +176,16 @@ class ClassificationScheme
                     $name = $this->extractLocalizedName($org['name'] ?? [], $this->locale);
                     if (!empty($name)) {
                         $config['items'][] = [$name, $org['uuid']];
-                        
                     }
                 }
             }
         }
-        
+
         // Add hint for users to search
         $searchHint = $this->getSearchHintText();
         $config['items'][] = ['─────────────────────', '--div--'];
         $config['items'][] = [$searchHint, ''];
-        
+
         // Debug: Log final item count (excluding separators)
         $actualItemCount = count($config['items']) - 2; // Minus separator and hint
         error_log('[Pure Debug] Organizations final dropdown items: ' . $actualItemCount);
@@ -209,42 +199,34 @@ class ClassificationScheme
             $this->getCurrentlySelectedUuids('selectorPersons'),
             $this->getCurrentlySelectedUuids('selectorPersonsWithOrganization')
         );
-        
+
         // Fetch real names for selected items
         $selectedItems = [];
         if (!empty($selectedUuids)) {
             $selectedItems = $this->getSelectedItemsWithRealNames($selectedUuids, 'person');
         }
-        
-        // For AJAX dynamic loading, only load minimal items initially (8 items like organizations)
-        $personXML = trim('<?xml version="1.0"?>
-            <personsQuery>
-            <size>8</size>
-            <locales>
-            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
-            </locales>
-            <fields>
-            <field>uuid</field>
-            <field>name.*</field>
-            <field>honoraryStaffOrganisationAssociations.uuid</field>
-            <field>honoraryStaffOrganisationAssociations.period.*</field>
-            <field>honoraryStaffOrganisationAssociations.organisationalUnit.uuid</field>
-            <field>honoraryStaffOrganisationAssociations.organisationalUnit.name.*</field>
-            </fields>
-            <orderings>
-            <ordering>lastName</ordering>
-            </orderings>
-            <employmentStatus>ACTIVE</employmentStatus>
-            </personsQuery>');
 
-        // Fetch fresh data for reliable language switching (8 items)
-        $persons = $this->webService->getJson('persons', $personXML);
-        
+        // Use unified API interface (respects PURE_API_VERSION environment variable)
+        $persons = $this->apiService->getPersons([
+            'size' => 8,
+            'locale' => $this->locale,
+            'fields' => [
+                'uuid',
+                'name.*',
+                'honoraryStaffOrganisationAssociations.uuid',
+                'honoraryStaffOrganisationAssociations.period.*',
+                'honoraryStaffOrganisationAssociations.organisationalUnit.uuid',
+                'honoraryStaffOrganisationAssociations.organisationalUnit.name.*'
+            ],
+            'ordering' => 'lastName',
+            'employmentStatus' => 'ACTIVE'
+        ]);
+
         // Debug: Log actual API response count
         if ($persons && isset($persons['items'])) {
             error_log('[Pure Debug] Persons API returned: ' . count($persons['items']) . ' items (requested 8)');
         }
-        
+
         if (!$persons || !isset($persons['items'])) {
             $this->addFlashMessage(
                 'Could not fetch Person data with organization associations from the API. Please check your connection.',
@@ -258,7 +240,7 @@ class ClassificationScheme
         foreach ($selectedItems as $item) {
             $config['items'][] = $item;
         }
-        
+
         // Then add fresh items from API (avoiding duplicates)
         $existingUuids = array_column($selectedItems, 1);
         if (is_array($persons) && isset($persons['items'])) {
@@ -266,18 +248,18 @@ class ClassificationScheme
                 if (!in_array($person['uuid'], $existingUuids)) {
                     $personName = $person['name']['lastName'] . ', ' . $person['name']['firstName'];
                     $organizationNames = $this->getActiveOrganizationNames($person);
-                    
+
                     if (!empty($organizationNames)) {
                         $displayName = $personName . ' (' . implode(', ', $organizationNames) . ')';
                     } else {
                         $displayName = $personName;
                     }
-                    
+
                     $config['items'][] = [$displayName, $person['uuid']];
                 }
             }
         }
-        
+
         // Add hint for users to search
         $searchHint = $this->getSearchHintText();
         $config['items'][] = ['─────────────────────', '--div--'];
@@ -312,41 +294,27 @@ class ClassificationScheme
     {
         // Always load ALL selected items to ensure they remain available
         $selectedUuids = $this->getCurrentlySelectedUuids('selectorProjects');
-        
+
         // Fetch real names for selected items
         $selectedItems = [];
         if (!empty($selectedUuids)) {
             $selectedItems = $this->getSelectedItemsWithRealNames($selectedUuids, 'project');
         }
-        
-        // For AJAX dynamic loading, only load minimal items initially (8 items like organizations)
-        $projectsXML = trim('<?xml version="1.0"?>
-            <projectsQuery>
-            <size>8</size>
-            <locales>
-            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
-            </locales>
-            <fields>
-            <field>uuid</field>
-            <field>acronym</field>
-            <field>title.*</field>
-            </fields>
-            <orderings>
-            <ordering>title</ordering>
-            </orderings>
-            <workflowSteps>
-            <workflowStep>validated</workflowStep>
-            </workflowSteps>
-            </projectsQuery>');
 
-        // Fetch fresh data for reliable language switching (8 items)
-        $projects = $this->webService->getJson('projects', $projectsXML);
-        
+        // Use unified API interface (respects PURE_API_VERSION environment variable)
+        $projects = $this->apiService->getProjects([
+            'size' => 8,
+            'locale' => $this->locale,
+            'fields' => ['uuid', 'acronym', 'title.*'],
+            'ordering' => 'title',
+            'workflowSteps' => ['validated']
+        ]);
+
         // Debug: Log actual API response count
         if ($projects && isset($projects['items'])) {
             error_log('[Pure Debug] Projects API returned: ' . count($projects['items']) . ' items (requested 8)');
         }
-        
+
         if (!$projects || !isset($projects['items'])) {
             $this->addFlashMessage(
                 'Could not fetch projects from the API. Please check your connection.',
@@ -360,7 +328,7 @@ class ClassificationScheme
         foreach ($selectedItems as $item) {
             $config['items'][] = $item;
         }
-        
+
         // Then add fresh items from API (avoiding duplicates)
         $existingUuids = array_column($selectedItems, 1);
         if (is_array($projects) && isset($projects['items'])) {
@@ -370,16 +338,15 @@ class ClassificationScheme
                     if (empty($title)) {
                         $title = 'Unknown Project';
                     }
-                    
+
                     if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
                         $title = $project['acronym'] . ' - ' . $title;
                     }
                     $config['items'][] = [$title, $project['uuid']];
-                    
                 }
             }
         }
-        
+
         // Add hint for users to search
         $searchHint = $this->getSearchHintText();
         $config['items'][] = ['─────────────────────', '--div--'];
@@ -701,167 +668,143 @@ class ClassificationScheme
     }
 
     /**
-     * Fetch organization by UUID using search
+     * OLD N+1 METHODS REMOVED
+     *
+     * The following methods were removed because they caused N+1 query problems:
+     * - fetchOrganizationByUuid() - replaced by bulk query
+     * - fetchPersonByUuid() - replaced by bulk query
+     * - fetchProjectByUuid() - replaced by bulk query
+     *
+     * Use getSelectedItemsWithRealNames() instead, which fetches all items in a single bulk query.
      */
-    protected function fetchOrganizationByUuid(string $uuid): ?array
-    {
-        // Use search by UUID instead of uuids element (which may not be supported)
-        $postData = trim('<?xml version="1.0"?>
-            <organisationalUnitsQuery>
-            <size>1</size>
-            <locales>
-            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
-            </locales>
-            <fields>
-            <field>uuid</field>
-            <field>name.text.value</field>
-            </fields>
-            <searchString>' . htmlspecialchars($uuid, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>
-            </organisationalUnitsQuery>');
-
-        $result = $this->webService->getJson('organisational-units', $postData);
-        
-        if (is_array($result) && isset($result['items'][0])) {
-            $name = $this->extractLocalizedName($result['items'][0]['name'] ?? [], $this->locale);
-            if (!empty($name)) {
-                return ['name' => $name];
-            }
-        }
-        
-        return null;
-    }
 
     /**
-     * Fetch person by UUID using search
-     */
-    protected function fetchPersonByUuid(string $uuid): ?array
-    {
-        $personXML = trim('<?xml version="1.0"?>
-            <personsQuery>
-            <size>1</size>
-            <fields>
-            <field>uuid</field>
-            <field>name.*</field>
-            <field>honoraryStaffOrganisationAssociations.uuid</field>
-            <field>honoraryStaffOrganisationAssociations.period.*</field>
-            <field>honoraryStaffOrganisationAssociations.organisationalUnit.uuid</field>
-            <field>honoraryStaffOrganisationAssociations.organisationalUnit.name.*</field>
-            </fields>
-            <employmentStatus>ACTIVE</employmentStatus>
-            <searchString>' . htmlspecialchars($uuid, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>
-            </personsQuery>');
-
-        $result = $this->webService->getJson('persons', $personXML);
-        
-        if (is_array($result) && isset($result['items'][0])) {
-            $person = $result['items'][0];
-            $personName = $person['name']['lastName'] . ', ' . $person['name']['firstName'];
-            
-            // Add organization names if available
-            $organizationNames = $this->getActiveOrganizationNames($person);
-            if (!empty($organizationNames)) {
-                $personName .= ' (' . implode(', ', $organizationNames) . ')';
-            }
-            
-            return ['name' => $personName];
-        }
-        
-        return null;
-    }
-
-    /**
-     * Fetch project by UUID using search
-     */
-    protected function fetchProjectByUuid(string $uuid): ?array
-    {
-        $projectsXML = trim('<?xml version="1.0"?>
-            <projectsQuery>
-            <size>1</size>
-            <locales>
-            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
-            </locales>
-            <fields>
-            <field>uuid</field>
-            <field>acronym</field>
-            <field>title.*</field>
-            </fields>
-            <workflowSteps>
-            <workflowStep>validated</workflowStep>
-            </workflowSteps>
-            <searchString>' . htmlspecialchars($uuid, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>
-            </projectsQuery>');
-
-        $result = $this->webService->getJson('projects', $projectsXML);
-        
-        if (is_array($result) && isset($result['items'][0])) {
-            $project = $result['items'][0];
-            $title = $this->extractLocalizedName($project['title'] ?? [], $this->locale);
-            
-            if (empty($title)) {
-                $title = 'Unknown Project';
-            }
-            
-            if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
-                $title = $project['acronym'] . ' - ' . $title;
-            }
-            
-            return ['title' => $title];
-        }
-        
-        return null;
-    }
-
-    /**
-     * Get selected items with their real names from API
+     * Get selected items with their real names from API (BULK QUERY - NO N+1!)
+     *
+     * Fetches ALL selected items in a SINGLE API call instead of N separate calls.
+     * This fixes the major performance bottleneck in backend form loading.
+     *
+     * BEFORE: 30 selected persons = 30 API calls (N+1 problem)
+     * AFTER: 30 selected persons = 1 API call (bulk query)
      */
     protected function getSelectedItemsWithRealNames(array $uuids, string $type): array
     {
         $items = [];
-        
-        // Fetch real names from API for all selected items
-        foreach ($uuids as $uuid) {
-            if (empty($uuid)) continue;
-            
-            try {
-                $realName = null;
-                switch ($type) {
-                    case 'org':
-                        $item = $this->fetchOrganizationByUuid($uuid);
-                        if ($item) {
-                            $realName = $item['name'];
-                        }
-                        break;
-                    
-                    case 'person':
-                        $item = $this->fetchPersonByUuid($uuid);
-                        if ($item) {
-                            $realName = $item['name'];
-                        }
-                        break;
-                    
-                    case 'project':
-                        $item = $this->fetchProjectByUuid($uuid);
-                        if ($item) {
-                            $realName = $item['title'];
-                        }
-                        break;
+
+        if (empty($uuids)) {
+            return $items;
+        }
+
+        try {
+            // ✅ SINGLE BULK API CALL - fetches ALL items at once
+            $result = null;
+            switch ($type) {
+                case 'org':
+                    $result = $this->apiService->getOrganisationalUnitsByUuids($uuids, [
+                        'locale' => $this->locale,
+                        'fields' => ['uuid', 'name.text.value']
+                    ]);
+                    break;
+
+                case 'person':
+                    $result = $this->apiService->getPersonsByUuids($uuids, [
+                        'locale' => $this->locale,
+                        'fields' => [
+                            'uuid',
+                            'name.*',
+                            'honoraryStaffOrganisationAssociations.uuid',
+                            'honoraryStaffOrganisationAssociations.period.*',
+                            'honoraryStaffOrganisationAssociations.organisationalUnit.uuid',
+                            'honoraryStaffOrganisationAssociations.organisationalUnit.name.*'
+                        ],
+                        'employmentStatus' => 'ACTIVE'
+                    ]);
+                    break;
+
+                case 'project':
+                    $result = $this->apiService->getProjectsByUuids($uuids, [
+                        'locale' => $this->locale,
+                        'fields' => ['uuid', 'acronym', 'title.*'],
+                        'workflowSteps' => ['validated']
+                    ]);
+                    break;
+            }
+
+            // Process bulk result and build items array
+            if ($result && isset($result['items'])) {
+                // Create UUID-indexed map for fast lookup
+                $itemsByUuid = [];
+                foreach ($result['items'] as $item) {
+                    $itemsByUuid[$item['uuid']] = $item;
                 }
-                
-                if ($realName) {
-                    $items[] = [$realName, $uuid];
-                } else {
-                    // Fall back to placeholder if API call fails
+
+                // Build items array in the SAME ORDER as input UUIDs
+                // This preserves the editor's selection order
+                foreach ($uuids as $uuid) {
+                    if (empty($uuid)) continue;
+
+                    if (isset($itemsByUuid[$uuid])) {
+                        $item = $itemsByUuid[$uuid];
+                        $displayName = null;
+
+                        switch ($type) {
+                            case 'org':
+                                $displayName = $this->extractLocalizedName($item['name'] ?? [], $this->locale);
+                                break;
+
+                            case 'person':
+                                $personName = ($item['name']['lastName'] ?? '') . ', ' . ($item['name']['firstName'] ?? '');
+                                $organizationNames = $this->getActiveOrganizationNames($item);
+                                if (!empty($organizationNames)) {
+                                    $displayName = $personName . ' (' . implode(', ', $organizationNames) . ')';
+                                } else {
+                                    $displayName = $personName;
+                                }
+                                break;
+
+                            case 'project':
+                                $displayName = $this->extractLocalizedName($item['title'] ?? [], $this->locale);
+                                if (empty($displayName)) {
+                                    $displayName = 'Unknown Project';
+                                }
+                                if (!empty($item['acronym']) && strpos($displayName, $item['acronym']) === false) {
+                                    $displayName = $item['acronym'] . ' - ' . $displayName;
+                                }
+                                break;
+                        }
+
+                        if ($displayName) {
+                            $items[] = [$displayName, $uuid];
+                        } else {
+                            // Fallback to placeholder
+                            $placeholder = '[' . ucfirst($type) . ': ' . substr($uuid, 0, 8) . '...]';
+                            $items[] = [$placeholder, $uuid];
+                        }
+                    } else {
+                        // UUID not found in bulk result - use placeholder
+                        $placeholder = '[' . ucfirst($type) . ': ' . substr($uuid, 0, 8) . '...]';
+                        $items[] = [$placeholder, $uuid];
+                    }
+                }
+            } else {
+                // Bulk query failed - fall back to placeholders
+                foreach ($uuids as $uuid) {
+                    if (empty($uuid)) continue;
                     $placeholder = '[' . ucfirst($type) . ': ' . substr($uuid, 0, 8) . '...]';
                     $items[] = [$placeholder, $uuid];
                 }
-                
-            } catch (\Exception $e) {
-                // Fall back to placeholder if fetch fails
+            }
+
+        } catch (\Exception $e) {
+            // Error during bulk query - fall back to placeholders
+            error_log('[Pure Debug] Bulk query failed for ' . $type . ': ' . $e->getMessage());
+            foreach ($uuids as $uuid) {
+                if (empty($uuid)) continue;
                 $placeholder = '[' . ucfirst($type) . ': ' . substr($uuid, 0, 8) . '...]';
                 $items[] = [$placeholder, $uuid];
             }
         }
-        
+
         return $items;
     }
 }

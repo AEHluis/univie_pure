@@ -7,10 +7,18 @@ services:
   Univie\UniviePure\:
     resource: '../Classes/*'
 
+  # Unified Cache Manager (centralized caching strategy)
+  Univie\UniviePure\Service\Cache\UnifiedCacheManager:
+    public: true
+    arguments:
+      $cache: '@cache.univie_pure'
+      $logger: '@logger.univie_pure'
+
   Univie\UniviePure\Service\WebService:
     public: true
     arguments:
       $cache: '@cache.univie_pure'
+      $cacheManager: '@Univie\UniviePure\Service\Cache\UnifiedCacheManager'
 
   # OpenAPI Services
 
@@ -24,6 +32,7 @@ services:
       $cache: '@cache.univie_pure'
       $logger: '@logger.univie_pure'
       $dataTransformer: '@Univie\UniviePure\Service\CslDataTransformer'
+      $cacheManager: '@Univie\UniviePure\Service\Cache\UnifiedCacheManager'
 
   # Rendering Service (transforms OpenAPI JSON to HTML)
   Univie\UniviePure\Service\RenderingService:
@@ -31,6 +40,7 @@ services:
     arguments:
       $cache: '@cache.univie_pure'
       $logger: '@logger.univie_pure'
+      $cacheManager: '@Univie\UniviePure\Service\Cache\UnifiedCacheManager'
       $cslRenderingService: '@Univie\UniviePure\Service\CslRenderingService'
 
   Univie\UniviePure\Service\OpenApi\OpenApiClient:
@@ -43,6 +53,7 @@ services:
       $logger: '@logger.univie_pure'
       $authenticator: '@Univie\UniviePure\Service\OpenApi\OpenApiAuthenticator'
       $responseParser: '@Univie\UniviePure\Service\OpenApi\OpenApiResponseParser'
+      $cacheManager: '@Univie\UniviePure\Service\Cache\UnifiedCacheManager'
 
   Univie\UniviePure\Service\OpenApi\OpenApiAuthenticator:
     public: false
@@ -110,12 +121,23 @@ services:
     class: GuzzleHttp\Client
     arguments:
       $config:
-        verify: false # 🔴 Disable SSL verification (for debugging only!)
+        verify: true # ✅ Enable SSL verification (required for production security)
 
   Univie\UniviePure\EventListener\BackendJavaScriptEventListener:
     tags:
       - name: event.listener
         identifier: 'univie-pure-backend-javascript'
         event: TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent
+
+  # Backend Controllers and Utilities
+  Univie\UniviePure\Controller\AjaxController:
+    public: true
+    arguments:
+      $apiServiceFactory: '@Univie\UniviePure\Service\ApiServiceFactory'
+
+  Univie\UniviePure\Utility\ClassificationScheme:
+    public: false
+    arguments:
+      $apiServiceFactory: '@Univie\UniviePure\Service\ApiServiceFactory'
 
 

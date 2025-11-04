@@ -284,6 +284,91 @@ class OpenApiService implements ApiServiceInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getPersonsByUuids(array $uuids, array $params = []): array
+    {
+        if (empty($uuids)) {
+            return ['items' => [], 'count' => 0];
+        }
+
+        // OpenAPI supports filtering by UUIDs using 'ids' query parameter
+        $queryParams = $this->migrationHelper->convertToOpenApiParams($params);
+        $queryParams['ids'] = implode(',', array_filter($uuids));
+        $queryParams['size'] = count($uuids);
+
+        $response = $this->client->get('/persons', $queryParams);
+        $collection = $this->parser->parseCollection($response);
+
+        // Add HTML rendering to each item
+        $view = $params['view'] ?? $params['rendering'] ?? 'short';
+        $view = $this->migrationHelper->mapRendering($view);
+
+        foreach ($collection['items'] as &$item) {
+            $item['rendering'] = $this->renderingService->renderPerson($item, $view);
+        }
+        unset($item);
+
+        return $collection;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProjectsByUuids(array $uuids, array $params = []): array
+    {
+        if (empty($uuids)) {
+            return ['items' => [], 'count' => 0];
+        }
+
+        $queryParams = $this->migrationHelper->convertToOpenApiParams($params);
+        $queryParams['ids'] = implode(',', array_filter($uuids));
+        $queryParams['size'] = count($uuids);
+
+        $response = $this->client->get('/projects', $queryParams);
+        $collection = $this->parser->parseCollection($response);
+
+        // Add HTML rendering to each item
+        $view = $params['view'] ?? $params['rendering'] ?? 'short';
+        $view = $this->migrationHelper->mapRendering($view);
+
+        foreach ($collection['items'] as &$item) {
+            $item['rendering'] = $this->renderingService->renderProject($item, $view);
+        }
+        unset($item);
+
+        return $collection;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOrganisationalUnitsByUuids(array $uuids, array $params = []): array
+    {
+        if (empty($uuids)) {
+            return ['items' => [], 'count' => 0];
+        }
+
+        $queryParams = $this->migrationHelper->convertToOpenApiParams($params);
+        $queryParams['ids'] = implode(',', array_filter($uuids));
+        $queryParams['size'] = count($uuids);
+
+        $response = $this->client->get('/organizational-units', $queryParams);
+        $collection = $this->parser->parseCollection($response);
+
+        // Add HTML rendering to each item
+        $view = $params['view'] ?? $params['rendering'] ?? 'short';
+        $view = $this->migrationHelper->mapRendering($view);
+
+        foreach ($collection['items'] as &$item) {
+            $item['rendering'] = $this->renderingService->renderOrganisation($item, $view);
+        }
+        unset($item);
+
+        return $collection;
+    }
+
+    /**
      * Build query parameters for single item requests
      *
      * @param array $params Input parameters

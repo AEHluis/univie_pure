@@ -229,17 +229,163 @@ class XmlApiService implements ApiServiceInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getPersonsByUuids(array $uuids, array $params = []): array
+    {
+        if (empty($uuids)) {
+            return ['items' => [], 'count' => 0];
+        }
+
+        // Fetch all persons in a single bulk query using comma-separated UUIDs
+        // Most Pure XML APIs support filtering by comma-separated UUIDs
+        $uuidFilter = implode(',', array_filter($uuids));
+
+        $xml = $this->buildPersonsBulkQuery($uuidFilter, $params);
+        $response = $this->webService->getJson('persons', $xml);
+
+        return $this->normalizeResponse($response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProjectsByUuids(array $uuids, array $params = []): array
+    {
+        if (empty($uuids)) {
+            return ['items' => [], 'count' => 0];
+        }
+
+        $uuidFilter = implode(',', array_filter($uuids));
+
+        $xml = $this->buildProjectsBulkQuery($uuidFilter, $params);
+        $response = $this->webService->getJson('projects', $xml);
+
+        return $this->normalizeResponse($response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOrganisationalUnitsByUuids(array $uuids, array $params = []): array
+    {
+        if (empty($uuids)) {
+            return ['items' => [], 'count' => 0];
+        }
+
+        $uuidFilter = implode(',', array_filter($uuids));
+
+        $xml = $this->buildOrganisationalUnitsBulkQuery($uuidFilter, $params);
+        $response = $this->webService->getJson('organisational-units', $xml);
+
+        return $this->normalizeResponse($response);
+    }
+
+    /**
+     * Build XML query for bulk persons by UUIDs
+     */
+    private function buildPersonsBulkQuery(string $uuidFilter, array $params): string
+    {
+        $size = count(explode(',', $uuidFilter));
+        $locale = $params['locale'] ?? 'de_DE';
+        $fields = $params['fields'] ?? ['uuid', 'name.*', 'honoraryStaffOrganisationAssociations.*'];
+        $rendering = $params['rendering'] ?? 'standard';
+
+        // Build XML with UUID filter
+        // The Pure XML API typically supports <uuids> element for filtering
+        $xml = '<?xml version="1.0"?>';
+        $xml .= '<personsQuery>';
+        $xml .= '<uuids>' . htmlspecialchars($uuidFilter, ENT_XML1, 'UTF-8') . '</uuids>';
+        $xml .= '<size>' . $size . '</size>';
+        $xml .= '<offset>0</offset>';
+        $xml .= '<linkingStrategy>noLinkingStrategy</linkingStrategy>';
+        $xml .= '<locales><locale>' . htmlspecialchars($locale, ENT_XML1, 'UTF-8') . '</locale></locales>';
+        $xml .= '<renderings><rendering>' . htmlspecialchars($rendering, ENT_XML1, 'UTF-8') . '</rendering></renderings>';
+        $xml .= '<fields>';
+        foreach ($fields as $field) {
+            $xml .= '<field>' . htmlspecialchars($field, ENT_XML1, 'UTF-8') . '</field>';
+        }
+        $xml .= '</fields>';
+        $xml .= '</personsQuery>';
+
+        return $xml;
+    }
+
+    /**
+     * Build XML query for bulk projects by UUIDs
+     */
+    private function buildProjectsBulkQuery(string $uuidFilter, array $params): string
+    {
+        $size = count(explode(',', $uuidFilter));
+        $locale = $params['locale'] ?? 'de_DE';
+        $fields = $params['fields'] ?? ['uuid', 'title.*', 'acronym'];
+        $rendering = $params['rendering'] ?? 'standard';
+
+        $xml = '<?xml version="1.0"?>';
+        $xml .= '<projectsQuery>';
+        $xml .= '<uuids>' . htmlspecialchars($uuidFilter, ENT_XML1, 'UTF-8') . '</uuids>';
+        $xml .= '<size>' . $size . '</size>';
+        $xml .= '<offset>0</offset>';
+        $xml .= '<linkingStrategy>noLinkingStrategy</linkingStrategy>';
+        $xml .= '<locales><locale>' . htmlspecialchars($locale, ENT_XML1, 'UTF-8') . '</locale></locales>';
+        $xml .= '<renderings><rendering>' . htmlspecialchars($rendering, ENT_XML1, 'UTF-8') . '</rendering></renderings>';
+        $xml .= '<fields>';
+        foreach ($fields as $field) {
+            $xml .= '<field>' . htmlspecialchars($field, ENT_XML1, 'UTF-8') . '</field>';
+        }
+        $xml .= '</fields>';
+        $xml .= '</projectsQuery>';
+
+        return $xml;
+    }
+
+    /**
+     * Build XML query for bulk organisational units by UUIDs
+     */
+    private function buildOrganisationalUnitsBulkQuery(string $uuidFilter, array $params): string
+    {
+        $size = count(explode(',', $uuidFilter));
+        $locale = $params['locale'] ?? 'de_DE';
+        $fields = $params['fields'] ?? ['uuid', 'name.*'];
+        $rendering = $params['rendering'] ?? 'standard';
+
+        $xml = '<?xml version="1.0"?>';
+        $xml .= '<organisationalUnitsQuery>';
+        $xml .= '<uuids>' . htmlspecialchars($uuidFilter, ENT_XML1, 'UTF-8') . '</uuids>';
+        $xml .= '<size>' . $size . '</size>';
+        $xml .= '<offset>0</offset>';
+        $xml .= '<linkingStrategy>noLinkingStrategy</linkingStrategy>';
+        $xml .= '<locales><locale>' . htmlspecialchars($locale, ENT_XML1, 'UTF-8') . '</locale></locales>';
+        $xml .= '<renderings><rendering>' . htmlspecialchars($rendering, ENT_XML1, 'UTF-8') . '</rendering></renderings>';
+        $xml .= '<fields>';
+        foreach ($fields as $field) {
+            $xml .= '<field>' . htmlspecialchars($field, ENT_XML1, 'UTF-8') . '</field>';
+        }
+        $xml .= '</fields>';
+        $xml .= '</organisationalUnitsQuery>';
+
+        return $xml;
+    }
+
+    /**
      * Build XML query for persons endpoint
      */
     private function buildPersonsQuery(array $params): string
     {
-        $searchString = $params['search'] ?? '';
+        // Support both 'search' and 'searchString' parameters
+        $searchString = $params['searchString'] ?? $params['search'] ?? '';
         $size = $params['limit'] ?? $params['size'] ?? 20;
         $offset = $params['offset'] ?? 0;
         $ordering = $params['sort'] ?? $params['ordering'] ?? '-startDate';
         $fields = $params['fields'] ?? ['uuid', 'name.*', 'renderings.*'];
         $locale = $params['locale'] ?? 'de_DE';
         $rendering = $params['rendering'] ?? $params['view'] ?? 'portal-short';
+        $employmentStatus = $params['employmentStatus'] ?? null;
+
+        $additionalParams = [];
+        if ($employmentStatus !== null) {
+            $additionalParams['employmentStatus'] = $employmentStatus;
+        }
 
         return $this->buildXmlQuery(
             'personsQuery',
@@ -249,7 +395,9 @@ class XmlApiService implements ApiServiceInterface
             $fields,
             [$ordering],
             [$locale],
-            [$rendering]
+            [$rendering],
+            [],
+            $additionalParams
         );
     }
 
@@ -258,7 +406,8 @@ class XmlApiService implements ApiServiceInterface
      */
     private function buildResearchOutputsQuery(array $params): string
     {
-        $searchString = $params['search'] ?? '';
+        // Support both 'search' and 'searchString' parameters
+        $searchString = $params['searchString'] ?? $params['search'] ?? '';
         $size = $params['limit'] ?? $params['size'] ?? 20;
         $offset = $params['offset'] ?? 0;
         $ordering = $params['sort'] ?? $params['ordering'] ?? '-publicationYear';
@@ -285,13 +434,20 @@ class XmlApiService implements ApiServiceInterface
      */
     private function buildProjectsQuery(array $params): string
     {
-        $searchString = $params['search'] ?? '';
+        // Support both 'search' and 'searchString' parameters
+        $searchString = $params['searchString'] ?? $params['search'] ?? '';
         $size = $params['limit'] ?? $params['size'] ?? 20;
         $offset = $params['offset'] ?? 0;
         $ordering = $params['sort'] ?? $params['ordering'] ?? '-startDate';
         $fields = $params['fields'] ?? ['uuid', 'renderings.*'];
         $locale = $params['locale'] ?? 'de_DE';
         $rendering = $params['rendering'] ?? $params['view'] ?? 'portal-short';
+
+        // Support workflowSteps parameter (array or single value)
+        $workflowSteps = [];
+        if (isset($params['workflowSteps'])) {
+            $workflowSteps = is_array($params['workflowSteps']) ? $params['workflowSteps'] : [$params['workflowSteps']];
+        }
 
         return $this->buildXmlQuery(
             'projectsQuery',
@@ -301,7 +457,8 @@ class XmlApiService implements ApiServiceInterface
             $fields,
             [$ordering],
             [$locale],
-            [$rendering]
+            [$rendering],
+            $workflowSteps
         );
     }
 
@@ -310,12 +467,24 @@ class XmlApiService implements ApiServiceInterface
      */
     private function buildOrganisationalUnitsQuery(array $params): string
     {
-        $searchString = $params['search'] ?? '';
+        // Support both 'search' and 'searchString' parameters
+        $searchString = $params['searchString'] ?? $params['search'] ?? '';
         $size = $params['limit'] ?? $params['size'] ?? 20;
         $offset = $params['offset'] ?? 0;
         $fields = $params['fields'] ?? ['uuid', 'name.*'];
         $locale = $params['locale'] ?? 'de_DE';
         $rendering = $params['rendering'] ?? $params['view'] ?? 'standard';
+        $ordering = $params['ordering'] ?? null;
+
+        $additionalParams = [];
+        if (isset($params['returnUsedContent'])) {
+            $additionalParams['returnUsedContent'] = $params['returnUsedContent'];
+        }
+
+        $orderings = [];
+        if ($ordering !== null) {
+            $orderings = is_array($ordering) ? $ordering : [$ordering];
+        }
 
         return $this->buildXmlQuery(
             'organisationalUnitsQuery',
@@ -323,9 +492,11 @@ class XmlApiService implements ApiServiceInterface
             $size,
             $offset,
             $fields,
-            [],
+            $orderings,
             [$locale],
-            [$rendering]
+            [$rendering],
+            [],
+            $additionalParams
         );
     }
 
@@ -389,6 +560,7 @@ class XmlApiService implements ApiServiceInterface
      * @param array $locales Locales
      * @param array $renderings Rendering styles
      * @param array $workflowSteps Workflow steps (optional)
+     * @param array $additionalParams Additional parameters (employmentStatus, returnUsedContent, etc.)
      * @return string XML query string
      */
     private function buildXmlQuery(
@@ -400,7 +572,8 @@ class XmlApiService implements ApiServiceInterface
         array $orderings = [],
         array $locales = ['de_DE'],
         array $renderings = ['portal-short'],
-        array $workflowSteps = []
+        array $workflowSteps = [],
+        array $additionalParams = []
     ): string {
         $xml = '<?xml version="1.0"?>';
         $xml .= '<' . $queryType . '>';
@@ -453,13 +626,22 @@ class XmlApiService implements ApiServiceInterface
             $xml .= '</orderings>';
         }
 
-        // Add workflow steps (for research outputs)
+        // Add workflow steps (for research outputs and projects)
         if (!empty($workflowSteps)) {
             $xml .= '<workflowSteps>';
             foreach ($workflowSteps as $step) {
                 $xml .= '<workflowStep>' . htmlspecialchars($step, ENT_XML1, 'UTF-8') . '</workflowStep>';
             }
             $xml .= '</workflowSteps>';
+        }
+
+        // Add additional parameters (employmentStatus, returnUsedContent, etc.)
+        foreach ($additionalParams as $key => $value) {
+            if (is_bool($value)) {
+                $xml .= '<' . $key . '>' . ($value ? 'true' : 'false') . '</' . $key . '>';
+            } elseif (is_string($value)) {
+                $xml .= '<' . $key . '>' . htmlspecialchars($value, ENT_XML1, 'UTF-8') . '</' . $key . '>';
+            }
         }
 
         $xml .= '</' . $queryType . '>';

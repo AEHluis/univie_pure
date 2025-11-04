@@ -9,6 +9,7 @@ use Seboettg\CiteProc\StyleSheet;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Log\LoggerInterface;
+use Univie\UniviePure\Service\Cache\UnifiedCacheManager;
 
 /**
  * CSL (Citation Style Language) rendering service
@@ -27,7 +28,8 @@ class CslRenderingService
     public function __construct(
         private readonly FrontendInterface $cache,
         private readonly LoggerInterface $logger,
-        private readonly CslDataTransformer $dataTransformer
+        private readonly CslDataTransformer $dataTransformer,
+        private readonly UnifiedCacheManager $cacheManager
     ) {}
 
     /**
@@ -40,8 +42,22 @@ class CslRenderingService
      */
     public function renderResearchOutput(array $data, string $style = self::DEFAULT_STYLE, string $format = 'html'): string
     {
-        // Check cache
-        $cacheKey = $this->getCacheKey($data['uuid'] ?? '', $style, $format);
+        $uuid = $data['uuid'] ?? '';
+
+        // Use unified cache key generation
+        $cacheKey = $this->cacheManager->generateCacheKey(
+            UnifiedCacheManager::LAYER_CSL,
+            'research_output',
+            $uuid,
+            ['style' => $style, 'format' => $format]
+        );
+
+        // Get cache tags
+        $cacheTags = $this->cacheManager->getCacheTags(
+            UnifiedCacheManager::LAYER_CSL,
+            'research_output',
+            $uuid
+        );
 
         if ($cached = $this->getCached($cacheKey)) {
             return $cached;
@@ -58,11 +74,11 @@ class CslRenderingService
             $citeProc = new CiteProc($styleSheet, 'en-US');
             $citation = $citeProc->render([$cslData], $format);
 
-            // Cache the result
-            $this->setCached($cacheKey, $citation);
+            // Cache the result with tags
+            $this->setCached($cacheKey, $citation, $cacheTags);
 
             $this->logger->debug('CSL citation generated', [
-                'uuid' => $data['uuid'] ?? 'unknown',
+                'uuid' => $uuid,
                 'style' => $style,
                 'format' => $format,
             ]);
@@ -71,7 +87,7 @@ class CslRenderingService
 
         } catch (\Exception $e) {
             $this->logger->error('CSL rendering failed', [
-                'uuid' => $data['uuid'] ?? 'unknown',
+                'uuid' => $uuid,
                 'style' => $style,
                 'error' => $e->getMessage(),
             ]);
@@ -381,14 +397,15 @@ class CslRenderingService
     }
 
     /**
-     * Set cached citation
+     * Set cached citation with tags
      *
      * @param string $cacheKey Cache key
      * @param string $citation Citation to cache
+     * @param array $tags Cache tags for selective clearing
      */
-    private function setCached(string $cacheKey, string $citation): void
+    private function setCached(string $cacheKey, string $citation, array $tags = []): void
     {
-        $this->cache->set($cacheKey, $citation, [], self::CACHE_LIFETIME);
+        $this->cache->set($cacheKey, $citation, $tags, self::CACHE_LIFETIME);
     }
 
     /**
@@ -433,32 +450,33 @@ class CslRenderingService
 
     /**
      * Clear citation caches
+     *
+     * Uses unified cache manager
      */
     public function clearCache(): void
     {
-        $this->cache->flush();
-        $this->logger->info('CSL citation cache cleared');
+        // Use unified cache manager to clear all CSL caches
+        $this->cacheManager->clearCsl();
+
+        $this->logger->info('CSL citation cache cleared via UnifiedCacheManager');
     }
 
     /**
      * Clear cache for specific item
      *
+     * Uses unified cache manager - automatically clears via tags
+     *
      * @param string $uuid Item UUID
+     * @param string $type Resource type (defaults to research_output)
      */
-    public function clearCacheForItem(string $uuid): void
+    public function clearCacheForItem(string $uuid, string $type = 'research_output'): void
     {
-        $styles = array_keys($this->getAvailableStyles());
-        $formats = ['html', 'text', 'rtf'];
+        // Use unified cache manager - clears all styles/formats via tags
+        $this->cacheManager->clearResource($type, $uuid);
 
-        foreach ($styles as $style) {
-            foreach ($formats as $format) {
-                $cacheKey = $this->getCacheKey($uuid, $style, $format);
-                if ($this->cache->has($cacheKey)) {
-                    $this->cache->remove($cacheKey);
-                }
-            }
-        }
-
-        $this->logger->debug('CSL cache cleared for item', ['uuid' => $uuid]);
+        $this->logger->debug('CSL cache cleared for item via UnifiedCacheManager', [
+            'uuid' => $uuid,
+            'type' => $type,
+        ]);
     }
 }

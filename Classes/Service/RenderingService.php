@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use Psr\Log\LoggerInterface;
+use Univie\UniviePure\Service\Cache\UnifiedCacheManager;
 
 /**
  * Rendering service for Pure API data
@@ -22,6 +23,7 @@ class RenderingService
     public function __construct(
         private readonly FrontendInterface $cache,
         private readonly LoggerInterface $logger,
+        private readonly UnifiedCacheManager $cacheManager,
         private readonly ?CslRenderingService $cslRenderingService = null
     ) {}
 
@@ -184,8 +186,22 @@ class RenderingService
      */
     private function render(string $type, array $data, string $view): string
     {
-        // Check cache first
-        $cacheKey = $this->getCacheKey($type, $data['uuid'] ?? '', $view);
+        $uuid = $data['uuid'] ?? '';
+
+        // Use unified cache key generation
+        $cacheKey = $this->cacheManager->generateCacheKey(
+            UnifiedCacheManager::LAYER_RENDER,
+            $type,
+            $uuid,
+            ['view' => $view]
+        );
+
+        // Get cache tags
+        $cacheTags = $this->cacheManager->getCacheTags(
+            UnifiedCacheManager::LAYER_RENDER,
+            $type,
+            $uuid
+        );
 
         if ($cached = $this->getCached($cacheKey)) {
             return $cached;
@@ -214,8 +230,8 @@ class RenderingService
 
             $rendered = $fluidView->render();
 
-            // Cache the result
-            $this->setCached($cacheKey, $rendered);
+            // Cache the result with tags
+            $this->setCached($cacheKey, $rendered, $cacheTags);
 
             return $rendered;
 
@@ -293,14 +309,15 @@ class RenderingService
     }
 
     /**
-     * Set cached rendering
+     * Set cached rendering with tags
      *
      * @param string $cacheKey Cache key
      * @param string $html HTML to cache
+     * @param array $tags Cache tags for selective clearing
      */
-    private function setCached(string $cacheKey, string $html): void
+    private function setCached(string $cacheKey, string $html, array $tags = []): void
     {
-        $this->cache->set($cacheKey, $html, [], self::CACHE_LIFETIME);
+        $this->cache->set($cacheKey, $html, $tags, self::CACHE_LIFETIME);
     }
 
     /**
@@ -328,43 +345,42 @@ class RenderingService
 
     /**
      * Clear all rendering caches
+     *
+     * Uses unified cache manager - automatically clears CSL caches via tags
      */
     public function clearCache(): void
     {
-        $this->cache->flush();
+        // Use unified cache manager to clear all rendering caches
+        // This automatically clears CSL caches via tags (no manual cascade needed)
+        $this->cacheManager->clearRendering();
 
-        if ($this->cslRenderingService) {
-            $this->cslRenderingService->clearCache();
-        }
-
-        $this->logger->info('Rendering cache cleared');
+        $this->logger->info('Rendering cache cleared via UnifiedCacheManager');
     }
 
     /**
      * Clear cache for specific item
      *
+     * Uses unified cache manager - automatically clears all layers via tags
+     *
      * @param string $uuid Item UUID
+     * @param string $type Resource type (optional, will try all types if not specified)
      */
-    public function clearCacheForItem(string $uuid): void
+    public function clearCacheForItem(string $uuid, string $type = ''): void
     {
-        // Clear all view variations for this UUID
-        $types = ['ResearchOutput', 'Person', 'Project', 'Organisation', 'DataSet', 'Equipment'];
-        $views = ['short', 'detailed', 'standard', 'bibtex'];
-
-        foreach ($types as $type) {
-            foreach ($views as $view) {
-                $cacheKey = $this->getCacheKey($type, $uuid, $view);
-                if ($this->cache->has($cacheKey)) {
-                    $this->cache->remove($cacheKey);
-                }
+        if (!empty($type)) {
+            // Clear specific resource type
+            $this->cacheManager->clearResource($type, $uuid);
+        } else {
+            // Try clearing all resource types (if type unknown)
+            $types = ['person', 'research_output', 'project', 'organisation', 'dataset', 'equipment'];
+            foreach ($types as $resourceType) {
+                $this->cacheManager->clearResource($resourceType, $uuid);
             }
         }
 
-        // Clear CSL cache
-        if ($this->cslRenderingService) {
-            $this->cslRenderingService->clearCacheForItem($uuid);
-        }
-
-        $this->logger->debug('Rendering cache cleared for item', ['uuid' => $uuid]);
+        $this->logger->debug('Rendering cache cleared for item via UnifiedCacheManager', [
+            'uuid' => $uuid,
+            'type' => $type ?: 'all',
+        ]);
     }
 }

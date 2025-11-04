@@ -11,6 +11,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
+use Univie\UniviePure\Service\Cache\UnifiedCacheManager;
 
 /**
  * OpenAPI REST client for Elsevier Pure API
@@ -36,7 +37,8 @@ class OpenApiClient
         private readonly FrontendInterface $cache,
         private readonly LoggerInterface $logger,
         private readonly OpenApiAuthenticator $authenticator,
-        private readonly OpenApiResponseParser $responseParser
+        private readonly OpenApiResponseParser $responseParser,
+        private readonly UnifiedCacheManager $cacheManager
     ) {
         $this->initializeConfiguration();
     }
@@ -75,7 +77,23 @@ class OpenApiClient
     public function get(string $endpoint, array $queryParams = [], array $additionalHeaders = []): array
     {
         $url = $this->buildUrl($endpoint, $queryParams);
-        $cacheKey = $this->generateCacheKey('GET', $url, $queryParams);
+
+        // Use unified cache key generation
+        $resourceInfo = $this->cacheManager->parseEndpoint($endpoint, $queryParams);
+
+        $cacheKey = $this->cacheManager->generateCacheKey(
+            UnifiedCacheManager::LAYER_OPENAPI,
+            $resourceInfo['type'],
+            $resourceInfo['uuid'],
+            $queryParams
+        );
+
+        // Get cache tags
+        $cacheTags = $this->cacheManager->getCacheTags(
+            UnifiedCacheManager::LAYER_OPENAPI,
+            $resourceInfo['type'],
+            $resourceInfo['uuid']
+        );
 
         // Check cache first
         if ($cachedResponse = $this->getCachedResponse($cacheKey)) {
@@ -92,8 +110,8 @@ class OpenApiClient
 
             $data = $this->responseParser->parse($response);
 
-            // Cache successful response
-            $this->cacheResponse($cacheKey, $data);
+            // Cache successful response with tags
+            $this->cacheResponse($cacheKey, $data, $cacheTags);
 
             $this->logger->info('OpenAPI GET request successful', [
                 'endpoint' => $endpoint,
@@ -275,15 +293,19 @@ class OpenApiClient
     }
 
     /**
-     * Cache response data
+     * Cache response data with tags
+     *
+     * @param string $cacheKey Cache key
+     * @param array $data Data to cache
+     * @param array $tags Cache tags for selective clearing
      */
-    private function cacheResponse(string $cacheKey, array $data): void
+    private function cacheResponse(string $cacheKey, array $data, array $tags = []): void
     {
         $serialized = serialize($data);
 
         // Only cache if data meets minimum size
         if (strlen($serialized) >= self::MIN_CACHE_SIZE) {
-            $this->cache->set($cacheKey, $data, [], self::CACHE_LIFETIME);
+            $this->cache->set($cacheKey, $data, $tags, self::CACHE_LIFETIME);
         }
     }
 

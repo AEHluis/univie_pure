@@ -4,12 +4,18 @@ declare(strict_types=1);
 namespace Univie\UniviePure\Hooks;
 
 use TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent;
+use TYPO3\CMS\Core\Page\PageRenderer;
 
 /**
  * Event listener to add JavaScript to TYPO3 backend
  */
 class BackendJavaScriptHook
 {
+    public function __construct(
+        private readonly PageRenderer $pageRenderer
+    ) {
+    }
+
     /**
      * Add JavaScript files to backend
      */
@@ -20,10 +26,8 @@ class BackendJavaScriptHook
             return;
         }
 
-        $pageRenderer = $event->getPageRenderer();
-
         // Add our dynamic multiselect JavaScript
-        $pageRenderer->addJsFile(
+        $this->pageRenderer->addJsFile(
             'EXT:univie_pure/Resources/Public/JavaScript/Backend/DynamicMultiSelect.js'
         );
     }

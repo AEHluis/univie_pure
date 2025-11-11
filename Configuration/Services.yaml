@@ -6,6 +6,13 @@ services:
 
   Univie\UniviePure\:
     resource: '../Classes/*'
+    exclude:
+      - '../Classes/Hooks/*'
+
+  # BackendJavaScriptHook is registered via SC_OPTIONS in ext_localconf.php
+  # NOT as an event listener - exclude from autoconfigure
+  Univie\UniviePure\Hooks\BackendJavaScriptHook:
+    autoconfigure: false
 
   Univie\UniviePure\Service\WebService:
     public: true
@@ -27,12 +34,6 @@ services:
       - name: event.listener
         identifier: 'univie-pure-cache-warmer'
         event: TYPO3\CMS\Core\Cache\Event\CacheWarmupEvent
-
-  Univie\UniviePure\Hooks\BackendJavaScriptHook:
-    tags:
-      - name: event.listener
-        identifier: 'univie-pure-backend-javascript'
-        event: TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent
 
   Psr\Http\Client\ClientInterface:
     class: GuzzleHttp\Client

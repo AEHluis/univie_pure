@@ -13,7 +13,7 @@ return [
 
     // Persons with organization suggest
     'univie_pure_search_persons_with_org' => [
-        'path' => '/univie_pure/search/persons-with-org', 
+        'path' => '/univie_pure/search/persons-with-org',
         'target' => \Univie\UniviePure\Controller\AjaxController::class . '::searchPersonsWithOrganizationAction',
     ],
 

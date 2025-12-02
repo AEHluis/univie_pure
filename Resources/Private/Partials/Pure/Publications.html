@@ -10,6 +10,43 @@
             <hr class="light"/>
 
             <f:for each="{publicationlist}" as="publication" iteration="iterator">
+                <f:if condition="{publication.rendering}">
+                    <div class="c-search__list">
+                        <div class="c-search__item">
+                            <f:format.raw>{publication.rendering}</f:format.raw>
+                            <f:if condition="{settings.showPublicationType}">
+                                <f:if condition="{publication.publicationStatus.uri} != '/dk/atira/pure/researchoutput/status/published'">
+                                    <div><em>{publication.publicationStatus.value}</em></div>
+                                </f:if>
+                            </f:if>
+                            <f:if condition="{settings.singlePid}">
+                                <div class="more">
+                                    <f:link.action action="show" arguments="{uuid : publication.uuid, what2show:'publ'}"
+                                               controller="Pure"
+                                               pageUid="{settings.singlePid}">
+                                        <strong>
+                                            <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.more"/>
+                                        </strong>
+                                    </f:link.action>
+                                </div>
+                            </f:if>
+                            <f:if condition="{settings.linkToPortal}">
+                                <f:if condition="{publication.portalUri}">
+                                    <div style="text-align: center; margin-top:0.5rem;">
+                                            <f:link.external uri="{publication.portalUri}" target="_blank" class="c-button u-icon-after u-icon-after--new-tab"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" /></f:link.external>
+                                    </div>
+                                </f:if>
+                            </f:if>
+                        </div>
+                    </div>
+                    <f:if condition="{iterator.isLast}"><f:then><br class="eogroup"></f:then><f:else></f:else></f:if>
+                </f:if>
+            </f:for>
+        </f:groupedFor>
+    </f:then>
+    <f:else>
+        <f:for each="{publications}" as="publication">
+            <f:if condition="{publication.rendering}">
                 <div class="c-search__list">
                     <div class="c-search__item">
                         <f:format.raw>{publication.rendering}</f:format.raw>
@@ -19,59 +56,25 @@
                             </f:if>
                         </f:if>
                         <f:if condition="{settings.singlePid}">
-                            <div class="more">
-                                <f:link.action action="show" arguments="{uuid : publication.uuid, what2show:'publ'}"
-                                           controller="Pure"
-                                           pageUid="{settings.singlePid}">
-                                    <strong>
-                                        <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.more"/>
-                                    </strong>
-                                </f:link.action>
-                            </div>
+                            <f:link.action action="show" arguments="{uuid : publication.uuid, what2show:'publ'}"
+                                       controller="Pure"
+                                       pageUid="{settings.singlePid}">
+                            <strong>
+                                <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.more"/>
+                            </strong>
+                            </f:link.action>
                         </f:if>
                         <f:if condition="{settings.linkToPortal}">
                             <f:if condition="{publication.portalUri}">
                                 <div style="text-align: center; margin-top:0.5rem;">
-                                        <f:link.external uri="{publication.portalUri}" target="_blank" class="c-button u-icon-after u-icon-after--new-tab"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" /></f:link.external>
+                                    <f:link.external uri="{publication.portalUri}" target="_blank" class="c-button u-icon-after u-icon-after--new-tab"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" /></f:link.external>
                                 </div>
                             </f:if>
                         </f:if>
+                        <f:if condition="{iterator.isLast}"><f:then><br class="eogroup"></f:then><f:else></f:else></f:if>
                     </div>
-                </div>
-                <f:if condition="{iterator.isLast}"><f:then><br class="eogroup"></f:then><f:else></f:else></f:if>
-
-            </f:for>
-        </f:groupedFor>
-    </f:then>
-    <f:else>
-        <f:for each="{publications}" as="publication">
-            <div class="c-search__list">
-                <div class="c-search__item">
-                    <f:format.raw>{publication.rendering}</f:format.raw>
-                    <f:if condition="{settings.showPublicationType}">
-                        <f:if condition="{publication.publicationStatus.uri} != '/dk/atira/pure/researchoutput/status/published'">
-                            <div><em>{publication.publicationStatus.value}</em></div>
-                        </f:if>
-                    </f:if>
-                    <f:if condition="{settings.singlePid}">
-                        <f:link.action action="show" arguments="{uuid : publication.uuid, what2show:'publ'}"
-                                   controller="Pure"
-                                   pageUid="{settings.singlePid}">
-                        <strong>
-                            <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.more"/>
-                        </strong>
-                        </f:link.action>
-                    </f:if>
-                    <f:if condition="{settings.linkToPortal}">
-                        <f:if condition="{publication.portalUri}">
-                            <div style="text-align: center; margin-top:0.5rem;">
-                                <f:link.external uri="{publication.portalUri}" target="_blank" class="c-button u-icon-after u-icon-after--new-tab"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" /></f:link.external>
-                            </div>
-                        </f:if>
-                    </f:if>
-                    <f:if condition="{iterator.isLast}"><f:then><br class="eogroup"></f:then><f:else></f:else></f:if>
-                </div>
-             </div>
+                 </div>
+            </f:if>
         </f:for>
     </f:else>
 </f:if>

@@ -142,3 +142,32 @@ div.projects > div > h2 {
 .tx-univie-pure .typo3-TCEforms-suggest-resultlist > li {
     background-color: #e6e6e6;
 }
+
+/* Fix for Dataset descriptions - make <p>&nbsp;</p> have zero height */
+/* Target only dataset renderings specifically */
+.rendering_dataset p:empty {
+    display: none;
+}
+
+/* Make paragraphs in dataset renderings more compact to minimize <p>&nbsp;</p> */
+.rendering_dataset p {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    font-size: 0;
+    height: 0;
+}
+
+/* But allow actual text content in datasets to display normally */
+.rendering_dataset p * {
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+/* Re-enable spacing for dataset paragraphs with actual child elements */
+.rendering_dataset p:has(*) {
+    line-height: 1.5;
+    font-size: 1rem;
+    height: auto;
+    margin-bottom: 0.5rem;
+}

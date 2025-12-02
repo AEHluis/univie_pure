@@ -280,6 +280,26 @@
 				<source>In depth settings for equipment</source>
 				<target>Erweiterte Einstellungen für Equipment</target>
 			</trans-unit>
+			<trans-unit id="flexform.equipments.orderEquipments">
+				<source>Order equipment:</source>
+				<target>Ordne Equipment nach:</target>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.orderEquipments.title.asc">
+				<source>Title a-z</source>
+				<target>Titel a-z</target>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.orderEquipments.title.desc">
+				<source>Title z-a</source>
+				<target>Titel z-a</target>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.orderEquipments.created.desc">
+				<source>Created date (newest first)</source>
+				<target>Erstellungsdatum (neueste zuerst)</target>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.orderEquipments.created.asc">
+				<source>Created date (oldest first)</source>
+				<target>Erstellungsdatum (älteste zuerst)</target>
+			</trans-unit>
 			<trans-unit id="flexform.projects.narrowBySearch">
 				<source>Choose projects by searchterms (separated by OR or AND if more than 1 entry):</source>
 				<target>Zeige Projekte anhand von Suchbegriffen (separiert durch OR oder AND bei mehreren Einträgen):</target>

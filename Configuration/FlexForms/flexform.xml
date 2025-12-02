@@ -358,6 +358,44 @@
                             </config>
                         </TCEforms>
                     </settings.narrowBySearch>
+                    <settings.orderEquipments>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.orderEquipments
+                            </label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.orderEquipments.title.asc
+                                        </numIndex>
+                                        <numIndex index="1">title</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.orderEquipments.title.desc
+                                        </numIndex>
+                                        <numIndex index="1">-title</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.orderEquipments.created.desc
+                                        </numIndex>
+                                        <numIndex index="1">-created</numIndex>
+                                    </numIndex>
+                                    <numIndex index="3" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.orderEquipments.created.asc
+                                        </numIndex>
+                                        <numIndex index="1">created</numIndex>
+                                    </numIndex>
+                                </items>
+                                <default>title</default>
+                            </config>
+                        </TCEforms>
+                    </settings.orderEquipments>
                 </el>
             </ROOT>
         </Equipments>

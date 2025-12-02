@@ -71,6 +71,11 @@ class Equipments extends Endpoints
         //set offset:
         $xml .= CommonUtilities::getOffset($settings['pageSize'], $currentPageNumber);
         $xml .= LanguageUtility::getLocale('xml');
+
+        //set ordering:
+        $ordering = $this->getArrayValue($settings, 'orderEquipments', 'title');
+        $xml .= $this->getOrderingXml($ordering, 'title');
+
         $xml .= '<renderings><rendering>short</rendering></renderings>';
         $xml .= '<fields>
                 <field>renderings.*</field>

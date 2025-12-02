@@ -85,6 +85,13 @@ class Equipments extends Endpoints
                 <field>emails.*</field>
                 <field>webAddresses.*</field>
              </fields>';
+
+        // Add equipment types if enabled
+        if (($this->getArrayValue($settings, 'narrowByEquipmentType', 0) == 1) &&
+            ($this->getArrayValue($settings, 'selectorEquipmentType', '') != '')) {
+            $xml .= $this->getEquipmentTypesXml($settings['selectorEquipmentType']);
+        }
+
         //search AND filter:
         if ($this->getArrayValue($settings, 'narrowBySearch') || $this->getArrayValue($settings, 'filter')) {
             $xml .= $this->getSearchXml($settings);
@@ -257,6 +264,28 @@ class Equipments extends Endpoints
         }
 
         return $view;
+    }
+
+    /**
+     * Generate XML for equipment types
+     *
+     * @param string $equipmentTypes Comma-separated list of equipment types
+     * @return string XML for equipment types
+     */
+    protected function getEquipmentTypesXml(string $equipmentTypes): string
+    {
+        $xml = "<typeUris>";
+        $types = explode(',', $equipmentTypes);
+
+        foreach ((array)$types as $type) {
+            if (strpos($type, "|")) {
+                $tmp = explode("|", $type);
+                $type = $tmp[0];
+            }
+            $xml .= '<typeUri>' . htmlspecialchars($type, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</typeUri>';
+        }
+        $xml .= '</typeUris>';
+        return $xml;
     }
 
 }

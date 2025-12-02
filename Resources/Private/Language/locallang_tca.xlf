@@ -241,6 +241,12 @@
 			<trans-unit id="flexform.equipments.orderEquipments.created.asc">
 				<source>Created date (oldest first)</source>
 			</trans-unit>
+			<trans-unit id="flexform.equipments.narrowByEquipmentType">
+				<source>Narrow selection by equipment type</source>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.selectEquipmentType">
+				<source>Select equipment types:</source>
+			</trans-unit>
 			<trans-unit id="flexform.projects.narrowBySearch">
 				<source>Choose Projects by searchterms (separated by OR or AND if more than 1 entry):</source>
 			</trans-unit>

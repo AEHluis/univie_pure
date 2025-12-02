@@ -22,6 +22,7 @@ class ClassificationScheme
 {
     private const RESEARCHOUTPUT = '/dk/atira/pure/researchoutput/researchoutputtypes';
     private const PROJECTS = '/dk/atira/pure/upm/fundingprogramme';
+    private const EQUIPMENT = '/dk/atira/pure/equipment/equipmenttypes';
 
     private string $locale;
     private WebService $webService;
@@ -396,7 +397,7 @@ class ClassificationScheme
             <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
             </locales>
             <returnUsedContent>true</returnUsedContent>
-            <navigationLink>true</navigationLink> 
+            <navigationLink>true</navigationLink>
             <baseUri>' . self::RESEARCHOUTPUT . '</baseUri>
             </classificationSchemesQuery>');
 
@@ -405,6 +406,29 @@ class ClassificationScheme
 
         if (is_array($publicationTypes)) {
             $sorted = $this->sortClassification($publicationTypes);
+            $this->sorted2items($sorted, $config);
+        }
+    }
+
+    public function getEquipmentTypes(&$config): void
+    {
+        $classificationXML = trim('<?xml version="1.0"?>
+            <classificationSchemesQuery>
+            <size>99999</size>
+            <offset>0</offset>
+            <locales>
+            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
+            </locales>
+            <returnUsedContent>true</returnUsedContent>
+            <navigationLink>true</navigationLink>
+            <baseUri>' . self::EQUIPMENT . '</baseUri>
+            </classificationSchemesQuery>');
+
+        // Fetch fresh equipment types data
+        $equipmentTypes = $this->webService->getJson('classification-schemes', $classificationXML);
+
+        if (is_array($equipmentTypes)) {
+            $sorted = $this->sortClassification($equipmentTypes);
             $this->sorted2items($sorted, $config);
         }
     }

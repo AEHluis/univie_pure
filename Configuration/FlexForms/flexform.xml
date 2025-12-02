@@ -396,6 +396,36 @@
                             </config>
                         </TCEforms>
                     </settings.orderEquipments>
+                    <settings.narrowByEquipmentType>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.narrowByEquipmentType
+                            </label>
+                            <onChange>reload</onChange>
+                            <config>
+                                <type>check</type>
+                            </config>
+                        </TCEforms>
+                    </settings.narrowByEquipmentType>
+                    <settings.selectorEquipmentType>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.selectEquipmentType
+                            </label>
+                            <displayCond>FIELD:settings.narrowByEquipmentType:REQ:true</displayCond>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectMultipleSideBySide</renderType>
+                                <itemsProcFunc>
+                                    Univie\UniviePure\Utility\ClassificationScheme->getEquipmentTypes
+                                </itemsProcFunc>
+                                <size>10</size>
+                                <maxitems>9999</maxitems>
+                                <minitems>0</minitems>
+                                <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>
+                            </config>
+                        </TCEforms>
+                    </settings.selectorEquipmentType>
                 </el>
             </ROOT>
         </Equipments>

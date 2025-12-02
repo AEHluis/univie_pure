@@ -92,9 +92,6 @@ class ResearchOutput extends Endpoints
     {
         $xml = '<?xml version="1.0"?><researchOutputsQuery>';
 
-        // Get projects XML if available
-        $xml .= CommonUtilities::getProjectsXml($settings);
-
         // Set page size
         $xml .= CommonUtilities::getPageSize($this->getArrayValue($settings, 'pageSize', 20));
 
@@ -108,7 +105,7 @@ class ResearchOutput extends Endpoints
 
         // Set rendering
         $rendering = $this->getArrayValue($settings, 'rendering', 'portal-short');
-        $xml .= '<renderings><rendering>' . $rendering . '</rendering></renderings>';
+        $xml .= '<renderings><rendering>' . htmlspecialchars($rendering, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</rendering></renderings>';
 
         // Handle publication type
         $pubtype = "";
@@ -132,7 +129,7 @@ class ResearchOutput extends Endpoints
 
         // Set ordering
         $ordering = $this->getArrayValue($settings, 'researchOutputOrdering', '-publicationYear');
-        $xml .= '<orderings><ordering>' . $ordering . '</ordering></orderings>';
+        $xml .= '<orderings><ordering>' . htmlspecialchars($ordering, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</ordering></orderings>';
 
         $xml .= '<returnUsedContent>true</returnUsedContent>';
         $xml .= '<navigationLink>true</navigationLink>';
@@ -172,10 +169,13 @@ class ResearchOutput extends Endpoints
                     <workflowStep>validated</workflowStep>
                   </workflowSteps>';
 
-        // Add persons or organisations XML
+        // Add persons or organisations XML (forPersons/forOrganisationalUnits)
         $xml .= CommonUtilities::getPersonsOrOrganisationsXml($settings);
 
-        // Add search terms if provided
+        // Add projects XML if available (forProjects - comes after forPersons/forOrganisationalUnits)
+        $xml .= CommonUtilities::getProjectsXml($settings);
+
+        // Add search terms if provided (searchString comes at the very end)
         if ($this->getArrayValue($settings, 'narrowBySearch') || $this->getArrayValue($settings, 'filter')) {
             $xml .= $this->getSearchXml($settings);
         }

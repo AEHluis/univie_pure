@@ -18,8 +18,9 @@ class AjaxController
 {
     protected WebService $webService;
     
-    private const MIN_SEARCH_LENGTH = 3;
-    private const SEARCH_SIZE = 20;
+    private const MIN_SEARCH_LENGTH = 4;
+    private const SEARCH_SIZE = 50;
+    private const MIN_RELEVANCE_SCORE = 50; // Only show results with score >= 50
     private const LOCALE_MAP = [
         'de' => 'de_DE',
         'en' => 'en_GB',
@@ -111,24 +112,44 @@ class AjaxController
         );
 
         $organisations = $this->webService->getJson('organisational-units', $postData);
-        
+
         $results = [];
 
         if (is_array($organisations) && isset($organisations['items'])) {
             foreach ($organisations['items'] as $org) {
                 // Get the best available name for current locale
                 $label = $this->extractLocalizedName($org['name'] ?? [], $locale);
-                
+
                 // Skip if no label found
                 if (empty($label)) {
                     continue;
                 }
-                
-                $results[] = [
-                    'value' => $org['uuid'],
-                    'label' => $label
-                ];
+
+                // Calculate relevance score to prioritize name matches
+                $score = $this->calculateRelevanceScore($searchTerm, $label, $label);
+
+                // Only include results above minimum relevance threshold
+                if ($score >= self::MIN_RELEVANCE_SCORE) {
+                    $results[] = [
+                        'value' => $org['uuid'],
+                        'label' => $label,
+                        'score' => $score
+                    ];
+                }
             }
+
+            // Sort by relevance score (highest first)
+            usort($results, function($a, $b) {
+                return $b['score'] - $a['score'];
+            });
+
+            // Remove score from output (only used for sorting)
+            $results = array_map(function($item) {
+                return ['value' => $item['value'], 'label' => $item['label']];
+            }, $results);
+
+            // Limit to top 20 results after filtering
+            $results = array_slice($results, 0, 20);
         }
 
         return new JsonResponse(['results' => $results]);
@@ -174,18 +195,38 @@ class AjaxController
             foreach ($persons['items'] as $person) {
                 $personName = $person['name']['lastName'] . ', ' . $person['name']['firstName'];
                 $organizationNames = $this->getActiveOrganizationNames($person, $locale);
-                
+
                 if (!empty($organizationNames)) {
                     $displayName = $personName . ' (' . implode(', ', $organizationNames) . ')';
                 } else {
                     $displayName = $personName;
                 }
-                
-                $results[] = [
-                    'value' => $person['uuid'],
-                    'label' => $displayName
-                ];
+
+                // Calculate relevance score to prioritize name matches
+                $score = $this->calculateRelevanceScore($searchTerm, $personName, $displayName);
+
+                // Only include results above minimum relevance threshold
+                if ($score >= self::MIN_RELEVANCE_SCORE) {
+                    $results[] = [
+                        'value' => $person['uuid'],
+                        'label' => $displayName,
+                        'score' => $score
+                    ];
+                }
             }
+
+            // Sort by relevance score (highest first)
+            usort($results, function($a, $b) {
+                return $b['score'] - $a['score'];
+            });
+
+            // Remove score from output (only used for sorting)
+            $results = array_map(function($item) {
+                return ['value' => $item['value'], 'label' => $item['label']];
+            }, $results);
+
+            // Limit to top 20 results after filtering
+            $results = array_slice($results, 0, 20);
         }
 
         return new JsonResponse(['results' => $results]);
@@ -223,21 +264,47 @@ class AjaxController
             foreach ($projects['items'] as $project) {
                 // Get the best available title for current locale
                 $title = $this->extractLocalizedName($project['title'] ?? [], $locale);
-                
+
                 if (empty($title)) {
                     $title = 'Unknown Project';
                 }
-                
+
+                // Store original title for scoring
+                $originalTitle = $title;
+
                 // Add acronym if available and not already in title
                 if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
                     $title = $project['acronym'] . ' - ' . $title;
                 }
-                
-                $results[] = [
-                    'value' => $project['uuid'],
-                    'label' => $title
-                ];
+
+                // Calculate relevance score (check both title and acronym)
+                $scoreByTitle = $this->calculateRelevanceScore($searchTerm, $originalTitle, $title);
+                $scoreByAcronym = !empty($project['acronym']) ?
+                    $this->calculateRelevanceScore($searchTerm, $project['acronym'], $title) : 0;
+                $score = max($scoreByTitle, $scoreByAcronym);
+
+                // Only include results above minimum relevance threshold
+                if ($score >= self::MIN_RELEVANCE_SCORE) {
+                    $results[] = [
+                        'value' => $project['uuid'],
+                        'label' => $title,
+                        'score' => $score
+                    ];
+                }
             }
+
+            // Sort by relevance score (highest first)
+            usort($results, function($a, $b) {
+                return $b['score'] - $a['score'];
+            });
+
+            // Remove score from output (only used for sorting)
+            $results = array_map(function($item) {
+                return ['value' => $item['value'], 'label' => $item['label']];
+            }, $results);
+
+            // Limit to top 20 results after filtering
+            $results = array_slice($results, 0, 20);
         }
 
         return new JsonResponse(['results' => $results]);
@@ -283,8 +350,47 @@ class AjaxController
     }
     
     /**
+     * Calculate relevance score for search results
+     * Prioritizes matches in name/title fields over matches in other fields
+     *
+     * @param string $searchTerm The search term entered by user
+     * @param string $primaryField The primary field to check (name, title, etc.)
+     * @param string $label The full display label
+     * @return int Relevance score (higher = more relevant)
+     */
+    private function calculateRelevanceScore(string $searchTerm, string $primaryField, string $label): int
+    {
+        $searchTermLower = mb_strtolower($searchTerm);
+        $primaryFieldLower = mb_strtolower($primaryField);
+        $labelLower = mb_strtolower($label);
+
+        // Exact match in primary field = highest score
+        if ($primaryFieldLower === $searchTermLower) {
+            return 100;
+        }
+
+        // Starts with search term in primary field = very high score
+        if (mb_strpos($primaryFieldLower, $searchTermLower) === 0) {
+            return 90;
+        }
+
+        // Contains search term in primary field = high score
+        if (mb_strpos($primaryFieldLower, $searchTermLower) !== false) {
+            return 80;
+        }
+
+        // Contains search term in full label (e.g., in organization name) = medium score
+        if (mb_strpos($labelLower, $searchTermLower) !== false) {
+            return 50;
+        }
+
+        // Found by API but not in visible fields = low score (likely in bio, etc.)
+        return 10;
+    }
+
+    /**
      * Extract localized name/title from Pure API response structure
-     * 
+     *
      * @param array $nameData The name data from API (could be name or title field)
      * @param string $locale The desired locale (e.g., 'de_DE' or 'en_GB')
      * @return string The localized name or fallback to first available

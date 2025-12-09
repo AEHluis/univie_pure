@@ -8,7 +8,6 @@ use Univie\UniviePure\Service\WebService;
 use Univie\UniviePure\Utility\CommonUtilities;
 use Univie\UniviePure\Utility\LanguageUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
@@ -191,27 +190,8 @@ class ResearchOutput extends Endpoints
         }
         $xml .= '</researchOutputsQuery>';
 
-        // DEBUG: Show XML request and response for citation style testing
-        if (isset($debug_rendering)) {
-            DebuggerUtility::var_dump([
-                'citation_style' => $debug_rendering,
-                'xml_request' => $xml
-            ], 'DEBUG: XML Request for Citation Style ' . $debug_rendering);
-        }
-
         // Get and transform the publications data
         $publications = $this->webservice->getJson('research-outputs', $xml);
-
-        // DEBUG: Show API response for citation style testing
-        if (isset($debug_rendering) && $publications) {
-            $firstPub = $publications['items']['contributionToJournal'][0] ?? null;
-            DebuggerUtility::var_dump([
-                'citation_style' => $debug_rendering,
-                'response_count' => $publications['count'] ?? 0,
-                'first_publication_keys' => $firstPub ? array_keys($firstPub) : [],
-                'first_publication_rendering' => $firstPub['renderings'] ?? 'NO_RENDERING_DATA'
-            ], 'DEBUG: API Response for Citation Style ' . $debug_rendering);
-        }
 
         if ($publications) {
             return $this->transformArray($publications, $settings, $lang);

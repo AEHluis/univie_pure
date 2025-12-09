@@ -158,11 +158,6 @@ class ClassificationScheme
 
         // Fetch fresh data for reliable language switching (only 8 items)
         $organisations = $this->webService->getJson('organisational-units', $postData);
-        
-        // Debug: Log actual API response count
-        if ($organisations && isset($organisations['items'])) {
-            error_log('[Pure Debug] Organizations API returned: ' . count($organisations['items']) . ' items (requested 8)');
-        }
 
         if (!$organisations || !isset($organisations['items'])) {
             $this->addFlashMessage(
@@ -231,12 +226,7 @@ class ClassificationScheme
 
         // Fetch fresh data for reliable language switching (8 items)
         $persons = $this->webService->getJson('persons', $personXML);
-        
-        // Debug: Log actual API response count
-        if ($persons && isset($persons['items'])) {
-            error_log('[Pure Debug] Persons API returned: ' . count($persons['items']) . ' items (requested 8)');
-        }
-        
+
         if (!$persons || !isset($persons['items'])) {
             $this->addFlashMessage(
                 'Could not fetch Person data with organization associations from the API. Please check your connection.',
@@ -328,12 +318,7 @@ class ClassificationScheme
 
         // Fetch fresh data for reliable language switching (8 items)
         $projects = $this->webService->getJson('projects', $projectsXML);
-        
-        // Debug: Log actual API response count
-        if ($projects && isset($projects['items'])) {
-            error_log('[Pure Debug] Projects API returned: ' . count($projects['items']) . ' items (requested 8)');
-        }
-        
+
         if (!$projects || !isset($projects['items'])) {
             $this->addFlashMessage(
                 'Could not fetch projects from the API. Please check your connection.',

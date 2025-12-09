@@ -247,8 +247,10 @@ class WebService
             $response = $this->client->sendRequest($request);
             // Check if response code is 2xx
             $statusCode = $response->getStatusCode();
+            $responseBody = (string)$response->getBody();
+
             if ($statusCode < 200 || $statusCode >= 300) {
-                // Log error if non-2xx
+                // Log error if non-2xx with detailed request/response info
                 $this->logger->error(
                     sprintf(
                         'Request to %s returned a non-2xx status code: %d',
@@ -257,14 +259,21 @@ class WebService
                     ),
                     [
                         'status_code' => $statusCode,
+                        'request_xml' => $data,
+                        'response_body' => $responseBody,
+                        'response_headers' => $response->getHeaders(),
                     ]
                 );
 
                 return null;
             }
-            return (string)$response->getBody();
+            return $responseBody;
         } catch (\Exception $e) {
-            $this->logger->error('Request failed', ['exception' => $e, 'uri' => (string)$uri]);
+            $this->logger->error('Request failed', [
+                'exception' => $e,
+                'uri' => (string)$uri,
+                'request_xml' => $data,
+            ]);
             return null;
         }
     }

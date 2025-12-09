@@ -7,6 +7,8 @@ use Univie\UniviePure\Service\WebService;
 use Univie\UniviePure\Utility\CommonUtilities;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Univie\UniviePure\Utility\LanguageUtility;
+use Psr\Log\LoggerInterface;
+use TYPO3\CMS\Core\Log\LogManager;
 
 /*
  * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
@@ -19,10 +21,12 @@ class Equipments extends Endpoints
 {
 
     private readonly WebService $webservice;
+    private readonly LoggerInterface $logger;
 
-    public function __construct(WebService $webservice)
+    public function __construct(WebService $webservice, ?LoggerInterface $logger = null)
     {
         $this->webservice = $webservice;
+        $this->logger = $logger ?? GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
 
     /**
@@ -72,10 +76,7 @@ class Equipments extends Endpoints
         $xml .= CommonUtilities::getOffset($settings['pageSize'], $currentPageNumber);
         $xml .= LanguageUtility::getLocale('xml');
 
-        //set ordering:
-        $ordering = $this->getArrayValue($settings, 'orderEquipments', 'title');
-        $xml .= $this->getOrderingXml($ordering, 'title');
-
+        // Add renderings and fields BEFORE orderings (like ResearchOutput does)
         $xml .= '<renderings><rendering>short</rendering></renderings>';
         $xml .= '<fields>
                 <field>renderings.*</field>
@@ -86,26 +87,30 @@ class Equipments extends Endpoints
                 <field>webAddresses.*</field>
              </fields>';
 
-        // Add equipment types if enabled
-        if (($this->getArrayValue($settings, 'narrowByEquipmentType', 0) == 1) &&
-            ($this->getArrayValue($settings, 'selectorEquipmentType', '') != '')) {
-            $xml .= $this->getEquipmentTypesXml($settings['selectorEquipmentType']);
-        }
+        //set ordering (MUST come AFTER renderings/fields per API schema):
+        $ordering = $this->getArrayValue($settings, 'orderEquipments', 'title');
+        $xml .= $this->getOrderingXml($ordering, 'title');
 
         //search AND filter:
         if ($this->getArrayValue($settings, 'narrowBySearch') || $this->getArrayValue($settings, 'filter')) {
             $xml .= $this->getSearchXml($settings);
         }
 
-        //Important WorkflowSteps must be first and then getPersonsOrOrganisationsXml
-        //workflow steps - only show approved and forApproval, exclude entries in progress
+        // Add equipment types if enabled (try BEFORE workflowSteps in filter section)
+        if (($this->getArrayValue($settings, 'narrowByEquipmentType', 0) == 1) &&
+            ($this->getArrayValue($settings, 'selectorEquipmentType', '') != '')) {
+            $xml .= $this->getEquipmentTypesXml($settings['selectorEquipmentType']);
+        }
+
+        // workflow steps - only show approved and forApproval, exclude entries in progress
         $xml .= '<workflowSteps>
                     <workflowStep>approved</workflowStep>
                     <workflowStep>forApproval</workflowStep>
                  </workflowSteps>';
-	 
+
         // Add persons or organizations
         $xml .= CommonUtilities::getPersonsOrOrganisationsXml($settings);
+
         $xml .= '</equipmentsQuery>';
 
 	// Get response from the web service

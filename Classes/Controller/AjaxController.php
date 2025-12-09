@@ -18,7 +18,7 @@ class AjaxController
 {
     protected WebService $webService;
     
-    private const MIN_SEARCH_LENGTH = 4;
+    private const MIN_SEARCH_LENGTH = 3;
     private const SEARCH_SIZE = 50;
     private const MIN_RELEVANCE_SCORE = 50; // Only show results with score >= 50
     private const LOCALE_MAP = [
@@ -374,17 +374,24 @@ class AjaxController
             return 90;
         }
 
-        // Contains search term in primary field = high score
-        if (mb_strpos($primaryFieldLower, $searchTermLower) !== false) {
+        // Contains search term as word in primary field = high score
+        // Check if search term appears as a word boundary (e.g., "Lee" in "Lee, John" but not in "Sleeper")
+        if (preg_match('/\b' . preg_quote($searchTermLower, '/') . '\b/ui', $primaryFieldLower)) {
             return 80;
         }
 
-        // Contains search term in full label (e.g., in organization name) = medium score
-        if (mb_strpos($labelLower, $searchTermLower) !== false) {
-            return 50;
+        // Contains search term anywhere in primary field = medium score
+        if (mb_strpos($primaryFieldLower, $searchTermLower) !== false) {
+            return 70;
         }
 
-        // Found by API but not in visible fields = low score (likely in bio, etc.)
+        // Contains search term in full label (e.g., in organization name) = lower score
+        if (mb_strpos($labelLower, $searchTermLower) !== false) {
+            return 55;
+        }
+
+        // Found by API but not in visible fields = very low score (likely in bio, etc.)
+        // This will be filtered out by MIN_RELEVANCE_SCORE = 50
         return 10;
     }
 

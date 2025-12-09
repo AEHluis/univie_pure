@@ -83,6 +83,10 @@
 				<source>--- please choose ---</source>
 				<target>--- bitte auswählen ---</target>
 			</trans-unit>
+			<trans-unit id="flexform.common.searchForMore">
+				<source>→ Search for more results</source>
+				<target>→ Suchen für mehr Ergebnisse</target>
+			</trans-unit>
 			<trans-unit id="flexform.common.ChooseSelector">
 				<source>Choose entity for which to show entries:</source>
 				<target>Wählen Sie die Einheit für die Einträge angezeigt werden sollen:</target>

@@ -63,6 +63,9 @@
 			<trans-unit id="flexform.common.selectBlank">
 				<source>--- please choose ---</source>
 			</trans-unit>
+			<trans-unit id="flexform.common.searchForMore">
+				<source>→ Search for more results</source>
+			</trans-unit>
 			<trans-unit id="flexform.common.ChooseSelector">
 				<source>Choose entity for which to show entries:</source>
 			</trans-unit>

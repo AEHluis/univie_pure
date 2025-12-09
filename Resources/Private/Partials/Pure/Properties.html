@@ -135,14 +135,7 @@
 
 		<!-- TYPE -->
 		<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.type" /></dt>
-		<f:if condition="{lang} == 'de_DE'">
-			<f:then>
-				<dd>{publication.type.term.text.1.value}</dd>
-			</f:then>
-			<f:else>
-				<dd>{publication.type.term.text.0.value}</dd>
-			</f:else>
-		</f:if>
+		<dd>{publication.type.term.text.0.value}</dd>
 
 		<!-- JOURNAL -->
 		<f:if condition="{publication.journalAssociation.title.value}">
@@ -198,14 +191,7 @@
 				<f:for each="{publication.publicationStatuses}" as="status" iteration="unitIter">
 					<f:if condition="{status.current} == 'true'">
 						<f:then>
-							<f:if condition="{lang} == 'de_DE'">
-								<f:then>
-									{status.publicationStatus.term.text.1.value}
-								</f:then>
-								<f:else>
-									{status.publicationStatus.term.text.0.value}
-								</f:else>
-							</f:if>
+							{status.publicationStatus.term.text.0.value}
 						</f:then>
 					</f:if>
 				</f:for>
@@ -229,24 +215,14 @@
 				<f:for each="{publication.keywordGroups}" as="keywordsGroup">
 					<f:if condition="{keywordsGroup.keywordContainers.0.structuredKeyword.term.text}">
 						<f:then>
-							<f:if condition="{lang} == 'de_DE'">
-								<f:then>
-									<dt class="col-sm-3">{keywordsGroup.type.term.text.1.value}</dt>
-									<dd class="col-sm-9 content-element-margin-small">
-										<f:for each="{keywordsGroup.keywordContainers}" as="container" iteration="keywordIter">
-											{container.structuredKeyword.term.text.1.value}<f:if condition="{keywordIter.isLast}"><f:else>, </f:else></f:if>
-										</f:for>
-									</dd>
-								</f:then>
-								<f:else>
-									<dt class="col-sm-3">{keywordsGroup.type.term.text.0.value}</dt>
-									<dd class="col-sm-9 content-element-margin-small">
-										<f:for each="{keywordsGroup.keywordContainers}" as="container" iteration="keywordIter">
-											{container.structuredKeyword.term.text.0.value}<f:if condition="{keywordIter.isLast}"><f:else>, </f:else></f:if>
-										</f:for>
-									</dd>
-								</f:else>
-							</f:if>
+							<dt class="col-sm-3">{keywordsGroup.type.term.text.0.value}</dt>
+							<dd class="col-sm-9 content-element-margin-small">
+								<f:for each="{keywordsGroup.keywordContainers}" as="container" iteration="keywordIter">
+									<f:if condition="{container.structuredKeyword.term.text.0.value}">
+										{container.structuredKeyword.term.text.0.value}<f:if condition="{keywordIter.isLast}"><f:else>, </f:else></f:if>
+									</f:if>
+								</f:for>
+							</dd>
 						</f:then>
 					</f:if>
 				</f:for>
@@ -260,26 +236,11 @@
 				<f:for each="{publication.electronicVersions}" as="electronicVersion">
 					<f:if condition="{electronicVersion.link}">
 						<a href="{electronicVersion.link}" target="_blank">{electronicVersion.link}</a> (<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.electronicVersionsAccess" />
-						<f:if condition="{lang} == 'de_DE'">
-							<f:then>
-								{electronicVersion.accessType.term.text.1.value})<br>
-							</f:then>
-							<f:else>
-								{electronicVersion.accessType.term.text.0.value})<br>
-							</f:else>
-						</f:if>
-
+						{electronicVersion.accessType.term.text.0.value})<br>
 					</f:if>
 					<f:if condition="{electronicVersion.doi}">
 						<a href="{electronicVersion.doi}" target="_blank">{electronicVersion.doi}</a> (<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.electronicVersionsAccess" />
-						<f:if condition="{lang} == 'de_DE'">
-							<f:then>
-								{electronicVersion.accessType.term.text.1.value})<br>
-							</f:then>
-							<f:else>
-								{electronicVersion.accessType.term.text.0.value})<br>
-							</f:else>
-						</f:if>
+						{electronicVersion.accessType.term.text.0.value})<br>
 					</f:if>
 				</f:for>
 			</dd>

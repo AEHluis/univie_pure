@@ -191,15 +191,6 @@ class ClassificationScheme
                 }
             }
         }
-        
-        // Add hint for users to search
-        $searchHint = $this->getSearchHintText();
-        $config['items'][] = ['─────────────────────', '--div--'];
-        $config['items'][] = [$searchHint, '--div--'];
-        
-        // Debug: Log final item count (excluding separators)
-        $actualItemCount = count($config['items']) - 2; // Minus separator and hint
-        error_log('[Pure Debug] Organizations final dropdown items: ' . $actualItemCount);
     }
 
     public function getPersons(&$config): void
@@ -278,11 +269,6 @@ class ClassificationScheme
                 }
             }
         }
-        
-        // Add hint for users to search
-        $searchHint = $this->getSearchHintText();
-        $config['items'][] = ['─────────────────────', '--div--'];
-        $config['items'][] = [$searchHint, '--div--'];
     }
 
     private function getActiveOrganizationNames(array $person): array
@@ -380,11 +366,6 @@ class ClassificationScheme
                 }
             }
         }
-        
-        // Add hint for users to search
-        $searchHint = $this->getSearchHintText();
-        $config['items'][] = ['─────────────────────', '--div--'];
-        $config['items'][] = [$searchHint, '--div--'];
     }
 
     public function getTypesFromPublications(&$config): void

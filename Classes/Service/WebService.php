@@ -85,11 +85,19 @@ class WebService
         if (isset($locale)) {
             $uri = $uri->withQuery($uri->getQuery() . '&locale=' . $locale);
         }
-        // Update cache identifier to include the locale if it was removed from params
+
+        // Extract rendering style for cache identifier (critical for citation styles)
+        $renderer = $params['rendering'] ?? 'html';
+        $lang = isset($locale) ? $locale : ($params['locale'] ?? null);
+
+        // Update cache identifier to include rendering style and locale
+        // This ensures different citation styles (APA, Harvard, etc.) get separate cache entries
         $cacheIdentifier = $this->generateCacheIdentifier(
             $endpoint,
             json_encode(isset($locale) ? array_merge($params, ['locale' => $locale]) : $params),
-            $responseType
+            $responseType,
+            $lang,
+            $renderer
         );
 
         if ($cachedContent = $this->getCachedContent($cacheIdentifier)) {

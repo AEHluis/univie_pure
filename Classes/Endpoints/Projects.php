@@ -91,6 +91,10 @@ class Projects extends Endpoints
                     if (is_array($view["items"])) {
                         if (array_key_exists("project", $view["items"])) {
                             if (is_array($view["items"]["project"])) {
+                                // Normalize single project to array so the loop works consistently
+                                if (array_key_exists("@attributes", $view["items"]["project"])) {
+                                    $view["items"]["project"] = [$view["items"]["project"]];
+                                }
                                 foreach ($view["items"]["project"] as $index => $items) {
                                     if (array_key_exists("renderings", $items)) {
                                         if (is_array($items["renderings"])) {

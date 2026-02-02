@@ -45,6 +45,54 @@ class DataSets extends Endpoints
         // Set default page size if not provided
         $settings['pageSize'] = $this->getArrayValue($settings, 'pageSize', 20);
 
+        $xml = $this->buildDataSetsQuery($settings, $currentPageNumber);
+        $view = $this->webservice->getXml('datasets', $xml);
+
+        if (!$view) {
+            return [
+                'error' => 'SERVER_NOT_AVAILABLE',
+                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
+            ];
+        }
+
+        if (!is_array($view)) {
+            return [
+                'error' => 'SERVER_NOT_AVAILABLE',
+                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
+            ];
+        }
+
+        $totalCount = (int)$this->getArrayValue($view, 'count', 0);
+        $items = $this->collectDataSetItems($view, $settings);
+
+        $pageSize = (int)$settings['pageSize'];
+        if ($pageSize > 0 && count($items) < $pageSize && $totalCount > $this->calculateOffset($pageSize, $currentPageNumber) + $pageSize) {
+            $nextPage = $currentPageNumber + 1;
+            $nextOffset = $this->calculateOffset($pageSize, $nextPage);
+            while (count($items) < $pageSize && $totalCount > $nextOffset) {
+                $nextXml = $this->buildDataSetsQuery($settings, $nextPage);
+                $nextView = $this->webservice->getXml('datasets', $nextXml);
+                if (!is_array($nextView)) {
+                    break;
+                }
+                $moreItems = $this->collectDataSetItems($nextView, $settings);
+                if (!empty($moreItems)) {
+                    $items = array_merge($items, $moreItems);
+                }
+                $nextPage++;
+                $nextOffset = $this->calculateOffset($pageSize, $nextPage);
+            }
+            $items = array_slice($items, 0, $pageSize);
+        }
+
+        $view['items'] = $items;
+        $view['offset'] = $this->calculateOffset((int)$settings['pageSize'], (int)$currentPageNumber);
+
+        return $view;
+    }
+
+    private function buildDataSetsQuery(array $settings, int $currentPageNumber): string
+    {
         $xml = '<?xml version="1.0"?><dataSetsQuery>';
         //set page size:
         $xml .= CommonUtilities::getProjectsForDatasetsXml($settings);
@@ -75,79 +123,60 @@ class DataSets extends Endpoints
         //either for organisations or for persons, both must not be submitted:
         $xml .= CommonUtilities::getPersonsOrOrganisationsXml($settings);
         $xml .= '</dataSetsQuery>';
-        $view = $this->webservice->getXml('datasets', $xml);
+        return $xml;
+    }
 
-        if (!$view) {
-            return [
-                'error' => 'SERVER_NOT_AVAILABLE',
-                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
-            ];
+    private function collectDataSetItems(array $view, array $settings): array
+    {
+        $dataSetItems = $this->getNestedArrayValue($view, 'items.dataSet', null);
+        if ($dataSetItems === null) {
+            return [];
         }
 
-        if (is_array($view)) {
-            if ($view["count"] > 0) {
-                if (array_key_exists("items", $view)) {
-                    if (is_array($view["items"])) {
-                        if (array_key_exists("dataSet", $view["items"])) {
-                            if (is_array($view["items"]["dataSet"])) {
-                                foreach ($view["items"]["dataSet"] as $index => $items) {
-                                    $renderings = $this->getNestedArrayValue($items, 'renderings', []);
-                                    if (is_array($renderings)) {
-                                        foreach ($renderings as $i => $x) {
-                                            $uuid = $this->getNestedArrayValue($view["items"]["dataSet"][$index], '@attributes.uuid', '');
+        if (isset($dataSetItems['@attributes'])) {
+            $dataSetItems = [$dataSetItems];
+        }
 
-                                            // Use the safely retrieved $renderings variable
-                                            $rendering = $this->getNestedArrayValue($renderings, 'rendering', '');
-                                            if (is_array($rendering)) {
-                                                $new_render = implode("", $rendering);
-                                            } else {
-                                                $new_render = $rendering;
-                                            }
+        $isInCampus = class_exists(\T3luh\T3luhlib\PhpUtility::class)
+            ? \T3luh\T3luhlib\PhpUtility::user_checkIP()
+            : false;
 
-                                            $new_render = mb_convert_encoding($new_render, "UTF-8");
-                                            $new_render = $this->transformRenderingHtml($new_render, [
-                                                'removeTypeParagraph' => true,
-                                            ]);
-
-                                            // Direct assignment for values we already have
-                                            $view["items"][$index]["renderings"][$i]['html'] = $new_render;
-                                            $view["items"][$index]["uuid"] = $uuid;
-
-                                            // Use getNestedArrayValue for the nested array access
-                                            $view["items"][$index]["link"] = $this->getNestedArrayValue($items, 'links.link', []);
-                                            $view["items"][$index]["description"] = $this->getNestedArrayValue($items, 'descriptions.description.value.text', '');
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                // Get the UUID and rendering data safely in one pass through the array
-                $dataSet = $this->getNestedArrayValue($view, 'items.dataSet', []);
-                $uuid = $this->getNestedArrayValue($dataSet, '@attributes.uuid', '');
-                $rendering = $this->getNestedArrayValue($dataSet, 'renderings.rendering', '');
-
-                // Process the rendering data - simplified with ternary operator
-                $new_render = is_array($rendering) ? implode(" ", $rendering) : $rendering;
-
-                // Chain the string transformations
-                $new_render = $this->transformRenderingHtml(
-                    mb_convert_encoding($new_render, "UTF-8"),
-                    ['removeTypeParagraph' => true]
-                );
-
-                $view["items"][0]["renderings"]['rendering']['html'] = $new_render;
-                $view["items"][0]["uuid"] = $uuid;
-                $view["items"][0]["link"] = $this->getNestedArrayValue($view, 'dataSet.links.link', []);
-                $view["items"][0]["description"] = $this->getNestedArrayValue($view, 'dataSet.descriptions.description.value.text', '');
+        $items = [];
+        foreach ($dataSetItems as $item) {
+            if (!is_array($item)) {
+                continue;
             }
-            unset($view["items"]["dataSet"]);
-
-            $view['offset'] = $this->calculateOffset((int)$settings['pageSize'], (int)$currentPageNumber);
-
-            return $view;
+            $processed = $this->processDataSetItem($item, $settings, $isInCampus);
+            if ($processed !== null) {
+                $items[] = $processed;
+            }
         }
+
+        return $items;
+    }
+
+    private function processDataSetItem(array $item, array $settings, bool $isInCampus): ?array
+    {
+        $visibilityKey = $this->getVisibilityKey($item);
+        if (!$this->isVisibleForCurrentUser($visibilityKey, $isInCampus)) {
+            return null;
+        }
+
+        $processed = [];
+        $uuid = $this->getNestedArrayValue($item, '@attributes.uuid', '');
+        $rendering = $this->getNestedArrayValue($item, 'renderings.rendering', '');
+        $new_render = is_array($rendering) ? implode(" ", $rendering) : $rendering;
+
+        $new_render = $this->transformRenderingHtml(
+            mb_convert_encoding($new_render, "UTF-8"),
+            ['removeTypeParagraph' => true]
+        );
+
+        $processed['renderings']['rendering']['html'] = $new_render;
+        $processed['uuid'] = $uuid;
+        $processed['link'] = $this->getNestedArrayValue($item, 'links.link', []);
+        $processed['description'] = $this->getNestedArrayValue($item, 'descriptions.description.value.text', '');
+
+        return $processed;
     }
 }

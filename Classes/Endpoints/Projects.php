@@ -43,6 +43,54 @@ class Projects extends Endpoints
 
         // Set default page size if not provided
         $settings['pageSize'] = $this->getArrayValue($settings, 'pageSize', 20);
+        $xml = $this->buildProjectsQuery($settings, $currentPageNumber);
+
+        $view = $this->webservice->getXml('projects', $xml);
+        if (!$view) {
+            return [
+                'error' => 'SERVER_NOT_AVAILABLE',
+                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
+            ];
+        }
+
+        if (!is_array($view)) {
+            return [
+                'error' => 'SERVER_NOT_AVAILABLE',
+                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
+            ];
+        }
+
+        $totalCount = (int)$this->getArrayValue($view, 'count', 0);
+        $items = $this->collectProjectItems($view, $settings);
+
+        $pageSize = (int)$settings['pageSize'];
+        if ($pageSize > 0 && count($items) < $pageSize && $totalCount > $this->calculateOffset($pageSize, $currentPageNumber) + $pageSize) {
+            $nextPage = $currentPageNumber + 1;
+            $nextOffset = $this->calculateOffset($pageSize, $nextPage);
+            while (count($items) < $pageSize && $totalCount > $nextOffset) {
+                $nextXml = $this->buildProjectsQuery($settings, $nextPage);
+                $nextView = $this->webservice->getXml('projects', $nextXml);
+                if (!is_array($nextView)) {
+                    break;
+                }
+                $moreItems = $this->collectProjectItems($nextView, $settings);
+                if (!empty($moreItems)) {
+                    $items = array_merge($items, $moreItems);
+                }
+                $nextPage++;
+                $nextOffset = $this->calculateOffset($pageSize, $nextPage);
+            }
+            $items = array_slice($items, 0, $pageSize);
+        }
+
+        $view['items'] = $items;
+        $view['offset'] = $this->calculateOffset((int)$settings['pageSize'], (int)$currentPageNumber);
+        return $view;
+
+    }
+
+    private function buildProjectsQuery(array $settings, int $currentPageNumber): string
+    {
         $xml = '<?xml version="1.0"?><projectsQuery>';
         //set page size:
         $xml .= CommonUtilities::getPageSize($settings['pageSize']);
@@ -56,7 +104,8 @@ class Projects extends Endpoints
                     <field>links.*</field>
                     <field>info.*</field>
                     <field>descriptions.*</field>                    
-                    <field>info.portalUrl</field>                    
+                    <field>info.portalUrl</field>
+                    <field>visibility.*</field>
                  </fields>';
         //set ordering:
         $xml .= $this->getOrderingXml($settings['orderProjects'] ?? '', '-startDate');
@@ -75,111 +124,70 @@ class Projects extends Endpoints
         }
 
         $xml .= '</projectsQuery>';
+        return $xml;
+    }
 
-
-        $view = $this->webservice->getXml('projects', $xml);
-        if (!$view) {
-            return [
-                'error' => 'SERVER_NOT_AVAILABLE',
-                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
-            ];
+    private function collectProjectItems(array $view, array $settings): array
+    {
+        $projectItems = $this->getNestedArrayValue($view, 'items.project', null);
+        if ($projectItems === null) {
+            return [];
         }
 
-        if (is_array($view)) {
-            if ($view["count"] > 0) {
-                if (array_key_exists("items", $view)) {
-                    if (is_array($view["items"])) {
-                        if (array_key_exists("project", $view["items"])) {
-                            if (is_array($view["items"]["project"])) {
-                                // Normalize single project to array so the loop works consistently
-                                if (array_key_exists("@attributes", $view["items"]["project"])) {
-                                    $view["items"]["project"] = [$view["items"]["project"]];
-                                }
-                                foreach ($view["items"]["project"] as $index => $items) {
-                                    if (array_key_exists("renderings", $items)) {
-                                        if (is_array($items["renderings"])) {
-                                            foreach ($items['renderings'] as $i => $x) {
-                                                $uuid = $view["items"]["project"][$index]["@attributes"]["uuid"];
-                                                $new_render = $items["renderings"]['rendering'];
-                                                $new_render = $this->transformRenderingHtml($new_render, []);
-                                                $view["items"][$index]["renderings"][$i]['html'] = $new_render;
-                                                $view["items"][$index]["uuid"] = $uuid;
-                                                // Extract links array for template iteration
-                                                if (isset($items['links']['link'])) {
-                                                    // Ensure links is always an array for template iteration
-                                                    if (isset($items['links']['link'][0])) {
-                                                        // Multiple links - already an array
-                                                        $view["items"][$index]["links"] = $items['links']['link'];
-                                                    } else {
-                                                        // Single link - wrap in array
-                                                        $view["items"][$index]["links"] = [$items['links']['link']];
-                                                    }
-                                                }
-                                                $view["items"][$index]["description"] = $this->getNestedArrayValue($items, 'descriptions.description.value.text', '');
+        if (isset($projectItems['@attributes'])) {
+            $projectItems = [$projectItems];
+        }
 
-                                                if ((array_key_exists('linkToPortal', $settings)) && ($settings['linkToPortal'] == 1)) {
-                                                    $view["items"][$index]["portaluri"] = $items['info']['portalUrl'];
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        $isInCampus = class_exists(\T3luh\T3luhlib\PhpUtility::class)
+            ? \T3luh\T3luhlib\PhpUtility::user_checkIP()
+            : false;
+
+        $items = [];
+        foreach ($projectItems as $item) {
+            if (!is_array($item)) {
+                continue;
             }
-        } else {
-            if ($view) {
-                // Get the project data safely
-                $project = $this->getNestedArrayValue($view, 'items.project', []);
-
-                // Get UUID and rendering data
-                $uuid = $this->getNestedArrayValue($project, '@attributes.uuid', '');
-                $rendering = $this->getNestedArrayValue($project, 'renderings.rendering', '');
-
-                // Transform the rendering HTML if it's not empty
-                $new_render = '';
-                if (!empty($rendering)) {
-                    $new_render = $this->transformRenderingHtml($rendering, []);
-                }
-
-                // Assign basic values to the view array
-                $view["items"][0]["renderings"]['rendering']['html'] = $new_render;
-                $view["items"][0]["uuid"] = $uuid;
-
-                // Assign additional data
-                // Extract links array for template iteration
-                if (isset($project['links']['link'])) {
-                    // Ensure links is always an array for template iteration
-                    if (isset($project['links']['link'][0])) {
-                        // Multiple links - already an array
-                        $view["items"][0]["links"] = $project['links']['link'];
-                    } else {
-                        // Single link - wrap in array
-                        $view["items"][0]["links"] = [$project['links']['link']];
-                    }
-                }
-                $view["items"][0]["description"] = $this->getNestedArrayValue($project, 'descriptions.description.value.text', '');
-
-                // Add portal URI if setting is enabled
-                if (isset($settings['linkToPortal']) && $settings['linkToPortal'] == 1) {
-                    $view["items"][0]["portaluri"] = $this->getNestedArrayValue($project, 'info.portalUrl', '');
-                }
+            $processed = $this->processProjectItem($item, $settings, $isInCampus);
+            if ($processed !== null) {
+                $items[] = $processed;
             }
         }
-        unset($view["items"]["project"]);
 
-        if ($view) {
-            $view['offset'] = $this->calculateOffset((int)$settings['pageSize'], (int)$currentPageNumber);
-            return $view;
-        } else {
-            return [
-                'error' => 'SERVER_NOT_AVAILABLE',
-                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure')
-            ];
+        return $items;
+    }
+
+    private function processProjectItem(array $item, array $settings, bool $isInCampus): ?array
+    {
+        $visibilityKey = $this->getVisibilityKey($item);
+        if (!$this->isVisibleForCurrentUser($visibilityKey, $isInCampus)) {
+            return null;
         }
 
+        $processed = [];
+        $uuid = $this->getNestedArrayValue($item, '@attributes.uuid', '');
+        $rendering = $this->getNestedArrayValue($item, 'renderings.rendering', '');
+        $new_render = '';
+        if (!empty($rendering)) {
+            $new_render = $this->transformRenderingHtml($rendering, []);
+        }
+        $processed['renderings']['rendering']['html'] = $new_render;
+        $processed['uuid'] = $uuid;
+
+        if (isset($item['links']['link'])) {
+            if (isset($item['links']['link'][0])) {
+                $processed['links'] = $item['links']['link'];
+            } else {
+                $processed['links'] = [$item['links']['link']];
+            }
+        }
+
+        $processed['description'] = $this->getNestedArrayValue($item, 'descriptions.description.value.text', '');
+
+        if ((array_key_exists('linkToPortal', $settings)) && ($settings['linkToPortal'] == 1)) {
+            $processed['portaluri'] = $this->getNestedArrayValue($item, 'info.portalUrl', '');
+        }
+
+        return $processed;
     }
 
 

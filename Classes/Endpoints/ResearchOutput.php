@@ -37,6 +37,39 @@ class ResearchOutput extends Endpoints
         // Set default page size if not provided
         $settings['pageSize'] = $this->getArrayValue($settings, 'pageSize', 20);
 
+        $results_short = $this->fetchPublicationPage($settings, $currentPageNumber, $lang);
+
+        if (isset($results_short['error'])) {
+            return $results_short;
+        }
+
+        $pageSize = (int)$settings['pageSize'];
+        $totalCount = (int)$this->getArrayValue($results_short, 'count', 0);
+        $items = $this->getArrayValue($results_short, 'contributionToJournal', []);
+
+        if ($pageSize > 0 && is_array($items) && count($items) < $pageSize && $totalCount > $results_short['offset'] + $pageSize) {
+            $nextPage = $currentPageNumber + 1;
+            $nextOffset = $this->calculateOffset($pageSize, $nextPage);
+            while (count($items) < $pageSize && $totalCount > $nextOffset) {
+                $nextResults = $this->fetchPublicationPage($settings, $nextPage, $lang);
+                if (!is_array($nextResults) || isset($nextResults['error'])) {
+                    break;
+                }
+                $nextItems = $this->getArrayValue($nextResults, 'contributionToJournal', []);
+                if (is_array($nextItems) && !empty($nextItems)) {
+                    $items = array_merge($items, $nextItems);
+                }
+                $nextPage++;
+                $nextOffset = $this->calculateOffset($pageSize, $nextPage);
+            }
+            $results_short['contributionToJournal'] = array_slice($items, 0, $pageSize);
+        }
+
+        return $results_short;
+    }
+
+    private function fetchPublicationPage(array $settings, int $currentPageNumber, string $lang): array
+    {
         $results_short = [];
         $results_portal = [];
 
@@ -128,7 +161,8 @@ class ResearchOutput extends Endpoints
                     <field>uuid</field>
                     <field>renderings.*</field>
                     <field>publicationStatuses.*</field>
-                    <field>personAssociations.*</field>';
+                    <field>personAssociations.*</field>
+                    <field>visibility.*</field>';
 
         // Add grouping if enabled
         if ($this->getArrayValue($settings, 'groupByYear', 0) == 1) {
@@ -311,7 +345,15 @@ class ResearchOutput extends Endpoints
             return $array;
         }
 
+        $isInCampus = class_exists(\T3luh\T3luhlib\PhpUtility::class)
+            ? \T3luh\T3luhlib\PhpUtility::user_checkIP()
+            : false;
         foreach ($publications['items'] as $contribution) {
+            $visibilityKey = $this->getVisibilityKey($contribution);
+            if (!$this->isVisibleForCurrentUser($visibilityKey, $isInCampus)) {
+                continue;
+            }
+
             // Get portal URI for the publication
             // Language should already be plain format (e.g., "de_DE")
             $singlePub = $this->getSinglePublication($this->getArrayValue($contribution, 'uuid', ''), $lang);

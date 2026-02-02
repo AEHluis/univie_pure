@@ -230,7 +230,7 @@ class WebService
 
     private function executeRequest(string $endpoint, string $data, string $responseType): ?string
     {
-        $cacheIdentifier = sha1($endpoint . $data . $responseType);
+        $cacheIdentifier = sha1($endpoint . $data . $responseType . $this->getCampusCacheKey());
 
         if ($cachedResponse = $this->getCachedContent($cacheIdentifier)) {
             return $cachedResponse;
@@ -298,6 +298,15 @@ class WebService
         ];
 
         return sha1(implode('|', array_filter($parts, fn($part) => $part !== null)));
+    }
+
+    private function getCampusCacheKey(): string
+    {
+        if (class_exists(\T3luh\T3luhlib\PhpUtility::class)) {
+            return \T3luh\T3luhlib\PhpUtility::user_checkIP() ? '|campus' : '|external';
+        }
+
+        return '|external';
     }
 
     private function addFlashMessage(string $title, string $message, ContextualFeedbackSeverity $severity): void

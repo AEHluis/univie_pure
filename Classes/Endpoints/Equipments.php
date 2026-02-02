@@ -68,6 +68,68 @@ class Equipments extends Endpoints
         // Set default page size if not provided
         $settings['pageSize'] = $this->getArrayValue($settings, 'pageSize', 20);
 
+        $xml = $this->buildEquipmentsQuery($settings, $currentPageNumber);
+
+        // Get response from the web service
+        $view = $this->webservice->getXml('equipments', $xml);
+
+        // Comprehensive validation of API response
+        if (!$view || !is_array($view)) {
+            return [
+                'error' => 'SERVER_NOT_AVAILABLE',
+                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure'),
+                'count' => 0,
+                'items' => [],
+                'offset' => 0
+            ];
+        }
+
+        // Initialize default structure to prevent undefined array key errors
+        if (!isset($view['items']) || !is_array($view['items'])) {
+            $view['items'] = [];
+        }
+        if (!isset($view['count']) || !is_numeric($view['count'])) {
+            $view['count'] = 0;
+        }
+
+        $totalCount = (int)$this->getArrayValue($view, 'count', 0);
+        $items = $this->collectEquipmentItems($view, $settings);
+
+        $pageSize = (int)$settings['pageSize'];
+        if ($pageSize > 0 && count($items) < $pageSize && $totalCount > $this->calculateOffset($pageSize, $currentPageNumber) + $pageSize) {
+            $nextPage = $currentPageNumber + 1;
+            $nextOffset = $this->calculateOffset($pageSize, $nextPage);
+            while (count($items) < $pageSize && $totalCount > $nextOffset) {
+                $nextXml = $this->buildEquipmentsQuery($settings, $nextPage);
+                $nextView = $this->webservice->getXml('equipments', $nextXml);
+                if (!is_array($nextView)) {
+                    break;
+                }
+                $moreItems = $this->collectEquipmentItems($nextView, $settings);
+                if (!empty($moreItems)) {
+                    $items = array_merge($items, $moreItems);
+                }
+                $nextPage++;
+                $nextOffset = $this->calculateOffset($pageSize, $nextPage);
+            }
+            $items = array_slice($items, 0, $pageSize);
+        }
+
+        $view['items'] = $items;
+
+        // Set offset for pagination - ensure $view is still an array
+        if (is_array($view)) {
+            $view['offset'] = $this->calculateOffset(
+                (int)$this->getArrayValue($settings, 'pageSize', 20),
+                (int)$currentPageNumber
+            );
+        }
+
+        return $view;
+    }
+
+    private function buildEquipmentsQuery(array $settings, int $currentPageNumber): string
+    {
         $xml = '<?xml version="1.0"?><equipmentsQuery>';
         //set page size:
         $xml .= CommonUtilities::getPageSize($settings['pageSize']);
@@ -85,6 +147,7 @@ class Equipments extends Endpoints
                 <field>contactPersons.*</field>
                 <field>emails.*</field>
                 <field>webAddresses.*</field>
+                <field>visibility.*</field>
              </fields>';
 
         //set ordering (MUST come AFTER renderings/fields per API schema):
@@ -112,163 +175,137 @@ class Equipments extends Endpoints
         $xml .= CommonUtilities::getPersonsOrOrganisationsXml($settings);
 
         $xml .= '</equipmentsQuery>';
+        return $xml;
+    }
 
-	// Get response from the web service
-	$view = $this->webservice->getXml('equipments', $xml);
-
-        // Comprehensive validation of API response
-        if (!$view || !is_array($view)) {
-            return [
-                'error' => 'SERVER_NOT_AVAILABLE',
-                'message' => LocalizationUtility::translate('error.server_unavailable', 'univie_pure'),
-                'count' => 0,
-                'items' => [],
-                'offset' => 0
-            ];
-        }
-
-        // Initialize default structure to prevent undefined array key errors
-        if (!isset($view['items']) || !is_array($view['items'])) {
-            $view['items'] = [];
-        }
-        if (!isset($view['count']) || !is_numeric($view['count'])) {
-            $view['count'] = 0;
-        }
-
-        // Process equipment items like Projects endpoint does
+    private function collectEquipmentItems(array $view, array $settings): array
+    {
         $equipmentItems = $this->getNestedArrayValue($view, 'items.equipment', null);
-        if ($this->getArrayValue($view, 'count', 0) > 0 && $equipmentItems !== null) {
-            
-            // Check if we have a single equipment or multiple
-            if (isset($equipmentItems['@attributes'])) {
-                // Single equipment - wrap it in an array
-                $equipmentItems = [$equipmentItems];
+        if ($this->getArrayValue($view, 'count', 0) <= 0 || $equipmentItems === null) {
+            return [];
+        }
+
+        $isInCampus = class_exists(\T3luh\T3luhlib\PhpUtility::class)
+            ? \T3luh\T3luhlib\PhpUtility::user_checkIP()
+            : false;
+
+        if (isset($equipmentItems['@attributes'])) {
+            $equipmentItems = [$equipmentItems];
+        }
+
+        $items = [];
+        foreach ($equipmentItems as $item) {
+            if (!is_array($item)) {
+                continue;
             }
-            
-            // Process each equipment item in place
-            foreach ($equipmentItems as $index => $item) {
-                // Skip invalid items
-                if (!is_array($item)) {
-                    continue;
-                }
+            $processed = $this->processEquipmentItem($item, $settings, $isInCampus);
+            if ($processed !== null) {
+                $items[] = $processed;
+            }
+        }
 
-                // Process renderings with type safety
-                $rendering = $this->getNestedArrayValue($item, 'renderings.rendering', '');
-                $new_render = '';
-                if (is_array($rendering)) {
-                    // Filter out non-string values before imploding
-                    $rendering = array_filter($rendering, 'is_string');
-                    $new_render = implode(" ", $rendering);
-                } elseif (is_string($rendering)) {
-                    $new_render = $rendering;
-                }
+        return $items;
+    }
 
-                // Ensure we have valid UTF-8 string before processing
-                if (!empty($new_render)) {
-                    $new_render = $this->transformRenderingHtml(mb_convert_encoding($new_render, "UTF-8"), []);
-                }
+    private function processEquipmentItem(array $item, array $settings, bool $isInCampus): ?array
+    {
+        $visibilityKey = $this->getVisibilityKey($item);
+        if (!$this->isVisibleForCurrentUser($visibilityKey, $isInCampus)) {
+            return null;
+        }
 
-                // Initialize nested structure safely using helper method
-                $this->initializeNestedArray($view, "items.$index.renderings.rendering");
+        $processed = [];
 
-                // Update the view items array safely
-                $view['items'][$index]['renderings']['rendering']['html'] = $new_render;
-                $view['items'][$index]['uuid'] = $this->getNestedArrayValue($item, '@attributes.uuid', '');
-                
-                // Process contact persons
-                $contactPersons = [];
-                $contactPersonData = $this->getNestedArrayValue($item, 'contactPersons.contactPerson', []);
-                if (isset($contactPersonData['name'])) {
-                    // Single contact person
-                    $name = $this->getNestedArrayValue($contactPersonData, 'name.text', '');
-                    if (!empty($name)) {
-                        $contactPersons[] = $name;
-                    }
-                } elseif (is_array($contactPersonData)) {
-                    // Multiple contact persons
-                    foreach ($contactPersonData as $person) {
-                        $name = $this->getNestedArrayValue($person, 'name.text', '');
-                        if (!empty($name)) {
-                            $contactPersons[] = $name;
-                        }
-                    }
+        // Process renderings with type safety
+        $rendering = $this->getNestedArrayValue($item, 'renderings.rendering', '');
+        $new_render = '';
+        if (is_array($rendering)) {
+            $rendering = array_filter($rendering, 'is_string');
+            $new_render = implode(" ", $rendering);
+        } elseif (is_string($rendering)) {
+            $new_render = $rendering;
+        }
+
+        if (!empty($new_render)) {
+            $new_render = $this->transformRenderingHtml(mb_convert_encoding($new_render, "UTF-8"), []);
+        }
+
+        $processed['renderings']['rendering']['html'] = $new_render;
+        $processed['uuid'] = $this->getNestedArrayValue($item, '@attributes.uuid', '');
+
+        // Process contact persons
+        $contactPersons = [];
+        $contactPersonData = $this->getNestedArrayValue($item, 'contactPersons.contactPerson', []);
+        if (isset($contactPersonData['name'])) {
+            $name = $this->getNestedArrayValue($contactPersonData, 'name.text', '');
+            if (!empty($name)) {
+                $contactPersons[] = $name;
+            }
+        } elseif (is_array($contactPersonData)) {
+            foreach ($contactPersonData as $person) {
+                $name = $this->getNestedArrayValue($person, 'name.text', '');
+                if (!empty($name)) {
+                    $contactPersons[] = $name;
                 }
-                if (!empty($contactPersons)) {
-                    $view['items'][$index]['contactPerson'] = $contactPersons;
+            }
+        }
+        if (!empty($contactPersons)) {
+            $processed['contactPerson'] = $contactPersons;
+        }
+
+        // Process emails
+        $emails = [];
+        $emailData = $this->getNestedArrayValue($item, 'emails.email', []);
+        if (isset($emailData['value'])) {
+            $emailValue = $this->getArrayValue($emailData, 'value', '');
+            if (!empty($emailValue)) {
+                $emails[] = strtolower($emailValue);
+            }
+        } elseif (is_array($emailData)) {
+            foreach ($emailData as $email) {
+                $emailValue = $this->getArrayValue($email, 'value', '');
+                if (!empty($emailValue)) {
+                    $emails[] = strtolower($emailValue);
                 }
-                
-                // Process emails
-                $emails = [];
-                $emailData = $this->getNestedArrayValue($item, 'emails.email', []);
-                if (isset($emailData['value'])) {
-                    // Single email
-                    $emailValue = $this->getArrayValue($emailData, 'value', '');
-                    if (!empty($emailValue)) {
-                        $emails[] = strtolower($emailValue);
-                    }
-                } elseif (is_array($emailData)) {
-                    // Multiple emails
-                    foreach ($emailData as $email) {
-                        $emailValue = $this->getArrayValue($email, 'value', '');
-                        if (!empty($emailValue)) {
-                            $emails[] = strtolower($emailValue);
-                        }
-                    }
+            }
+        }
+        if (!empty($emails)) {
+            $processed['email'] = $emails;
+        }
+
+        // Process web addresses
+        $webAddresses = [];
+        $webData = $this->getNestedArrayValue($item, 'webAddresses.webAddress', []);
+        if (!empty($webData) && is_array($webData)) {
+            if (isset($webData['value'])) {
+                $text = $this->getNestedArrayValue($webData, 'value.text', '');
+                if (!empty($text)) {
+                    $webAddresses[] = $text;
                 }
-                if (!empty($emails)) {
-                    $view['items'][$index]['email'] = $emails;
-                }
-                
-                // Process web addresses
-                $webAddresses = [];
-                $webData = $this->getNestedArrayValue($item, 'webAddresses.webAddress', []);
-                if (!empty($webData) && is_array($webData)) {
-                    // Check if single web address (has 'value' key directly)
-                    if (isset($webData['value'])) {
-                        $text = $this->getNestedArrayValue($webData, 'value.text', '');
+            } else {
+                foreach ($webData as $web) {
+                    if (is_array($web)) {
+                        $text = $this->getNestedArrayValue($web, 'value.text', '');
                         if (!empty($text)) {
                             $webAddresses[] = $text;
                         }
-                    } else {
-                        // Multiple web addresses
-                        foreach ($webData as $web) {
-                            if (is_array($web)) {
-                                $text = $this->getNestedArrayValue($web, 'value.text', '');
-                                if (!empty($text)) {
-                                    $webAddresses[] = $text;
-                                }
-                            }
-                        }
-                    }
-                }
-                if (!empty($webAddresses)) {
-                    $view['items'][$index]['webAddress'] = $webAddresses;
-                }
-
-                // Add portal URI if enabled
-                if ($this->getArrayValue($settings, 'linkToPortal') == 1) {
-                    $portalUri = $this->getNestedArrayValue($item, 'info.portalUrl', '');
-                    if (!empty($portalUri)) {
-                        $view['items'][$index]['portaluri'] = $portalUri;
                     }
                 }
             }
+        }
+        if (!empty($webAddresses)) {
+            $processed['webAddress'] = $webAddresses;
+        }
 
-            // Remove the original equipment key to clean up the structure
-            if (isset($view['items']['equipment'])) {
-                unset($view['items']['equipment']);
+        // Add portal URI if enabled
+        if ($this->getArrayValue($settings, 'linkToPortal') == 1) {
+            $portalUri = $this->getNestedArrayValue($item, 'info.portalUrl', '');
+            if (!empty($portalUri)) {
+                $processed['portaluri'] = $portalUri;
             }
         }
 
-        // Set offset for pagination - ensure $view is still an array
-        if (is_array($view)) {
-            $view['offset'] = $this->calculateOffset(
-                (int)$this->getArrayValue($settings, 'pageSize', 20),
-                (int)$currentPageNumber
-            );
-        }
-
-        return $view;
+        return $processed;
     }
 
     /**

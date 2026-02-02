@@ -13,7 +13,8 @@
   "require": {
     "php": ">=8.2.0 <8.5.0",
     "typo3/cms-core": "^12.4",
-    "georgringer/numbered-pagination": ">=2.0.1"
+    "georgringer/numbered-pagination": ">=2.0.1",
+    "t3luh/t3luhlib": "^12.0"
   },
   "autoload": {
     "psr-4": {

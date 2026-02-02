@@ -98,4 +98,31 @@ class Endpoints
             : 0;
     }
 
+    protected function getVisibilityKey(array $item): ?string
+    {
+        $key = $this->getNestedArrayValue($item, 'visibility.@attributes.key', null);
+        if (!is_string($key) || $key === '') {
+            $key = $this->getNestedArrayValue($item, 'visibility.key', null);
+        }
+        return is_string($key) && $key !== '' ? $key : null;
+    }
+
+    protected function isVisibleForCurrentUser(?string $visibilityKey, bool $isInCampus): bool
+    {
+        if ($visibilityKey === null || $visibilityKey === '') {
+            return true;
+        }
+
+        switch (strtoupper($visibilityKey)) {
+            case 'BACKEND':
+            case 'CONFIDENTIAL':
+                return false;
+            case 'RESTRICTED_IP':
+            case 'CAMPUS':
+                return $isInCampus;
+            default:
+                return true;
+        }
+    }
+
 }

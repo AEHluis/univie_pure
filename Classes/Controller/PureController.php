@@ -196,11 +196,20 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         $paginator = new ArrayPaginator($publications, $currentPageNumber, $this->settings['pageSize']);
                         $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
 
+                        $publicationsForView = $paginator->getPaginatedItems();
+                        if (!empty($this->settings['groupByYear'])) {
+                            $publicationsForView = array_values(array_filter(
+                                $publicationsForView,
+                                static fn($item) => $item !== null
+                            ));
+                        }
+
                         $this->view->assignMultiple([
                             'what_to_display' => $this->settings['what_to_display'],
                             'pagination' => $pagination,
                             'initial_no_results' => $this->settings['initialNoResults'],
                             'paginator' => $paginator,
+                            'publicationsForView' => $publicationsForView,
                         ]);
                     }
                     break;

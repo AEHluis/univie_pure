@@ -38,7 +38,7 @@
 					<f:then>
 							<f:if condition="{paginator.paginatedItems}">
 								<f:then>
-									<f:render partial="Pure/Publications" arguments="{pagination:pagination, paginator:paginator, publications:paginator.paginatedItems}"/>
+									<f:render partial="Pure/Publications" arguments="{pagination:pagination, paginator:paginator, publications:publicationsForView}"/>
 								</f:then>
 							</f:if>
 						</f:then>

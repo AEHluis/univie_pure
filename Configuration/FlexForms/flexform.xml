@@ -264,6 +264,9 @@
                             <label>
                                 LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectPerson
                             </label>
+                            <description>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectPerson.description
+                            </description>
                             <displayCond>FIELD:settings.chooseSelector:=:1</displayCond>
                             <config>
                                 <type>select</type>
@@ -293,6 +296,9 @@
                             <label>
                                 LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectPerson
                             </label>
+                            <description>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectPerson.description
+                            </description>
                             <displayCond>FIELD:settings.chooseSelector:=:3</displayCond>
                             <config>
                                 <type>select</type>

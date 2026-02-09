@@ -119,6 +119,10 @@
 				<source>Show list for selected person(s):</source>
 				<target>Zeige Einträge für ausgewählte Personen:</target>
 			</trans-unit>
+			<trans-unit id="flexform.common.selectPerson.description">
+				<source>Note: Persons are selectable only if their FIS profile is public. Researchers missing from this list must set their FIS profile to public. Help: https://www.intern.uni-hannover.de/de/themenbereiche/forschung-transfer/forschungsinformationssystem/fis-support/fis-schnelleinstieg</source>
+				<target>Hinweis: Personen sind hier nur auswählbar, wenn ihr FIS-Profil öffentlich ist. Nicht gelistete Forschende müssen ihr FIS-Profil auf öffentlich stellen. Hilfe: https://www.intern.uni-hannover.de/de/themenbereiche/forschung-transfer/forschungsinformationssystem/fis-support/fis-schnelleinstieg</target>
+			</trans-unit>
 			<trans-unit id="flexform.data_sets">
 				<source>In depth settings for datasets</source>
 				<target>Erweiterte Einstellungen für Datasets</target>

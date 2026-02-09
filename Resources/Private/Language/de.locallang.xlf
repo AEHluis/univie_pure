@@ -28,7 +28,7 @@
 				<target>Abstract</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.authors">
-				<source>authored by</source>
+				<source>Authored by</source>
 				<target>verfasst von</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.supervisors">

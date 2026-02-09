@@ -22,7 +22,7 @@
 				<source>Abstract</source>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.authors">
-				<source>authored by</source>
+				<source>Authored by</source>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.supervisors">
                 <source>supervised by</source>

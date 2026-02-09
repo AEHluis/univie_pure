@@ -316,7 +316,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 $bibtexXml = $pub->getBibtex($uuid, $locale);
                 $bibtex = CommonUtilities::getNestedArrayValue($bibtexXml,'renderings.rendering','') ;
                 // Get publication data
-                $view = $pub->getSinglePublication($uuid);
+                $view = $pub->getSinglePublication($uuid, $locale);
 
                 // Check if publication exists and is valid
                 if (!is_array($view) || CommonUtilities::getArrayValue($view, 'code', 0) > 200) {

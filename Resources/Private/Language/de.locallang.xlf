@@ -29,7 +29,7 @@
 			</trans-unit>
 			<trans-unit id="univiepur.publication.authors">
 				<source>Authored by</source>
-				<target>verfasst von</target>
+				<target>Verfasst von</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.supervisors">
 				<source>supervised by</source>

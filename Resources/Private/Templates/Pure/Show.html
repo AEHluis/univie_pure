@@ -20,11 +20,11 @@
           }
         }
 
-        // Check if document is already loaded
-        if (document.readyState === 'complete') {
+        // Bind as soon as DOM is ready (not waiting for full window load)
+        if (document.readyState !== 'loading') {
           initAccordion();
         } else {
-          window.addEventListener('load', initAccordion);
+          document.addEventListener('DOMContentLoaded', initAccordion);
         }
       })();
     </script>

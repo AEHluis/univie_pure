@@ -373,6 +373,38 @@
                             </config>
                         </TCEforms>
                     </settings.selectorProjects>
+                    <settings.selectorEquipments>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectEquipment
+                            </label>
+                            <displayCond>FIELD:settings.chooseSelector:=:4</displayCond>
+
+                            <config>
+                                <type>select</type>
+
+                                <itemsProcFunc>
+                                    Univie\UniviePure\Utility\ClassificationScheme->getEquipments
+                                </itemsProcFunc>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">─────────────────────</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.searchForMore</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                </items>
+                                <size>15</size>
+                                <maxitems>9999</maxitems>
+                                <minitems>0</minitems>
+                                <renderType>selectMultipleSideBySide</renderType>
+                                <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>
+
+                            </config>
+                        </TCEforms>
+                    </settings.selectorEquipments>
 
                 </el>
             </ROOT>

@@ -86,12 +86,19 @@ class ClassificationScheme
      */
     private function extractLocalizedName(array $nameData, string $locale): string
     {
+        if (isset($nameData['value']) && is_string($nameData['value'])) {
+            return $nameData['value'];
+        }
+
         // If there's no text field, return empty
         if (!isset($nameData['text']) || !is_array($nameData['text'])) {
             return '';
         }
         
         $texts = $nameData['text'];
+        if (isset($texts['value']) && is_string($texts['value'])) {
+            $texts = [$texts];
+        }
         $fallbackValue = '';
         
         // Look for the text entry with matching locale
@@ -119,6 +126,45 @@ class ClassificationScheme
         
         // Return fallback if no locale match found
         return $fallbackValue;
+    }
+
+    /**
+     * Resolve equipment label from multiple possible API field shapes.
+     */
+    private function getEquipmentLabel(array $equipment): string
+    {
+        $label = $this->extractLocalizedName($equipment['title'] ?? [], $this->locale);
+        if ($label !== '') {
+            return $label;
+        }
+
+        $label = $this->extractLocalizedName($equipment['name'] ?? [], $this->locale);
+        if ($label !== '') {
+            return $label;
+        }
+
+        if (isset($equipment['title']) && is_string($equipment['title'])) {
+            return $equipment['title'];
+        }
+        if (isset($equipment['name']) && is_string($equipment['name'])) {
+            return $equipment['name'];
+        }
+
+        return '';
+    }
+
+    /**
+     * Resolve uuid from API payload (field or XML attributes mapping).
+     */
+    private function getUuidFromItem(array $item): string
+    {
+        if (!empty($item['uuid']) && is_string($item['uuid'])) {
+            return $item['uuid'];
+        }
+        if (isset($item['@attributes']['uuid']) && is_string($item['@attributes']['uuid'])) {
+            return $item['@attributes']['uuid'];
+        }
+        return '';
     }
 
     // Add this method to your ClassificationScheme class
@@ -353,6 +399,77 @@ class ClassificationScheme
         }
     }
 
+    public function getEquipments(&$config): void
+    {
+        $selectedUuids = $this->getCurrentlySelectedUuids('selectorEquipments');
+
+        $selectedItems = [];
+        if (!empty($selectedUuids)) {
+            $selectedItems = $this->getSelectedItemsWithRealNames($selectedUuids, 'equipment');
+        }
+
+        $equipmentsXml = trim('<?xml version="1.0"?>
+            <equipmentsQuery>
+            <size>8</size>
+            <locales>
+            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
+            </locales>
+            <fields>
+            <field>uuid</field>
+            <field>title.*</field>
+            <field>name.*</field>
+            </fields>
+            <orderings>
+            <ordering>title</ordering>
+            </orderings>
+            <workflowSteps>
+            <workflowStep>validated</workflowStep>
+            <workflowStep>approved</workflowStep>
+            <workflowStep>forApproval</workflowStep>
+            </workflowSteps>
+            </equipmentsQuery>');
+
+        $equipments = $this->webService->getJson('equipments', $equipmentsXml);
+
+        if (!$equipments) {
+            $this->addFlashMessage(
+                'Could not fetch equipments from the API. Please check your connection.',
+                'Equipment Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            return;
+        }
+
+        foreach ($selectedItems as $item) {
+            $config['items'][] = $item;
+        }
+
+        $existingUuids = array_column($selectedItems, 1);
+        if (is_array($equipments)) {
+            $items = $equipments['items'] ?? [];
+            if (isset($items['equipment'])) {
+                $items = $items['equipment'];
+            }
+            if (isset($items['uuid']) || isset($items['@attributes'])) {
+                $items = [$items];
+            }
+
+            foreach ($items as $equipment) {
+                if (!is_array($equipment)) {
+                    continue;
+                }
+                $uuid = $this->getUuidFromItem($equipment);
+                if ($uuid === '' || in_array($uuid, $existingUuids, true)) {
+                    continue;
+                }
+                $label = $this->getEquipmentLabel($equipment);
+                if (!empty($label)) {
+                    $config['items'][] = [$label, $uuid];
+                }
+            }
+        }
+    }
+
     public function getTypesFromPublications(&$config): void
     {
         $classificationXML = trim('<?xml version="1.0"?>
@@ -541,11 +658,15 @@ class ClassificationScheme
                     $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByProject'),
                     2
                 ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByEquipment'),
+                    4
+                ];
                 // Note: PersonWithOrganization (3) is intentionally not shown for cleaner UI
                 break;
                 
             case 'PROJECTS':
-                // Projects: Organizations, Persons (no projects)
+                // Projects: Organizations, Persons, Equipments
                 $config['items'][] = [
                     $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
                     0
@@ -553,6 +674,10 @@ class ClassificationScheme
                 $config['items'][] = [
                     $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
                     1
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByEquipment'),
+                    4
                 ];
                 break;
                 
@@ -677,7 +802,31 @@ class ClassificationScheme
             }
         }
         
-        return array_filter(array_unique($uuids));
+        $normalizedUuids = [];
+        foreach ($uuids as $uuid) {
+            $normalized = $this->normalizeSelectedIdentifier((string)$uuid);
+            if ($normalized !== '') {
+                $normalizedUuids[] = $normalized;
+            }
+        }
+
+        return array_values(array_unique($normalizedUuids));
+    }
+
+    /**
+     * Normalize selector value to a plain UUID.
+     * TYPO3 may store select values as "uuid|label" for some configurations.
+     */
+    private function normalizeSelectedIdentifier(string $value): string
+    {
+        $value = trim($value);
+        if ($value === '') {
+            return '';
+        }
+        if (str_contains($value, '|')) {
+            $value = explode('|', $value, 2)[0];
+        }
+        return trim($value);
     }
 
     /**
@@ -791,6 +940,108 @@ class ClassificationScheme
         return null;
     }
 
+    protected function fetchEquipmentByUuid(string $uuid): ?array
+    {
+        // 1) Preferred: single endpoint /equipments/{uuid}
+        $single = $this->webService->getSingleResponse('equipments', $uuid, 'json', true, null, $this->locale);
+        if (is_array($single)) {
+            $candidates = [$single];
+            if (isset($single['equipment']) && is_array($single['equipment'])) {
+                $candidates[] = $single['equipment'];
+            }
+            foreach ($candidates as $equipment) {
+                if (!is_array($equipment)) {
+                    continue;
+                }
+                $title = $this->getEquipmentLabel($equipment);
+                if ($title !== '') {
+                    return ['title' => $title];
+                }
+            }
+        }
+
+        // 2) Fallback: q-search endpoint
+        $searchResult = $this->webService->getAlternativeSingleResponse('equipments', $uuid, 'json', $this->locale);
+        if (is_array($searchResult)) {
+            $items = $searchResult['items'] ?? [];
+            if (isset($items['equipment'])) {
+                $items = $items['equipment'];
+            }
+            if (isset($items['uuid']) || isset($items['@attributes'])) {
+                $items = [$items];
+            }
+            if (is_array($items)) {
+                foreach ($items as $equipment) {
+                    if (!is_array($equipment)) {
+                        continue;
+                    }
+                    $itemUuid = $this->getUuidFromItem($equipment);
+                    if ($itemUuid !== '' && $itemUuid !== $uuid) {
+                        continue;
+                    }
+                    $title = $this->getEquipmentLabel($equipment);
+                    if ($title !== '') {
+                        return ['title' => $title];
+                    }
+                }
+            }
+        }
+
+        // 3) Fallback: query endpoint
+        $equipmentsXml = trim('<?xml version="1.0"?>
+            <equipmentsQuery>
+            <size>1</size>
+            <uuids>
+            <uuid>' . htmlspecialchars($uuid, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</uuid>
+            </uuids>
+            <locales>
+            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
+            </locales>
+            <fields>
+            <field>uuid</field>
+            <field>title.*</field>
+            <field>name.*</field>
+            </fields>
+            <workflowSteps>
+            <workflowStep>validated</workflowStep>
+            <workflowStep>approved</workflowStep>
+            <workflowStep>forApproval</workflowStep>
+            </workflowSteps>
+            </equipmentsQuery>');
+
+        $result = $this->webService->getJson('equipments', $equipmentsXml);
+        if (!is_array($result)) {
+            return null;
+        }
+
+        $items = $result['items'] ?? [];
+        if (isset($items['equipment'])) {
+            $items = $items['equipment'];
+        }
+        if (isset($items['uuid']) || isset($items['@attributes'])) {
+            $items = [$items];
+        }
+        if (!is_array($items)) {
+            return null;
+        }
+
+        foreach ($items as $equipment) {
+            if (!is_array($equipment)) {
+                continue;
+            }
+            $itemUuid = $this->getUuidFromItem($equipment);
+            if ($itemUuid !== '' && $itemUuid !== $uuid) {
+                continue;
+            }
+            $title = $this->getEquipmentLabel($equipment);
+            if ($title !== '') {
+                return ['title' => $title];
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Get selected items with their real names from API
      */
@@ -800,7 +1051,10 @@ class ClassificationScheme
         
         // Fetch real names from API for all selected items
         foreach ($uuids as $uuid) {
-            if (empty($uuid)) continue;
+            $uuid = $this->normalizeSelectedIdentifier((string)$uuid);
+            if ($uuid === '') {
+                continue;
+            }
             
             try {
                 $realName = null;
@@ -821,6 +1075,12 @@ class ClassificationScheme
                     
                     case 'project':
                         $item = $this->fetchProjectByUuid($uuid);
+                        if ($item) {
+                            $realName = $item['title'];
+                        }
+                        break;
+                    case 'equipment':
+                        $item = $this->fetchEquipmentByUuid($uuid);
                         if ($item) {
                             $realName = $item['title'];
                         }

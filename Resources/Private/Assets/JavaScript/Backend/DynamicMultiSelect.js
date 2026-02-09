@@ -11,14 +11,16 @@
             this.ajaxUrls = {
                 organizations: TYPO3.settings.ajaxUrls.univie_pure_search_organizations,
                 personsWithOrg: TYPO3.settings.ajaxUrls.univie_pure_search_persons_with_org,
-                projects: TYPO3.settings.ajaxUrls.univie_pure_search_projects
+                projects: TYPO3.settings.ajaxUrls.univie_pure_search_projects,
+                equipments: TYPO3.settings.ajaxUrls.univie_pure_search_equipments
             };
         } else {
             // Fallback to direct URLs
             this.ajaxUrls = {
                 organizations: '/typo3/ajax/univie_pure/search/organizations',
                 personsWithOrg: '/typo3/ajax/univie_pure/search/persons-with-org',
-                projects: '/typo3/ajax/univie_pure/search/projects'
+                projects: '/typo3/ajax/univie_pure/search/projects',
+                equipments: '/typo3/ajax/univie_pure/search/equipments'
             };
         }
 
@@ -137,6 +139,12 @@
                        labelTextLower.includes('project') ||
                        labelTextLower.includes('projekt')) {
                 endpoint = 'projects';
+            } else if (fieldIdentifierLower.includes('selectorequipments') ||
+                       fieldIdentifierLower.includes('equipment') ||
+                       labelTextLower.includes('equipment') ||
+                       labelTextLower.includes('geraet') ||
+                       labelTextLower.includes('gerät')) {
+                endpoint = 'equipments';
             }
 
             // Additional check: Make sure this is a Pure extension field
@@ -144,7 +152,8 @@
             const isPureField = fieldIdentifierLower.includes('settings') &&
                                (fieldIdentifierLower.includes('selectororganisations') ||
                                 fieldIdentifierLower.includes('selectorpersons') ||
-                                fieldIdentifierLower.includes('selectorprojects'));
+                                fieldIdentifierLower.includes('selectorprojects') ||
+                                fieldIdentifierLower.includes('selectorequipments'));
 
             if (!endpoint || !isPureField) {
                 return;

@@ -217,9 +217,14 @@ class ResearchOutput extends Endpoints
 
         // Add projects XML if available (forProjects - comes after forPersons/forOrganisationalUnits)
         $xml .= CommonUtilities::getProjectsXml($settings);
+        // Add equipment based filter XML if available
+        $equipmentSearchXml = CommonUtilities::getResearchOutputsForEquipmentsXml($settings);
+        $xml .= $equipmentSearchXml;
 
         // Add search terms if provided (searchString comes at the very end)
-        if ($this->getArrayValue($settings, 'narrowBySearch') || $this->getArrayValue($settings, 'filter')) {
+        $isEquipmentSelector = (int)$this->getArrayValue($settings, 'chooseSelector', -1) === 4;
+        if (($this->getArrayValue($settings, 'narrowBySearch') || $this->getArrayValue($settings, 'filter'))
+            && !$isEquipmentSelector) {
             $xml .= $this->getSearchXml($settings);
         }
         $xml .= '</researchOutputsQuery>';

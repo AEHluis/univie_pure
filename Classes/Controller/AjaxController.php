@@ -311,6 +311,80 @@ class AjaxController
     }
 
     /**
+     * Search equipments via AJAX
+     */
+    public function searchEquipmentsAction(ServerRequestInterface $request): ResponseInterface
+    {
+        $parsedBody = $request->getParsedBody();
+        $searchTerm = trim($parsedBody['searchTerm'] ?? '');
+
+        if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
+            return new JsonResponse(['results' => []]);
+        }
+
+        $locale = $this->getBackendUserLocale();
+
+        $postData = $this->buildXmlQuery(
+            'equipmentsQuery',
+            $searchTerm,
+            $locale,
+            ['uuid', 'title.*', 'name.*'],
+            [
+                'orderings' => ['title'],
+                'workflowSteps' => ['validated', 'approved', 'forApproval']
+            ]
+        );
+
+        $equipments = $this->webService->getJson('equipments', $postData);
+        $results = [];
+
+        if (is_array($equipments)) {
+            $items = $equipments['items'] ?? [];
+            if (isset($items['equipment'])) {
+                $items = $items['equipment'];
+            }
+            if (isset($items['uuid']) || isset($items['@attributes'])) {
+                $items = [$items];
+            }
+
+            foreach ($items as $equipment) {
+                if (!is_array($equipment)) {
+                    continue;
+                }
+                $uuid = $this->getUuidFromItem($equipment);
+                if ($uuid === '') {
+                    continue;
+                }
+                $label = $this->getEquipmentLabel($equipment, $locale);
+                if (empty($label)) {
+                    $label = 'Unknown Equipment';
+                }
+
+                $score = $this->calculateRelevanceScore($searchTerm, $label, $label);
+                if ($score >= self::MIN_RELEVANCE_SCORE) {
+                    $results[] = [
+                        'value' => $uuid,
+                        'label' => $label,
+                        'score' => $score
+                    ];
+                }
+            }
+
+            usort($results, function($a, $b) {
+                return $b['score'] - $a['score'];
+            });
+
+            $results = array_map(function($item) {
+                return ['value' => $item['value'], 'label' => $item['label']];
+            }, $results);
+
+            $results = array_slice($results, 0, 20);
+        }
+
+        return new JsonResponse(['results' => $results]);
+    }
+
+    /**
      * Extract active organization names from person data
      */
     private function getActiveOrganizationNames(array $person, string $locale): array
@@ -404,12 +478,19 @@ class AjaxController
      */
     private function extractLocalizedName(array $nameData, string $locale): string
     {
+        if (isset($nameData['value']) && is_string($nameData['value'])) {
+            return $nameData['value'];
+        }
+
         // If there's no text field, return empty
         if (!isset($nameData['text']) || !is_array($nameData['text'])) {
             return '';
         }
         
         $texts = $nameData['text'];
+        if (isset($texts['value']) && is_string($texts['value'])) {
+            $texts = [$texts];
+        }
         $fallbackValue = '';
         
         // Look for the text entry with matching locale
@@ -437,5 +518,45 @@ class AjaxController
         
         // Return fallback if no locale match found
         return $fallbackValue;
+    }
+
+    /**
+     * Resolve equipment label from multiple possible API field shapes.
+     */
+    private function getEquipmentLabel(array $equipment, string $locale): string
+    {
+        $label = $this->extractLocalizedName($equipment['title'] ?? [], $locale);
+        if ($label !== '') {
+            return $label;
+        }
+
+        $label = $this->extractLocalizedName($equipment['name'] ?? [], $locale);
+        if ($label !== '') {
+            return $label;
+        }
+
+        if (isset($equipment['title']) && is_string($equipment['title'])) {
+            return $equipment['title'];
+        }
+        if (isset($equipment['name']) && is_string($equipment['name'])) {
+            return $equipment['name'];
+        }
+
+        return '';
+    }
+
+    /**
+     * Resolve uuid from API payload (field or XML attributes mapping).
+     */
+    private function getUuidFromItem(array $item): string
+    {
+        if (!empty($item['uuid']) && is_string($item['uuid'])) {
+            return $item['uuid'];
+        }
+        if (isset($item['@attributes']['uuid']) && is_string($item['@attributes']['uuid'])) {
+            return $item['@attributes']['uuid'];
+        }
+
+        return '';
     }
 }

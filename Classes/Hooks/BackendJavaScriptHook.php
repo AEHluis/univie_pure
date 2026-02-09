@@ -13,6 +13,20 @@ use TYPO3\CMS\Backend\Routing\UriBuilder;
 class BackendJavaScriptHook
 {
     /**
+     * Event-listener compatibility fallback.
+     * Some environments may register this class as an event listener service.
+     */
+    public function __invoke(object $event): void
+    {
+        if (method_exists($event, 'getPageRenderer')) {
+            $pageRenderer = $event->getPageRenderer();
+            if ($pageRenderer instanceof PageRenderer) {
+                $this->injectAssets($pageRenderer);
+            }
+        }
+    }
+
+    /**
      * Add JavaScript files to backend
      */
     public function addJavaScript(array $params, PageRenderer $pageRenderer): void
@@ -21,32 +35,7 @@ class BackendJavaScriptHook
         if (!$this->isBackendContext()) {
             return;
         }
-
-        // Register AJAX URLs in TYPO3.settings.ajaxUrls
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-
-        try {
-            $pageRenderer->addInlineSettingArray('ajaxUrls', [
-                'univie_pure_search_organizations' => (string)$uriBuilder->buildUriFromRoute('univie_pure_search_organizations'),
-                'univie_pure_search_persons_with_org' => (string)$uriBuilder->buildUriFromRoute('univie_pure_search_persons_with_org'),
-                'univie_pure_search_projects' => (string)$uriBuilder->buildUriFromRoute('univie_pure_search_projects'),
-            ]);
-        } catch (\Exception $e) {
-            // Routes might not be registered yet during cache clear - JavaScript fallback URLs will be used
-        }
-
-        // Add our dynamic multiselect JavaScript
-        $pageRenderer->addJsFile(
-            'EXT:univie_pure/Resources/Public/JavaScript/Backend/DynamicMultiSelect.js',
-            'text/javascript',
-            false,  // compress
-            false,  // force on top
-            '',     // all wrap
-            true,   // exclude from concatenation
-            '|',    // split char
-            false,  // async
-            'backend'  // type
-        );
+        $this->injectAssets($pageRenderer);
     }
 
     /**
@@ -63,5 +52,33 @@ class BackendJavaScriptHook
 
         // Fallback for older TYPO3 versions
         return defined('TYPO3_MODE') && TYPO3_MODE === 'BE';
+    }
+
+    private function injectAssets(PageRenderer $pageRenderer): void
+    {
+        // Register AJAX URLs in TYPO3.settings.ajaxUrls
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        try {
+            $pageRenderer->addInlineSettingArray('ajaxUrls', [
+                'univie_pure_search_organizations' => (string)$uriBuilder->buildUriFromRoute('univie_pure_search_organizations'),
+                'univie_pure_search_persons_with_org' => (string)$uriBuilder->buildUriFromRoute('univie_pure_search_persons_with_org'),
+                'univie_pure_search_projects' => (string)$uriBuilder->buildUriFromRoute('univie_pure_search_projects'),
+                'univie_pure_search_equipments' => (string)$uriBuilder->buildUriFromRoute('univie_pure_search_equipments'),
+            ]);
+        } catch (\Exception $e) {
+            // Routes might not be registered yet during cache clear - JavaScript fallback URLs will be used
+        }
+
+        $pageRenderer->addJsFile(
+            'EXT:univie_pure/Resources/Public/JavaScript/Backend/DynamicMultiSelect.js',
+            'text/javascript',
+            false,
+            false,
+            '',
+            true,
+            '|',
+            false,
+            'backend'
+        );
     }
 }

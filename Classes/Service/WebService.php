@@ -156,6 +156,8 @@ class WebService
             $params['rendering'] = 'detailsPortal';
         } elseif ($renderer === 'standard') {
             $params['rendering'] = 'standard';
+        } elseif ($renderer === 'short') {
+            $params['rendering'] = 'short';
         } elseif ($renderer != null) {
             $params['rendering'] = strtoupper($renderer);
         }

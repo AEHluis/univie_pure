@@ -22,4 +22,10 @@ return [
         'path' => '/univie_pure/search/projects',
         'target' => \Univie\UniviePure\Controller\AjaxController::class . '::searchProjectsAction',
     ],
+
+    // Equipments suggest
+    'univie_pure_search_equipments' => [
+        'path' => '/univie_pure/search/equipments',
+        'target' => \Univie\UniviePure\Controller\AjaxController::class . '::searchEquipmentsAction',
+    ],
 ];

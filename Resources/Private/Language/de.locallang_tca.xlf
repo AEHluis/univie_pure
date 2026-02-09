@@ -103,6 +103,10 @@
 				<source>Show list of chosen endpoint for project(s):</source>
 				<target>Für Projekte</target>
 			</trans-unit>
+			<trans-unit id="flexform.common.selectByEquipment">
+				<source>Show list of chosen endpoint for equipment:</source>
+				<target>Für Equipment</target>
+			</trans-unit>
 			<trans-unit id="flexform.common.selectOrganisation">
 				<source>Show list for selected organisation:</source>
 				<target>Zeige Einträge für ausgewählte Organisationseinheiten:</target>
@@ -118,6 +122,10 @@
 			<trans-unit id="flexform.common.selectPerson">
 				<source>Show list for selected person(s):</source>
 				<target>Zeige Einträge für ausgewählte Personen:</target>
+			</trans-unit>
+			<trans-unit id="flexform.common.selectEquipment">
+				<source>Show list for selected equipment:</source>
+				<target>Zeige Einträge für ausgewähltes Equipment:</target>
 			</trans-unit>
 			<trans-unit id="flexform.common.selectPerson.description">
 				<source>Note: Persons are selectable only if their FIS profile is public. Researchers missing from this list must set their FIS profile to public. Help: https://www.intern.uni-hannover.de/de/themenbereiche/forschung-transfer/forschungsinformationssystem/fis-support/fis-schnelleinstieg</source>

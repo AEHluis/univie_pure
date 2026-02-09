@@ -317,25 +317,27 @@ class AjaxController
     {
         $parsedBody = $request->getParsedBody();
         $searchTerm = trim($parsedBody['searchTerm'] ?? '');
+        $this->debugLog('searchEquipmentsAction: incoming request', [
+            'searchTerm' => $searchTerm,
+            'searchTermLength' => strlen($searchTerm),
+        ]);
 
         if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
+            $this->debugLog('searchEquipmentsAction: term below min length', [
+                'minLength' => self::MIN_SEARCH_LENGTH
+            ]);
             return new JsonResponse(['results' => []]);
         }
 
         $locale = $this->getBackendUserLocale();
 
-        $postData = $this->buildXmlQuery(
-            'equipmentsQuery',
-            $searchTerm,
-            $locale,
-            ['uuid', 'title.*', 'name.*'],
-            [
-                'orderings' => ['title'],
-                'workflowSteps' => ['validated', 'approved', 'forApproval']
-            ]
-        );
-
-        $equipments = $this->webService->getJson('equipments', $postData);
+        // NOTE: equipmentsQuery does not support <searchString>.
+        // Use q-search endpoint: GET /equipments?q=...
+        $equipments = $this->webService->getAlternativeSingleResponse('equipments', $searchTerm, 'json', $locale);
+        $this->debugLog('searchEquipmentsAction: API response received', [
+            'responseType' => gettype($equipments),
+            'response' => $equipments,
+        ]);
         $results = [];
 
         if (is_array($equipments)) {
@@ -349,19 +351,35 @@ class AjaxController
 
             foreach ($items as $equipment) {
                 if (!is_array($equipment)) {
+                    $this->debugLog('searchEquipmentsAction: skipping non-array item', [
+                        'itemType' => gettype($equipment)
+                    ]);
                     continue;
                 }
                 $uuid = $this->getUuidFromItem($equipment);
                 if ($uuid === '') {
+                    $this->debugLog('searchEquipmentsAction: skipping item without uuid', [
+                        'itemKeys' => array_keys($equipment),
+                        'item' => $equipment,
+                    ]);
                     continue;
                 }
                 $label = $this->getEquipmentLabel($equipment, $locale);
                 if (empty($label)) {
-                    $label = 'Unknown Equipment';
+                    $label = $this->extractFallbackString($equipment['title'] ?? null)
+                        ?: $this->extractFallbackString($equipment['name'] ?? null)
+                        ?: 'Unknown Equipment';
                 }
 
                 $score = $this->calculateRelevanceScore($searchTerm, $label, $label);
-                if ($score >= self::MIN_RELEVANCE_SCORE) {
+                $this->debugLog('searchEquipmentsAction: scored item', [
+                    'uuid' => $uuid,
+                    'label' => $label,
+                    'score' => $score,
+                    'itemKeys' => array_keys($equipment),
+                ]);
+                // Equipment responses can have heterogeneous title shapes; keep lower-score API matches.
+                if ($score >= 10) {
                     $results[] = [
                         'value' => $uuid,
                         'label' => $label,
@@ -380,8 +398,22 @@ class AjaxController
 
             $results = array_slice($results, 0, 20);
         }
+        $this->debugLog('searchEquipmentsAction: returning results', [
+            'resultsCount' => count($results),
+            'results' => $results,
+        ]);
 
         return new JsonResponse(['results' => $results]);
+    }
+
+    private function debugLog(string $message, array $context = []): void
+    {
+        $line = '[univie_pure][AjaxController] ' . $message;
+        if (!empty($context)) {
+            $json = json_encode($context, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+            $line .= ' | ' . ($json !== false ? $json : 'context_encode_failed');
+        }
+        error_log($line);
     }
 
     /**
@@ -482,19 +514,37 @@ class AjaxController
             return $nameData['value'];
         }
 
+        // Some API variants provide locale-keyed maps directly.
+        if (isset($nameData[$locale]) && is_string($nameData[$locale])) {
+            return $nameData[$locale];
+        }
+
         // If there's no text field, return empty
         if (!isset($nameData['text']) || !is_array($nameData['text'])) {
             return '';
         }
         
         $texts = $nameData['text'];
+        if (isset($texts[$locale]) && is_string($texts[$locale])) {
+            return $texts[$locale];
+        }
         if (isset($texts['value']) && is_string($texts['value'])) {
             $texts = [$texts];
         }
         $fallbackValue = '';
         
         // Look for the text entry with matching locale
-        foreach ($texts as $text) {
+        foreach ($texts as $key => $text) {
+            if (is_string($text)) {
+                if ($fallbackValue === '') {
+                    $fallbackValue = $text;
+                }
+                if (is_string($key) && ($key === $locale ||
+                    (strpos($locale, '_') !== false && strpos($key, substr($locale, 0, 2)) === 0))) {
+                    return $text;
+                }
+                continue;
+            }
             if (!is_array($text) || !isset($text['value'])) {
                 continue;
             }
@@ -518,6 +568,36 @@ class AjaxController
         
         // Return fallback if no locale match found
         return $fallbackValue;
+    }
+
+    /**
+     * Best-effort extraction of first meaningful string from unknown API field shapes.
+     */
+    private function extractFallbackString($data): string
+    {
+        if (is_string($data)) {
+            $value = trim($data);
+            return $value !== '' ? $value : '';
+        }
+        if (!is_array($data)) {
+            return '';
+        }
+
+        if (isset($data['value']) && is_string($data['value']) && trim($data['value']) !== '') {
+            return trim($data['value']);
+        }
+        if (isset($data['text']) && is_string($data['text']) && trim($data['text']) !== '') {
+            return trim($data['text']);
+        }
+
+        foreach ($data as $value) {
+            $candidate = $this->extractFallbackString($value);
+            if ($candidate !== '') {
+                return $candidate;
+            }
+        }
+
+        return '';
     }
 
     /**

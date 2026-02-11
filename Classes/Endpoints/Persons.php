@@ -74,4 +74,54 @@ class Persons extends Endpoints
         // Ensure the returned value is a string or null
         return is_string($portalUrl) ? $portalUrl : null;
     }
+
+    /**
+     * Resolve a person's portal URL by searching for full name and then matching externalId with LUHID.
+     *
+     * @param string $externalId LUHID to validate against person.externalId
+     * @param string $fullName Search query, usually "firstName lastName"
+     * @param string $lang Pure locale, default de_DE
+     * @return string|null
+     */
+    public function getPortalUrlByExternalIdAndName(string $externalId, string $fullName, string $lang = 'de_DE'): ?string
+    {
+        $externalId = strtoupper(trim($externalId));
+        $fullName = trim($fullName);
+        if ($externalId === '' || $fullName === '') {
+            return null;
+        }
+
+        $result = $this->webservice->getAlternativeSingleResponse('persons', $fullName, 'json', $lang);
+        if (!is_array($result) || !isset($result['items']) || !is_array($result['items'])) {
+            return null;
+        }
+
+        $items = $result['items'];
+        if (isset($items['uuid']) || isset($items['@attributes'])) {
+            $items = [$items];
+        }
+
+        foreach ($items as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            $personExternalId = strtoupper((string)($item['externalId'] ?? $item['@attributes']['externalId'] ?? ''));
+            if ($personExternalId !== $externalId) {
+                continue;
+            }
+
+            $portalUrl = trim((string)($item['info']['portalUrl'] ?? ''));
+            if ($portalUrl !== '') {
+                return $portalUrl;
+            }
+
+            $uuid = (string)($item['uuid'] ?? $item['@attributes']['uuid'] ?? '');
+            if ($uuid !== '') {
+                return $this->getPortalUrl($uuid);
+            }
+        }
+
+        return null;
+    }
 }

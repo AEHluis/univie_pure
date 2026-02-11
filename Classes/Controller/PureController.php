@@ -16,9 +16,11 @@ use GeorgRinger\NumberedPagination\NumberedPagination;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use Throwable;
 
 
 
@@ -353,17 +355,32 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 
     /**
-     * Updates the HTML page title via t3luhlib.
+     * Updates the HTML page title, independent of frontend context availability.
      */
     protected function updatePageTitle(string $title): void
     {
-        if (class_exists(Page::class)) {
-            Page::updatePageTitle($title);
+        $title = trim($title);
+
+        if ($title === '') {
             return;
         }
 
+        if (class_exists(Page::class)) {
+            try {
+                Page::updatePageTitle($title);
+            } catch (Throwable) {
+                // Fall through to TYPO3 core fallback when context aspects are unavailable.
+            }
+        }
+
+        try {
+            GeneralUtility::makeInstance(PageRenderer::class)->setTitle($title);
+        } catch (Throwable) {
+            // Ignore and continue with TSFE fallback.
+        }
+
         if (isset($GLOBALS['TSFE'])) {
-            $GLOBALS['TSFE']->indexedDocTitle = '';
+            $GLOBALS['TSFE']->indexedDocTitle = $title;
         }
     }
 }

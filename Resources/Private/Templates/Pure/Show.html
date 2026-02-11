@@ -1,5 +1,8 @@
 <f:layout name="Default" />
 <f:section name="main">
+    <f:if condition="{publication.title.value}">
+        <f:page.title>{publication.title.value}</f:page.title>
+    </f:if>
     <f:flashMessages />
     <f:render partial="Pure/Properties" arguments="{publication:publication, lang:lang, showLinkToPortal:showLinkToPortal}" />
 

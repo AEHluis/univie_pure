@@ -21,7 +21,7 @@ call_user_func(
             ],
             // non-cacheable actions
             [
-                PureController::class => 'list,listHandler,show',
+                PureController::class => 'list,listHandler',
             ]
         );
 

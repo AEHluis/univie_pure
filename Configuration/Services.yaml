@@ -35,6 +35,9 @@ services:
         identifier: 'univie-pure-cache-warmer'
         event: TYPO3\CMS\Core\Cache\Event\CacheWarmupEvent
 
+  Univie\UniviePure\PageTitle\PublicationPageTitleProvider:
+    public: true
+
   Psr\Http\Client\ClientInterface:
     class: GuzzleHttp\Client
     arguments:

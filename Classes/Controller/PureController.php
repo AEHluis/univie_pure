@@ -18,15 +18,7 @@ use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
-use TYPO3\CMS\Core\Localization\LanguageService;
-use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\Http\ServerRequestFactory;
-use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Localization\LocalizationFactory;
-use TYPO3\CMS\Core\Localization\Locales;
-use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Frontend\Page\PageRepository;
+use Univie\UniviePure\PageTitle\PublicationPageTitleProvider;
 
 
 
@@ -51,6 +43,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     private readonly Projects $projects;
     private readonly Equipments $equipments;
     private readonly DataSets $dataSets;
+    private readonly PublicationPageTitleProvider $pageTitleProvider;
     protected string $locale;
     protected string $localeShort;
     protected string $localeXml;
@@ -71,11 +64,12 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * Constructor – dependencies are injected here.
      */
     public function __construct(
-        ConfigurationManagerInterface $configurationManager,
-        ResearchOutput                $researchOutput,
-        Projects                      $projects,
-        Equipments                    $equipments,
-        DataSets                      $dataSets
+        ConfigurationManagerInterface    $configurationManager,
+        ResearchOutput                   $researchOutput,
+        Projects                         $projects,
+        Equipments                       $equipments,
+        DataSets                         $dataSets,
+        PublicationPageTitleProvider     $pageTitleProvider
     )
     {
         $this->configurationManager = $configurationManager;
@@ -83,6 +77,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->dataSets = $dataSets;
         $this->projects = $projects;
         $this->equipments = $equipments;
+        $this->pageTitleProvider = $pageTitleProvider;
         $this->locale = $this->getLocale(); // Plain string for URLs
         $this->localeShort = $this->getLocaleShort();
         $this->localeXml = $this->getLocaleXml(); // XML for API requests
@@ -360,64 +355,11 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
 
-    function updatePageTitle(string $title): void
-    {
-        $concatenatedTitles = [$title];
-
-        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
-        $context = GeneralUtility::makeInstance(Context::class);
-
-        if (!$context->hasAspect('frontend.page')) {
-            return; // Context not available – no error
-        }
-
-        $currentPageId = $context->getAspect('frontend.page')->get('id');
-
-        $currentSite = $siteFinder->getSiteByPageId((int)$currentPageId);
-        $rootLineTitle = $currentSite->getConfiguration()['rootPageTitle'] ?? 'Home';
-
-        $languageService = self::getLanguageService();
-        $universityName = $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:university_name');
-
-        $concatenatedTitles[] = $rootLineTitle;
-        $concatenatedTitles[] = $universityName;
-        $concatenatedTitles = array_unique($concatenatedTitles);
-        $pageTitle = trim(implode(" – ", $concatenatedTitles));
-
-        // TYPO3 12 compatible: Get PageRenderer from request
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->setTitle($pageTitle);
-
-        // Set indexed title for search engines (TYPO3 12 compatible)
-        if (isset($GLOBALS['TSFE']) && method_exists($GLOBALS['TSFE'], 'getPageRenderer')) {
-            $GLOBALS['TSFE']->indexedDocTitle = $pageTitle;
-        }
-    }
-    
-     /**
-     * Get the TYPO3 language service.
-     *
-     * @return LanguageService
+    /**
+     * Updates the HTML page title using the PageTitleProvider API.
      */
-    protected function getLanguageService(): LanguageService
+    protected function updatePageTitle(string $title): void
     {
-        if (isset($GLOBALS['LANG'])) {
-            return $GLOBALS['LANG'];
-        }
-        
-        // In TYPO3 12, use the language service from request or create with required parameters
-        $context = GeneralUtility::makeInstance(Context::class);
-        $languageAspect = $context->getAspect('language');
-        $localizationFactory = GeneralUtility::makeInstance(LocalizationFactory::class);
-        
-        // Create language service with proper constructor arguments
-        $languageService = new LanguageService(
-            GeneralUtility::makeInstance(Locales::class),
-            $localizationFactory,
-            GeneralUtility::makeInstance(CacheManager::class)->getCache('runtime')
-        );
-        $languageService->init($languageAspect->get('id'));
-        
-        return $languageService;
+        $this->pageTitleProvider->setTitle($title);
     }
 }

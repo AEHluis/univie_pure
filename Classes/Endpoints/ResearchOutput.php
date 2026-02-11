@@ -495,6 +495,19 @@ class ResearchOutput extends Endpoints
     }
 
     /**
+     * Query for a specific citation rendering style.
+     *
+     * @param string $uuid Publication UUID
+     * @param string $renderer Rendering style (e.g. standard, harvard, apa, vancouver, author, ris)
+     * @param string $lang Language code
+     * @return array|string|\SimpleXMLElement|null Citation rendering data
+     */
+    public function getCitationRendering(string $uuid, string $renderer, string $lang)
+    {
+        return $this->webservice->getSingleResponse('research-outputs', $uuid, 'xml', true, $renderer, $lang);
+    }
+
+    /**
      * Query for getStandardRendering response
      *
      * @param string $uuid Publication UUID

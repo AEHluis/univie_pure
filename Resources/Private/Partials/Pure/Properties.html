@@ -7,46 +7,34 @@
 	<!-- supervisors -->
 	<f:if condition="{publication.subTitle}">
 		<f:then>
-			<h2 class="content-element-margin"><f:format.raw>{publication.subTitle.value}</f:format.raw></h2>
+			<h2 class="content-element-margin publication-section-title"><f:format.raw>{publication.subTitle.value}</f:format.raw></h2>
 		</f:then>
 	</f:if>
-	<dl>
-		<!-- AUTHORS -->
-		<dt class="col-sm-3"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.authors" /></dt>
-		<dd class="col-sm-9 content-element-margin-small">
+
+	<section class="publication-block publication-authorship">
+		<h2 class="publication-section-title"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.authors" /></h2>
+		<p class="publication-authors-list">
 			<f:for each="{publication.personAssociations}" as="person" iteration="persIter">
 				<f:if condition="{person.authorCollaboration}">
 					<f:if condition="{lang} == 'de_DE' ">
 						<f:then>
 							<f:if condition="{person.authorCollaboration.name.text.1.locale} == 'de_DE'">
-								<f:then>
-									{person.authorCollaboration.name.text.1.value}
-								</f:then>
+								<f:then>{person.authorCollaboration.name.text.1.value}</f:then>
 								<f:else>
 									<f:if condition="{person.authorCollaboration.name.text.1.value} != '' ">
-										<f:then>
-											{person.authorCollaboration.name.text.1.value}
-										</f:then>
-										<f:else>
-											{person.authorCollaboration.name.text.0.value}
-										</f:else>
+										<f:then>{person.authorCollaboration.name.text.1.value}</f:then>
+										<f:else>{person.authorCollaboration.name.text.0.value}</f:else>
 									</f:if>
 								</f:else>
 							</f:if>
 						</f:then>
 						<f:else>
 							<f:if condition="{person.authorCollaboration.name.text.0.locale} == 'en_GB'">
-								<f:then>
-									{person.authorCollaboration.name.text.0.value}
-								</f:then>
+								<f:then>{person.authorCollaboration.name.text.0.value}</f:then>
 								<f:else>
 									<f:if condition="{person.authorCollaboration.name.text.0.value} != '' ">
-										<f:then>
-											{person.authorCollaboration.name.text.0.value}
-										</f:then>
-										<f:else>
-											{person.authorCollaboration.name.text.1.value}
-										</f:else>
+										<f:then>{person.authorCollaboration.name.text.0.value}</f:then>
+										<f:else>{person.authorCollaboration.name.text.1.value}</f:else>
 									</f:if>
 								</f:else>
 							</f:if>
@@ -55,9 +43,45 @@
 				</f:if>
 				{person.name.firstName} {person.name.lastName}<f:if condition="{persIter.isLast}"><f:else>, </f:else></f:if>
 			</f:for>
-		</dd>
+		</p>
+	</section>
 
+	<f:if condition="{publication.abstract.text}">
+		<section class="publication-block publication-abstract-block">
+			<h2 class="publication-section-title"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.abstract" /></h2>
+			<div class="publication-abstract-content">
+				<f:if condition="{lang} == 'de_DE' ">
+					<f:then>
+						<f:if condition="{publication.abstract.text.1.locale} == 'de_DE'">
+							<f:then><f:format.html>{publication.abstract.text.1.value}</f:format.html></f:then>
+							<f:else>
+								<f:if condition="{publication.abstract.text.1.value} != '' ">
+									<f:then><f:format.html>{publication.abstract.text.1.value}</f:format.html></f:then>
+									<f:else><f:format.html>{publication.abstract.text.0.value}</f:format.html></f:else>
+								</f:if>
+							</f:else>
+						</f:if>
+					</f:then>
+					<f:else>
+						<f:if condition="{publication.abstract.text.0.locale} == 'en_GB'">
+							<f:then><f:format.html>{publication.abstract.text.0.value}</f:format.html></f:then>
+							<f:else>
+								<f:if condition="{publication.abstract.text.0.value} != '' ">
+									<f:then><f:format.html>{publication.abstract.text.0.value}</f:format.html></f:then>
+									<f:else><f:format.html>{publication.abstract.text.1.value}</f:format.html></f:else>
+								</f:if>
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+			</div>
+		</section>
+	</f:if>
 
+	<h2 class="publication-section-title publication-section-title--details">
+		<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.details" />
+	</h2>
+	<dl>
 		<!-- supervisors -->
 		<f:if condition="{publication.supervisors}">
 			<f:then>
@@ -67,48 +91,6 @@
 					</f:for>
 				</dd>
 			</f:then>
-		</f:if>
-
-
-		<!-- ABSTRACT -->
-		<f:if condition="{publication.abstract.text}">
-			<dt class="col-sm-3"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.abstract" /></dt>
-			<f:if condition="{lang} == 'de_DE' ">
-				<f:then>
-					<f:if condition="{publication.abstract.text.1.locale} == 'de_DE'">
-						<f:then>
-							<dd class="col-sm-9 content-element-margin-small"><f:format.html>{publication.abstract.text.1.value}</f:format.html></dd>
-						</f:then>
-						<f:else>
-							<f:if condition="{publication.abstract.text.1.value} != '' ">
-								<f:then>
-									<dd class="col-sm-9 content-element-margin-small"><f:format.html>{publication.abstract.text.1.value}</f:format.html></dd>
-								</f:then>
-								<f:else>
-									<dd class="col-sm-9 content-element-margin-small"><f:format.html>{publication.abstract.text.0.value}</f:format.html></dd>
-								</f:else>
-							</f:if>
-						</f:else>
-					</f:if>
-				</f:then>
-				<f:else>
-					<f:if condition="{publication.abstract.text.0.locale} == 'en_GB'">
-						<f:then>
-							<dd class="col-sm-9 content-element-margin-small"><f:format.html>{publication.abstract.text.0.value}</f:format.html></dd>
-						</f:then>
-						<f:else>
-							<f:if condition="{publication.abstract.text.0.value} != '' ">
-								<f:then>
-									<dd class="col-sm-9 content-element-margin-small"><f:format.html>{publication.abstract.text.0.value}</f:format.html></dd>
-								</f:then>
-								<f:else>
-									<dd class="col-sm-9 content-element-margin-small"><f:format.html>{publication.abstract.text.1.value}</f:format.html></dd>
-								</f:else>
-							</f:if>
-						</f:else>
-					</f:if>
-				</f:else>
-			</f:if>
 		</f:if>
 
 		<!-- Internal UNITS -->

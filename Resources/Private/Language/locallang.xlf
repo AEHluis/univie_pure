@@ -93,6 +93,33 @@
 			<trans-unit id="univiepur.publication.electronicVersionsAccess">
 				<source>Access:</source>
 			</trans-unit>
+			<trans-unit id="univiepur.publication.details">
+				<source>Details</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citations">
+				<source>Cite</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.standard">
+				<source>Standard</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.harvard">
+				<source>Harvard</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.apa">
+				<source>APA</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.vancouver">
+				<source>Vancouver</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.author">
+				<source>Author</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.bibtex">
+				<source>BibTeX</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.ris">
+				<source>RIS</source>
+			</trans-unit>
 			<trans-unit id="univiepur.projects.description">
 				<source>Abstract</source>
 			</trans-unit>

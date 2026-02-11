@@ -1,54 +1,75 @@
 <f:layout name="Default" />
 <f:section name="main">
-    <f:if condition="{publication.title.value}">
-        <f:page.title>{publication.title.value}</f:page.title>
-    </f:if>
-    <f:flashMessages />
-    <f:render partial="Pure/Properties" arguments="{publication:publication, lang:lang, showLinkToPortal:showLinkToPortal}" />
-
-    <f:if condition="{settings.showBibtex}">
-        <div class="tx-univie-pure">
-            <ul class="accordion" role="list">
-                <li class="accordion-item">
-                    <button type="button"
-                            class="accordion-title"
-                            aria-controls="bibtex-accordion"
-                            aria-expanded="false"
-                            id="bibtex-accordion-label">
-                        BibTeX
-                    </button>
-                    <div class="accordion-content"
-                         role="region"
-                         aria-labelledby="bibtex-accordion-label"
-                         id="bibtex-accordion"
-                         hidden>
-                        <f:format.raw>{bibtex}</f:format.raw>
-                    </div>
-                </li>
-            </ul>
+  <f:flashMessages  />
+  <f:render partial="Pure/Properties" arguments="{publication:publication, lang:lang, showLinkToPortal:showLinkToPortal}" />
+  <f:if condition="{settings.showBibtex}">
+    <f:if condition="{citations}">
+      <div class="tx-univie-pure publication-citations">
+        <h2 class="publication-section-title"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citations" /></h2>
+        <ul class="publication-citations__tabs" role="tablist">
+          <f:for each="{citations}" as="citation" iteration="tabIter">
+            <li>
+              <button type="button"
+                      class="publication-citations__tab<f:if condition='{tabIter.isFirst}'><f:then> is-active</f:then></f:if>"
+                      role="tab"
+                      id="citation-tab-{citation.id}"
+                      data-target="citation-pane-{citation.id}"
+                      aria-controls="citation-pane-{citation.id}"
+                      aria-selected="<f:if condition='{tabIter.isFirst}'><f:then>true</f:then><f:else>false</f:else></f:if>">
+                <f:translate key="{citation.labelKey}" />
+              </button>
+            </li>
+          </f:for>
+        </ul>
+        <div class="publication-citations__panes">
+          <f:for each="{citations}" as="citation" iteration="paneIter">
+            <div class="publication-citations__pane<f:if condition='{paneIter.isFirst}'><f:then> is-active</f:then></f:if>"
+                 role="tabpanel"
+                 id="citation-pane-{citation.id}"
+                 aria-labelledby="citation-tab-{citation.id}">
+              <f:if condition="{citation.isPreformatted}">
+                <f:then><pre><f:format.raw>{citation.content}</f:format.raw></pre></f:then>
+                <f:else><f:format.raw>{citation.content}</f:format.raw></f:else>
+              </f:if>
+            </div>
+          </f:for>
         </div>
-
-        <script>
-            (function() {
-                function initAccordion() {
-                    var button = document.querySelector('.accordion-title');
-                    var content = document.getElementById('bibtex-accordion');
-
-                    if (button && content) {
-                        button.addEventListener('click', function() {
-                            var isExpanded = button.getAttribute('aria-expanded') === 'true';
-                            button.setAttribute('aria-expanded', !isExpanded);
-                            content.hidden = isExpanded;
-                        });
-                    }
+      </div>
+      <script>
+        (function() {
+          function initCitationTabs() {
+            var container = document.querySelector('.publication-citations');
+            if (!container) {
+              return;
+            }
+            var tabs = container.querySelectorAll('.publication-citations__tab');
+            var panes = container.querySelectorAll('.publication-citations__pane');
+            tabs.forEach(function(tab) {
+              tab.addEventListener('click', function() {
+                var targetId = tab.getAttribute('data-target');
+                tabs.forEach(function(t) {
+                  t.classList.remove('is-active');
+                  t.setAttribute('aria-selected', 'false');
+                });
+                panes.forEach(function(p) {
+                  p.classList.remove('is-active');
+                });
+                tab.classList.add('is-active');
+                tab.setAttribute('aria-selected', 'true');
+                var target = container.querySelector('#' + targetId);
+                if (target) {
+                  target.classList.add('is-active');
                 }
-
-                if (document.readyState !== 'loading') {
-                    initAccordion();
-                } else {
-                    document.addEventListener('DOMContentLoaded', initAccordion);
-                }
-            })();
-        </script>
+              });
+            });
+          }
+          if (document.readyState !== 'loading') {
+            initCitationTabs();
+          } else {
+            document.addEventListener('DOMContentLoaded', initCitationTabs);
+          }
+        })();
+      </script>
     </f:if>
+  </f:if>
 </f:section>

@@ -159,7 +159,9 @@ class WebService
         } elseif ($renderer === 'short') {
             $params['rendering'] = 'short';
         } elseif ($renderer != null) {
-            $params['rendering'] = strtoupper($renderer);
+            // Keep explicit renderer casing as provided by caller.
+            // Pure renderer names are case-sensitive (e.g. "harvard", "apa", "RIS").
+            $params['rendering'] = $renderer;
         }
 
         // Add language parameter if provided

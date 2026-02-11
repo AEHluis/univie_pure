@@ -1,3 +1,13 @@
+# Page title provider for publication detail pages
+config {
+  pageTitleProviders {
+    univiepure {
+      provider = Univie\UniviePure\PageTitle\PublicationPageTitleProvider
+      before = record
+    }
+  }
+}
+
 # Main plugin configuration for "univie_pure"
 plugin.tx_univiepure_univiepure {
     view {

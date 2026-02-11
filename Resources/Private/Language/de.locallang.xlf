@@ -127,6 +127,42 @@
                 <source>Access:</source>
             	<target>Zugang:</target>
             </trans-unit>
+			<trans-unit id="univiepur.publication.details">
+				<source>Details</source>
+				<target>Details</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citations">
+				<source>Cite</source>
+				<target>Zitieren</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.standard">
+				<source>Standard</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.harvard">
+				<source>Harvard</source>
+				<target>Harvard</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.apa">
+				<source>APA</source>
+				<target>APA</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.vancouver">
+				<source>Vancouver</source>
+				<target>Vancouver</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.author">
+				<source>Author</source>
+				<target>Autor</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.bibtex">
+				<source>BibTeX</source>
+				<target>BibTeX</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.ris">
+				<source>RIS</source>
+				<target>RIS</target>
+			</trans-unit>
 			<trans-unit id="univiepur.more">
 				<source>more...</source>
 				<target>Mehr...</target>

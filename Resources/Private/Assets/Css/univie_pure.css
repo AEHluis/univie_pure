@@ -176,6 +176,7 @@
 .tx-univie-pure.publication {
     margin: 0 auto;
     max-width: 64rem;
+    padding: 0.5rem 0;
 }
 
 .tx-univie-pure.publication h1 {
@@ -184,16 +185,42 @@
 }
 
 .tx-univie-pure.publication h2 {
-    margin-top: -0.5rem;
-    margin-bottom: 1rem;
     line-height: 1.3;
+}
+
+.tx-univie-pure.publication .publication-block {
+    margin: 1rem 0 1.25rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 0px;
+}
+
+.tx-univie-pure .publication-section-title {
+    margin: 0 0 0.55rem;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #1f1f1f;
+    text-align: left;
+}
+
+.tx-univie-pure.publication .publication-section-title--details {
+    margin-top: 1.2rem;
+}
+
+.tx-univie-pure.publication .publication-authors-list {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.tx-univie-pure.publication .publication-abstract-content {
+    line-height: 1.65;
 }
 
 .tx-univie-pure.publication dl {
     display: grid;
     grid-template-columns: minmax(12rem, 28%) 1fr;
     column-gap: 1.75rem;
-    row-gap: 0.55rem;
+    row-gap: 0.35rem;
     align-items: start;
 }
 
@@ -202,19 +229,106 @@
     float: none;
     width: auto;
     margin: 0;
-    padding: 0;
+    padding: 0.35rem 0;
 }
 
 .tx-univie-pure.publication dt {
     font-weight: 600;
+    color: #1f1f1f;
+    font-size: 0.97rem;
+    letter-spacing: 0.01em;
 }
 
 .tx-univie-pure.publication dd {
     line-height: 1.55;
+    color: #2a2a2a;
+}
+
+.tx-univie-pure.publication dd + dt {
+    margin-top: 0.25rem;
 }
 
 .tx-univie-pure.publication dd a {
     overflow-wrap: anywhere;
+}
+
+.tx-univie-pure.publication-citations {
+    margin-top: 2rem;
+}
+
+.tx-univie-pure.publication-citations h2.publication-section-title {
+    margin: 0 0 1rem;
+}
+
+.tx-univie-pure.publication h2,
+.tx-univie-pure.publication-citations h2 {
+    text-align: left;
+}
+
+.tx-univie-pure .publication-citations__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #d6d6d6;
+}
+
+.tx-univie-pure .publication-citations__tab {
+    position: relative;
+    border: 1px solid transparent;
+    border-bottom: none;
+    background: transparent;
+    color: #1f1f1f;
+    padding: 0.95rem 1.55rem;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.tx-univie-pure .publication-citations__tab.is-active {
+    border-color: #d6d6d6;
+    border-bottom-color: transparent;
+    background: #fff;
+    color: #004f9f;
+    margin-bottom: -1px;
+}
+
+.tx-univie-pure .publication-citations__tab.is-active::after {
+    content: "";
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    height: 2px;
+    background: #fff;
+}
+
+.tx-univie-pure .publication-citations__panes {
+    border: 1px solid #d6d6d6;
+    border-top: none;
+    background: #fff;
+}
+
+.tx-univie-pure .publication-citations__pane {
+    display: none;
+    padding: 1.25rem 1.3rem;
+    font-size: 1.1rem;
+    line-height: 1.65;
+}
+
+.tx-univie-pure .publication-citations__pane.is-active {
+    display: block;
+}
+
+.tx-univie-pure .publication-citations__pane pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.96rem;
+    line-height: 1.6;
 }
 
 @media (max-width: 767px) {
@@ -225,5 +339,15 @@
 
     .tx-univie-pure.publication dt {
         margin-top: 0.5rem;
+    }
+
+    .tx-univie-pure .publication-citations__tab {
+        padding: 0.75rem 1rem;
+        font-size: 0.96rem;
+    }
+
+    .tx-univie-pure .publication-citations__pane {
+        padding: 1rem;
+        font-size: 1rem;
     }
 }

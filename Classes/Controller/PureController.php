@@ -6,7 +6,6 @@ use Univie\UniviePure\Endpoints\DataSets;
 use Univie\UniviePure\Endpoints\ResearchOutput;
 use Univie\UniviePure\Endpoints\Projects;
 use Univie\UniviePure\Endpoints\Equipments;
-use T3luh\T3luhlib\Utils\Page;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Univie\UniviePure\Utility\LanguageUtility;
 use Univie\UniviePure\Utility\CommonUtilities;
@@ -20,6 +19,7 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use Univie\UniviePure\PageTitle\PublicationPageTitleProvider;
 use Throwable;
 
 
@@ -310,6 +310,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 // Get bibtex data
                 $bibtexXml = $pub->getBibtex($uuid, $locale);
                 $bibtex = CommonUtilities::getNestedArrayValue($bibtexXml,'renderings.rendering','') ;
+                $citations = $this->buildCitationRenderings($pub, $uuid, $locale, $bibtexXml);
                 // Get publication data
                 $view = $pub->getSinglePublication($uuid, $locale);
 
@@ -317,6 +318,16 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 if (!is_array($view) || CommonUtilities::getArrayValue($view, 'code', 0) > 200) {
                     $this->handleContentNotFound();
                 }
+
+                $visibilityKey = $this->getPublicationVisibilityKey($view);
+                $isRestricted = $this->isRestrictedVisibility($visibilityKey);
+                $isInCampus = $this->isInCampusRequest();
+
+                if ($isRestricted && !$isInCampus) {
+                    $this->handleContentNotFound();
+                }
+
+                $this->setMetaAccessHeader($isRestricted ? 'luhintern' : 'default');
 
                 // Update page title if available
                 $titleValue = CommonUtilities::getNestedArrayValue($view, 'title.value', '');
@@ -328,6 +339,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 $this->view->assignMultiple([
                     'publication' => $view,
                     'bibtex' => $bibtex,
+                    'citations' => $citations,
                     'lang' => $this->locale,
                     'showLinkToPortal' => CommonUtilities::getArrayValue($this->settings, 'linkToPortal', null),
                 ]);
@@ -355,32 +367,189 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 
     /**
-     * Updates the HTML page title, independent of frontend context availability.
+     * Updates the HTML page title via custom PageTitleProvider.
      */
     protected function updatePageTitle(string $title): void
     {
-        $title = trim($title);
-
+        $title = trim(strip_tags($title));
         if ($title === '') {
             return;
         }
 
-        if (class_exists(Page::class)) {
-            try {
-                Page::updatePageTitle($title);
-            } catch (Throwable) {
-                // Fall through to TYPO3 core fallback when context aspects are unavailable.
-            }
-        }
+        GeneralUtility::makeInstance(PublicationPageTitleProvider::class)->setTitle($title);
 
         try {
             GeneralUtility::makeInstance(PageRenderer::class)->setTitle($title);
         } catch (Throwable) {
-            // Ignore and continue with TSFE fallback.
+            // Keep provider/TSFE fallback paths active.
         }
 
         if (isset($GLOBALS['TSFE'])) {
             $GLOBALS['TSFE']->indexedDocTitle = $title;
         }
+    }
+
+    private function getPublicationVisibilityKey(array $publication): string
+    {
+        $visibilityKey = (string)CommonUtilities::getNestedArrayValue($publication, 'visibility.@attributes.key', '');
+        if ($visibilityKey === '') {
+            $visibilityKey = (string)CommonUtilities::getNestedArrayValue($publication, 'visibility.key', '');
+        }
+        return $visibilityKey;
+    }
+
+    private function isRestrictedVisibility(string $visibilityKey): bool
+    {
+        return in_array(strtoupper($visibilityKey), ['RESTRICTED_IP', 'CAMPUS'], true);
+    }
+
+    private function isInCampusRequest(): bool
+    {
+        if (class_exists(\T3luh\T3luhlib\PhpUtility::class)) {
+            return \T3luh\T3luhlib\PhpUtility::user_checkIP();
+        }
+        return false;
+    }
+
+    private function setMetaAccessHeader(string $value): void
+    {
+        $value = trim($value);
+        if ($value === '') {
+            return;
+        }
+
+        try {
+            GeneralUtility::makeInstance(PageRenderer::class)->addHeaderData('<meta access="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '" />');
+        } catch (Throwable) {
+            // Ignore if header injection is unavailable in current rendering context.
+        }
+    }
+
+    private function buildCitationRenderings(ResearchOutput $pub, string $uuid, string $locale, mixed $bibtexXml): array
+    {
+        $styles = [
+            ['id' => 'standard', 'labelKey' => 'LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citation.standard', 'renderer' => 'standard'],
+            ['id' => 'harvard', 'labelKey' => 'LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citation.harvard', 'renderer' => 'harvard'],
+            ['id' => 'apa', 'labelKey' => 'LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citation.apa', 'renderer' => 'apa'],
+            ['id' => 'vancouver', 'labelKey' => 'LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citation.vancouver', 'renderer' => 'vancouver'],
+            ['id' => 'author', 'labelKey' => 'LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citation.author', 'renderer' => 'author'],
+            ['id' => 'bibtex', 'labelKey' => 'LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citation.bibtex', 'renderer' => 'bibtex'],
+            ['id' => 'ris', 'labelKey' => 'LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citation.ris', 'renderer' => 'ris'],
+        ];
+
+        $citations = [];
+        foreach ($styles as $style) {
+            $response = $style['id'] === 'bibtex'
+                ? $bibtexXml
+                : $pub->getCitationRendering($uuid, $style['renderer'], $locale);
+            $content = $this->extractCitationContent($response);
+
+            if ($content === '') {
+                continue;
+            }
+
+            if (in_array($style['id'], ['bibtex', 'ris'], true)) {
+                $content = $this->normalizePreformattedCitation($content, $style['id']);
+            }
+
+            $citations[] = [
+                'id' => $style['id'],
+                'labelKey' => $style['labelKey'],
+                'content' => $content,
+                'isPreformatted' => in_array($style['id'], ['bibtex', 'ris'], true),
+            ];
+        }
+
+        return $citations;
+    }
+
+    private function extractCitationContent(mixed $response): string
+    {
+        if (is_string($response)) {
+            $content = trim($response);
+            return $this->isRendererErrorPayload($content) ? '' : $content;
+        }
+
+        if (!is_array($response)) {
+            return '';
+        }
+
+        $paths = [
+            'renderings.rendering',
+            'renderings.0.html',
+            'renderings.rendering.0.html',
+            'rendering',
+            'data',
+        ];
+
+        foreach ($paths as $path) {
+            $value = CommonUtilities::getNestedArrayValue($response, $path, null);
+            $text = $this->flattenCitationValue($value);
+            if ($text !== '') {
+                return $this->isRendererErrorPayload($text) ? '' : $text;
+            }
+        }
+
+        return '';
+    }
+
+    private function flattenCitationValue(mixed $value): string
+    {
+        if (is_string($value)) {
+            return trim($value);
+        }
+        if (!is_array($value)) {
+            return '';
+        }
+        if (isset($value['html']) && is_string($value['html'])) {
+            return trim($value['html']);
+        }
+
+        $parts = [];
+        foreach ($value as $item) {
+            $piece = $this->flattenCitationValue($item);
+            if ($piece !== '') {
+                $parts[] = $piece;
+            }
+        }
+        return trim(implode("\n", $parts));
+    }
+
+    private function isRendererErrorPayload(string $content): bool
+    {
+        $trimmed = ltrim($content);
+        return str_starts_with($trimmed, 'Unknown render style');
+    }
+
+    private function normalizePreformattedCitation(string $content, string $styleId): string
+    {
+        $text = preg_replace('#<br\s*/?>#i', "\n", $content);
+        $text = preg_replace('#</p>\s*<p[^>]*>#i', "\n\n", (string)$text);
+        $text = strip_tags((string)$text);
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $text = str_replace(["\r\n", "\r"], "\n", $text);
+        $text = trim($text);
+
+        if ($styleId === 'bibtex') {
+            $text = $this->formatBibtexForReadability($text);
+        }
+
+        return $text;
+    }
+
+    private function formatBibtexForReadability(string $bibtex): string
+    {
+        $text = trim($bibtex);
+        if (!str_starts_with($text, '@')) {
+            return $text;
+        }
+
+        // FIS often returns BibTeX in a single line with double spaces between fields.
+        $text = preg_replace('/^(@[^{]+\{[^,]+),\s{2,}/', "$1,\n  ", $text) ?? $text;
+        $text = preg_replace('/,\s{2,}([a-zA-Z_][a-zA-Z0-9_]*\s*=)/', ",\n  $1", $text) ?? $text;
+        $text = preg_replace('/\n\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*/', "\n  $1 = ", $text) ?? $text;
+        $text = preg_replace('/,\s*}$/', "\n}", $text) ?? $text;
+
+        return $text;
     }
 }

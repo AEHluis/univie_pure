@@ -96,9 +96,8 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $settings = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
         );
-        if (isset($settings['pageSize']) && $settings['pageSize'] == 0) {
-            $settings['pageSize'] = 20;
-        }
+        $pageSize = (int)($settings['pageSize'] ?? 20);
+        $settings['pageSize'] = $pageSize > 0 ? $pageSize : 20;
         $this->settings = $settings;
     }
 
@@ -167,6 +166,8 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $currentPageNumber = (int)($this->request->hasArgument('currentPageNumber')
             ? $this->request->getArgument('currentPageNumber')
             : 1);
+        $currentPageNumber = max(1, $currentPageNumber);
+        $itemsPerPage = max(1, (int)($this->settings['pageSize'] ?? 20));
         $paginationMaxLinks = 10;
 
         // Use locale from TYPO3 site language (not from URL parameter)
@@ -193,7 +194,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         $contributionCount = is_array($contributionToJournal) ? count($contributionToJournal) : 0;
                         array_splice($publications, $view['offset'], $contributionCount, $contributionToJournal);
 
-                        $paginator = new ArrayPaginator($publications, $currentPageNumber, $this->settings['pageSize']);
+                        $paginator = new ArrayPaginator($publications, $currentPageNumber, $itemsPerPage);
                         $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
 
                         $publicationsForView = $paginator->getPaginatedItems();
@@ -225,7 +226,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         $items = (isset($view['items']) && is_array($view['items'])) ? $view['items'] : [];
                         array_splice($equipmentsArray, $view['offset'], count($items), $items);
 
-                        $paginator = new ArrayPaginator($equipmentsArray, $currentPageNumber, $this->settings['pageSize']);
+                        $paginator = new ArrayPaginator($equipmentsArray, $currentPageNumber, $itemsPerPage);
                         $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
 
                         $this->view->assignMultiple([
@@ -247,7 +248,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         $items = (isset($view['items']) && is_array($view['items'])) ? $view['items'] : [];
                         array_splice($projectsArray, $view['offset'], count($items), $items);
 
-                        $paginator = new ArrayPaginator($projectsArray, $currentPageNumber, $this->settings['pageSize']);
+                        $paginator = new ArrayPaginator($projectsArray, $currentPageNumber, $itemsPerPage);
                         $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
 
                         $this->view->assignMultiple([
@@ -269,7 +270,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         $items = (isset($view['items']) && is_array($view['items'])) ? $view['items'] : [];
                         array_splice($dataSetsArray, $view['offset'], count($items), $items);
 
-                        $paginator = new ArrayPaginator($dataSetsArray, $currentPageNumber, $this->settings['pageSize']);
+                        $paginator = new ArrayPaginator($dataSetsArray, $currentPageNumber, $itemsPerPage);
                         $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
 
                         $this->view->assignMultiple([

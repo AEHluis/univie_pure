@@ -348,7 +348,7 @@
 			<dd class="col-sm-9 content-element-margin-small">
 					<f:for each="{publication.electronicVersions}" as="electronicVersion">
 						<f:if condition="{electronicVersion.link}">
-							<a href="{electronicVersion.link}" target="_blank">{electronicVersion.link}</a> (<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.electronicVersionsAccess" />
+							<a href="{electronicVersion.link}" target="_blank" rel="noopener noreferrer">{electronicVersion.link}</a> (<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.electronicVersionsAccess" />
 							<f:if condition="{lang} == 'de_DE'">
 								<f:then>
 									<f:if condition="{electronicVersion.accessType.term.text.1.value} != ''">
@@ -365,7 +365,7 @@
 							</f:if>)<br>
 						</f:if>
 						<f:if condition="{electronicVersion.doi}">
-							<a href="{electronicVersion.doi}" target="_blank">{electronicVersion.doi}</a> (<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.electronicVersionsAccess" />
+							<a href="{electronicVersion.doi}" target="_blank" rel="noopener noreferrer">{electronicVersion.doi}</a> (<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.electronicVersionsAccess" />
 							<f:if condition="{lang} == 'de_DE'">
 								<f:then>
 									<f:if condition="{electronicVersion.accessType.term.text.1.value} != ''">
@@ -392,8 +392,8 @@
 			</dt>
 			<dd class="col-sm-9 content-element-margin-small">
 				<f:if condition="{publication.info.portalUrl}">
-					<p class="type" style="margin-top:1rem">
-					<f:link.external uri="{publication.info.portalUrl}" target="_blank" class="c-button u-icon-after u-icon-after--new-tab"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" /></f:link.external>
+					<p class="type publication-portal-link-row">
+					<f:link.external uri="{publication.info.portalUrl}" target="_blank" rel="noopener noreferrer" class="c-button u-icon-after u-icon-after--new-tab"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" /></f:link.external>
 					</p>
 				</f:if>
 

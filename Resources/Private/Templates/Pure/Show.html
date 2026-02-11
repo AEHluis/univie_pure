@@ -15,6 +15,7 @@
                       id="citation-tab-{citation.id}"
                       data-target="citation-pane-{citation.id}"
                       aria-controls="citation-pane-{citation.id}"
+                      tabindex="<f:if condition='{tabIter.isFirst}'><f:then>0</f:then><f:else>-1</f:else></f:if>"
                       aria-selected="<f:if condition='{tabIter.isFirst}'><f:then>true</f:then><f:else>false</f:else></f:if>">
                 <f:translate key="{citation.labelKey}" />
               </button>
@@ -26,6 +27,8 @@
             <div class="publication-citations__pane<f:if condition='{paneIter.isFirst}'><f:then> is-active</f:then></f:if>"
                  role="tabpanel"
                  id="citation-pane-{citation.id}"
+                 aria-hidden="<f:if condition='{paneIter.isFirst}'><f:then>false</f:then><f:else>true</f:else></f:if>"
+                 <f:if condition="{paneIter.isFirst}"><f:else>hidden="hidden"</f:else></f:if>
                  aria-labelledby="citation-tab-{citation.id}">
               <f:if condition="{citation.isPreformatted}">
                 <f:then><pre><f:format.raw>{citation.content}</f:format.raw></pre></f:then>
@@ -45,20 +48,48 @@
             var tabs = container.querySelectorAll('.publication-citations__tab');
             var panes = container.querySelectorAll('.publication-citations__pane');
             tabs.forEach(function(tab) {
+              tab.addEventListener('keydown', function(event) {
+                var key = event.key;
+                var currentIndex = Array.prototype.indexOf.call(tabs, tab);
+                var targetIndex = currentIndex;
+
+                if (key === 'ArrowRight') {
+                  targetIndex = (currentIndex + 1) % tabs.length;
+                } else if (key === 'ArrowLeft') {
+                  targetIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                } else if (key === 'Home') {
+                  targetIndex = 0;
+                } else if (key === 'End') {
+                  targetIndex = tabs.length - 1;
+                } else {
+                  return;
+                }
+
+                event.preventDefault();
+                tabs[targetIndex].focus();
+                tabs[targetIndex].click();
+              });
+
               tab.addEventListener('click', function() {
                 var targetId = tab.getAttribute('data-target');
                 tabs.forEach(function(t) {
                   t.classList.remove('is-active');
                   t.setAttribute('aria-selected', 'false');
+                  t.setAttribute('tabindex', '-1');
                 });
                 panes.forEach(function(p) {
                   p.classList.remove('is-active');
+                  p.setAttribute('aria-hidden', 'true');
+                  p.setAttribute('hidden', 'hidden');
                 });
                 tab.classList.add('is-active');
                 tab.setAttribute('aria-selected', 'true');
+                tab.setAttribute('tabindex', '0');
                 var target = container.querySelector('#' + targetId);
                 if (target) {
                   target.classList.add('is-active');
+                  target.setAttribute('aria-hidden', 'false');
+                  target.removeAttribute('hidden');
                 }
               });
             });

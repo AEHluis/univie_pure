@@ -6,6 +6,7 @@ use Univie\UniviePure\Endpoints\DataSets;
 use Univie\UniviePure\Endpoints\ResearchOutput;
 use Univie\UniviePure\Endpoints\Projects;
 use Univie\UniviePure\Endpoints\Equipments;
+use T3luh\T3luhlib\Utils\Page;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Univie\UniviePure\Utility\LanguageUtility;
 use Univie\UniviePure\Utility\CommonUtilities;
@@ -18,7 +19,6 @@ use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
-use Univie\UniviePure\PageTitle\PublicationPageTitleProvider;
 
 
 
@@ -43,7 +43,6 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     private readonly Projects $projects;
     private readonly Equipments $equipments;
     private readonly DataSets $dataSets;
-    private readonly PublicationPageTitleProvider $pageTitleProvider;
     protected string $locale;
     protected string $localeShort;
     protected string $localeXml;
@@ -68,8 +67,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         ResearchOutput                   $researchOutput,
         Projects                         $projects,
         Equipments                       $equipments,
-        DataSets                         $dataSets,
-        PublicationPageTitleProvider     $pageTitleProvider
+        DataSets                         $dataSets
     )
     {
         $this->configurationManager = $configurationManager;
@@ -77,7 +75,6 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->dataSets = $dataSets;
         $this->projects = $projects;
         $this->equipments = $equipments;
-        $this->pageTitleProvider = $pageTitleProvider;
         $this->locale = $this->getLocale(); // Plain string for URLs
         $this->localeShort = $this->getLocaleShort();
         $this->localeXml = $this->getLocaleXml(); // XML for API requests
@@ -356,10 +353,17 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 
     /**
-     * Updates the HTML page title using the PageTitleProvider API.
+     * Updates the HTML page title via t3luhlib.
      */
     protected function updatePageTitle(string $title): void
     {
-        $this->pageTitleProvider->setTitle($title);
+        if (class_exists(Page::class)) {
+            Page::updatePageTitle($title);
+            return;
+        }
+
+        if (isset($GLOBALS['TSFE'])) {
+            $GLOBALS['TSFE']->indexedDocTitle = '';
+        }
     }
 }

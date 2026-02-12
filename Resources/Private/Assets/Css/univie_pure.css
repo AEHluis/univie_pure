@@ -182,10 +182,16 @@
 .tx-univie-pure.publication h1 {
     margin-bottom: 1.25rem;
     line-height: 1.2;
+    text-align: center;
 }
 
 .tx-univie-pure.publication h2 {
     line-height: 1.3;
+    text-align: center;
+}
+
+.tx-univie-pure.publication h3 {
+    text-align: left;
 }
 
 .tx-univie-pure.publication .publication-block {

@@ -200,7 +200,7 @@
     line-height: 1.3;
     font-weight: 600;
     color: #1f1f1f;
-    text-align: left;
+    text-align: center;
 }
 
 .tx-univie-pure.publication .publication-section-title--details {
@@ -260,13 +260,13 @@
     margin-top: 2rem;
 }
 
-.tx-univie-pure.publication-citations h2.publication-section-title {
+.tx-univie-pure.publication-citations h3.publication-section-title {
     margin: 0 0 1rem;
 }
 
-.tx-univie-pure.publication h2,
-.tx-univie-pure.publication-citations h2 {
-    text-align: left;
+.tx-univie-pure.publication h3,
+.tx-univie-pure.publication-citations h3 {
+    line-height: 1.3;
 }
 
 .tx-univie-pure .publication-citations__tabs {

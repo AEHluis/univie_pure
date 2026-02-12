@@ -12,7 +12,7 @@
 	</f:if>
 
 	<section class="publication-block publication-authorship">
-		<h2 class="publication-section-title"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.authors" /></h2>
+		<h3 class="publication-section-title"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.authors" /></h3>
 		<p class="publication-authors-list">
 			<f:for each="{publication.personAssociations}" as="person" iteration="persIter">
 				<f:if condition="{person.authorCollaboration}">
@@ -48,7 +48,7 @@
 
 	<f:if condition="{publication.abstract.text}">
 		<section class="publication-block publication-abstract-block">
-			<h2 class="publication-section-title"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.abstract" /></h2>
+			<h3 class="publication-section-title"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.abstract" /></h3>
 			<div class="publication-abstract-content">
 				<f:if condition="{lang} == 'de_DE' ">
 					<f:then>
@@ -78,9 +78,9 @@
 		</section>
 	</f:if>
 
-	<h2 class="publication-section-title publication-section-title--details">
+	<h3 class="publication-section-title publication-section-title--details">
 		<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.details" />
-	</h2>
+	</h3>
 	<dl>
 		<!-- supervisors -->
 		<f:if condition="{publication.supervisors}">

@@ -1,0 +1,93 @@
+<f:if condition="{publicationInsights.enabled}">
+  <div class="tx-univie-pure publication publication-insights">
+    <section class="publication-block publication-insights-block">
+      <div class="publication-insights__header">
+        <h3 class="publication-section-title">
+          <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights" />
+        </h3>
+        <f:if condition="{publicationInsights.oa.statusPrimary}">
+          <span class="publication-insights__badge {publicationInsights.oa.badgeClass}">
+            {publicationInsights.oa.statusPrimary}
+          </span>
+        </f:if>
+      </div>
+
+      <f:if condition="{publicationInsights.document.best}">
+        <p class="publication-insights__cta-row">
+          <a href="{publicationInsights.document.best.url}" target="_blank" rel="noopener noreferrer"
+             class="c-button u-icon-after u-icon-after--new-tab publication-insights__cta">
+            <f:if condition="{publicationInsights.document.best.isPdf}">
+              <f:then><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.openPdf" /></f:then>
+              <f:else><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.openLandingPage" /></f:else>
+            </f:if>
+          </a>
+          <span class="publication-insights__cta-meta">
+            {publicationInsights.document.best.source}
+          </span>
+        </p>
+      </f:if>
+
+      <dl>
+        <f:if condition="{publicationInsights.dois}">
+          <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.dois" /></dt>
+          <dd>
+            <f:for each="{publicationInsights.dois}" as="doi" iteration="doiIter">
+              <a href="https://doi.org/{doi}" target="_blank" rel="noopener noreferrer">https://doi.org/{doi}</a><f:if condition="{doiIter.isLast}"><f:else><br /></f:else></f:if>
+            </f:for>
+          </dd>
+        </f:if>
+
+        <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.scopusCitations" /></dt>
+        <dd>{publicationInsights.display.scopusCitations}</dd>
+
+        <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.fwci" /></dt>
+        <dd>{publicationInsights.display.fwci}</dd>
+
+        <f:if condition="{publicationInsights.display.publishedDate}">
+          <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.publishedDate" /></dt>
+          <dd>{publicationInsights.display.publishedDate}</dd>
+        </f:if>
+
+        <f:if condition="{publicationInsights.external.openalex.ok}">
+          <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.openalexCitations" /></dt>
+          <dd>{publicationInsights.external.openalex.citedByCount}</dd>
+        </f:if>
+
+        <f:if condition="{publicationInsights.document.alternatives}">
+          <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.alternativeLinks" /></dt>
+          <dd>
+            <f:for each="{publicationInsights.document.alternatives}" as="doc" iteration="docIter">
+              <a href="{doc.url}" target="_blank" rel="noopener noreferrer">{doc.source}</a><f:if condition="{docIter.isLast}"><f:else> | </f:else></f:if>
+            </f:for>
+          </dd>
+        </f:if>
+
+        <f:if condition="{publicationInsights.display.lastModified}">
+          <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.lastModified" /></dt>
+          <dd>{publicationInsights.display.lastModified}</dd>
+        </f:if>
+
+        <f:if condition="{publicationInsights.sources}">
+          <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.sources" /></dt>
+          <dd>
+            <f:for each="{publicationInsights.sources}" as="source" iteration="sourceIter">
+              {source}<f:if condition="{sourceIter.isLast}"><f:else>, </f:else></f:if>
+            </f:for>
+          </dd>
+        </f:if>
+      </dl>
+
+      <f:if condition="{publicationInsights.oa.hasExternalConflict}">
+        <p class="publication-insights__note">
+          <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.externalOaNotice" />
+        </p>
+      </f:if>
+
+      <f:if condition="{publicationInsights.flags.externalLookupUnavailable}">
+        <p class="publication-insights__note">
+          <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.externalLookupUnavailable" />
+        </p>
+      </f:if>
+    </section>
+  </div>
+</f:if>

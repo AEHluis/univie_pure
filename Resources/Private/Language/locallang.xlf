@@ -120,6 +120,51 @@
 			<trans-unit id="univiepur.publication.citation.ris">
 				<source>RIS</source>
 			</trans-unit>
+			<trans-unit id="univiepur.publication.insights">
+				<source>Publication Insights</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.oaStatus">
+				<source>Open Access status</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.dois">
+				<source>DOI(s)</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.scopusCitations">
+				<source>Scopus citations</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.fwci">
+				<source>Field-Weighted Citation Impact (FWCI)</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.openalexCitations">
+				<source>OpenAlex citations</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.bestOpenVersion">
+				<source>Best open version</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.openPdf">
+				<source>Open PDF</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.openLandingPage">
+				<source>Open landing page</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.lastModified">
+				<source>Last modified</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.publishedDate">
+				<source>Published</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.sources">
+				<source>Sources</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.alternativeLinks">
+				<source>Alternative links</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.externalOaNotice">
+				<source>An external Open Access version is available.</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.externalLookupUnavailable">
+				<source>External metadata lookup is currently unavailable.</source>
+			</trans-unit>
 			<trans-unit id="univiepur.projects.description">
 				<source>Abstract</source>
 			</trans-unit>

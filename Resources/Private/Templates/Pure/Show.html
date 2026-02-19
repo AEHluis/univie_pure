@@ -2,6 +2,7 @@
 <f:section name="main">
   <f:flashMessages  />
   <f:render partial="Pure/Properties" arguments="{publication:publication, lang:lang, showLinkToPortal:showLinkToPortal}" />
+  <f:render partial="Pure/PublicationInsights" arguments="{publicationInsights:publicationInsights}" />
   <f:if condition="{settings.showBibtex}">
     <f:if condition="{citations}">
       <div class="tx-univie-pure publication-citations">

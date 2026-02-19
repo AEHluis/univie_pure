@@ -163,6 +163,66 @@
 				<source>RIS</source>
 				<target>RIS</target>
 			</trans-unit>
+			<trans-unit id="univiepur.publication.insights">
+				<source>Publication Insights</source>
+				<target>Publikations-Insights</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.oaStatus">
+				<source>Open Access status</source>
+				<target>Open-Access-Status</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.dois">
+				<source>DOI(s)</source>
+				<target>DOI(s)</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.scopusCitations">
+				<source>Scopus citations</source>
+				<target>Scopus-Zitationen</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.fwci">
+				<source>Field-Weighted Citation Impact (FWCI)</source>
+				<target>Field-Weighted Citation Impact (FWCI)</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.openalexCitations">
+				<source>OpenAlex citations</source>
+				<target>OpenAlex-Zitationen</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.bestOpenVersion">
+				<source>Best open version</source>
+				<target>Beste frei zugängliche Version</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.openPdf">
+				<source>Open PDF</source>
+				<target>PDF öffnen</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.openLandingPage">
+				<source>Open landing page</source>
+				<target>Landing-Page öffnen</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.lastModified">
+				<source>Last modified</source>
+				<target>Zuletzt geändert</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.publishedDate">
+				<source>Published</source>
+				<target>Veröffentlicht</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.sources">
+				<source>Sources</source>
+				<target>Quellen</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.alternativeLinks">
+				<source>Alternative links</source>
+				<target>Alternative Links</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.externalOaNotice">
+				<source>An external Open Access version is available.</source>
+				<target>Eine externe Open-Access-Version ist verfügbar.</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.externalLookupUnavailable">
+				<source>External metadata lookup is currently unavailable.</source>
+				<target>Externe Metadaten sind aktuell nicht verfügbar.</target>
+			</trans-unit>
 			<trans-unit id="univiepur.more">
 				<source>more...</source>
 				<target>Mehr...</target>

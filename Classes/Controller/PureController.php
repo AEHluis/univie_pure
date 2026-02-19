@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use Univie\UniviePure\PageTitle\PublicationPageTitleProvider;
+use Univie\UniviePure\Service\Enrichment\PublicationInsightsService;
 use Throwable;
 
 
@@ -45,6 +46,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     private readonly Projects $projects;
     private readonly Equipments $equipments;
     private readonly DataSets $dataSets;
+    private readonly PublicationInsightsService $publicationInsightsService;
     protected string $locale;
     protected string $localeShort;
     protected string $localeXml;
@@ -69,7 +71,8 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         ResearchOutput                   $researchOutput,
         Projects                         $projects,
         Equipments                       $equipments,
-        DataSets                         $dataSets
+        DataSets                         $dataSets,
+        PublicationInsightsService       $publicationInsightsService
     )
     {
         $this->configurationManager = $configurationManager;
@@ -77,6 +80,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->dataSets = $dataSets;
         $this->projects = $projects;
         $this->equipments = $equipments;
+        $this->publicationInsightsService = $publicationInsightsService;
         $this->locale = $this->getLocale(); // Plain string for URLs
         $this->localeShort = $this->getLocaleShort();
         $this->localeXml = $this->getLocaleXml(); // XML for API requests
@@ -340,6 +344,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'publication' => $view,
                     'bibtex' => $bibtex,
                     'citations' => $citations,
+                    'publicationInsights' => $this->publicationInsightsService->build($view, $locale),
                     'lang' => $this->locale,
                     'showLinkToPortal' => CommonUtilities::getArrayValue($this->settings, 'linkToPortal', null),
                 ]);

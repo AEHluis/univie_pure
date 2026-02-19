@@ -38,9 +38,33 @@ services:
   Univie\UniviePure\PageTitle\PublicationPageTitleProvider:
     public: true
 
+  univie_pure.external_http_client:
+    class: GuzzleHttp\Client
+    arguments:
+      $config:
+        verify: true
+        proxy:
+          http: '%env(string:PURE_PROXY)%'
+          https: '%env(string:PURE_PROXY)%'
+          no: '%env(csv:OUTBOUND_NO_PROXY)%'
+
+  Univie\UniviePure\Service\Enrichment\UnpaywallClient:
+    arguments:
+      $client: '@univie_pure.external_http_client'
+      $cache: '@cache.univie_pure'
+
+  Univie\UniviePure\Service\Enrichment\OpenAlexClient:
+    arguments:
+      $client: '@univie_pure.external_http_client'
+      $cache: '@cache.univie_pure'
+
+  Univie\UniviePure\Service\Enrichment\RorClient:
+    arguments:
+      $client: '@univie_pure.external_http_client'
+      $cache: '@cache.univie_pure'
+
   Psr\Http\Client\ClientInterface:
     class: GuzzleHttp\Client
     arguments:
       $config:
         verify: true # 🔴 Disable SSL verification (for debugging only!)
-

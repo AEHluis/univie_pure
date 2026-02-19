@@ -200,6 +200,13 @@
     border-bottom: 0px;
 }
 
+.tx-univie-pure.publication .publication-details-block {
+    margin-top: 1.25rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid #e6e6e6;
+    background: #fafbfd;
+}
+
 .tx-univie-pure .publication-section-title {
     margin: 0 0 0.55rem;
     font-size: 1.5rem;

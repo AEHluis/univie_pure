@@ -138,6 +138,9 @@
 			<trans-unit id="univiepur.publication.insights.openPdf">
 				<source>Open PDF</source>
 			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.scopusLink">
+				<source>Scopus link</source>
+			</trans-unit>
 			<trans-unit id="univiepur.publication.insights.lastModified">
 				<source>Last modified</source>
 			</trans-unit>

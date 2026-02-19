@@ -1,10 +1,11 @@
 <f:if condition="{publicationInsights.enabled}">
-  <f:if condition="{publicationInsights.oa.statusPrimary}">
-    <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.oaStatus" /></dt>
+  <f:if condition="{publicationInsights.pure.scopusUrl}">
+    <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.scopusLink" /></dt>
     <dd>
-      <span class="publication-insights__badge {publicationInsights.oa.badgeClass}">
-        {publicationInsights.oa.statusPrimary}
-      </span>
+      <a href="{publicationInsights.pure.scopusUrl}" target="_blank" rel="noopener noreferrer"
+         class="c-button u-icon-after u-icon-after--new-tab publication-insights__cta">
+        <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.scopusLink" />
+      </a>
     </dd>
   </f:if>
 
@@ -18,11 +19,15 @@
     </dd>
   </f:if>
 
-  <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.scopusCitations" /></dt>
-  <dd>{publicationInsights.display.scopusCitations}</dd>
+  <f:if condition="{publicationInsights.display.scopusCitations}">
+    <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.scopusCitations" /></dt>
+    <dd>{publicationInsights.display.scopusCitations}</dd>
+  </f:if>
 
-  <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.fwci" /></dt>
-  <dd>{publicationInsights.display.fwci}</dd>
+  <f:if condition="{publicationInsights.display.fwci}">
+    <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.fwci" /></dt>
+    <dd>{publicationInsights.display.fwci}</dd>
+  </f:if>
 
   <f:if condition="{publicationInsights.display.lastModified}">
     <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.lastModified" /></dt>

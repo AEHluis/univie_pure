@@ -34,6 +34,7 @@ class PublicationInsightsService
                 'publishedDate' => $publishedDate,
                 'lastModified' => $publication['info']['modifiedDate'] ?? null,
                 'documents' => $pureDocuments,
+                'scopusUrl' => $this->extractScopusUrl($publication),
             ],
             'external' => [
                 'unpaywall' => [
@@ -62,8 +63,8 @@ class PublicationInsightsService
             'display' => [
                 'publishedDate' => $this->formatDate($publishedDate, $locale),
                 'lastModified' => $this->formatDate($publication['info']['modifiedDate'] ?? null, $locale, true),
-                'scopusCitations' => $this->formatNullableNumber($publication['totalScopusCitations'] ?? null, '0'),
-                'fwci' => $this->formatNullableNumber($publication['fieldWeightedCitationImpact'] ?? null, '0.0'),
+                'scopusCitations' => $this->formatPositiveNumber($publication['totalScopusCitations'] ?? null),
+                'fwci' => $this->formatPositiveNumber($publication['fieldWeightedCitationImpact'] ?? null),
             ],
             'flags' => [
                 'externalLookupUnavailable' => false,
@@ -248,6 +249,16 @@ class PublicationInsightsService
             if ($rawDoi !== '') {
                 $normalized = $this->doiExtractor->normalizeDoi($rawDoi);
                 if ($normalized !== null) {
+                    $arxivPdfUrl = $this->buildArxivPdfUrl($normalized);
+                    if ($arxivPdfUrl !== null) {
+                        $documents[] = [
+                            'url' => $arxivPdfUrl,
+                            'source' => 'Pure/arXiv',
+                            'label' => 'Open PDF',
+                            'isPdf' => true,
+                            'score' => 95,
+                        ];
+                    }
                     $documents[] = [
                         'url' => 'https://doi.org/' . $normalized,
                         'source' => 'Pure',
@@ -260,6 +271,29 @@ class PublicationInsightsService
         }
 
         return $this->dedupeDocuments($documents);
+    }
+
+    private function extractScopusUrl(array $publication): ?string
+    {
+        $links = $publication['additionalLinks']['additionalLink'] ?? ($publication['additionalLinks'] ?? []);
+        $fallback = null;
+        foreach ($this->toList($links) as $link) {
+            if (!is_array($link)) {
+                continue;
+            }
+            $url = trim((string)($link['url'] ?? ''));
+            if ($url === '' || !$this->isHttpUrl($url)) {
+                continue;
+            }
+            $typeUri = strtolower(trim((string)($link['linkType']['uri'] ?? '')));
+            if ($typeUri !== '' && str_contains($typeUri, 'scopuspublication')) {
+                return $url;
+            }
+            if ($fallback === null && str_contains(strtolower($url), 'scopus.com')) {
+                $fallback = $url;
+            }
+        }
+        return $fallback;
     }
 
     /**
@@ -345,6 +379,20 @@ class PublicationInsightsService
         return str_contains($value, '.pdf') || str_contains($value, '/pdf');
     }
 
+    private function buildArxivPdfUrl(string $normalizedDoi): ?string
+    {
+        $prefix = '10.48550/arxiv.';
+        $doi = strtolower(trim($normalizedDoi));
+        if (!str_starts_with($doi, $prefix)) {
+            return null;
+        }
+        $arxivId = trim(substr($doi, strlen($prefix)));
+        if ($arxivId === '') {
+            return null;
+        }
+        return 'https://arxiv.org/pdf/' . $arxivId . '.pdf';
+    }
+
     /**
      * @param array<string,mixed> $oa
      * @return array<string,mixed>
@@ -370,13 +418,17 @@ class PublicationInsightsService
         return $oa;
     }
 
-    private function formatNullableNumber(mixed $value, string $fallback): string
+    private function formatPositiveNumber(mixed $value): ?string
     {
         if ($value === null || $value === '') {
-            return $fallback;
+            return null;
         }
         if (!is_numeric((string)$value)) {
-            return $fallback;
+            return null;
+        }
+        $numeric = (float)$value;
+        if ($numeric <= 0.0) {
+            return null;
         }
         return (string)$value;
     }

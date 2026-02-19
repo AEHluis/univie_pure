@@ -53,16 +53,6 @@ services:
       $client: '@univie_pure.external_http_client'
       $cache: '@cache.univie_pure'
 
-  Univie\UniviePure\Service\Enrichment\OpenAlexClient:
-    arguments:
-      $client: '@univie_pure.external_http_client'
-      $cache: '@cache.univie_pure'
-
-  Univie\UniviePure\Service\Enrichment\RorClient:
-    arguments:
-      $client: '@univie_pure.external_http_client'
-      $cache: '@cache.univie_pure'
-
   Psr\Http\Client\ClientInterface:
     class: GuzzleHttp\Client
     arguments:

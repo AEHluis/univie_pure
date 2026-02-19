@@ -8,9 +8,7 @@ class PublicationInsightsService
 {
     public function __construct(
         private readonly DoiExtractor $doiExtractor,
-        private readonly UnpaywallClient $unpaywallClient,
-        private readonly OpenAlexClient $openAlexClient,
-        private readonly RorClient $rorClient
+        private readonly UnpaywallClient $unpaywallClient
     ) {
     }
 
@@ -49,18 +47,6 @@ class PublicationInsightsService
                     'license' => null,
                     'updated' => null,
                 ],
-                'openalex' => [
-                    'enabled' => false,
-                    'ok' => false,
-                    'citedByCount' => null,
-                    'isOa' => null,
-                    'oaStatus' => null,
-                ],
-                'ror' => [
-                    'enabled' => false,
-                    'ok' => false,
-                    'institutions' => [],
-                ],
             ],
             'oa' => [
                 'statusPrimary' => $pureOaStatus,
@@ -82,7 +68,6 @@ class PublicationInsightsService
             'flags' => [
                 'externalLookupUnavailable' => false,
             ],
-            'sources' => ['Pure'],
         ];
 
         $externalEnabled = $this->isEnabled('ENRICHMENT_EXTERNAL_ENABLED', false);
@@ -97,41 +82,20 @@ class PublicationInsightsService
             $unpaywall = $this->unpaywallClient->fetchByDoi($primaryDoi, $unpaywallEmail);
             $insights['external']['unpaywall'] = array_merge($insights['external']['unpaywall'], $unpaywall);
             if (!empty($unpaywall['ok'])) {
-                $insights['sources'][] = 'Unpaywall';
-                $insights['oa']['isOa'] = $unpaywall['isOa'] ?? null;
-                $insights['oa']['bestUrl'] = $unpaywall['bestUrl'] ?? null;
-                $insights['oa']['bestPdfUrl'] = $unpaywall['bestPdfUrl'] ?? null;
-                $insights['oa']['license'] = $unpaywall['license'] ?? null;
+                $bestPdfUrl = trim((string)($unpaywall['bestPdfUrl'] ?? ''));
+                $hasUsefulPdf = $bestPdfUrl !== '' && $this->isHttpUrl($bestPdfUrl);
+                if ($hasUsefulPdf) {
+                    $insights['oa']['isOa'] = $unpaywall['isOa'] ?? null;
+                    $insights['oa']['bestPdfUrl'] = $bestPdfUrl;
+                    $insights['oa']['license'] = $unpaywall['license'] ?? null;
 
-                $preferExternalOa = $this->isEnabled('ENRICHMENT_PREFER_EXTERNAL_OA', false);
-                if ($preferExternalOa && !empty($unpaywall['oaStatus'])) {
-                    $insights['oa']['statusPrimary'] = $unpaywall['oaStatus'];
+                    $preferExternalOa = $this->isEnabled('ENRICHMENT_PREFER_EXTERNAL_OA', false);
+                    if ($preferExternalOa && !empty($unpaywall['oaStatus'])) {
+                        $insights['oa']['statusPrimary'] = $unpaywall['oaStatus'];
+                    }
                 }
             } else {
                 $insights['flags']['externalLookupUnavailable'] = true;
-            }
-        }
-
-        $useOpenAlex = $this->isEnabled('ENRICHMENT_OPENALEX_ENABLED', false);
-        if ($useOpenAlex) {
-            $mailto = trim((string)(getenv('OPENALEX_MAILTO') ?: ''));
-            $openAlex = $this->openAlexClient->fetchByDoi($primaryDoi, $mailto !== '' ? $mailto : null);
-            $insights['external']['openalex'] = array_merge($insights['external']['openalex'], $openAlex);
-            if (!empty($openAlex['ok'])) {
-                $insights['sources'][] = 'OpenAlex';
-            } else {
-                $insights['flags']['externalLookupUnavailable'] = true;
-            }
-
-            $useRor = $this->isEnabled('ENRICHMENT_ROR_ENABLED', false);
-            if ($useRor && !empty($openAlex['institutions']) && is_array($openAlex['institutions'])) {
-                $insights['external']['ror']['enabled'] = true;
-                $institutions = $this->rorClient->resolve($openAlex['institutions']);
-                $insights['external']['ror']['institutions'] = $institutions;
-                $insights['external']['ror']['ok'] = $institutions !== [];
-                if ($institutions !== []) {
-                    $insights['sources'][] = 'ROR';
-                }
             }
         }
 
@@ -141,7 +105,6 @@ class PublicationInsightsService
             $insights['pure']['oaStatus'],
             (bool)($insights['external']['unpaywall']['ok'] ?? false)
         );
-        $insights['sources'] = array_values(array_unique($insights['sources']));
 
         return $insights;
     }
@@ -317,16 +280,6 @@ class PublicationInsightsService
                     'label' => 'Open PDF',
                     'isPdf' => true,
                     'score' => 100,
-                ];
-            }
-            $landing = trim((string)($unpaywall['bestUrl'] ?? ''));
-            if ($landing !== '' && $this->isHttpUrl($landing)) {
-                $documents[] = [
-                    'url' => $landing,
-                    'source' => 'Unpaywall',
-                    'label' => 'Open Source',
-                    'isPdf' => $this->isPdfUrl($landing),
-                    'score' => $this->isPdfUrl($landing) ? 95 : 70,
                 ];
             }
         }

@@ -183,21 +183,9 @@
 				<source>Field-Weighted Citation Impact (FWCI)</source>
 				<target>Field-Weighted Citation Impact (FWCI)</target>
 			</trans-unit>
-			<trans-unit id="univiepur.publication.insights.openalexCitations">
-				<source>OpenAlex citations</source>
-				<target>OpenAlex-Zitationen</target>
-			</trans-unit>
-			<trans-unit id="univiepur.publication.insights.bestOpenVersion">
-				<source>Best open version</source>
-				<target>Beste frei zugängliche Version</target>
-			</trans-unit>
 			<trans-unit id="univiepur.publication.insights.openPdf">
 				<source>Open PDF</source>
 				<target>PDF öffnen</target>
-			</trans-unit>
-			<trans-unit id="univiepur.publication.insights.openLandingPage">
-				<source>Open landing page</source>
-				<target>Landing-Page öffnen</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.insights.lastModified">
 				<source>Last modified</source>
@@ -206,14 +194,6 @@
 			<trans-unit id="univiepur.publication.insights.publishedDate">
 				<source>Published</source>
 				<target>Veröffentlicht</target>
-			</trans-unit>
-			<trans-unit id="univiepur.publication.insights.sources">
-				<source>Sources</source>
-				<target>Quellen</target>
-			</trans-unit>
-			<trans-unit id="univiepur.publication.insights.alternativeLinks">
-				<source>Alternative links</source>
-				<target>Alternative Links</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.insights.externalOaNotice">
 				<source>An external Open Access version is available.</source>

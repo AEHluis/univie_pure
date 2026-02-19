@@ -410,36 +410,20 @@
 		<f:else>
 			<div class="tx-univie-pure publication publication-insights">
 				<section class="publication-block publication-insights-block">
-					<div class="publication-insights__header">
-						<h3 class="publication-section-title">
-							<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights" />
-						</h3>
-						<f:if condition="{lang} == 'de_DE'">
-							<f:then>
-								<f:if condition="{publication.openAccessPermission.term.text.1.value}">
-									<span class="publication-insights__badge is-unknown">{publication.openAccessPermission.term.text.1.value}</span>
-								</f:if>
-							</f:then>
-							<f:else>
-								<f:if condition="{publication.openAccessPermission.term.text.0.value}">
-									<span class="publication-insights__badge is-unknown">{publication.openAccessPermission.term.text.0.value}</span>
-								</f:if>
-							</f:else>
-						</f:if>
-					</div>
+					<f:if condition="{lang} == 'de_DE'">
+						<f:then>
+							<f:if condition="{publication.openAccessPermission.term.text.1.value}">
+								<p class="publication-insights__cta-row"><span class="publication-insights__badge is-unknown">{publication.openAccessPermission.term.text.1.value}</span></p>
+							</f:if>
+						</f:then>
+						<f:else>
+							<f:if condition="{publication.openAccessPermission.term.text.0.value}">
+								<p class="publication-insights__cta-row"><span class="publication-insights__badge is-unknown">{publication.openAccessPermission.term.text.0.value}</span></p>
+							</f:if>
+						</f:else>
+					</f:if>
 
 					<dl>
-						<f:if condition="{publication.electronicVersions}">
-							<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.dois" /></dt>
-							<dd>
-								<f:for each="{publication.electronicVersions}" as="electronicVersion" iteration="doiIter">
-									<f:if condition="{electronicVersion.doi}">
-										<a href="{electronicVersion.doi}" target="_blank" rel="noopener noreferrer">{electronicVersion.doi}</a><f:if condition="{doiIter.isLast}"><f:else><br /></f:else></f:if>
-									</f:if>
-								</f:for>
-							</dd>
-						</f:if>
-
 						<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.scopusCitations" /></dt>
 						<dd><f:if condition="{publication.totalScopusCitations}"><f:then>{publication.totalScopusCitations}</f:then><f:else>0</f:else></f:if></dd>
 
@@ -451,8 +435,6 @@
 							<dd>{publication.info.modifiedDate}</dd>
 						</f:if>
 
-						<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.sources" /></dt>
-						<dd>Pure</dd>
 					</dl>
 				</section>
 			</div>

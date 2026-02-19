@@ -1,50 +1,32 @@
 <f:if condition="{publicationInsights.enabled}">
-  <div class="tx-univie-pure publication publication-insights">
-    <section class="publication-block publication-insights-block">
-      <f:if condition="{publicationInsights.oa.statusPrimary}">
-        <p class="publication-insights__cta-row">
-          <span class="publication-insights__badge {publicationInsights.oa.badgeClass}">
-            {publicationInsights.oa.statusPrimary}
-          </span>
-        </p>
-      </f:if>
+  <f:if condition="{publicationInsights.oa.statusPrimary}">
+    <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.oaStatus" /></dt>
+    <dd>
+      <span class="publication-insights__badge {publicationInsights.oa.badgeClass}">
+        {publicationInsights.oa.statusPrimary}
+      </span>
+    </dd>
+  </f:if>
 
-      <f:if condition="{publicationInsights.document.best} && {publicationInsights.document.best.isPdf}">
-        <p class="publication-insights__cta-row">
-          <a href="{publicationInsights.document.best.url}" target="_blank" rel="noopener noreferrer"
-             class="c-button u-icon-after u-icon-after--new-tab publication-insights__cta">
-            <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.openPdf" />
-          </a>
-          <span class="publication-insights__cta-meta">
-            {publicationInsights.document.best.source}
-          </span>
-        </p>
-      </f:if>
+  <f:if condition="{publicationInsights.document.best} && {publicationInsights.document.best.isPdf}">
+    <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.openPdf" /></dt>
+    <dd>
+      <a href="{publicationInsights.document.best.url}" target="_blank" rel="noopener noreferrer"
+         class="c-button u-icon-after u-icon-after--new-tab publication-insights__cta">
+        <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.openPdf" />
+      </a>
+    </dd>
+  </f:if>
 
-      <dl>
-        <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.scopusCitations" /></dt>
-        <dd>{publicationInsights.display.scopusCitations}</dd>
+  <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.scopusCitations" /></dt>
+  <dd>{publicationInsights.display.scopusCitations}</dd>
 
-        <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.fwci" /></dt>
-        <dd>{publicationInsights.display.fwci}</dd>
+  <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.fwci" /></dt>
+  <dd>{publicationInsights.display.fwci}</dd>
 
-        <f:if condition="{publicationInsights.display.lastModified}">
-          <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.lastModified" /></dt>
-          <dd>{publicationInsights.display.lastModified}</dd>
-        </f:if>
-      </dl>
+  <f:if condition="{publicationInsights.display.lastModified}">
+    <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.lastModified" /></dt>
+    <dd>{publicationInsights.display.lastModified}</dd>
+  </f:if>
 
-      <f:if condition="{publicationInsights.oa.hasExternalConflict}">
-        <p class="publication-insights__note">
-          <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.externalOaNotice" />
-        </p>
-      </f:if>
-
-      <f:if condition="{publicationInsights.flags.externalLookupUnavailable}">
-        <p class="publication-insights__note">
-          <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.externalLookupUnavailable" />
-        </p>
-      </f:if>
-    </section>
-  </div>
 </f:if>

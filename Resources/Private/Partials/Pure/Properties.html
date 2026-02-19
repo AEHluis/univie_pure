@@ -399,46 +399,39 @@
 
 		</f:if>
 
+		<f:if condition="{publicationInsights}">
+			<f:then>
+				<f:render partial="Pure/PublicationInsights" arguments="{publicationInsights:publicationInsights}" />
+			</f:then>
+			<f:else>
+				<f:if condition="{lang} == 'de_DE'">
+					<f:then>
+						<f:if condition="{publication.openAccessPermission.term.text.1.value}">
+							<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.oaStatus" /></dt>
+							<dd><span class="publication-insights__badge is-unknown">{publication.openAccessPermission.term.text.1.value}</span></dd>
+						</f:if>
+					</f:then>
+					<f:else>
+						<f:if condition="{publication.openAccessPermission.term.text.0.value}">
+							<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.oaStatus" /></dt>
+							<dd><span class="publication-insights__badge is-unknown">{publication.openAccessPermission.term.text.0.value}</span></dd>
+						</f:if>
+					</f:else>
+				</f:if>
 
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.scopusCitations" /></dt>
+				<dd><f:if condition="{publication.totalScopusCitations}"><f:then>{publication.totalScopusCitations}</f:then><f:else>0</f:else></f:if></dd>
+
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.fwci" /></dt>
+				<dd><f:if condition="{publication.fieldWeightedCitationImpact}"><f:then>{publication.fieldWeightedCitationImpact}</f:then><f:else>0.0</f:else></f:if></dd>
+
+				<f:if condition="{publication.info.modifiedDate}">
+					<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.lastModified" /></dt>
+					<dd>{publication.info.modifiedDate}</dd>
+				</f:if>
+			</f:else>
+		</f:if>
 
 	</dl>
-
-	<f:if condition="{publicationInsights}">
-		<f:then>
-			<f:render partial="Pure/PublicationInsights" arguments="{publicationInsights:publicationInsights}" />
-		</f:then>
-		<f:else>
-			<div class="tx-univie-pure publication publication-insights">
-				<section class="publication-block publication-insights-block">
-					<f:if condition="{lang} == 'de_DE'">
-						<f:then>
-							<f:if condition="{publication.openAccessPermission.term.text.1.value}">
-								<p class="publication-insights__cta-row"><span class="publication-insights__badge is-unknown">{publication.openAccessPermission.term.text.1.value}</span></p>
-							</f:if>
-						</f:then>
-						<f:else>
-							<f:if condition="{publication.openAccessPermission.term.text.0.value}">
-								<p class="publication-insights__cta-row"><span class="publication-insights__badge is-unknown">{publication.openAccessPermission.term.text.0.value}</span></p>
-							</f:if>
-						</f:else>
-					</f:if>
-
-					<dl>
-						<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.scopusCitations" /></dt>
-						<dd><f:if condition="{publication.totalScopusCitations}"><f:then>{publication.totalScopusCitations}</f:then><f:else>0</f:else></f:if></dd>
-
-						<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.fwci" /></dt>
-						<dd><f:if condition="{publication.fieldWeightedCitationImpact}"><f:then>{publication.fieldWeightedCitationImpact}</f:then><f:else>0.0</f:else></f:if></dd>
-
-						<f:if condition="{publication.info.modifiedDate}">
-							<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.lastModified" /></dt>
-							<dd>{publication.info.modifiedDate}</dd>
-						</f:if>
-
-					</dl>
-				</section>
-			</div>
-		</f:else>
-	</f:if>
 
 </div>

@@ -136,7 +136,7 @@
 				<source>Field-Weighted Citation Impact (FWCI)</source>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.insights.openPdf">
-				<source>Open PDF</source>
+				<source>PDF</source>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.insights.scopusLink">
 				<source>Scopus link</source>

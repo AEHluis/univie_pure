@@ -38,21 +38,11 @@ services:
   Univie\UniviePure\PageTitle\PublicationPageTitleProvider:
     public: true
 
-  univie_pure.external_http_client:
-    class: GuzzleHttp\Client
-    arguments:
-      $config:
-        verify: true
-        proxy: '%env(string:PURE_PROXY)%'
-
   Univie\UniviePure\Service\Enrichment\UnpaywallClient:
     arguments:
-      $client: '@univie_pure.external_http_client'
+      $client: '@Psr\Http\Client\ClientInterface'
       $cache: '@cache.univie_pure'
 
   Psr\Http\Client\ClientInterface:
     class: GuzzleHttp\Client
-    arguments:
-      $config:
-        verify: true
-        proxy: '%env(string:PURE_PROXY)%'
+    factory: ['Univie\UniviePure\Service\HttpClientFactory', 'create']

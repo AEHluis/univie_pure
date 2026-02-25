@@ -46,7 +46,7 @@ services:
         proxy:
           http: '%env(string:PURE_PROXY)%'
           https: '%env(string:PURE_PROXY)%'
-          no: '%env(csv:OUTBOUND_NO_PROXY)%'
+          no: '%env(csv:default::OUTBOUND_NO_PROXY)%'
 
   Univie\UniviePure\Service\Enrichment\UnpaywallClient:
     arguments:

@@ -34,7 +34,7 @@ class PublicationInsightsService
                 'publishedDate' => $publishedDate,
                 'lastModified' => $publication['info']['modifiedDate'] ?? null,
                 'documents' => $pureDocuments,
-                'scopusUrl' => $this->extractScopusUrl($publication),
+                'scopusUrl' => $this->isEnabled('DISPLAY_SCOPUS_LINK', true) ? $this->extractScopusUrl($publication) : null,
             ],
             'external' => [
                 'unpaywall' => [

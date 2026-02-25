@@ -43,10 +43,7 @@ services:
     arguments:
       $config:
         verify: true
-        proxy:
-          http: '%env(string:PURE_PROXY)%'
-          https: '%env(string:PURE_PROXY)%'
-          no: '%env(csv:default::OUTBOUND_NO_PROXY)%'
+        proxy: '%env(string:PURE_PROXY)%'
 
   Univie\UniviePure\Service\Enrichment\UnpaywallClient:
     arguments:
@@ -57,4 +54,5 @@ services:
     class: GuzzleHttp\Client
     arguments:
       $config:
-        verify: true # 🔴 Disable SSL verification (for debugging only!)
+        verify: true
+        proxy: '%env(string:PURE_PROXY)%'

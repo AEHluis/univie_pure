@@ -120,6 +120,15 @@
 			<trans-unit id="univiepur.publication.citation.ris">
 				<source>RIS</source>
 			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.loading">
+				<source>Loading...</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.error">
+				<source>Failed to load citation</source>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.clickToLoad">
+				<source>Loading...</source>
+			</trans-unit>
 			<trans-unit id="univiepur.publication.insights">
 				<source>Publication Insights</source>
 			</trans-unit>

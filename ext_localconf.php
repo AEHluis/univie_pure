@@ -27,6 +27,9 @@ call_user_func(
             ]
         );
 
+        // Note: Citation AJAX is handled by CitationAjaxMiddleware
+        // registered in Configuration/RequestMiddlewares.php
+
         // TypoScript
         ExtensionManagementUtility::addTypoScriptConstants(
             '@import "EXT:univie_pure/Configuration/TypoScript/constants.typoscript"'

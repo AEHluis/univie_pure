@@ -38,6 +38,12 @@ services:
   Univie\UniviePure\PageTitle\PublicationPageTitleProvider:
     public: true
 
+  Univie\UniviePure\Controller\CitationAjaxController:
+    public: true
+
+  Univie\UniviePure\Middleware\CitationAjaxMiddleware:
+    public: true
+
   Univie\UniviePure\Service\Enrichment\UnpaywallClient:
     arguments:
       $client: '@Psr\Http\Client\ClientInterface'

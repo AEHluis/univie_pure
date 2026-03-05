@@ -163,6 +163,18 @@
 				<source>RIS</source>
 				<target>RIS</target>
 			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.loading">
+				<source>Loading...</source>
+				<target>Laden...</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.error">
+				<source>Failed to load citation</source>
+				<target>Zitat konnte nicht geladen werden</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.clickToLoad">
+				<source>Loading...</source>
+				<target>Laden...</target>
+			</trans-unit>
 			<trans-unit id="univiepur.publication.insights">
 				<source>Publication Insights</source>
 				<target>Publikations-Insights</target>

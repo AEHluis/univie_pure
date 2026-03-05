@@ -12,7 +12,7 @@ use TYPO3\CMS\Core\Http\Uri;
 
 class UnpaywallClient
 {
-    private const CACHE_TTL = 604800; // 7 days
+    private const CACHE_TTL = 2592000; // 30 days
     private const NEGATIVE_CACHE_TTL = 86400; // 24h
 
     public function __construct(

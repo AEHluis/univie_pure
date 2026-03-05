@@ -20,8 +20,10 @@ call_user_func(
                 PureController::class => 'list,listHandler,show',
             ],
             // non-cacheable actions
+            // Note: list and show are now cacheable to reduce Pure API load
+            // listHandler remains non-cacheable as it handles form POST and redirects
             [
-                PureController::class => 'list,listHandler',
+                PureController::class => 'listHandler',
             ]
         );
 

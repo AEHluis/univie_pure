@@ -30,7 +30,7 @@ use Univie\UniviePure\Utility\DotEnv;
 
 class WebService
 {
-    private const CACHE_LIFETIME = 14400; // 4 hours in seconds
+    private const CACHE_LIFETIME = 86400; // 24 hours in seconds
     private const MINIMUM_RESPONSE_SIZE = 350;
 
     public function __construct(

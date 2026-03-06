@@ -460,12 +460,8 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $robotsMeta = 'noindex, nofollow, noarchive, nosnippet, noimageindex';
 
         try {
-            GeneralUtility::makeInstance(PageRenderer::class)->addMetaTag(
-                'name',
-                'robots',
-                $robotsMeta,
-                [],
-                true
+            GeneralUtility::makeInstance(PageRenderer::class)->addHeaderData(
+                '<meta name="robots" content="' . htmlspecialchars($robotsMeta, ENT_QUOTES, 'UTF-8') . '" />'
             );
         } catch (Throwable) {
             // Ignore if header injection is unavailable in current rendering context.

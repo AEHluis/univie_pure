@@ -109,8 +109,17 @@ class PublicationInsightsService
         if ($raw === false || $raw === '') {
             return $default;
         }
+        $normalized = strtolower(trim((string)$raw));
+        $normalized = trim($normalized, "\"'");
 
-        return filter_var($raw, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE) ?? $default;
+        if (in_array($normalized, ['1', 'true', 'yes', 'on'], true)) {
+            return true;
+        }
+        if (in_array($normalized, ['0', 'false', 'no', 'off'], true)) {
+            return false;
+        }
+
+        return $default;
     }
 
     private function extractCurrentPublicationDate(mixed $statuses): ?string

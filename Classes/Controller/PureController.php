@@ -357,7 +357,11 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         if (!array_key_exists('what2show', $arguments)) {
             $this->handleContentNotFound();
         }
-        return $this->htmlResponse();
+        $this->setCrawlerBlockingDirectives();
+        return $this->htmlResponse()->withHeader(
+            'X-Robots-Tag',
+            'noindex, nofollow, noarchive, nosnippet, noimageindex'
+        );
     }
 
     /**
@@ -443,6 +447,22 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         try {
             GeneralUtility::makeInstance(PageRenderer::class)->addHeaderData('<meta access="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '" />');
+        } catch (Throwable) {
+            // Ignore if header injection is unavailable in current rendering context.
+        }
+    }
+
+    /**
+     * Prevent indexing/crawling for publication detail pages.
+     */
+    private function setCrawlerBlockingDirectives(): void
+    {
+        $robotsMeta = 'noindex, nofollow, noarchive, nosnippet, noimageindex';
+
+        try {
+            GeneralUtility::makeInstance(PageRenderer::class)->addHeaderData(
+                '<meta name="robots" content="' . htmlspecialchars($robotsMeta, ENT_QUOTES, 'UTF-8') . '" />'
+            );
         } catch (Throwable) {
             // Ignore if header injection is unavailable in current rendering context.
         }

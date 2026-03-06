@@ -70,8 +70,7 @@ class PublicationInsightsService
             ],
         ];
 
-        $externalEnabled = $this->isEnabled('ENRICHMENT_EXTERNAL_ENABLED', false);
-        if (!$externalEnabled || $primaryDoi === null) {
+        if ($primaryDoi === null) {
             $insights['oa'] = $this->decorateOaState($insights['oa'], $insights['pure']['oaStatus'], false);
             return $insights;
         }
@@ -88,11 +87,6 @@ class PublicationInsightsService
                     $insights['oa']['isOa'] = $unpaywall['isOa'] ?? null;
                     $insights['oa']['bestPdfUrl'] = $bestPdfUrl;
                     $insights['oa']['license'] = $unpaywall['license'] ?? null;
-
-                    $preferExternalOa = $this->isEnabled('ENRICHMENT_PREFER_EXTERNAL_OA', false);
-                    if ($preferExternalOa && !empty($unpaywall['oaStatus'])) {
-                        $insights['oa']['statusPrimary'] = $unpaywall['oaStatus'];
-                    }
                 }
             } else {
                 $insights['flags']['externalLookupUnavailable'] = true;

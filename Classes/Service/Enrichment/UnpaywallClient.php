@@ -33,7 +33,8 @@ class UnpaywallClient
             ];
         }
 
-        $cacheKey = 'enrichment:unpaywall:' . sha1($doi);
+        // TYPO3 cache identifiers must not contain ":".
+        $cacheKey = 'enrichment_unpaywall_' . sha1(mb_strtolower(trim($doi)));
         $cached = $this->cache->get($cacheKey);
         if (is_array($cached)) {
             return $cached;
@@ -98,4 +99,3 @@ class UnpaywallClient
         }
     }
 }
-

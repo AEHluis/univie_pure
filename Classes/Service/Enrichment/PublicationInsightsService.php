@@ -34,7 +34,6 @@ class PublicationInsightsService
                 'publishedDate' => $publishedDate,
                 'lastModified' => $publication['info']['modifiedDate'] ?? null,
                 'documents' => $pureDocuments,
-                'scopusUrl' => $this->isEnabled('DISPLAY_SCOPUS_LINK', true) ? $this->extractScopusUrl($publication) : null,
             ],
             'external' => [
                 'unpaywall' => [
@@ -271,29 +270,6 @@ class PublicationInsightsService
         }
 
         return $this->dedupeDocuments($documents);
-    }
-
-    private function extractScopusUrl(array $publication): ?string
-    {
-        $links = $publication['additionalLinks']['additionalLink'] ?? ($publication['additionalLinks'] ?? []);
-        $fallback = null;
-        foreach ($this->toList($links) as $link) {
-            if (!is_array($link)) {
-                continue;
-            }
-            $url = trim((string)($link['url'] ?? ''));
-            if ($url === '' || !$this->isHttpUrl($url)) {
-                continue;
-            }
-            $typeUri = strtolower(trim((string)($link['linkType']['uri'] ?? '')));
-            if ($typeUri !== '' && str_contains($typeUri, 'scopuspublication')) {
-                return $url;
-            }
-            if ($fallback === null && str_contains(strtolower($url), 'scopus.com')) {
-                $fallback = $url;
-            }
-        }
-        return $fallback;
     }
 
     /**

@@ -404,26 +404,6 @@
 			<f:then>
 				<f:render partial="Pure/PublicationInsights" arguments="{publicationInsights:publicationInsights}" />
 			</f:then>
-			<f:else>
-				<f:if condition="{publication.totalScopusCitations}">
-					<f:if condition="{publication.totalScopusCitations} > 0">
-						<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.scopusCitations" /></dt>
-						<dd>{publication.totalScopusCitations}</dd>
-					</f:if>
-				</f:if>
-
-				<f:if condition="{publication.fieldWeightedCitationImpact}">
-					<f:if condition="{publication.fieldWeightedCitationImpact} > 0">
-						<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.fwci" /></dt>
-						<dd>{publication.fieldWeightedCitationImpact}</dd>
-					</f:if>
-				</f:if>
-
-				<f:if condition="{publication.info.modifiedDate}">
-					<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.lastModified" /></dt>
-					<dd>{publication.info.modifiedDate}</dd>
-				</f:if>
-			</f:else>
 		</f:if>
 
 	</dl>

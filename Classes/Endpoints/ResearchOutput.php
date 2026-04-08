@@ -36,11 +36,16 @@ class ResearchOutput extends Endpoints
     {
         // Set default page size if not provided
         $settings['pageSize'] = $this->getArrayValue($settings, 'pageSize', 20);
+        $projectSelectionTotalCount = $this->getProjectSelectionTotalCount($settings);
 
         $results_short = $this->fetchPublicationPage($settings, $currentPageNumber, $lang);
 
         if (isset($results_short['error'])) {
             return $results_short;
+        }
+
+        if ($projectSelectionTotalCount !== null) {
+            $results_short['count'] = $projectSelectionTotalCount;
         }
 
         $pageSize = (int)$settings['pageSize'];
@@ -66,6 +71,20 @@ class ResearchOutput extends Endpoints
         }
 
         return $results_short;
+    }
+
+    protected function getProjectSelectionTotalCount(array $settings): ?int
+    {
+        $chooseSelector = (int)$this->getArrayValue($settings, 'chooseSelector', -1);
+        if ($chooseSelector !== 2) {
+            return null;
+        }
+
+        if ($this->getArrayValue($settings, 'narrowBySearch') || $this->getArrayValue($settings, 'filter')) {
+            return null;
+        }
+
+        return count(CommonUtilities::getRelatedResearchOutputUuidsForProjectSelection($settings));
     }
 
     private function fetchPublicationPage(array $settings, int $currentPageNumber, string $lang): array

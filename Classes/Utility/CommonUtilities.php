@@ -468,6 +468,43 @@ class CommonUtilities
     }
 
     /**
+     * Resolve related research-output UUIDs for a project selector configuration.
+     */
+    public static function getRelatedResearchOutputUuidsForProjectSelection(array $settings): array
+    {
+        $chooseSelector = (int)self::getArrayValue($settings, 'chooseSelector', -1);
+        if ($chooseSelector !== 2) {
+            return [];
+        }
+
+        $selectorProjects = self::getArrayValue($settings, 'selectorProjects', '');
+        if ($selectorProjects === '') {
+            return [];
+        }
+
+        $projectUuids = [];
+        foreach (explode(',', $selectorProjects) as $project) {
+            $project = trim((string)$project);
+            if ($project === '') {
+                continue;
+            }
+            if (strpos($project, '|') !== false) {
+                $project = explode('|', $project)[0];
+            }
+            $project = trim($project);
+            if ($project !== '') {
+                $projectUuids[] = $project;
+            }
+        }
+
+        if (empty($projectUuids)) {
+            return [];
+        }
+
+        return self::getRelatedResearchOutputUuidsForProjectUuids($projectUuids);
+    }
+
+    /**
      * Resolve project UUIDs through selected equipments
      * and return them as <uuids>...</uuids> block for projects queries.
      */

@@ -216,15 +216,16 @@ class ResearchOutput extends Endpoints
         $xml .= CommonUtilities::getPersonsOrOrganisationsXml($settings);
 
         // Add projects XML if available (forProjects - comes after forPersons/forOrganisationalUnits)
-        $xml .= CommonUtilities::getProjectsXml($settings);
+        $projectFilterXml = $this->getProjectFilterXml($settings);
+        $xml .= $projectFilterXml;
         // Add equipment based filter XML if available
-        $equipmentSearchXml = CommonUtilities::getResearchOutputsForEquipmentsXml($settings);
+        $equipmentSearchXml = $this->getEquipmentFilterXml($settings);
         $xml .= $equipmentSearchXml;
 
-        // Add search terms if provided (searchString comes at the very end)
-        $isEquipmentSelector = (int)$this->getArrayValue($settings, 'chooseSelector', -1) === 4;
+        // Relation-based selector fragments can already emit <searchString>; avoid duplicating it.
+        $hasSelectorSearchString = $this->containsSearchString($projectFilterXml) || $this->containsSearchString($equipmentSearchXml);
         if (($this->getArrayValue($settings, 'narrowBySearch') || $this->getArrayValue($settings, 'filter'))
-            && !$isEquipmentSelector) {
+            && !$hasSelectorSearchString) {
             $xml .= $this->getSearchXml($settings);
         }
         $xml .= '</researchOutputsQuery>';
@@ -250,6 +251,25 @@ class ResearchOutput extends Endpoints
     protected function getFieldForGrouping(): string
     {
         return '<field>publicationStatuses.publicationDate.year</field>';
+    }
+
+    protected function getProjectFilterXml(array $settings): string
+    {
+        return (string)CommonUtilities::getProjectsXml($settings);
+    }
+
+    protected function getEquipmentFilterXml(array $settings): string
+    {
+        if (!method_exists(CommonUtilities::class, 'getResearchOutputsForEquipmentsXml')) {
+            return '';
+        }
+
+        return (string)CommonUtilities::getResearchOutputsForEquipmentsXml($settings);
+    }
+
+    protected function containsSearchString(string $xmlFragment): bool
+    {
+        return str_contains($xmlFragment, '<searchString>');
     }
 
     /**

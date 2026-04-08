@@ -5,7 +5,46 @@ require_once __DIR__ . '/FakeWebServiceResearchOutput.php';
 require_once __DIR__ . '/TestResearchOutput.php';
 
 use PHPUnit\Framework\TestCase;
+use Univie\UniviePure\Endpoints\ResearchOutput;
+use Univie\UniviePure\Tests\Unit\Endpoints\FakeWebServiceResearchOutput;
 use Univie\UniviePure\Tests\Unit\Endpoints\TestResearchOutput;
+
+class CapturingFakeWebServiceResearchOutput extends FakeWebServiceResearchOutput
+{
+    public string $lastXml = '';
+
+    public function getJson(string $endpoint, string $xml): ?array
+    {
+        $this->lastXml = $xml;
+        return parent::getJson($endpoint, $xml);
+    }
+}
+
+class SelectorAwareResearchOutput extends ResearchOutput
+{
+    private string $projectFilterXml = '';
+    private string $equipmentFilterXml = '';
+
+    public function setProjectFilterXml(string $projectFilterXml): void
+    {
+        $this->projectFilterXml = $projectFilterXml;
+    }
+
+    public function setEquipmentFilterXml(string $equipmentFilterXml): void
+    {
+        $this->equipmentFilterXml = $equipmentFilterXml;
+    }
+
+    protected function getProjectFilterXml(array $settings): string
+    {
+        return $this->projectFilterXml;
+    }
+
+    protected function getEquipmentFilterXml(array $settings): string
+    {
+        return $this->equipmentFilterXml;
+    }
+}
 
 class ResearchOutputTest extends TestCase
 {
@@ -110,5 +149,41 @@ class ResearchOutputTest extends TestCase
         $result = $ro->getStandardRendering($uuid, 'en_US');
         $this->assertNotEmpty($result, 'Standard rendering result should not be empty');
         $this->assertEquals('fake standard rendering for ' . $uuid . ' in en_US', $result, 'Standard rendering result mismatch');
+    }
+
+    public function testStandaloneSearchStringIsNotDuplicatedWhenProjectSelectorAlreadyProvidesOne()
+    {
+        $webservice = new CapturingFakeWebServiceResearchOutput();
+        $ro = new SelectorAwareResearchOutput($webservice);
+        $ro->setProjectFilterXml('<searchString>"project-related-uuid"</searchString>');
+
+        $settings = [
+            'pageSize' => 20,
+            'rendering' => 'standard',
+            'narrowBySearch' => 'QuantumFrontiers',
+            'filter' => '',
+            'selectorProjects' => 'projA',
+            'chooseSelector' => 2,
+            'narrowByPublicationType' => 0,
+            'peerReviewedOnly' => 0,
+            'notPeerReviewedOrNotSetOnly' => 0,
+            'publishedBeforeDate' => '',
+            'publishedAfterDate' => '',
+            'selectorPublicationType' => '',
+            'selectorOrganisations' => '',
+            'includeSubUnits' => 0,
+            'orderProjects' => '',
+            'filterProjects' => '',
+            'groupByYear' => 0,
+            'showPublicationType' => 0,
+            'luhPubsOnly' => 0,
+            'inPress' => 1
+        ];
+
+        $ro->getRealPublicationList($settings, 1, 'en_US');
+
+        $this->assertSame(1, substr_count($webservice->lastXml, '<searchString>'));
+        $this->assertStringContainsString('<searchString>"project-related-uuid"</searchString>', $webservice->lastXml);
+        $this->assertStringNotContainsString('<searchString>QuantumFrontiers</searchString>', $webservice->lastXml);
     }
 }

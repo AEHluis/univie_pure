@@ -292,7 +292,10 @@ class CommonUtilities
             }
         }
 
-        return self::buildResearchOutputSearchStringFragment(array_keys($relatedResearchOutputUuids), '');
+        $filter = self::getArrayValue($settings, 'filter', '');
+        $userTerms = trim($narrowBySearch . ' ' . $filter);
+
+        return self::buildResearchOutputSearchStringFragment(array_keys($relatedResearchOutputUuids), $userTerms);
     }
 
     /**

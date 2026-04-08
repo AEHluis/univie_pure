@@ -108,8 +108,8 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // Maximum length to prevent DoS
         $content = substr($content, 0, 500);
 
-        // Remove control characters and potential injection patterns
-        $content = filter_var($content, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
+        // Remove control characters but keep Unicode letters such as umlauts
+        $content = filter_var($content, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW);
 
         // Normalize whitespace
         $content = preg_replace('/\s+/', ' ', trim($content));

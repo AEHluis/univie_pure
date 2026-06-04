@@ -1,0 +1,2809 @@
+{
+    "test_name": "projects_list",
+    "description": "List projects with pagination",
+    "timestamp": "2026-06-02 13:42:44",
+    "endpoint": "projects",
+    "query_params": {
+        "size": 5,
+        "offset": 0
+    },
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 818.8500000000000227373675443232059478759765625,
+        "url": "https://fis.uni-hannover.de/ws/api/projects?size=5&offset=0",
+        "curl_error": null,
+        "response": "{\"count\":2663,\"pageInformation\":{\"offset\":0,\"size\":5},\"items\":[{\"typeDiscriminator\":\"BasicProject\",\"pureId\":3040630,\"uuid\":\"8229f43a-02b0-47aa-985d-3a852914bf5e\",\"createdBy\":\"jw_admin\",\"createdDate\":\"2020-02-13T10:37:57.891+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-11-03T15:37:03.285+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/projects/8229f43a-02b0-47aa-985d-3a852914bf5e\",\"prettyUrlIdentifiers\":[\"research-training-group-20732-integrating-ethics-and-epistemology\"],\"version\":\"4c6e7b69d694e76477ec799f4fa3d9e81d672b64\",\"participants\":[{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3040645,\"name\":{\"firstName\":\"Torsten\",\"lastName\":\"Wilholt\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"8c81f21f-9543-4785-b232-4a90a81ea416\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"}]},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3040658,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"name\":{\"firstName\":\"Martin\",\"lastName\":\"Carrier\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/copi\",\"term\":{\"en_GB\":\"Co-Principal Investigator\",\"de_DE\":\"Leitende*r Forscher*in (Co-Principal Investigator)\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"af97d46b-cf0c-44a9-b7f7-7790545ad36c\"}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3040647,\"name\":{\"firstName\":\"Anke\",\"lastName\":\"Büter\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3040649,\"name\":{\"firstName\":\"Uljana\",\"lastName\":\"Feest\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}}},{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3040651,\"name\":{\"firstName\":\"Mathias\",\"lastName\":\"Frisch\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"6423981d-1a77-4ef6-b2a7-d9f0bca3f3e9\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"}]},{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3040653,\"name\":{\"firstName\":\"Dietmar\",\"lastName\":\"Hübner\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"9a34b20b-3b3b-440a-abfb-f7e58353954e\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"}]},{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3040655,\"name\":{\"firstName\":\"Thomas\",\"lastName\":\"Reydon\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"e090fc8e-a61a-4e60-98f9-c5b83030678e\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"}]},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3040657,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"name\":{\"firstName\":\"Ralf\",\"lastName\":\"Stoecker\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"802ac8b2-1772-4dad-b1c6-e16834915659\"}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3040659,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"name\":{\"firstName\":\"Marie I.\",\"lastName\":\"Kaiser\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"2251be53-9b69-49dc-a308-06f3784c2c42\"}}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"collaborators\":[{\"typeDiscriminator\":\"ExternalCollaboratorAssociation\",\"pureId\":3040633,\"leadCollaborator\":false,\"externalOrganization\":{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}},{\"typeDiscriminator\":\"InternalCollaboratorAssociation\",\"pureId\":3040634,\"leadCollaborator\":true,\"organization\":{\"systemName\":\"Organization\",\"uuid\":\"07adc7bb-b839-4e70-900c-76d494d5b00a\"}}],\"descriptions\":[{\"pureId\":3040635,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/projectdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}},{\"pureId\":3040636,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/keyfindings\",\"term\":{\"en_GB\":\"Key findings\",\"de_DE\":\"wichtigste Ergebnisse\"}}}],\"period\":{\"startDate\":\"2020-04-01\",\"endDate\":\"2024-09-30\"},\"natureTypes\":[{\"uri\":\"/dk/atira/pure/upm/nature/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"},{\"systemName\":\"Organization\",\"uuid\":\"34c200f4-c5dd-4864-bdca-64e922c09206\"}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"},\"title\":{\"en_GB\":\"Research Training Group 2073/2: Integrating Ethics and Epistemology of Scientific Research\",\"de_DE\":\"Graduiertenkolleg 2073/2: Die Integration von theoretischer und praktischer Wissenschaftsphilosophie\"},\"type\":{\"uri\":\"/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"links\":[{\"pureId\":3040643,\"url\":\"https://www.philos.uni-hannover.de/de/forschung/grk2037\"}],\"keywordGroups\":[{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3040639,\"logicalName\":\"/dk/atira/pure/project/project_funder\",\"name\":{\"en_GB\":\"Funding type\",\"de_DE\":\"Mittelherkunft\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/project/project_funder/germansciencefoundation\",\"term\":{\"en_GB\":\"German Research Foundation (DFG)\",\"de_DE\":\"Deutsche Forschungsgemeinschaft (DFG)\"}}]},{\"typeDiscriminator\":\"FullKeywordGroup\",\"pureId\":74438221,\"logicalName\":\"/dk/atira/pure/project/financingsources\",\"name\":{\"en_GB\":\"Funding scheme\",\"de_DE\":\"Förderprogramme und -linien\"},\"keywordContainers\":[{\"pureId\":74438222,\"structuredKeyword\":{\"uri\":\"/dk/atira/pure/project/financingsources/02/02/01\",\"term\":{\"en_GB\":\"(International) Research Training Groups\",\"de_DE\":\"(Internationale) Graduiertenkollegs\"}}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3040717,\"logicalName\":\"luh_schwerpunkte\",\"name\":{\"en_GB\":\"Key research areas of LUH\",\"de_DE\":\"Etablierte Forschungsschwerpunkte der LUH\"},\"classifications\":[{\"uri\":\"luh_schwerpunkte/interdisciplinary_studies_of_science\",\"term\":{\"en_GB\":\"Interdisciplinary Studies of Science and Academia\",\"de_DE\":\"Wissenschaftsreflexion\"}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":46974234,\"logicalName\":\"sustainabledevelopmentgoals\",\"name\":{\"en_GB\":\"Sustainable Development Goals\",\"de_DE\":\"Ziele für nachhaltige Entwicklung\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/sustainabledevelopmentgoals/peace_justice_and_strong_institutions\",\"term\":{\"en_GB\":\"SDG 16 - Peace, Justice and Strong Institutions\",\"de_DE\":\"SDG 16 - Frieden, Gerechtigkeit und starke Institutionen\"}},{\"uri\":\"/dk/atira/pure/sustainabledevelopmentgoals/climate_action\",\"term\":{\"en_GB\":\"SDG 13 - Climate Action\",\"de_DE\":\"SDG 13 - Klimaschutzmaßnahmen\"}}]}],\"projects\":[{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/predecessor\",\"term\":{\"en_GB\":\"Predecessor\",\"de_DE\":\"Vorgänger\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"ad231c1e-ae07-4044-8d87-36a48e626a31\"}}],\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"bd03a834-116a-42d5-a356-4c6404a08956\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"11f00ce4-cc32-4143-b953-94838811b6d0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"93ebd2b5-c1fd-4836-b853-afe9e58830d9\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"03e0e66d-06fc-4888-b2d9-7049e782d00d\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"b75cc503-83db-4f32-841f-eaebd46dbd2b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"9b1be796-84c0-40d3-ad2e-ad7f207524ef\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"f45251e7-2bab-4e64-8a1e-cdc139e944e9\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"5fabe970-3f14-4b9e-8985-6ddd2d2b747e\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"6e275b8b-6f14-4097-ae27-6c190cdad222\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0878a572-89aa-4d65-9cbf-22d7e5524b26\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"8ff55ff9-dedb-4cd1-9a65-c28265175a98\"}}],\"systemName\":\"Project\"},{\"typeDiscriminator\":\"BasicProject\",\"pureId\":3042165,\"uuid\":\"ad231c1e-ae07-4044-8d87-36a48e626a31\",\"createdBy\":\"jw_admin\",\"createdDate\":\"2020-02-13T12:12:07.263+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-11-03T15:37:04.256+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/projects/ad231c1e-ae07-4044-8d87-36a48e626a31\",\"prettyUrlIdentifiers\":[\"research-training-group-20731-integrating-ethics-and-epistemology\"],\"version\":\"008f32a5721be3f5c425b20b62adb3d488ebfadc\",\"participants\":[{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3042181,\"name\":{\"firstName\":\"Torsten\",\"lastName\":\"Wilholt\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"8c81f21f-9543-4785-b232-4a90a81ea416\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"}]},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3042185,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"name\":{\"firstName\":\"Martin\",\"lastName\":\"Carrier\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/copi\",\"term\":{\"en_GB\":\"Co-Principal Investigator\",\"de_DE\":\"Leitende*r Forscher*in (Co-Principal Investigator)\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"af97d46b-cf0c-44a9-b7f7-7790545ad36c\"}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3042183,\"name\":{\"firstName\":\"Anke\",\"lastName\":\"Büter\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3042186,\"name\":{\"firstName\":\"Uljana\",\"lastName\":\"Feest\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}}},{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3042188,\"name\":{\"firstName\":\"Nils Christian\",\"lastName\":\"Hoppe\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"da3d675a-e620-4ceb-8ba6-f20525860fbc\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"1dca2a20-df44-4a23-9d0b-f0c474c3fd72\"}]},{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3042190,\"name\":{\"firstName\":\"Dietmar\",\"lastName\":\"Hübner\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"9a34b20b-3b3b-440a-abfb-f7e58353954e\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"}]},{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3042192,\"name\":{\"firstName\":\"Thomas\",\"lastName\":\"Reydon\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"e090fc8e-a61a-4e60-98f9-c5b83030678e\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"}]},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3042194,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"name\":{\"firstName\":\"Ralf\",\"lastName\":\"Stoecker\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"802ac8b2-1772-4dad-b1c6-e16834915659\"}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3042195,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"name\":{\"firstName\":\"Cornelis\",\"lastName\":\"Menke\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}}}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"collaborators\":[{\"typeDiscriminator\":\"ExternalCollaboratorAssociation\",\"pureId\":3042168,\"leadCollaborator\":false,\"externalOrganization\":{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}},{\"typeDiscriminator\":\"InternalCollaboratorAssociation\",\"pureId\":3042169,\"leadCollaborator\":true,\"organization\":{\"systemName\":\"Organization\",\"uuid\":\"07adc7bb-b839-4e70-900c-76d494d5b00a\"}}],\"descriptions\":[{\"pureId\":3042170,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/projectdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}},{\"pureId\":3042171,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/keyfindings\",\"term\":{\"en_GB\":\"Key findings\",\"de_DE\":\"wichtigste Ergebnisse\"}}}],\"period\":{\"startDate\":\"2015-10-01\",\"endDate\":\"2020-03-31\"},\"natureTypes\":[{\"uri\":\"/dk/atira/pure/upm/nature/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"34c200f4-c5dd-4864-bdca-64e922c09206\"},{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"},{\"systemName\":\"Organization\",\"uuid\":\"1dca2a20-df44-4a23-9d0b-f0c474c3fd72\"}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"},\"title\":{\"en_GB\":\"Research Training Group 2073/1: Integrating Ethics and Epistemology of Scientific Research\",\"de_DE\":\"Graduiertenkolleg 2073/1: Die Integration von theoretischer und praktischer Wissenschaftsphilosophie\"},\"type\":{\"uri\":\"/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"links\":[{\"pureId\":3042178,\"url\":\"https://grk2073.org/\"}],\"keywordGroups\":[{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3042174,\"logicalName\":\"/dk/atira/pure/project/project_funder\",\"name\":{\"en_GB\":\"Funding type\",\"de_DE\":\"Mittelherkunft\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/project/project_funder/germansciencefoundation\",\"term\":{\"en_GB\":\"German Research Foundation (DFG)\",\"de_DE\":\"Deutsche Forschungsgemeinschaft (DFG)\"}}]},{\"typeDiscriminator\":\"FullKeywordGroup\",\"pureId\":74438227,\"logicalName\":\"/dk/atira/pure/project/financingsources\",\"name\":{\"en_GB\":\"Funding scheme\",\"de_DE\":\"Förderprogramme und -linien\"},\"keywordContainers\":[{\"pureId\":74438228,\"structuredKeyword\":{\"uri\":\"/dk/atira/pure/project/financingsources/02/02/01\",\"term\":{\"en_GB\":\"(International) Research Training Groups\",\"de_DE\":\"(Internationale) Graduiertenkollegs\"}}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3042176,\"logicalName\":\"luh_schwerpunkte\",\"name\":{\"en_GB\":\"Key research areas of LUH\",\"de_DE\":\"Etablierte Forschungsschwerpunkte der LUH\"},\"classifications\":[{\"uri\":\"luh_schwerpunkte/interdisciplinary_studies_of_science\",\"term\":{\"en_GB\":\"Interdisciplinary Studies of Science and Academia\",\"de_DE\":\"Wissenschaftsreflexion\"}}]}],\"projects\":[{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/successor\",\"term\":{\"en_GB\":\"Successor\",\"de_DE\":\"Nachfolger\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"8229f43a-02b0-47aa-985d-3a852914bf5e\"}}],\"prizes\":[{\"prize\":{\"systemName\":\"Prize\",\"uuid\":\"a3542b05-105c-4b08-a48d-295f0441abef\"}}],\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"bd03a834-116a-42d5-a356-4c6404a08956\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"11f00ce4-cc32-4143-b953-94838811b6d0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"03e0e66d-06fc-4888-b2d9-7049e782d00d\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"989fa497-0d7b-4033-abcd-acffb6917fc7\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"b75cc503-83db-4f32-841f-eaebd46dbd2b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"7cdd1683-df59-49ad-8b69-23728d4044ff\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"8ff55ff9-dedb-4cd1-9a65-c28265175a98\"}}],\"systemName\":\"Project\"},{\"typeDiscriminator\":\"BasicProject\",\"pureId\":3066710,\"uuid\":\"e1230eeb-4fab-4a7d-a5a9-6823d4ba705f\",\"createdBy\":\"jw_admin\",\"createdDate\":\"2020-02-14T16:54:14.626+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-11-03T15:37:04.919+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/projects/e1230eeb-4fab-4a7d-a5a9-6823d4ba705f\",\"prettyUrlIdentifiers\":[\"collaborative-research-centre-12271-designed-quantum-states-of-ma\"],\"version\":\"f78a2cfdff0196f215166a66d5bd305cbe95092a\",\"acronym\":\"DQ-mat\",\"participants\":[{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3066727,\"name\":{\"firstName\":\"Piet Oliver\",\"lastName\":\"Schmidt\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"8584b413-86d9-4a40-ae98-37ea74464fc9\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"bebed6cc-c284-44ca-9115-8b4f2e13a7cb\"},{\"systemName\":\"Organization\",\"uuid\":\"7e2dceea-80f9-4015-a1ac-5b4f545645fd\"}]}],\"collaborators\":[{\"typeDiscriminator\":\"ExternalCollaboratorAssociation\",\"pureId\":3066713,\"leadCollaborator\":false,\"externalOrganization\":{\"systemName\":\"ExternalOrganization\",\"uuid\":\"aa28521a-6803-4692-9423-8092c80a1248\"}},{\"typeDiscriminator\":\"ExternalCollaboratorAssociation\",\"pureId\":3066714,\"leadCollaborator\":false,\"externalOrganization\":{\"systemName\":\"ExternalOrganization\",\"uuid\":\"5eba19f3-8750-4513-80d4-2833178dfad7\"}},{\"typeDiscriminator\":\"InternalCollaboratorAssociation\",\"pureId\":3066715,\"leadCollaborator\":true,\"organization\":{\"systemName\":\"Organization\",\"uuid\":\"07adc7bb-b839-4e70-900c-76d494d5b00a\"}}],\"descriptions\":[{\"pureId\":3066716,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/projectdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}},{\"pureId\":3066717,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/keyfindings\",\"term\":{\"en_GB\":\"Key findings\",\"de_DE\":\"wichtigste Ergebnisse\"}}}],\"period\":{\"startDate\":\"2016-07-01\",\"endDate\":\"2020-06-30\"},\"natureTypes\":[{\"uri\":\"/dk/atira/pure/upm/nature/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"bebed6cc-c284-44ca-9115-8b4f2e13a7cb\"},{\"systemName\":\"Organization\",\"uuid\":\"7e2dceea-80f9-4015-a1ac-5b4f545645fd\"}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"7e2dceea-80f9-4015-a1ac-5b4f545645fd\"},\"title\":{\"en_GB\":\"Collaborative Research Centre 1227/1: Designed Quantum States of Matter - Generation, Manipulation and Detection for Metrological Applications and Tests of Fundamental Physics\",\"de_DE\":\"Sonderforschungsbereich 1227/1: Designte Quantenzustände der Materie - Erzeugung, Manipulation und Detektion für metrologische Anwendungen und Tests fundamentaler Physik\"},\"type\":{\"uri\":\"/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"links\":[{\"pureId\":3066724,\"url\":\"https://www.dq-mat.uni-hannover.de/\"}],\"keywordGroups\":[{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3066718,\"logicalName\":\"/dk/atira/pure/project/project_funder\",\"name\":{\"en_GB\":\"Funding type\",\"de_DE\":\"Mittelherkunft\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/project/project_funder/germansciencefoundation\",\"term\":{\"en_GB\":\"German Research Foundation (DFG)\",\"de_DE\":\"Deutsche Forschungsgemeinschaft (DFG)\"}}]},{\"typeDiscriminator\":\"FullKeywordGroup\",\"pureId\":74438236,\"logicalName\":\"/dk/atira/pure/project/financingsources\",\"name\":{\"en_GB\":\"Funding scheme\",\"de_DE\":\"Förderprogramme und -linien\"},\"keywordContainers\":[{\"pureId\":74438237,\"structuredKeyword\":{\"uri\":\"/dk/atira/pure/project/financingsources/02/02/03\",\"term\":{\"en_GB\":\"Collaborative Research Centres/Transregios\",\"de_DE\":\"Sonderforschungsbereiche/Transregios\"}}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3066722,\"logicalName\":\"luh_schwerpunkte\",\"name\":{\"en_GB\":\"Key research areas of LUH\",\"de_DE\":\"Etablierte Forschungsschwerpunkte der LUH\"},\"classifications\":[{\"uri\":\"luh_schwerpunkte/quantum_optics_and_gravitational_physics\",\"term\":{\"en_GB\":\"Quantum Optics and Gravitational Physics\",\"de_DE\":\"Quantenoptik und Gravitationsphysik\"}},{\"uri\":\"luh_schwerpunkte/optical_technologies\",\"term\":{\"en_GB\":\"Optical Technologies\",\"de_DE\":\"Optische Technologien\"}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":41612155,\"logicalName\":\"sustainabledevelopmentgoals\",\"name\":{\"en_GB\":\"Sustainable Development Goals\",\"de_DE\":\"Ziele für nachhaltige Entwicklung\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/sustainabledevelopmentgoals/affordable_and_clean_energy\",\"term\":{\"en_GB\":\"SDG 7 - Affordable and Clean Energy\",\"de_DE\":\"SDG 7 - Erschwingliche und saubere Energie\"}}]}],\"projects\":[{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"74918f3b-43b0-4fdf-beed-31388e453bc8\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"f9f4ac9c-1437-4c71-9af9-0b8452c239dd\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"eecf2c77-0e8b-471c-9aa0-4b582ad0db1b\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"5574b815-4bc4-4531-8704-290981ddda65\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"04b6cc69-f35f-4403-b574-ae78df57687a\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"a516f9d7-4583-4519-a662-241300fe9329\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"75b9e1e8-bae2-411b-99ec-578a6bd397b5\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"ee97269f-9d8e-41bb-a40b-c820609f8c96\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"81f3cb0d-d542-4d66-8e8b-1dfbde6bf95b\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"142f0330-1e70-430f-b85a-59f58f8fd443\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"916558a1-2fff-4f56-94dd-7b77440abcfa\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"db316fdd-9b3b-48e4-a5ad-d0e670d180a3\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/successor\",\"term\":{\"en_GB\":\"Successor\",\"de_DE\":\"Nachfolger\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"e6c173ef-4a1b-4e67-817b-670fe6fbb7c6\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"0ec6b365-5fc1-4971-96b1-2fe71f7a4a7e\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"5fa7b00d-c5c7-4c83-b21f-e4a83301b327\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"73304d42-381a-4aae-9e8e-9733c9a4a0af\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/partof\",\"term\":{\"en_GB\":\"Part of\",\"de_DE\":\"Teil von\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"d6ebd415-72e4-4433-a9ec-50e9642b1253\"}}],\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"2a0793d5-eebd-4739-8909-12650084d0fc\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"bfa5185a-b5a0-44fa-9516-f32735f7066d\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"e009ba78-60bf-426a-9f62-0e30e27a6fd8\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"7d399b58-f51f-46fe-bcac-c6e228cbef53\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"83b93397-6d71-4de5-86ea-c2106e649944\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"9ca76f3c-a160-4365-99dd-0d7171b777d8\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"459c686e-57e7-467e-8548-7fdc234768cf\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"48884cc3-d569-4ee8-8f62-f67423b464a9\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"aae0c626-0a6a-4559-9be6-d5a15a3b01a9\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"a863a34a-35d5-4079-8ba3-45c79c24d1c4\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"b6cfed5f-e6f4-4d88-9817-24d534221358\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"56fed9d2-bb79-4b11-828c-406fadbcb278\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"32905ae3-80ce-4e52-850f-83dd2a928ac0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"9b162c0f-7818-4dcd-a8c0-3cdb65498a86\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"192a44f6-a05b-4c10-a0c5-9b0e9ec75f11\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"ebd9c764-792d-401e-ad78-72f2af4a6b93\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"d8559115-2c3c-4345-a6db-4b1d6cf5b241\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"56a13ef6-4fb8-48a9-b78e-cfbf72b81519\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"80eb888e-9426-4a5b-95a0-ad4542241b7a\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"766493de-21c8-4bf9-a934-7a468906e3be\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"4949c691-8792-4eea-8f0b-d8f2058c78a4\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"4345b167-133f-4d22-a7ee-2db7a4e621f7\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"1c0f3187-a8bc-467c-abdc-9c7c8985425d\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"c9fed1a2-e7bf-49cb-91ab-52027a0c559c\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"976b9c87-81e4-41c4-970d-17e6d8e980bd\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"c2c5fe27-de50-4aac-827a-1d5f0219cf82\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"d7b516e0-8b5f-494c-98a4-e9ed5245afa1\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"2f5c0bf0-055d-4307-9109-16823eda25c6\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0fafff10-b22c-469c-873f-175656ee7372\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"c035ab9a-1aac-4d82-bbaa-751955b0a7db\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"16d5211b-d01f-49a4-b37a-1b927cf76a4b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"1b665b1f-7ed1-4bc1-8dee-4b6c87a126c0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0216c3d9-ddca-454c-99d2-f18fec27b752\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"50e0c6d2-8f58-4c9c-ac87-6361ee94d37b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"ee49608e-7998-434e-b2e2-615b5d7b473f\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"381ef9e1-d197-49a4-be86-d31a2dc8129c\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"50b04d0d-1994-4a1e-978c-d2d58088caaa\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"24767f55-68e3-4e4a-b334-a901051d76be\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"de02141f-77b0-4d80-8734-a58421b49629\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"c2e19fed-ea7d-4dce-a31c-246ef1329456\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"ba878f09-9136-4697-b655-1d6e3d50d499\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"dd4228fd-93f3-48f8-8385-0a1c9efebc54\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"a1d74e3b-ce38-4d52-84c8-b1aab7e20005\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"8248b801-f5b3-48bf-b80f-0e9d51cdf84f\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"52b4c526-c6de-4e69-919a-1968630a318d\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"25da6d04-1f0b-449a-b5aa-43913de3aedc\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"2fee49e7-e6c1-4908-8158-d8adc3c2044c\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"2da82b2b-88e0-44f1-a304-022715fad359\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0d6dfe55-40bb-4a9a-bb5b-2bf7da565b8c\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"2a66e526-a10e-422b-a426-89498e24ba29\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"4c91349d-b6a2-4150-8d86-39b90c801789\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"966a83c4-f335-4eeb-ad6b-4ce1dffc85cb\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"3bbe5ab7-76ea-4e45-a5ab-24ab97fb84bd\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"f397bf27-3c75-4a2f-a1d7-1dcb952d2765\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"fabc3557-126b-4b44-81dd-65fc97a88727\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0ac2e2a8-ed4d-4090-af05-e25943cf453b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"dbffc2fe-0414-45bf-8815-a4b8580e56f1\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"e31bc969-3d8f-4c21-9a1a-b7da414151d3\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"18c1f86e-b684-4595-9ae7-8f6016bb3238\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"3e90fbb7-0500-4e07-8e49-4dc0291c5be0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0765b09d-64da-41c2-9777-54d043e2079d\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"96b13c8c-89cb-44f1-be35-d15f7aca1d0b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"c1d2cc9f-20fe-4153-bf19-3a3914ef2552\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0d6a11dc-89b4-4746-ae8f-2f2fa6b2b8d3\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"a705bbca-5868-4787-8f96-ae822d6a2423\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"4b9a1c6a-ac35-4e91-a38e-9781c5dba8a8\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"e2db471f-e30d-438a-b899-d1990fa81e53\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"87ed80df-9d4a-49bc-a24a-a8762cf6cb9e\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"17e07ced-b499-42b5-af5f-544b55cbe678\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"261a992e-786e-4bbe-8d8f-2b46439ac28c\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"1a46718a-685d-42b4-b780-504da62a971b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"5be7b5ff-c216-4414-be08-af690ce843d5\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"5b9fb198-36a5-4da0-a957-95161d7bcce4\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"497c83c0-3c0e-4de4-8c20-6135585237aa\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"249b6182-cba0-4712-a200-a0c4b02258cb\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"8c8a1ff7-04d4-41f9-a943-ea3552d8f061\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"72dd1506-42a5-419f-bb69-624e583b1d25\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0812639a-44a1-42b1-9a78-d2b731237178\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"7e945ecb-9294-42bc-a4bc-c3082facaa5d\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"d1716204-e6b7-4ecb-96ee-4d1fb87bd504\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"f64453ef-cec8-420d-b718-5bc5663f5383\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"9a25c6e7-e877-4511-b27c-3bc6b93e8cf4\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"9103767b-9060-41f5-bdd4-3563d64b2063\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"a9b7a4d4-4b64-4b89-926c-328b0ec8c5da\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"923ce667-18ee-4ee0-b147-7501ba967903\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"f2856c5d-311b-4ff5-b22a-47842bed77a8\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"256e912b-8a2b-4e93-bbf1-9113786012c2\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"9dd5c9dd-a5be-4799-9d04-ef41b04b60ac\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"7eea3b9f-402f-4839-89f7-228e4d7a0680\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"a2645f32-76db-4b54-bb48-64a0bfa13851\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"523323e9-0759-4982-a100-bb423a842d3c\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"7d84a13e-bc71-44e6-bfb0-4e027472a5b0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"cd0c26ef-b08a-484e-b6a9-78542c5807bc\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"7008f528-0a13-4292-81ed-f717334b37db\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"9d058268-a1fd-4269-a849-f0a90f97a1b0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"86187d0d-8e56-4772-a698-8c56760ac423\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"b88d0d47-420c-4064-aba5-458d8e87ce0e\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"a2bd756f-f36a-4cda-96d1-e5beea1976b7\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"136a25f4-8a05-4020-a111-52eb6ef5fc7b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"a41a7789-992c-429b-aced-be4deab7ea2e\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"7a01438e-e2ed-4fc8-818d-4a2a17533fac\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"9bfb36e2-50df-487d-a8e0-eb64ca5e09a0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"a2a30237-af02-4c8d-a43d-a531c6400509\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"4f1a307e-93a2-4486-9d7e-a64005a4bdd9\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"dab788dc-194a-4ac7-80fe-bc67a1253c00\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"29bcedf5-79da-4aa9-b5c7-310f528e6ce5\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"782ec7b1-0c7f-487a-bd12-86fe40976ce1\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"f830c709-cdc3-4474-85ae-6629bea33975\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0e7de7b4-2411-48a6-b5a1-fef3d2af14b5\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"163d2dba-e857-4415-8e35-8756cae1bb60\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"b83bf3d4-9c1e-42a8-b21e-48f63a688664\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"28b94094-5392-488a-bddd-a224a664c8ca\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"adc6cd4e-bc66-4afa-b220-ef6a7501a07f\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"4a4598a8-99d2-4860-9cbf-fa7f0e54e7a7\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"8eeb2351-bdd5-4929-86ff-827512f35e69\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"034749fe-f4d4-4ee0-b8b6-03ff699023a8\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"bce505c0-8694-41cf-bf41-487e41215fc2\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0a4be8e7-23d0-4f33-a913-484f37f67d06\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"f9952551-1fe6-420e-b079-b3ac4d67e6c9\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"e96f2d43-eccf-4b24-b1e5-f2bb2c555055\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"334947c5-a59f-43ab-a373-48c7e8f63db0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"efba4c34-a19f-4fa0-a1bc-c71b77c66ba7\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"c78f0755-c4b6-463a-bde6-ec91b7cabc16\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"49cfaf8b-3504-4a4d-bcdb-09c2d4d441a5\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"18e8bfc1-9e82-40d7-8a5c-5e0d2778e5d6\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"81ddc079-5454-40e2-b51e-4e0cc92c37b6\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0461470d-e6a1-4101-8ab4-bb6e9480bbd0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"60ef750c-29e0-4fe3-a924-bdb75c8a7688\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"802461fe-ff61-4d8b-9e8d-58e41c770668\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"fb0e2f35-a6b6-4529-9a2b-c293dbc470d7\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"a9b84154-d10d-4ad0-8401-059cf0f3c1ad\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"252d76fb-2ac3-4eca-be9b-04080e6b08a5\"}}],\"systemName\":\"Project\"},{\"typeDiscriminator\":\"BasicProject\",\"pureId\":3067336,\"uuid\":\"74918f3b-43b0-4fdf-beed-31388e453bc8\",\"createdBy\":\"jw_admin\",\"createdDate\":\"2020-02-14T17:22:55.679+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-11-03T15:37:05.556+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/projects/74918f3b-43b0-4fdf-beed-31388e453bc8\",\"prettyUrlIdentifiers\":[\"collaborative-research-centre-12271-sub-project-a01-quantum-magne\"],\"version\":\"783c0bc4a8e17815e95fb0c556cca8607bc8f5cc\",\"acronym\":\"DQ-mat\",\"participants\":[{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3067350,\"name\":{\"firstName\":\"Christian\",\"lastName\":\"Ospelkaus\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"bfcb0e9f-0e35-4a96-bfd5-e1b28905c9ad\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"bebed6cc-c284-44ca-9115-8b4f2e13a7cb\"},{\"systemName\":\"Organization\",\"uuid\":\"7e2dceea-80f9-4015-a1ac-5b4f545645fd\"}]}],\"descriptions\":[{\"pureId\":3067339,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/projectdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}},{\"pureId\":3067340,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/keyfindings\",\"term\":{\"en_GB\":\"Key findings\",\"de_DE\":\"wichtigste Ergebnisse\"}}}],\"period\":{\"startDate\":\"2016-07-01\",\"endDate\":\"2020-06-30\"},\"natureTypes\":[{\"uri\":\"/dk/atira/pure/upm/nature/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"bebed6cc-c284-44ca-9115-8b4f2e13a7cb\"},{\"systemName\":\"Organization\",\"uuid\":\"7e2dceea-80f9-4015-a1ac-5b4f545645fd\"}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"7e2dceea-80f9-4015-a1ac-5b4f545645fd\"},\"title\":{\"en_GB\":\"Collaborative Research Centre 1227/1, sub-project A01: Quantum magnetism in trapped ions\",\"de_DE\":\"Sonderforschungsbereich 1227/1, Teilprojekt A01: Quantenmagnetismus in gefangenen Ionen\"},\"type\":{\"uri\":\"/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"links\":[{\"pureId\":3067347,\"url\":\"https://www.dq-mat.uni-hannover.de/de/forschung/projektbereich-a/teilprojekt-a01/\"}],\"keywordGroups\":[{\"typeDiscriminator\":\"FreeKeywordsKeywordGroup\",\"pureId\":3067824,\"logicalName\":\"keywordContainers\",\"name\":{\"en_GB\":\"Keywords\",\"de_DE\":\"Schlagwörter\"},\"keywords\":[{\"pureId\":3067826,\"locale\":\"de_DE\",\"freeKeywords\":[\"SFB 1227/1, Projektbereich A\"]},{\"pureId\":3067827,\"locale\":\"en_GB\",\"freeKeywords\":[\"SFB 1227/1, Projektbereich A\"]}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3067341,\"logicalName\":\"/dk/atira/pure/project/project_funder\",\"name\":{\"en_GB\":\"Funding type\",\"de_DE\":\"Mittelherkunft\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/project/project_funder/germansciencefoundation\",\"term\":{\"en_GB\":\"German Research Foundation (DFG)\",\"de_DE\":\"Deutsche Forschungsgemeinschaft (DFG)\"}}]},{\"typeDiscriminator\":\"FullKeywordGroup\",\"pureId\":74438261,\"logicalName\":\"/dk/atira/pure/project/financingsources\",\"name\":{\"en_GB\":\"Funding scheme\",\"de_DE\":\"Förderprogramme und -linien\"},\"keywordContainers\":[{\"pureId\":74438262,\"structuredKeyword\":{\"uri\":\"/dk/atira/pure/project/financingsources/02/02/03\",\"term\":{\"en_GB\":\"Collaborative Research Centres/Transregios\",\"de_DE\":\"Sonderforschungsbereiche/Transregios\"}}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3067345,\"logicalName\":\"luh_schwerpunkte\",\"name\":{\"en_GB\":\"Key research areas of LUH\",\"de_DE\":\"Etablierte Forschungsschwerpunkte der LUH\"},\"classifications\":[{\"uri\":\"luh_schwerpunkte/quantum_optics_and_gravitational_physics\",\"term\":{\"en_GB\":\"Quantum Optics and Gravitational Physics\",\"de_DE\":\"Quantenoptik und Gravitationsphysik\"}}]}],\"projects\":[{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/successor\",\"term\":{\"en_GB\":\"Successor\",\"de_DE\":\"Nachfolger\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"3a0bc530-9b81-423d-b746-cf29dde557ac\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/contains\",\"term\":{\"en_GB\":\"Contains\",\"de_DE\":\"Enthält\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"e1230eeb-4fab-4a7d-a5a9-6823d4ba705f\"}}],\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"50e0c6d2-8f58-4c9c-ac87-6361ee94d37b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"f830c709-cdc3-4474-85ae-6629bea33975\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"83b93397-6d71-4de5-86ea-c2106e649944\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"8c8a1ff7-04d4-41f9-a943-ea3552d8f061\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"c2e19fed-ea7d-4dce-a31c-246ef1329456\"}}],\"systemName\":\"Project\"},{\"typeDiscriminator\":\"BasicProject\",\"pureId\":3067616,\"uuid\":\"f9f4ac9c-1437-4c71-9af9-0b8452c239dd\",\"createdBy\":\"jw_admin\",\"createdDate\":\"2020-02-14T17:30:25.449+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-11-03T15:37:06.2+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/projects/f9f4ac9c-1437-4c71-9af9-0b8452c239dd\",\"prettyUrlIdentifiers\":[\"collaborative-research-centre-12271-sub-project-a02-non-gaussian-\"],\"version\":\"d586f7989f4634549b1a23b86d71482225e0037f\",\"acronym\":\"DQ-mat\",\"participants\":[{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3067631,\"name\":{\"firstName\":\"Carsten\",\"lastName\":\"Klempt\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3067634,\"name\":{\"firstName\":\"Luis Sanchez\",\"lastName\":\"Santos\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3067637,\"name\":{\"firstName\":\"Wolfgang\",\"lastName\":\"Ertmer\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}}}],\"descriptions\":[{\"pureId\":3067619,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/projectdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}},{\"pureId\":3067620,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/keyfindings\",\"term\":{\"en_GB\":\"Key findings\",\"de_DE\":\"wichtigste Ergebnisse\"}}}],\"period\":{\"startDate\":\"2016-07-01\",\"endDate\":\"2020-06-30\"},\"natureTypes\":[{\"uri\":\"/dk/atira/pure/upm/nature/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"bebed6cc-c284-44ca-9115-8b4f2e13a7cb\"},{\"systemName\":\"Organization\",\"uuid\":\"7e2dceea-80f9-4015-a1ac-5b4f545645fd\"},{\"systemName\":\"Organization\",\"uuid\":\"cd2571a0-bbce-455d-a3bb-27414a805f5b\"}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"7e2dceea-80f9-4015-a1ac-5b4f545645fd\"},\"title\":{\"en_GB\":\"Collaborative Research Centre 1227/1, sub-project A02: Non-Gaussian atomic states for tests of nature’s quantum character\",\"de_DE\":\"Sonderforschungsbereich 1227/1, Teilprojekt A02: Nicht-Gauß’sche atomare Zustände für Tests der Quantenmechanik\"},\"type\":{\"uri\":\"/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"links\":[{\"pureId\":3067627,\"url\":\"https://www.dq-mat.uni-hannover.de/de/forschung/projektbereich-a/teilprojekt-a02/\"}],\"keywordGroups\":[{\"typeDiscriminator\":\"FreeKeywordsKeywordGroup\",\"pureId\":3067817,\"logicalName\":\"keywordContainers\",\"name\":{\"en_GB\":\"Keywords\",\"de_DE\":\"Schlagwörter\"},\"keywords\":[{\"pureId\":3067819,\"locale\":\"de_DE\",\"freeKeywords\":[\"SFB 1227/1, Projektbereich A\"]},{\"pureId\":3067820,\"locale\":\"en_GB\",\"freeKeywords\":[\"CRC 1227/1, project area A\"]}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3067621,\"logicalName\":\"/dk/atira/pure/project/project_funder\",\"name\":{\"en_GB\":\"Funding type\",\"de_DE\":\"Mittelherkunft\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/project/project_funder/germansciencefoundation\",\"term\":{\"en_GB\":\"German Research Foundation (DFG)\",\"de_DE\":\"Deutsche Forschungsgemeinschaft (DFG)\"}}]},{\"typeDiscriminator\":\"FullKeywordGroup\",\"pureId\":74438271,\"logicalName\":\"/dk/atira/pure/project/financingsources\",\"name\":{\"en_GB\":\"Funding scheme\",\"de_DE\":\"Förderprogramme und -linien\"},\"keywordContainers\":[{\"pureId\":74438272,\"structuredKeyword\":{\"uri\":\"/dk/atira/pure/project/financingsources/02/02/03\",\"term\":{\"en_GB\":\"Collaborative Research Centres/Transregios\",\"de_DE\":\"Sonderforschungsbereiche/Transregios\"}}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3067625,\"logicalName\":\"luh_schwerpunkte\",\"name\":{\"en_GB\":\"Key research areas of LUH\",\"de_DE\":\"Etablierte Forschungsschwerpunkte der LUH\"},\"classifications\":[{\"uri\":\"luh_schwerpunkte/quantum_optics_and_gravitational_physics\",\"term\":{\"en_GB\":\"Quantum Optics and Gravitational Physics\",\"de_DE\":\"Quantenoptik und Gravitationsphysik\"}}]}],\"projects\":[{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/successor\",\"term\":{\"en_GB\":\"Successor\",\"de_DE\":\"Nachfolger\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"2c6b1cbe-bff0-4ac0-842c-d28cc3824372\"}},{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/contains\",\"term\":{\"en_GB\":\"Contains\",\"de_DE\":\"Enthält\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"e1230eeb-4fab-4a7d-a5a9-6823d4ba705f\"}}],\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0ac2e2a8-ed4d-4090-af05-e25943cf453b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0d6dfe55-40bb-4a9a-bb5b-2bf7da565b8c\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"9d058268-a1fd-4269-a849-f0a90f97a1b0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"a2bd756f-f36a-4cda-96d1-e5beea1976b7\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"7a01438e-e2ed-4fc8-818d-4a2a17533fac\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"136a25f4-8a05-4020-a111-52eb6ef5fc7b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"c1d2cc9f-20fe-4153-bf19-3a3914ef2552\"}}],\"systemName\":\"Project\"}]}",
+        "response_data": {
+            "count": 2663,
+            "pageInformation": {
+                "offset": 0,
+                "size": 5
+            },
+            "items": [
+                {
+                    "typeDiscriminator": "BasicProject",
+                    "pureId": 3040630,
+                    "uuid": "8229f43a-02b0-47aa-985d-3a852914bf5e",
+                    "createdBy": "jw_admin",
+                    "createdDate": "2020-02-13T10:37:57.891+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2025-11-03T15:37:03.285+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/projects/8229f43a-02b0-47aa-985d-3a852914bf5e",
+                    "prettyUrlIdentifiers": [
+                        "research-training-group-20732-integrating-ethics-and-epistemology"
+                    ],
+                    "version": "4c6e7b69d694e76477ec799f4fa3d9e81d672b64",
+                    "participants": [
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 3040645,
+                            "name": {
+                                "firstName": "Torsten",
+                                "lastName": "Wilholt"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "8c81f21f-9543-4785-b232-4a90a81ea416"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3040658,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                                }
+                            ],
+                            "name": {
+                                "firstName": "Martin",
+                                "lastName": "Carrier"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/copi",
+                                "term": {
+                                    "en_GB": "Co-Principal Investigator",
+                                    "de_DE": "Leitende*r Forscher*in (Co-Principal Investigator)"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "af97d46b-cf0c-44a9-b7f7-7790545ad36c"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3040647,
+                            "name": {
+                                "firstName": "Anke",
+                                "lastName": "Büter"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3040649,
+                            "name": {
+                                "firstName": "Uljana",
+                                "lastName": "Feest"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 3040651,
+                            "name": {
+                                "firstName": "Mathias",
+                                "lastName": "Frisch"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "6423981d-1a77-4ef6-b2a7-d9f0bca3f3e9"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 3040653,
+                            "name": {
+                                "firstName": "Dietmar",
+                                "lastName": "Hübner"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "9a34b20b-3b3b-440a-abfb-f7e58353954e"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 3040655,
+                            "name": {
+                                "firstName": "Thomas",
+                                "lastName": "Reydon"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "e090fc8e-a61a-4e60-98f9-c5b83030678e"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3040657,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                                }
+                            ],
+                            "name": {
+                                "firstName": "Ralf",
+                                "lastName": "Stoecker"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "802ac8b2-1772-4dad-b1c6-e16834915659"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3040659,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                                }
+                            ],
+                            "name": {
+                                "firstName": "Marie I.",
+                                "lastName": "Kaiser"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "2251be53-9b69-49dc-a308-06f3784c2c42"
+                            }
+                        }
+                    ],
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                        }
+                    ],
+                    "collaborators": [
+                        {
+                            "typeDiscriminator": "ExternalCollaboratorAssociation",
+                            "pureId": 3040633,
+                            "leadCollaborator": false,
+                            "externalOrganization": {
+                                "systemName": "ExternalOrganization",
+                                "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalCollaboratorAssociation",
+                            "pureId": 3040634,
+                            "leadCollaborator": true,
+                            "organization": {
+                                "systemName": "Organization",
+                                "uuid": "07adc7bb-b839-4e70-900c-76d494d5b00a"
+                            }
+                        }
+                    ],
+                    "descriptions": [
+                        {
+                            "pureId": 3040635,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/projectdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 3040636,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/keyfindings",
+                                "term": {
+                                    "en_GB": "Key findings",
+                                    "de_DE": "wichtigste Ergebnisse"
+                                }
+                            }
+                        }
+                    ],
+                    "period": {
+                        "startDate": "2020-04-01",
+                        "endDate": "2024-09-30"
+                    },
+                    "natureTypes": [
+                        {
+                            "uri": "/dk/atira/pure/upm/nature/research",
+                            "term": {
+                                "en_GB": "Research",
+                                "de_DE": "Forschung"
+                            }
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "34c200f4-c5dd-4864-bdca-64e922c09206"
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                    },
+                    "title": {
+                        "en_GB": "Research Training Group 2073/2: Integrating Ethics and Epistemology of Scientific Research",
+                        "de_DE": "Graduiertenkolleg 2073/2: Die Integration von theoretischer und praktischer Wissenschaftsphilosophie"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "links": [
+                        {
+                            "pureId": 3040643,
+                            "url": "https://www.philos.uni-hannover.de/de/forschung/grk2037"
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3040639,
+                            "logicalName": "/dk/atira/pure/project/project_funder",
+                            "name": {
+                                "en_GB": "Funding type",
+                                "de_DE": "Mittelherkunft"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/project/project_funder/germansciencefoundation",
+                                    "term": {
+                                        "en_GB": "German Research Foundation (DFG)",
+                                        "de_DE": "Deutsche Forschungsgemeinschaft (DFG)"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "FullKeywordGroup",
+                            "pureId": 74438221,
+                            "logicalName": "/dk/atira/pure/project/financingsources",
+                            "name": {
+                                "en_GB": "Funding scheme",
+                                "de_DE": "Förderprogramme und -linien"
+                            },
+                            "keywordContainers": [
+                                {
+                                    "pureId": 74438222,
+                                    "structuredKeyword": {
+                                        "uri": "/dk/atira/pure/project/financingsources/02/02/01",
+                                        "term": {
+                                            "en_GB": "(International) Research Training Groups",
+                                            "de_DE": "(Internationale) Graduiertenkollegs"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3040717,
+                            "logicalName": "luh_schwerpunkte",
+                            "name": {
+                                "en_GB": "Key research areas of LUH",
+                                "de_DE": "Etablierte Forschungsschwerpunkte der LUH"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "luh_schwerpunkte/interdisciplinary_studies_of_science",
+                                    "term": {
+                                        "en_GB": "Interdisciplinary Studies of Science and Academia",
+                                        "de_DE": "Wissenschaftsreflexion"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 46974234,
+                            "logicalName": "sustainabledevelopmentgoals",
+                            "name": {
+                                "en_GB": "Sustainable Development Goals",
+                                "de_DE": "Ziele für nachhaltige Entwicklung"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/sustainabledevelopmentgoals/peace_justice_and_strong_institutions",
+                                    "term": {
+                                        "en_GB": "SDG 16 - Peace, Justice and Strong Institutions",
+                                        "de_DE": "SDG 16 - Frieden, Gerechtigkeit und starke Institutionen"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/sustainabledevelopmentgoals/climate_action",
+                                    "term": {
+                                        "en_GB": "SDG 13 - Climate Action",
+                                        "de_DE": "SDG 13 - Klimaschutzmaßnahmen"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "projects": [
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/predecessor",
+                                "term": {
+                                    "en_GB": "Predecessor",
+                                    "de_DE": "Vorgänger"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "ad231c1e-ae07-4044-8d87-36a48e626a31"
+                            }
+                        }
+                    ],
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "bd03a834-116a-42d5-a356-4c6404a08956"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "11f00ce4-cc32-4143-b953-94838811b6d0"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "93ebd2b5-c1fd-4836-b853-afe9e58830d9"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "03e0e66d-06fc-4888-b2d9-7049e782d00d"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "b75cc503-83db-4f32-841f-eaebd46dbd2b"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "9b1be796-84c0-40d3-ad2e-ad7f207524ef"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "f45251e7-2bab-4e64-8a1e-cdc139e944e9"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "5fabe970-3f14-4b9e-8985-6ddd2d2b747e"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "6e275b8b-6f14-4097-ae27-6c190cdad222"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0878a572-89aa-4d65-9cbf-22d7e5524b26"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "8ff55ff9-dedb-4cd1-9a65-c28265175a98"
+                            }
+                        }
+                    ],
+                    "systemName": "Project"
+                },
+                {
+                    "typeDiscriminator": "BasicProject",
+                    "pureId": 3042165,
+                    "uuid": "ad231c1e-ae07-4044-8d87-36a48e626a31",
+                    "createdBy": "jw_admin",
+                    "createdDate": "2020-02-13T12:12:07.263+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2025-11-03T15:37:04.256+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/projects/ad231c1e-ae07-4044-8d87-36a48e626a31",
+                    "prettyUrlIdentifiers": [
+                        "research-training-group-20731-integrating-ethics-and-epistemology"
+                    ],
+                    "version": "008f32a5721be3f5c425b20b62adb3d488ebfadc",
+                    "participants": [
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 3042181,
+                            "name": {
+                                "firstName": "Torsten",
+                                "lastName": "Wilholt"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "8c81f21f-9543-4785-b232-4a90a81ea416"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3042185,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                                }
+                            ],
+                            "name": {
+                                "firstName": "Martin",
+                                "lastName": "Carrier"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/copi",
+                                "term": {
+                                    "en_GB": "Co-Principal Investigator",
+                                    "de_DE": "Leitende*r Forscher*in (Co-Principal Investigator)"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "af97d46b-cf0c-44a9-b7f7-7790545ad36c"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3042183,
+                            "name": {
+                                "firstName": "Anke",
+                                "lastName": "Büter"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3042186,
+                            "name": {
+                                "firstName": "Uljana",
+                                "lastName": "Feest"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 3042188,
+                            "name": {
+                                "firstName": "Nils Christian",
+                                "lastName": "Hoppe"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "da3d675a-e620-4ceb-8ba6-f20525860fbc"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "1dca2a20-df44-4a23-9d0b-f0c474c3fd72"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 3042190,
+                            "name": {
+                                "firstName": "Dietmar",
+                                "lastName": "Hübner"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "9a34b20b-3b3b-440a-abfb-f7e58353954e"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 3042192,
+                            "name": {
+                                "firstName": "Thomas",
+                                "lastName": "Reydon"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "e090fc8e-a61a-4e60-98f9-c5b83030678e"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3042194,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                                }
+                            ],
+                            "name": {
+                                "firstName": "Ralf",
+                                "lastName": "Stoecker"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "802ac8b2-1772-4dad-b1c6-e16834915659"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3042195,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                                }
+                            ],
+                            "name": {
+                                "firstName": "Cornelis",
+                                "lastName": "Menke"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                                "term": {
+                                    "en_GB": "Co-Investigator",
+                                    "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                                }
+                            }
+                        }
+                    ],
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                        }
+                    ],
+                    "collaborators": [
+                        {
+                            "typeDiscriminator": "ExternalCollaboratorAssociation",
+                            "pureId": 3042168,
+                            "leadCollaborator": false,
+                            "externalOrganization": {
+                                "systemName": "ExternalOrganization",
+                                "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalCollaboratorAssociation",
+                            "pureId": 3042169,
+                            "leadCollaborator": true,
+                            "organization": {
+                                "systemName": "Organization",
+                                "uuid": "07adc7bb-b839-4e70-900c-76d494d5b00a"
+                            }
+                        }
+                    ],
+                    "descriptions": [
+                        {
+                            "pureId": 3042170,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/projectdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 3042171,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/keyfindings",
+                                "term": {
+                                    "en_GB": "Key findings",
+                                    "de_DE": "wichtigste Ergebnisse"
+                                }
+                            }
+                        }
+                    ],
+                    "period": {
+                        "startDate": "2015-10-01",
+                        "endDate": "2020-03-31"
+                    },
+                    "natureTypes": [
+                        {
+                            "uri": "/dk/atira/pure/upm/nature/research",
+                            "term": {
+                                "en_GB": "Research",
+                                "de_DE": "Forschung"
+                            }
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "34c200f4-c5dd-4864-bdca-64e922c09206"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "1dca2a20-df44-4a23-9d0b-f0c474c3fd72"
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                    },
+                    "title": {
+                        "en_GB": "Research Training Group 2073/1: Integrating Ethics and Epistemology of Scientific Research",
+                        "de_DE": "Graduiertenkolleg 2073/1: Die Integration von theoretischer und praktischer Wissenschaftsphilosophie"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "links": [
+                        {
+                            "pureId": 3042178,
+                            "url": "https://grk2073.org/"
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3042174,
+                            "logicalName": "/dk/atira/pure/project/project_funder",
+                            "name": {
+                                "en_GB": "Funding type",
+                                "de_DE": "Mittelherkunft"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/project/project_funder/germansciencefoundation",
+                                    "term": {
+                                        "en_GB": "German Research Foundation (DFG)",
+                                        "de_DE": "Deutsche Forschungsgemeinschaft (DFG)"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "FullKeywordGroup",
+                            "pureId": 74438227,
+                            "logicalName": "/dk/atira/pure/project/financingsources",
+                            "name": {
+                                "en_GB": "Funding scheme",
+                                "de_DE": "Förderprogramme und -linien"
+                            },
+                            "keywordContainers": [
+                                {
+                                    "pureId": 74438228,
+                                    "structuredKeyword": {
+                                        "uri": "/dk/atira/pure/project/financingsources/02/02/01",
+                                        "term": {
+                                            "en_GB": "(International) Research Training Groups",
+                                            "de_DE": "(Internationale) Graduiertenkollegs"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3042176,
+                            "logicalName": "luh_schwerpunkte",
+                            "name": {
+                                "en_GB": "Key research areas of LUH",
+                                "de_DE": "Etablierte Forschungsschwerpunkte der LUH"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "luh_schwerpunkte/interdisciplinary_studies_of_science",
+                                    "term": {
+                                        "en_GB": "Interdisciplinary Studies of Science and Academia",
+                                        "de_DE": "Wissenschaftsreflexion"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "projects": [
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/successor",
+                                "term": {
+                                    "en_GB": "Successor",
+                                    "de_DE": "Nachfolger"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "8229f43a-02b0-47aa-985d-3a852914bf5e"
+                            }
+                        }
+                    ],
+                    "prizes": [
+                        {
+                            "prize": {
+                                "systemName": "Prize",
+                                "uuid": "a3542b05-105c-4b08-a48d-295f0441abef"
+                            }
+                        }
+                    ],
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "bd03a834-116a-42d5-a356-4c6404a08956"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "11f00ce4-cc32-4143-b953-94838811b6d0"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "03e0e66d-06fc-4888-b2d9-7049e782d00d"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "989fa497-0d7b-4033-abcd-acffb6917fc7"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "b75cc503-83db-4f32-841f-eaebd46dbd2b"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "7cdd1683-df59-49ad-8b69-23728d4044ff"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "8ff55ff9-dedb-4cd1-9a65-c28265175a98"
+                            }
+                        }
+                    ],
+                    "systemName": "Project"
+                },
+                {
+                    "typeDiscriminator": "BasicProject",
+                    "pureId": 3066710,
+                    "uuid": "e1230eeb-4fab-4a7d-a5a9-6823d4ba705f",
+                    "createdBy": "jw_admin",
+                    "createdDate": "2020-02-14T16:54:14.626+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2025-11-03T15:37:04.919+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/projects/e1230eeb-4fab-4a7d-a5a9-6823d4ba705f",
+                    "prettyUrlIdentifiers": [
+                        "collaborative-research-centre-12271-designed-quantum-states-of-ma"
+                    ],
+                    "version": "f78a2cfdff0196f215166a66d5bd305cbe95092a",
+                    "acronym": "DQ-mat",
+                    "participants": [
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 3066727,
+                            "name": {
+                                "firstName": "Piet Oliver",
+                                "lastName": "Schmidt"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "8584b413-86d9-4a40-ae98-37ea74464fc9"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "bebed6cc-c284-44ca-9115-8b4f2e13a7cb"
+                                },
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "7e2dceea-80f9-4015-a1ac-5b4f545645fd"
+                                }
+                            ]
+                        }
+                    ],
+                    "collaborators": [
+                        {
+                            "typeDiscriminator": "ExternalCollaboratorAssociation",
+                            "pureId": 3066713,
+                            "leadCollaborator": false,
+                            "externalOrganization": {
+                                "systemName": "ExternalOrganization",
+                                "uuid": "aa28521a-6803-4692-9423-8092c80a1248"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalCollaboratorAssociation",
+                            "pureId": 3066714,
+                            "leadCollaborator": false,
+                            "externalOrganization": {
+                                "systemName": "ExternalOrganization",
+                                "uuid": "5eba19f3-8750-4513-80d4-2833178dfad7"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalCollaboratorAssociation",
+                            "pureId": 3066715,
+                            "leadCollaborator": true,
+                            "organization": {
+                                "systemName": "Organization",
+                                "uuid": "07adc7bb-b839-4e70-900c-76d494d5b00a"
+                            }
+                        }
+                    ],
+                    "descriptions": [
+                        {
+                            "pureId": 3066716,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/projectdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 3066717,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/keyfindings",
+                                "term": {
+                                    "en_GB": "Key findings",
+                                    "de_DE": "wichtigste Ergebnisse"
+                                }
+                            }
+                        }
+                    ],
+                    "period": {
+                        "startDate": "2016-07-01",
+                        "endDate": "2020-06-30"
+                    },
+                    "natureTypes": [
+                        {
+                            "uri": "/dk/atira/pure/upm/nature/research",
+                            "term": {
+                                "en_GB": "Research",
+                                "de_DE": "Forschung"
+                            }
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "bebed6cc-c284-44ca-9115-8b4f2e13a7cb"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "7e2dceea-80f9-4015-a1ac-5b4f545645fd"
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "7e2dceea-80f9-4015-a1ac-5b4f545645fd"
+                    },
+                    "title": {
+                        "en_GB": "Collaborative Research Centre 1227/1: Designed Quantum States of Matter - Generation, Manipulation and Detection for Metrological Applications and Tests of Fundamental Physics",
+                        "de_DE": "Sonderforschungsbereich 1227/1: Designte Quantenzustände der Materie - Erzeugung, Manipulation und Detektion für metrologische Anwendungen und Tests fundamentaler Physik"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "links": [
+                        {
+                            "pureId": 3066724,
+                            "url": "https://www.dq-mat.uni-hannover.de/"
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3066718,
+                            "logicalName": "/dk/atira/pure/project/project_funder",
+                            "name": {
+                                "en_GB": "Funding type",
+                                "de_DE": "Mittelherkunft"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/project/project_funder/germansciencefoundation",
+                                    "term": {
+                                        "en_GB": "German Research Foundation (DFG)",
+                                        "de_DE": "Deutsche Forschungsgemeinschaft (DFG)"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "FullKeywordGroup",
+                            "pureId": 74438236,
+                            "logicalName": "/dk/atira/pure/project/financingsources",
+                            "name": {
+                                "en_GB": "Funding scheme",
+                                "de_DE": "Förderprogramme und -linien"
+                            },
+                            "keywordContainers": [
+                                {
+                                    "pureId": 74438237,
+                                    "structuredKeyword": {
+                                        "uri": "/dk/atira/pure/project/financingsources/02/02/03",
+                                        "term": {
+                                            "en_GB": "Collaborative Research Centres/Transregios",
+                                            "de_DE": "Sonderforschungsbereiche/Transregios"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3066722,
+                            "logicalName": "luh_schwerpunkte",
+                            "name": {
+                                "en_GB": "Key research areas of LUH",
+                                "de_DE": "Etablierte Forschungsschwerpunkte der LUH"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "luh_schwerpunkte/quantum_optics_and_gravitational_physics",
+                                    "term": {
+                                        "en_GB": "Quantum Optics and Gravitational Physics",
+                                        "de_DE": "Quantenoptik und Gravitationsphysik"
+                                    }
+                                },
+                                {
+                                    "uri": "luh_schwerpunkte/optical_technologies",
+                                    "term": {
+                                        "en_GB": "Optical Technologies",
+                                        "de_DE": "Optische Technologien"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 41612155,
+                            "logicalName": "sustainabledevelopmentgoals",
+                            "name": {
+                                "en_GB": "Sustainable Development Goals",
+                                "de_DE": "Ziele für nachhaltige Entwicklung"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/sustainabledevelopmentgoals/affordable_and_clean_energy",
+                                    "term": {
+                                        "en_GB": "SDG 7 - Affordable and Clean Energy",
+                                        "de_DE": "SDG 7 - Erschwingliche und saubere Energie"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "projects": [
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "74918f3b-43b0-4fdf-beed-31388e453bc8"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "f9f4ac9c-1437-4c71-9af9-0b8452c239dd"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "eecf2c77-0e8b-471c-9aa0-4b582ad0db1b"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "5574b815-4bc4-4531-8704-290981ddda65"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "04b6cc69-f35f-4403-b574-ae78df57687a"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "a516f9d7-4583-4519-a662-241300fe9329"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "75b9e1e8-bae2-411b-99ec-578a6bd397b5"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "ee97269f-9d8e-41bb-a40b-c820609f8c96"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "81f3cb0d-d542-4d66-8e8b-1dfbde6bf95b"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "142f0330-1e70-430f-b85a-59f58f8fd443"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "916558a1-2fff-4f56-94dd-7b77440abcfa"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "db316fdd-9b3b-48e4-a5ad-d0e670d180a3"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/successor",
+                                "term": {
+                                    "en_GB": "Successor",
+                                    "de_DE": "Nachfolger"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "e6c173ef-4a1b-4e67-817b-670fe6fbb7c6"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "0ec6b365-5fc1-4971-96b1-2fe71f7a4a7e"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "5fa7b00d-c5c7-4c83-b21f-e4a83301b327"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "73304d42-381a-4aae-9e8e-9733c9a4a0af"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/partof",
+                                "term": {
+                                    "en_GB": "Part of",
+                                    "de_DE": "Teil von"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "d6ebd415-72e4-4433-a9ec-50e9642b1253"
+                            }
+                        }
+                    ],
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "2a0793d5-eebd-4739-8909-12650084d0fc"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "bfa5185a-b5a0-44fa-9516-f32735f7066d"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "e009ba78-60bf-426a-9f62-0e30e27a6fd8"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "7d399b58-f51f-46fe-bcac-c6e228cbef53"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "83b93397-6d71-4de5-86ea-c2106e649944"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "9ca76f3c-a160-4365-99dd-0d7171b777d8"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "459c686e-57e7-467e-8548-7fdc234768cf"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "48884cc3-d569-4ee8-8f62-f67423b464a9"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "aae0c626-0a6a-4559-9be6-d5a15a3b01a9"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "a863a34a-35d5-4079-8ba3-45c79c24d1c4"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "b6cfed5f-e6f4-4d88-9817-24d534221358"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "56fed9d2-bb79-4b11-828c-406fadbcb278"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "32905ae3-80ce-4e52-850f-83dd2a928ac0"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "9b162c0f-7818-4dcd-a8c0-3cdb65498a86"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "192a44f6-a05b-4c10-a0c5-9b0e9ec75f11"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "ebd9c764-792d-401e-ad78-72f2af4a6b93"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "d8559115-2c3c-4345-a6db-4b1d6cf5b241"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "56a13ef6-4fb8-48a9-b78e-cfbf72b81519"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "80eb888e-9426-4a5b-95a0-ad4542241b7a"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "766493de-21c8-4bf9-a934-7a468906e3be"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "4949c691-8792-4eea-8f0b-d8f2058c78a4"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "4345b167-133f-4d22-a7ee-2db7a4e621f7"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "1c0f3187-a8bc-467c-abdc-9c7c8985425d"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "c9fed1a2-e7bf-49cb-91ab-52027a0c559c"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "976b9c87-81e4-41c4-970d-17e6d8e980bd"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "c2c5fe27-de50-4aac-827a-1d5f0219cf82"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "d7b516e0-8b5f-494c-98a4-e9ed5245afa1"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "2f5c0bf0-055d-4307-9109-16823eda25c6"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0fafff10-b22c-469c-873f-175656ee7372"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "c035ab9a-1aac-4d82-bbaa-751955b0a7db"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "16d5211b-d01f-49a4-b37a-1b927cf76a4b"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "1b665b1f-7ed1-4bc1-8dee-4b6c87a126c0"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0216c3d9-ddca-454c-99d2-f18fec27b752"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "50e0c6d2-8f58-4c9c-ac87-6361ee94d37b"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "ee49608e-7998-434e-b2e2-615b5d7b473f"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "381ef9e1-d197-49a4-be86-d31a2dc8129c"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "50b04d0d-1994-4a1e-978c-d2d58088caaa"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "24767f55-68e3-4e4a-b334-a901051d76be"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "de02141f-77b0-4d80-8734-a58421b49629"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "c2e19fed-ea7d-4dce-a31c-246ef1329456"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "ba878f09-9136-4697-b655-1d6e3d50d499"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "dd4228fd-93f3-48f8-8385-0a1c9efebc54"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "a1d74e3b-ce38-4d52-84c8-b1aab7e20005"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "8248b801-f5b3-48bf-b80f-0e9d51cdf84f"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "52b4c526-c6de-4e69-919a-1968630a318d"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "25da6d04-1f0b-449a-b5aa-43913de3aedc"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "2fee49e7-e6c1-4908-8158-d8adc3c2044c"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "2da82b2b-88e0-44f1-a304-022715fad359"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0d6dfe55-40bb-4a9a-bb5b-2bf7da565b8c"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "2a66e526-a10e-422b-a426-89498e24ba29"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "4c91349d-b6a2-4150-8d86-39b90c801789"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "966a83c4-f335-4eeb-ad6b-4ce1dffc85cb"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "3bbe5ab7-76ea-4e45-a5ab-24ab97fb84bd"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "f397bf27-3c75-4a2f-a1d7-1dcb952d2765"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "fabc3557-126b-4b44-81dd-65fc97a88727"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0ac2e2a8-ed4d-4090-af05-e25943cf453b"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "dbffc2fe-0414-45bf-8815-a4b8580e56f1"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "e31bc969-3d8f-4c21-9a1a-b7da414151d3"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "18c1f86e-b684-4595-9ae7-8f6016bb3238"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "3e90fbb7-0500-4e07-8e49-4dc0291c5be0"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0765b09d-64da-41c2-9777-54d043e2079d"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "96b13c8c-89cb-44f1-be35-d15f7aca1d0b"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "c1d2cc9f-20fe-4153-bf19-3a3914ef2552"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0d6a11dc-89b4-4746-ae8f-2f2fa6b2b8d3"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "a705bbca-5868-4787-8f96-ae822d6a2423"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "4b9a1c6a-ac35-4e91-a38e-9781c5dba8a8"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "e2db471f-e30d-438a-b899-d1990fa81e53"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "87ed80df-9d4a-49bc-a24a-a8762cf6cb9e"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "17e07ced-b499-42b5-af5f-544b55cbe678"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "261a992e-786e-4bbe-8d8f-2b46439ac28c"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "1a46718a-685d-42b4-b780-504da62a971b"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "5be7b5ff-c216-4414-be08-af690ce843d5"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "5b9fb198-36a5-4da0-a957-95161d7bcce4"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "497c83c0-3c0e-4de4-8c20-6135585237aa"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "249b6182-cba0-4712-a200-a0c4b02258cb"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "8c8a1ff7-04d4-41f9-a943-ea3552d8f061"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "72dd1506-42a5-419f-bb69-624e583b1d25"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0812639a-44a1-42b1-9a78-d2b731237178"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "7e945ecb-9294-42bc-a4bc-c3082facaa5d"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "d1716204-e6b7-4ecb-96ee-4d1fb87bd504"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "f64453ef-cec8-420d-b718-5bc5663f5383"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "9a25c6e7-e877-4511-b27c-3bc6b93e8cf4"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "9103767b-9060-41f5-bdd4-3563d64b2063"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "a9b7a4d4-4b64-4b89-926c-328b0ec8c5da"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "923ce667-18ee-4ee0-b147-7501ba967903"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "f2856c5d-311b-4ff5-b22a-47842bed77a8"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "256e912b-8a2b-4e93-bbf1-9113786012c2"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "9dd5c9dd-a5be-4799-9d04-ef41b04b60ac"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "7eea3b9f-402f-4839-89f7-228e4d7a0680"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "a2645f32-76db-4b54-bb48-64a0bfa13851"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "523323e9-0759-4982-a100-bb423a842d3c"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "7d84a13e-bc71-44e6-bfb0-4e027472a5b0"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "cd0c26ef-b08a-484e-b6a9-78542c5807bc"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "7008f528-0a13-4292-81ed-f717334b37db"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "9d058268-a1fd-4269-a849-f0a90f97a1b0"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "86187d0d-8e56-4772-a698-8c56760ac423"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "b88d0d47-420c-4064-aba5-458d8e87ce0e"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "a2bd756f-f36a-4cda-96d1-e5beea1976b7"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "136a25f4-8a05-4020-a111-52eb6ef5fc7b"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "a41a7789-992c-429b-aced-be4deab7ea2e"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "7a01438e-e2ed-4fc8-818d-4a2a17533fac"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "9bfb36e2-50df-487d-a8e0-eb64ca5e09a0"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "a2a30237-af02-4c8d-a43d-a531c6400509"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "4f1a307e-93a2-4486-9d7e-a64005a4bdd9"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "dab788dc-194a-4ac7-80fe-bc67a1253c00"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "29bcedf5-79da-4aa9-b5c7-310f528e6ce5"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "782ec7b1-0c7f-487a-bd12-86fe40976ce1"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "f830c709-cdc3-4474-85ae-6629bea33975"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0e7de7b4-2411-48a6-b5a1-fef3d2af14b5"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "163d2dba-e857-4415-8e35-8756cae1bb60"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "b83bf3d4-9c1e-42a8-b21e-48f63a688664"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "28b94094-5392-488a-bddd-a224a664c8ca"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "adc6cd4e-bc66-4afa-b220-ef6a7501a07f"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "4a4598a8-99d2-4860-9cbf-fa7f0e54e7a7"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "8eeb2351-bdd5-4929-86ff-827512f35e69"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "034749fe-f4d4-4ee0-b8b6-03ff699023a8"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "bce505c0-8694-41cf-bf41-487e41215fc2"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0a4be8e7-23d0-4f33-a913-484f37f67d06"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "f9952551-1fe6-420e-b079-b3ac4d67e6c9"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "e96f2d43-eccf-4b24-b1e5-f2bb2c555055"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "334947c5-a59f-43ab-a373-48c7e8f63db0"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "efba4c34-a19f-4fa0-a1bc-c71b77c66ba7"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "c78f0755-c4b6-463a-bde6-ec91b7cabc16"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "49cfaf8b-3504-4a4d-bcdb-09c2d4d441a5"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "18e8bfc1-9e82-40d7-8a5c-5e0d2778e5d6"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "81ddc079-5454-40e2-b51e-4e0cc92c37b6"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0461470d-e6a1-4101-8ab4-bb6e9480bbd0"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "60ef750c-29e0-4fe3-a924-bdb75c8a7688"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "802461fe-ff61-4d8b-9e8d-58e41c770668"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "fb0e2f35-a6b6-4529-9a2b-c293dbc470d7"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "a9b84154-d10d-4ad0-8401-059cf0f3c1ad"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "252d76fb-2ac3-4eca-be9b-04080e6b08a5"
+                            }
+                        }
+                    ],
+                    "systemName": "Project"
+                },
+                {
+                    "typeDiscriminator": "BasicProject",
+                    "pureId": 3067336,
+                    "uuid": "74918f3b-43b0-4fdf-beed-31388e453bc8",
+                    "createdBy": "jw_admin",
+                    "createdDate": "2020-02-14T17:22:55.679+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2025-11-03T15:37:05.556+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/projects/74918f3b-43b0-4fdf-beed-31388e453bc8",
+                    "prettyUrlIdentifiers": [
+                        "collaborative-research-centre-12271-sub-project-a01-quantum-magne"
+                    ],
+                    "version": "783c0bc4a8e17815e95fb0c556cca8607bc8f5cc",
+                    "acronym": "DQ-mat",
+                    "participants": [
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 3067350,
+                            "name": {
+                                "firstName": "Christian",
+                                "lastName": "Ospelkaus"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "bfcb0e9f-0e35-4a96-bfd5-e1b28905c9ad"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "bebed6cc-c284-44ca-9115-8b4f2e13a7cb"
+                                },
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "7e2dceea-80f9-4015-a1ac-5b4f545645fd"
+                                }
+                            ]
+                        }
+                    ],
+                    "descriptions": [
+                        {
+                            "pureId": 3067339,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/projectdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 3067340,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/keyfindings",
+                                "term": {
+                                    "en_GB": "Key findings",
+                                    "de_DE": "wichtigste Ergebnisse"
+                                }
+                            }
+                        }
+                    ],
+                    "period": {
+                        "startDate": "2016-07-01",
+                        "endDate": "2020-06-30"
+                    },
+                    "natureTypes": [
+                        {
+                            "uri": "/dk/atira/pure/upm/nature/research",
+                            "term": {
+                                "en_GB": "Research",
+                                "de_DE": "Forschung"
+                            }
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "bebed6cc-c284-44ca-9115-8b4f2e13a7cb"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "7e2dceea-80f9-4015-a1ac-5b4f545645fd"
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "7e2dceea-80f9-4015-a1ac-5b4f545645fd"
+                    },
+                    "title": {
+                        "en_GB": "Collaborative Research Centre 1227/1, sub-project A01: Quantum magnetism in trapped ions",
+                        "de_DE": "Sonderforschungsbereich 1227/1, Teilprojekt A01: Quantenmagnetismus in gefangenen Ionen"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "links": [
+                        {
+                            "pureId": 3067347,
+                            "url": "https://www.dq-mat.uni-hannover.de/de/forschung/projektbereich-a/teilprojekt-a01/"
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                            "pureId": 3067824,
+                            "logicalName": "keywordContainers",
+                            "name": {
+                                "en_GB": "Keywords",
+                                "de_DE": "Schlagwörter"
+                            },
+                            "keywords": [
+                                {
+                                    "pureId": 3067826,
+                                    "locale": "de_DE",
+                                    "freeKeywords": [
+                                        "SFB 1227/1, Projektbereich A"
+                                    ]
+                                },
+                                {
+                                    "pureId": 3067827,
+                                    "locale": "en_GB",
+                                    "freeKeywords": [
+                                        "SFB 1227/1, Projektbereich A"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3067341,
+                            "logicalName": "/dk/atira/pure/project/project_funder",
+                            "name": {
+                                "en_GB": "Funding type",
+                                "de_DE": "Mittelherkunft"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/project/project_funder/germansciencefoundation",
+                                    "term": {
+                                        "en_GB": "German Research Foundation (DFG)",
+                                        "de_DE": "Deutsche Forschungsgemeinschaft (DFG)"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "FullKeywordGroup",
+                            "pureId": 74438261,
+                            "logicalName": "/dk/atira/pure/project/financingsources",
+                            "name": {
+                                "en_GB": "Funding scheme",
+                                "de_DE": "Förderprogramme und -linien"
+                            },
+                            "keywordContainers": [
+                                {
+                                    "pureId": 74438262,
+                                    "structuredKeyword": {
+                                        "uri": "/dk/atira/pure/project/financingsources/02/02/03",
+                                        "term": {
+                                            "en_GB": "Collaborative Research Centres/Transregios",
+                                            "de_DE": "Sonderforschungsbereiche/Transregios"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3067345,
+                            "logicalName": "luh_schwerpunkte",
+                            "name": {
+                                "en_GB": "Key research areas of LUH",
+                                "de_DE": "Etablierte Forschungsschwerpunkte der LUH"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "luh_schwerpunkte/quantum_optics_and_gravitational_physics",
+                                    "term": {
+                                        "en_GB": "Quantum Optics and Gravitational Physics",
+                                        "de_DE": "Quantenoptik und Gravitationsphysik"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "projects": [
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/successor",
+                                "term": {
+                                    "en_GB": "Successor",
+                                    "de_DE": "Nachfolger"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "3a0bc530-9b81-423d-b746-cf29dde557ac"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/contains",
+                                "term": {
+                                    "en_GB": "Contains",
+                                    "de_DE": "Enthält"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "e1230eeb-4fab-4a7d-a5a9-6823d4ba705f"
+                            }
+                        }
+                    ],
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "50e0c6d2-8f58-4c9c-ac87-6361ee94d37b"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "f830c709-cdc3-4474-85ae-6629bea33975"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "83b93397-6d71-4de5-86ea-c2106e649944"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "8c8a1ff7-04d4-41f9-a943-ea3552d8f061"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "c2e19fed-ea7d-4dce-a31c-246ef1329456"
+                            }
+                        }
+                    ],
+                    "systemName": "Project"
+                },
+                {
+                    "typeDiscriminator": "BasicProject",
+                    "pureId": 3067616,
+                    "uuid": "f9f4ac9c-1437-4c71-9af9-0b8452c239dd",
+                    "createdBy": "jw_admin",
+                    "createdDate": "2020-02-14T17:30:25.449+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2025-11-03T15:37:06.2+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/projects/f9f4ac9c-1437-4c71-9af9-0b8452c239dd",
+                    "prettyUrlIdentifiers": [
+                        "collaborative-research-centre-12271-sub-project-a02-non-gaussian-"
+                    ],
+                    "version": "d586f7989f4634549b1a23b86d71482225e0037f",
+                    "acronym": "DQ-mat",
+                    "participants": [
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3067631,
+                            "name": {
+                                "firstName": "Carsten",
+                                "lastName": "Klempt"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3067634,
+                            "name": {
+                                "firstName": "Luis Sanchez",
+                                "lastName": "Santos"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3067637,
+                            "name": {
+                                "firstName": "Wolfgang",
+                                "lastName": "Ertmer"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            }
+                        }
+                    ],
+                    "descriptions": [
+                        {
+                            "pureId": 3067619,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/projectdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 3067620,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/keyfindings",
+                                "term": {
+                                    "en_GB": "Key findings",
+                                    "de_DE": "wichtigste Ergebnisse"
+                                }
+                            }
+                        }
+                    ],
+                    "period": {
+                        "startDate": "2016-07-01",
+                        "endDate": "2020-06-30"
+                    },
+                    "natureTypes": [
+                        {
+                            "uri": "/dk/atira/pure/upm/nature/research",
+                            "term": {
+                                "en_GB": "Research",
+                                "de_DE": "Forschung"
+                            }
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "bebed6cc-c284-44ca-9115-8b4f2e13a7cb"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "7e2dceea-80f9-4015-a1ac-5b4f545645fd"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "cd2571a0-bbce-455d-a3bb-27414a805f5b"
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "7e2dceea-80f9-4015-a1ac-5b4f545645fd"
+                    },
+                    "title": {
+                        "en_GB": "Collaborative Research Centre 1227/1, sub-project A02: Non-Gaussian atomic states for tests of nature’s quantum character",
+                        "de_DE": "Sonderforschungsbereich 1227/1, Teilprojekt A02: Nicht-Gauß’sche atomare Zustände für Tests der Quantenmechanik"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "links": [
+                        {
+                            "pureId": 3067627,
+                            "url": "https://www.dq-mat.uni-hannover.de/de/forschung/projektbereich-a/teilprojekt-a02/"
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                            "pureId": 3067817,
+                            "logicalName": "keywordContainers",
+                            "name": {
+                                "en_GB": "Keywords",
+                                "de_DE": "Schlagwörter"
+                            },
+                            "keywords": [
+                                {
+                                    "pureId": 3067819,
+                                    "locale": "de_DE",
+                                    "freeKeywords": [
+                                        "SFB 1227/1, Projektbereich A"
+                                    ]
+                                },
+                                {
+                                    "pureId": 3067820,
+                                    "locale": "en_GB",
+                                    "freeKeywords": [
+                                        "CRC 1227/1, project area A"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3067621,
+                            "logicalName": "/dk/atira/pure/project/project_funder",
+                            "name": {
+                                "en_GB": "Funding type",
+                                "de_DE": "Mittelherkunft"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/project/project_funder/germansciencefoundation",
+                                    "term": {
+                                        "en_GB": "German Research Foundation (DFG)",
+                                        "de_DE": "Deutsche Forschungsgemeinschaft (DFG)"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "FullKeywordGroup",
+                            "pureId": 74438271,
+                            "logicalName": "/dk/atira/pure/project/financingsources",
+                            "name": {
+                                "en_GB": "Funding scheme",
+                                "de_DE": "Förderprogramme und -linien"
+                            },
+                            "keywordContainers": [
+                                {
+                                    "pureId": 74438272,
+                                    "structuredKeyword": {
+                                        "uri": "/dk/atira/pure/project/financingsources/02/02/03",
+                                        "term": {
+                                            "en_GB": "Collaborative Research Centres/Transregios",
+                                            "de_DE": "Sonderforschungsbereiche/Transregios"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3067625,
+                            "logicalName": "luh_schwerpunkte",
+                            "name": {
+                                "en_GB": "Key research areas of LUH",
+                                "de_DE": "Etablierte Forschungsschwerpunkte der LUH"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "luh_schwerpunkte/quantum_optics_and_gravitational_physics",
+                                    "term": {
+                                        "en_GB": "Quantum Optics and Gravitational Physics",
+                                        "de_DE": "Quantenoptik und Gravitationsphysik"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "projects": [
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/successor",
+                                "term": {
+                                    "en_GB": "Successor",
+                                    "de_DE": "Nachfolger"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "2c6b1cbe-bff0-4ac0-842c-d28cc3824372"
+                            }
+                        },
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/contains",
+                                "term": {
+                                    "en_GB": "Contains",
+                                    "de_DE": "Enthält"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "e1230eeb-4fab-4a7d-a5a9-6823d4ba705f"
+                            }
+                        }
+                    ],
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0ac2e2a8-ed4d-4090-af05-e25943cf453b"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "0d6dfe55-40bb-4a9a-bb5b-2bf7da565b8c"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "9d058268-a1fd-4269-a849-f0a90f97a1b0"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "a2bd756f-f36a-4cda-96d1-e5beea1976b7"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "7a01438e-e2ed-4fc8-818d-4a2a17533fac"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "136a25f4-8a05-4020-a111-52eb6ef5fc7b"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "c1d2cc9f-20fe-4153-bf19-3a3914ef2552"
+                            }
+                        }
+                    ],
+                    "systemName": "Project"
+                }
+            ]
+        },
+        "json_error": "No error"
+    }
+}

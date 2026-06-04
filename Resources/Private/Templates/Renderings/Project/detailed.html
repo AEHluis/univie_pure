@@ -1,0 +1,72 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="rendering_project rendering_detailed" data-uuid="{data.uuid}">
+    <h3 class="project-title">
+        <f:if condition="{data.title.en_GB}">
+            <f:then><f:format.raw>{data.title.en_GB}</f:format.raw></f:then>
+            <f:else>
+                <f:if condition="{data.title.de_DE}">
+                    <f:then><f:format.raw>{data.title.de_DE}</f:format.raw></f:then>
+                    <f:else><f:format.raw>{data.title}</f:format.raw></f:else>
+                </f:if>
+            </f:else>
+        </f:if>
+    </h3>
+
+    <f:if condition="{data.acronym}">
+        <p class="project-acronym"><strong>{data.acronym}</strong></p>
+    </f:if>
+
+    <div class="project-details">
+        <dl>
+            <f:if condition="{data.period.startDate}">
+                <dt>Duration</dt>
+                <dd>
+                    {data.period.startDate -> f:format.date(format: 'd.m.Y')}
+                    <f:if condition="{data.period.endDate}"> - {data.period.endDate -> f:format.date(format: 'd.m.Y')}</f:if>
+                </dd>
+            </f:if>
+
+            <f:if condition="{data.status}">
+                <dt>Status</dt>
+                <dd>{data.status}</dd>
+            </f:if>
+
+            <f:if condition="{data.type.term.en_GB}">
+                <f:then>
+                    <dt>Type</dt>
+                    <dd>{data.type.term.en_GB}</dd>
+                </f:then>
+                <f:else>
+                    <f:if condition="{data.type}">
+                        <dt>Type</dt>
+                        <dd>{data.type}</dd>
+                    </f:if>
+                </f:else>
+            </f:if>
+
+            <f:if condition="{data.info.portalUrl}">
+                <dt>Portal</dt>
+                <dd><a href="{data.info.portalUrl}" target="_blank" rel="noopener">View in Pure</a></dd>
+            </f:if>
+        </dl>
+    </div>
+
+    <f:if condition="{data.description}">
+        <div class="project-description">
+            <h5>Description</h5>
+            <p><f:format.raw>{data.description}</f:format.raw></p>
+        </div>
+    </f:if>
+
+    <f:if condition="{data.participants}">
+        <div class="project-participants">
+            <h5>Participants</h5>
+            <ul>
+                <f:for each="{data.participants}" as="participant">
+                    <li>{participant.name}</li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+</div>
+</html>

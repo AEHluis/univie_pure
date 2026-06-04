@@ -159,6 +159,18 @@
 				<source>BibTeX</source>
 				<target>BibTeX</target>
 			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.ieee">
+				<source>IEEE</source>
+				<target>IEEE</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.chicago">
+				<source>Chicago</source>
+				<target>Chicago</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.mla">
+				<source>MLA</source>
+				<target>MLA</target>
+			</trans-unit>
 			<trans-unit id="univiepur.publication.citation.ris">
 				<source>RIS</source>
 				<target>RIS</target>

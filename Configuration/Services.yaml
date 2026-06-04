@@ -4,51 +4,87 @@ services:
     autoconfigure: true
     public: false
 
+  # Auto-register all classes
   Univie\UniviePure\:
     resource: '../Classes/*'
     exclude:
-      - '../Classes/Hooks/*'
+      - '../Classes/Domain/Model/*'
 
-  # BackendJavaScriptHook is registered via SC_OPTIONS in ext_localconf.php
-  # NOT as an event listener - exclude from autoconfigure
-  Univie\UniviePure\Hooks\BackendJavaScriptHook:
-    autoconfigure: false
-
-  Univie\UniviePure\Service\WebService:
-    public: true
-    arguments:
-      $cache: '@cache.univie_pure'
+  # ============================================================
+  # Cache
+  # ============================================================
 
   cache.univie_pure:
     class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
     factory: ['@TYPO3\CMS\Core\Cache\CacheManager', 'getCache']
     arguments: ['univie_pure']
 
-  Univie\UniviePure\Cache\Warmup\UniviePureCacheWarmer:
+  # Services requiring cache injection
+  Univie\UniviePure\Service\OpenApi\OpenApiClient:
+    arguments:
+      $cache: '@cache.univie_pure'
+
+  Univie\UniviePure\Service\CslRenderingService:
+    arguments:
+      $cache: '@cache.univie_pure'
+
+  Univie\UniviePure\Service\RenderingService:
+    arguments:
+      $cache: '@cache.univie_pure'
+
+  Univie\UniviePure\Service\Cache\UnifiedCacheManager:
+    arguments:
+      $cache: '@cache.univie_pure'
+
+  Univie\UniviePure\Service\Enrichment\UnpaywallClient:
+    arguments:
+      $cache: '@cache.univie_pure'
+
+  # ============================================================
+  # API Service (OpenAPI)
+  # ============================================================
+
+  Univie\UniviePure\Service\ApiServiceInterface:
+    alias: Univie\UniviePure\Service\OpenApi\OpenApiService
+    public: true
+
+  Univie\UniviePure\Service\OpenApi\OpenApiService:
+    public: true
+
+  # ============================================================
+  # HTTP Client
+  # ============================================================
+
+  Psr\Http\Client\ClientInterface:
+    class: GuzzleHttp\Client
+    factory: ['Univie\UniviePure\Service\HttpClientFactory', 'create']
+
+  # ============================================================
+  # Controllers
+  # ============================================================
+
+  Univie\UniviePure\Controller\PureController:
     public: true
     arguments:
-      $classificationScheme: '@Univie\UniviePure\Utility\ClassificationScheme'
+      $configurationManager: '@TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface'
+      $apiService: '@Univie\UniviePure\Service\ApiServiceInterface'
+      $publicationInsightsService: '@Univie\UniviePure\Service\Enrichment\PublicationInsightsService'
+      $cslRenderingService: '@?Univie\UniviePure\Service\CslRenderingService'
+
+  Univie\UniviePure\Controller\AjaxController:
+    public: true
+    arguments:
+      $apiService: '@Univie\UniviePure\Service\ApiServiceInterface'
+
+  # ============================================================
+  # Cache Warmer Event Listener
+  # ============================================================
+
+  Univie\UniviePure\Cache\Warmup\UniviePureCacheWarmer:
+    arguments:
       $cache: '@cache.univie_pure'
       $logManager: '@TYPO3\CMS\Core\Log\LogManager'
     tags:
       - name: event.listener
         identifier: 'univie-pure-cache-warmer'
         event: TYPO3\CMS\Core\Cache\Event\CacheWarmupEvent
-
-  Univie\UniviePure\PageTitle\PublicationPageTitleProvider:
-    public: true
-
-  Univie\UniviePure\Controller\CitationAjaxController:
-    public: true
-
-  Univie\UniviePure\Middleware\CitationAjaxMiddleware:
-    public: true
-
-  Univie\UniviePure\Service\Enrichment\UnpaywallClient:
-    arguments:
-      $client: '@Psr\Http\Client\ClientInterface'
-      $cache: '@cache.univie_pure'
-
-  Psr\Http\Client\ClientInterface:
-    class: GuzzleHttp\Client
-    factory: ['Univie\UniviePure\Service\HttpClientFactory', 'create']

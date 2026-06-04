@@ -1,0 +1,353 @@
+{
+    "test_name": "persons_list",
+    "description": "List persons with pagination",
+    "timestamp": "2026-06-02 13:42:42",
+    "endpoint": "persons",
+    "query_params": {
+        "size": 5,
+        "offset": 0
+    },
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 80.099999999999994315658113919198513031005859375,
+        "url": "https://fis.uni-hannover.de/ws/api/persons?size=5&offset=0",
+        "curl_error": null,
+        "response": "{\"count\":1245,\"pageInformation\":{\"offset\":0,\"size\":5},\"items\":[{\"pureId\":2889736,\"uuid\":\"ce5a0a5e-23de-4801-b89b-00280a81ae2c\",\"portalUrl\":\"https://research.uni-hannover.de/en/persons/ce5a0a5e-23de-4801-b89b-00280a81ae2c\",\"prettyUrlIdentifiers\":[\"paul-heitjans\"],\"version\":\"a0523ca9971aabefcf00528d498fd5d062a027e6\",\"name\":{\"firstName\":\"Paul\",\"lastName\":\"Heitjans\"},\"names\":[{\"pureId\":2889739,\"name\":{\"firstName\":\"Paul\",\"lastName\":\"Heitjans\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/sort\",\"term\":{\"en_GB\":\"Sort name\",\"de_DE\":\"Sortiername\"}}}],\"orcid\":\"0000-0003-1563-9176\",\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"synchronisedUnifiedPerson\",\"value\":\"CFB-LWW\"},{\"typeDiscriminator\":\"ClassifiedId\",\"pureId\":2967090,\"id\":\"22997036200\",\"type\":{\"uri\":\"/dk/atira/pure/person/personsources/scopusauthor\",\"term\":{\"en_GB\":\"Scopus Author ID\",\"de_DE\":\"Scopus-ID\"}}}],\"systemName\":\"Person\"},{\"pureId\":2891336,\"uuid\":\"34fea6b6-49d1-44a3-ba56-444d07e0876f\",\"portalUrl\":\"https://research.uni-hannover.de/en/persons/34fea6b6-49d1-44a3-ba56-444d07e0876f\",\"version\":\"d1c5615282f2449b7bf736dfe0b380ffb37b9e67\",\"name\":{\"firstName\":\"Tobias\",\"lastName\":\"Kersten\"},\"names\":[{\"pureId\":2891339,\"name\":{\"firstName\":\"Tobias\",\"lastName\":\"Kersten\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/sort\",\"term\":{\"en_GB\":\"Sort name\",\"de_DE\":\"Sortiername\"}}}],\"orcid\":\"0000-0003-3117-4567\",\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"synchronisedUnifiedPerson\",\"value\":\"DHK-488\"},{\"typeDiscriminator\":\"ClassifiedId\",\"pureId\":4785373,\"id\":\"37017213200\",\"type\":{\"uri\":\"/dk/atira/pure/person/personsources/scopusauthor\",\"term\":{\"en_GB\":\"Scopus Author ID\",\"de_DE\":\"Scopus-ID\"}}}],\"systemName\":\"Person\"},{\"pureId\":2892233,\"uuid\":\"2e083004-be36-409f-9e02-3c7e340b3e3a\",\"portalUrl\":\"https://research.uni-hannover.de/en/persons/2e083004-be36-409f-9e02-3c7e340b3e3a\",\"prettyUrlIdentifiers\":[\"martin-alexander-oeser-rabe\"],\"version\":\"8a397272ae3f11c010ae569aa0c329843d522546\",\"name\":{\"firstName\":\"Martin Alexander\",\"lastName\":\"Oeser-Rabe\"},\"names\":[{\"pureId\":2892240,\"name\":{\"firstName\":\"Martin Alexander\",\"lastName\":\"Oeser-Rabe\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/sort\",\"term\":{\"en_GB\":\"Sort name\",\"de_DE\":\"Sortiername\"}}}],\"orcid\":\"0000-0002-0476-7802\",\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"synchronisedUnifiedPerson\",\"value\":\"XQM-S7C\"},{\"typeDiscriminator\":\"ClassifiedId\",\"pureId\":62039591,\"id\":\"55105965000\",\"type\":{\"uri\":\"/dk/atira/pure/person/personsources/scopusauthor\",\"term\":{\"en_GB\":\"Scopus Author ID\",\"de_DE\":\"Scopus-ID\"}}}],\"systemName\":\"Person\"},{\"pureId\":2892286,\"uuid\":\"56dc5445-0d2f-4641-8b37-cdd79aaf1cca\",\"portalUrl\":\"https://research.uni-hannover.de/en/persons/56dc5445-0d2f-4641-8b37-cdd79aaf1cca\",\"prettyUrlIdentifiers\":[\"leopold-sauheitl\"],\"version\":\"b04fe1c7e9d6140f8aadaf6ae30d6d2b1028d3a6\",\"name\":{\"firstName\":\"Leopold\",\"lastName\":\"Sauheitl\"},\"names\":[{\"pureId\":2892289,\"name\":{\"firstName\":\"Leopold\",\"lastName\":\"Sauheitl\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/sort\",\"term\":{\"en_GB\":\"Sort name\",\"de_DE\":\"Sortiername\"}}},{\"pureId\":11055366,\"name\":{\"firstName\":\"L\",\"lastName\":\"Sauheitl\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/defaultpublishing\",\"term\":{\"en_GB\":\"Default publishing name\",\"de_DE\":\"Standardname bei Veröffentlichungen\"}}},{\"pureId\":11055367,\"name\":{\"firstName\":\"L.\",\"lastName\":\"Sauheitl\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/former\",\"term\":{\"en_GB\":\"Former name\",\"de_DE\":\"Früherer Nachname\"}}}],\"orcid\":\"0000-0003-2281-1464\",\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"synchronisedUnifiedPerson\",\"value\":\"CZP-05K\"},{\"typeDiscriminator\":\"ClassifiedId\",\"pureId\":19426024,\"id\":\"8574655900\",\"type\":{\"uri\":\"/dk/atira/pure/person/personsources/scopusauthor\",\"term\":{\"en_GB\":\"Scopus Author ID\",\"de_DE\":\"Scopus-ID\"}}}],\"systemName\":\"Person\"},{\"pureId\":2892952,\"uuid\":\"ce07dd7f-c741-471d-ba1a-b1bef936cfbe\",\"portalUrl\":\"https://research.uni-hannover.de/en/persons/ce07dd7f-c741-471d-ba1a-b1bef936cfbe\",\"prettyUrlIdentifiers\":[\"bernhard-wilhelm-roth\"],\"version\":\"a1a350016f8c1b7e67b92561102609b014792947\",\"name\":{\"firstName\":\"Bernhard Wilhelm\",\"lastName\":\"Roth\"},\"names\":[{\"pureId\":2892955,\"name\":{\"firstName\":\"Bernhard Wilhelm\",\"lastName\":\"Roth\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/sort\",\"term\":{\"en_GB\":\"Sort name\",\"de_DE\":\"Sortiername\"}}},{\"pureId\":9415571,\"name\":{\"firstName\":\"Bernhard\",\"lastName\":\"Roth\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/publishing_name_variant\",\"term\":{\"en_GB\":\"publishing name variant\",\"de_DE\":\"Namensvariante auf Veröffentlichungen\"}}}],\"orcid\":\"0000-0001-9389-7125\",\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"synchronisedUnifiedPerson\",\"value\":\"P7L-KEZ\"},{\"typeDiscriminator\":\"ClassifiedId\",\"pureId\":2957861,\"id\":\"57203036967\",\"type\":{\"uri\":\"/dk/atira/pure/person/personsources/scopusauthor\",\"term\":{\"en_GB\":\"Scopus Author ID\",\"de_DE\":\"Scopus-ID\"}}}],\"systemName\":\"Person\"}]}",
+        "response_data": {
+            "count": 1245,
+            "pageInformation": {
+                "offset": 0,
+                "size": 5
+            },
+            "items": [
+                {
+                    "pureId": 2889736,
+                    "uuid": "ce5a0a5e-23de-4801-b89b-00280a81ae2c",
+                    "portalUrl": "https://research.uni-hannover.de/en/persons/ce5a0a5e-23de-4801-b89b-00280a81ae2c",
+                    "prettyUrlIdentifiers": [
+                        "paul-heitjans"
+                    ],
+                    "version": "a0523ca9971aabefcf00528d498fd5d062a027e6",
+                    "name": {
+                        "firstName": "Paul",
+                        "lastName": "Heitjans"
+                    },
+                    "names": [
+                        {
+                            "pureId": 2889739,
+                            "name": {
+                                "firstName": "Paul",
+                                "lastName": "Heitjans"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/sort",
+                                "term": {
+                                    "en_GB": "Sort name",
+                                    "de_DE": "Sortiername"
+                                }
+                            }
+                        }
+                    ],
+                    "orcid": "0000-0003-1563-9176",
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "synchronisedUnifiedPerson",
+                            "value": "CFB-LWW"
+                        },
+                        {
+                            "typeDiscriminator": "ClassifiedId",
+                            "pureId": 2967090,
+                            "id": "22997036200",
+                            "type": {
+                                "uri": "/dk/atira/pure/person/personsources/scopusauthor",
+                                "term": {
+                                    "en_GB": "Scopus Author ID",
+                                    "de_DE": "Scopus-ID"
+                                }
+                            }
+                        }
+                    ],
+                    "systemName": "Person"
+                },
+                {
+                    "pureId": 2891336,
+                    "uuid": "34fea6b6-49d1-44a3-ba56-444d07e0876f",
+                    "portalUrl": "https://research.uni-hannover.de/en/persons/34fea6b6-49d1-44a3-ba56-444d07e0876f",
+                    "version": "d1c5615282f2449b7bf736dfe0b380ffb37b9e67",
+                    "name": {
+                        "firstName": "Tobias",
+                        "lastName": "Kersten"
+                    },
+                    "names": [
+                        {
+                            "pureId": 2891339,
+                            "name": {
+                                "firstName": "Tobias",
+                                "lastName": "Kersten"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/sort",
+                                "term": {
+                                    "en_GB": "Sort name",
+                                    "de_DE": "Sortiername"
+                                }
+                            }
+                        }
+                    ],
+                    "orcid": "0000-0003-3117-4567",
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "synchronisedUnifiedPerson",
+                            "value": "DHK-488"
+                        },
+                        {
+                            "typeDiscriminator": "ClassifiedId",
+                            "pureId": 4785373,
+                            "id": "37017213200",
+                            "type": {
+                                "uri": "/dk/atira/pure/person/personsources/scopusauthor",
+                                "term": {
+                                    "en_GB": "Scopus Author ID",
+                                    "de_DE": "Scopus-ID"
+                                }
+                            }
+                        }
+                    ],
+                    "systemName": "Person"
+                },
+                {
+                    "pureId": 2892233,
+                    "uuid": "2e083004-be36-409f-9e02-3c7e340b3e3a",
+                    "portalUrl": "https://research.uni-hannover.de/en/persons/2e083004-be36-409f-9e02-3c7e340b3e3a",
+                    "prettyUrlIdentifiers": [
+                        "martin-alexander-oeser-rabe"
+                    ],
+                    "version": "8a397272ae3f11c010ae569aa0c329843d522546",
+                    "name": {
+                        "firstName": "Martin Alexander",
+                        "lastName": "Oeser-Rabe"
+                    },
+                    "names": [
+                        {
+                            "pureId": 2892240,
+                            "name": {
+                                "firstName": "Martin Alexander",
+                                "lastName": "Oeser-Rabe"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/sort",
+                                "term": {
+                                    "en_GB": "Sort name",
+                                    "de_DE": "Sortiername"
+                                }
+                            }
+                        }
+                    ],
+                    "orcid": "0000-0002-0476-7802",
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "synchronisedUnifiedPerson",
+                            "value": "XQM-S7C"
+                        },
+                        {
+                            "typeDiscriminator": "ClassifiedId",
+                            "pureId": 62039591,
+                            "id": "55105965000",
+                            "type": {
+                                "uri": "/dk/atira/pure/person/personsources/scopusauthor",
+                                "term": {
+                                    "en_GB": "Scopus Author ID",
+                                    "de_DE": "Scopus-ID"
+                                }
+                            }
+                        }
+                    ],
+                    "systemName": "Person"
+                },
+                {
+                    "pureId": 2892286,
+                    "uuid": "56dc5445-0d2f-4641-8b37-cdd79aaf1cca",
+                    "portalUrl": "https://research.uni-hannover.de/en/persons/56dc5445-0d2f-4641-8b37-cdd79aaf1cca",
+                    "prettyUrlIdentifiers": [
+                        "leopold-sauheitl"
+                    ],
+                    "version": "b04fe1c7e9d6140f8aadaf6ae30d6d2b1028d3a6",
+                    "name": {
+                        "firstName": "Leopold",
+                        "lastName": "Sauheitl"
+                    },
+                    "names": [
+                        {
+                            "pureId": 2892289,
+                            "name": {
+                                "firstName": "Leopold",
+                                "lastName": "Sauheitl"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/sort",
+                                "term": {
+                                    "en_GB": "Sort name",
+                                    "de_DE": "Sortiername"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 11055366,
+                            "name": {
+                                "firstName": "L",
+                                "lastName": "Sauheitl"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/defaultpublishing",
+                                "term": {
+                                    "en_GB": "Default publishing name",
+                                    "de_DE": "Standardname bei Veröffentlichungen"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 11055367,
+                            "name": {
+                                "firstName": "L.",
+                                "lastName": "Sauheitl"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/former",
+                                "term": {
+                                    "en_GB": "Former name",
+                                    "de_DE": "Früherer Nachname"
+                                }
+                            }
+                        }
+                    ],
+                    "orcid": "0000-0003-2281-1464",
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "synchronisedUnifiedPerson",
+                            "value": "CZP-05K"
+                        },
+                        {
+                            "typeDiscriminator": "ClassifiedId",
+                            "pureId": 19426024,
+                            "id": "8574655900",
+                            "type": {
+                                "uri": "/dk/atira/pure/person/personsources/scopusauthor",
+                                "term": {
+                                    "en_GB": "Scopus Author ID",
+                                    "de_DE": "Scopus-ID"
+                                }
+                            }
+                        }
+                    ],
+                    "systemName": "Person"
+                },
+                {
+                    "pureId": 2892952,
+                    "uuid": "ce07dd7f-c741-471d-ba1a-b1bef936cfbe",
+                    "portalUrl": "https://research.uni-hannover.de/en/persons/ce07dd7f-c741-471d-ba1a-b1bef936cfbe",
+                    "prettyUrlIdentifiers": [
+                        "bernhard-wilhelm-roth"
+                    ],
+                    "version": "a1a350016f8c1b7e67b92561102609b014792947",
+                    "name": {
+                        "firstName": "Bernhard Wilhelm",
+                        "lastName": "Roth"
+                    },
+                    "names": [
+                        {
+                            "pureId": 2892955,
+                            "name": {
+                                "firstName": "Bernhard Wilhelm",
+                                "lastName": "Roth"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/sort",
+                                "term": {
+                                    "en_GB": "Sort name",
+                                    "de_DE": "Sortiername"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 9415571,
+                            "name": {
+                                "firstName": "Bernhard",
+                                "lastName": "Roth"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/publishing_name_variant",
+                                "term": {
+                                    "en_GB": "publishing name variant",
+                                    "de_DE": "Namensvariante auf Veröffentlichungen"
+                                }
+                            }
+                        }
+                    ],
+                    "orcid": "0000-0001-9389-7125",
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "synchronisedUnifiedPerson",
+                            "value": "P7L-KEZ"
+                        },
+                        {
+                            "typeDiscriminator": "ClassifiedId",
+                            "pureId": 2957861,
+                            "id": "57203036967",
+                            "type": {
+                                "uri": "/dk/atira/pure/person/personsources/scopusauthor",
+                                "term": {
+                                    "en_GB": "Scopus Author ID",
+                                    "de_DE": "Scopus-ID"
+                                }
+                            }
+                        }
+                    ],
+                    "systemName": "Person"
+                }
+            ]
+        },
+        "json_error": "No error"
+    }
+}

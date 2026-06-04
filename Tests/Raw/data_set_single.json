@@ -1,0 +1,235 @@
+{
+    "test_name": "data_set_single",
+    "description": "Get single data set by UUID",
+    "timestamp": "2026-06-02 13:42:48",
+    "endpoint": "data-sets/9f42c951-090c-4364-9936-96a8c9d03efc",
+    "query_params": [],
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 198.469999999999998863131622783839702606201171875,
+        "url": "https://fis.uni-hannover.de/ws/api/data-sets/9f42c951-090c-4364-9936-96a8c9d03efc",
+        "curl_error": null,
+        "response": "{\"pureId\":4096234,\"uuid\":\"9f42c951-090c-4364-9936-96a8c9d03efc\",\"createdBy\":\"QK4-FU5\",\"createdDate\":\"2020-06-17T18:18:38.939+02:00\",\"modifiedBy\":\"lp_support\",\"modifiedDate\":\"2024-05-30T09:55:51.323+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/datasets/9f42c951-090c-4364-9936-96a8c9d03efc\",\"prettyUrlIdentifiers\":[\"finite-size-data-for-the-q-deformed-osp32-superspin-chain\"],\"previousUuids\":[\"696f3d57-e45b-4ed8-b67d-38e132116163\"],\"version\":\"c6a507a71f541b1f9ea61efdd0d0d49b38e67e9c\",\"title\":{\"en_GB\":\"Finite size data for the q-deformed OSp(3|2) superspin chain\",\"de_DE\":\"Finite size data for the q-deformed OSp(3|2) superspin chain\"},\"descriptions\":[{\"pureId\":4096237,\"value\":{\"en_GB\":\"Bethe ansatz data (roots, finite size energies, scaling dimensions and conformal spin) for low energy states of the integrable \\\\(U_q[OSp(3|2)]\\\\) superspin chain.\",\"de_DE\":\"Bethe ansatz data (roots, finite size energies, scaling dimensions and conformal spin) for low energy states of the integrable \\\\(U_q[OSp(3|2)]\\\\) superspin chain.\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/descriptions/datasetdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"cd2571a0-bbce-455d-a3bb-27414a805f5b\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/datasettypes/dataset/dataset\",\"term\":{\"en_GB\":\"Dataset\",\"de_DE\":\"Dataset\"}},\"publisher\":{\"systemName\":\"Publisher\",\"uuid\":\"f0890f38-0616-4a92-b4b5-a1ab6db19ca6\"},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"DataSearchImport\",\"value\":\"048051051052054048048047053051056053050046048049:tib.luis\"},{\"typeDiscriminator\":\"Id\",\"pureId\":15569160,\"idSource\":\"tib.luis\",\"value\":\"10.25835/0064330\"}],\"geoLocation\":{},\"persons\":[{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":4096239,\"name\":{\"firstName\":\"Holger\",\"lastName\":\"Frahm\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"c4667652-13e8-4aed-a5dd-84bf891dd7ca\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"cd2571a0-bbce-455d-a3bb-27414a805f5b\"}]},{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":4096241,\"name\":{\"firstName\":\"Konstantin\",\"lastName\":\"Hobuß\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"cd2571a0-bbce-455d-a3bb-27414a805f5b\"}]},{\"typeDiscriminator\":\"ExternalDataSetPersonAssociation\",\"pureId\":4096243,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"efd0a0ed-867a-49d4-ac95-c32b7c5bfa36\"}],\"name\":{\"firstName\":\"Márcio J.\",\"lastName\":\"Martins\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"32a19a27-5643-4577-8c0b-e944b1ff3db5\"}}],\"doi\":{\"pureId\":4096235,\"doi\":\"10.25835/0064330\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"cd2571a0-bbce-455d-a3bb-27414a805f5b\"}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"efd0a0ed-867a-49d4-ac95-c32b7c5bfa36\"}],\"publicationAvailableDate\":{\"year\":2019},\"openAccess\":{\"openAccessPermission\":{\"uri\":\"/dk/atira/pure/dataset/accesspermission/open\",\"term\":{\"en_GB\":\"Open\",\"de_DE\":\"Offen\"}}},\"openAireCompliant\":false,\"license\":{\"uri\":\"/dk/atira/pure/dataset/documentlicenses/cc-by\",\"term\":{\"en_GB\":\"CC BY\",\"de_DE\":\"CC BY\"}},\"projects\":[{\"project\":{\"systemName\":\"Project\",\"uuid\":\"1e1fa5d5-c4dd-4b39-b5cc-25bc4335a613\"}}],\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"7f1bbf72-a5cd-48e3-9266-ad11da2da0f5\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"5863c742-90e0-4f15-92e3-b0b546453942\"}}],\"links\":[{\"pureId\":54784609,\"url\":\"https://data.uni-hannover.de/dataset/finite-size-data-for-the-q-deformed-osp-3-2-superspin-chain\"}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"customDefinedFields\":{},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"systemName\":\"DataSet\"}",
+        "response_data": {
+            "pureId": 4096234,
+            "uuid": "9f42c951-090c-4364-9936-96a8c9d03efc",
+            "createdBy": "QK4-FU5",
+            "createdDate": "2020-06-17T18:18:38.939+02:00",
+            "modifiedBy": "lp_support",
+            "modifiedDate": "2024-05-30T09:55:51.323+02:00",
+            "portalUrl": "https://research.uni-hannover.de/en/datasets/9f42c951-090c-4364-9936-96a8c9d03efc",
+            "prettyUrlIdentifiers": [
+                "finite-size-data-for-the-q-deformed-osp32-superspin-chain"
+            ],
+            "previousUuids": [
+                "696f3d57-e45b-4ed8-b67d-38e132116163"
+            ],
+            "version": "c6a507a71f541b1f9ea61efdd0d0d49b38e67e9c",
+            "title": {
+                "en_GB": "Finite size data for the q-deformed OSp(3|2) superspin chain",
+                "de_DE": "Finite size data for the q-deformed OSp(3|2) superspin chain"
+            },
+            "descriptions": [
+                {
+                    "pureId": 4096237,
+                    "value": {
+                        "en_GB": "Bethe ansatz data (roots, finite size energies, scaling dimensions and conformal spin) for low energy states of the integrable \\(U_q[OSp(3|2)]\\) superspin chain.",
+                        "de_DE": "Bethe ansatz data (roots, finite size energies, scaling dimensions and conformal spin) for low energy states of the integrable \\(U_q[OSp(3|2)]\\) superspin chain."
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/dataset/descriptions/datasetdescription",
+                        "term": {
+                            "en_GB": "Description",
+                            "de_DE": "Beschreibung"
+                        }
+                    }
+                }
+            ],
+            "managingOrganization": {
+                "systemName": "Organization",
+                "uuid": "cd2571a0-bbce-455d-a3bb-27414a805f5b"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/dataset/datasettypes/dataset/dataset",
+                "term": {
+                    "en_GB": "Dataset",
+                    "de_DE": "Dataset"
+                }
+            },
+            "publisher": {
+                "systemName": "Publisher",
+                "uuid": "f0890f38-0616-4a92-b4b5-a1ab6db19ca6"
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "DataSearchImport",
+                    "value": "048051051052054048048047053051056053050046048049:tib.luis"
+                },
+                {
+                    "typeDiscriminator": "Id",
+                    "pureId": 15569160,
+                    "idSource": "tib.luis",
+                    "value": "10.25835/0064330"
+                }
+            ],
+            "geoLocation": [],
+            "persons": [
+                {
+                    "typeDiscriminator": "InternalDataSetPersonAssociation",
+                    "pureId": 4096239,
+                    "name": {
+                        "firstName": "Holger",
+                        "lastName": "Frahm"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                        "term": {
+                            "en_GB": "Creator",
+                            "de_DE": "Urheber*in"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "c4667652-13e8-4aed-a5dd-84bf891dd7ca"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "cd2571a0-bbce-455d-a3bb-27414a805f5b"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "InternalDataSetPersonAssociation",
+                    "pureId": 4096241,
+                    "name": {
+                        "firstName": "Konstantin",
+                        "lastName": "Hobuß"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                        "term": {
+                            "en_GB": "Creator",
+                            "de_DE": "Urheber*in"
+                        }
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "cd2571a0-bbce-455d-a3bb-27414a805f5b"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "ExternalDataSetPersonAssociation",
+                    "pureId": 4096243,
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "efd0a0ed-867a-49d4-ac95-c32b7c5bfa36"
+                        }
+                    ],
+                    "name": {
+                        "firstName": "Márcio J.",
+                        "lastName": "Martins"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                        "term": {
+                            "en_GB": "Creator",
+                            "de_DE": "Urheber*in"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "32a19a27-5643-4577-8c0b-e944b1ff3db5"
+                    }
+                }
+            ],
+            "doi": {
+                "pureId": 4096235,
+                "doi": "10.25835/0064330"
+            },
+            "organizations": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "cd2571a0-bbce-455d-a3bb-27414a805f5b"
+                }
+            ],
+            "externalOrganizations": [
+                {
+                    "systemName": "ExternalOrganization",
+                    "uuid": "efd0a0ed-867a-49d4-ac95-c32b7c5bfa36"
+                }
+            ],
+            "publicationAvailableDate": {
+                "year": 2019
+            },
+            "openAccess": {
+                "openAccessPermission": {
+                    "uri": "/dk/atira/pure/dataset/accesspermission/open",
+                    "term": {
+                        "en_GB": "Open",
+                        "de_DE": "Offen"
+                    }
+                }
+            },
+            "openAireCompliant": false,
+            "license": {
+                "uri": "/dk/atira/pure/dataset/documentlicenses/cc-by",
+                "term": {
+                    "en_GB": "CC BY",
+                    "de_DE": "CC BY"
+                }
+            },
+            "projects": [
+                {
+                    "project": {
+                        "systemName": "Project",
+                        "uuid": "1e1fa5d5-c4dd-4b39-b5cc-25bc4335a613"
+                    }
+                }
+            ],
+            "researchOutputs": [
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "7f1bbf72-a5cd-48e3-9266-ad11da2da0f5"
+                    }
+                },
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "5863c742-90e0-4f15-92e3-b0b546453942"
+                    }
+                }
+            ],
+            "links": [
+                {
+                    "pureId": 54784609,
+                    "url": "https://data.uni-hannover.de/dataset/finite-size-data-for-the-q-deformed-osp-3-2-superspin-chain"
+                }
+            ],
+            "visibility": {
+                "key": "FREE",
+                "description": {
+                    "en_GB": "Public - No restriction",
+                    "de_DE": "Öffentlich - Keine Einschränkungen"
+                }
+            },
+            "customDefinedFields": [],
+            "workflow": {
+                "step": "validated",
+                "description": {
+                    "en_GB": "Validated",
+                    "de_DE": "Validiert"
+                }
+            },
+            "systemName": "DataSet"
+        },
+        "json_error": "No error"
+    }
+}

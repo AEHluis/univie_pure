@@ -11,8 +11,8 @@ namespace Univie\UniviePure\Utility;
 
 class DotEnv
 {
-    protected $path;
-    public $variables;
+    protected string $path;
+    public array $variables = [];
 
     public function __construct(string $path)
     {
@@ -30,19 +30,29 @@ class DotEnv
 
         $lines = file($this->path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         foreach ($lines as $line) {
-            if (strpos(trim($line), '#') === 0) {
+            // Skip comments
+            $line = trim($line);
+            if ($line === '' || str_starts_with($line, '#')) {
                 continue;
             }
 
             $parts = explode('=', $line, 2);
             if (count($parts) !== 2) {
-                continue; // Skip invalid lines
+                continue;
             }
 
             $name = trim($parts[0]);
-            $value = trim($parts[1], "\x00..\x1F\"");
+            $value = trim($parts[1]);
 
-            if (empty($name)) {
+            // Remove surrounding quotes if present
+            if (
+                (str_starts_with($value, '"') && str_ends_with($value, '"')) ||
+                (str_starts_with($value, "'") && str_ends_with($value, "'"))
+            ) {
+                $value = substr($value, 1, -1);
+            }
+
+            if ($name === '') {
                 continue;
             }
 

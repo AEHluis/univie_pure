@@ -1,0 +1,44 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="rendering_dataset rendering_short" data-uuid="{data.uuid}">
+    <h4 class="dataset-title">
+        <f:if condition="{data.title.value}">
+            <f:then><f:format.raw>{data.title.value}</f:format.raw></f:then>
+            <f:else><f:format.raw>{data.title}</f:format.raw></f:else>
+        </f:if>
+    </h4>
+
+    <f:if condition="{data.publicationStatuses}">
+        <f:then>
+            <f:for each="{data.publicationStatuses}" as="status">
+                <f:if condition="{status.current}">
+                    <p class="dataset-year">({status.publicationDate.year})</p>
+                </f:if>
+            </f:for>
+        </f:then>
+        <f:else>
+            <f:if condition="{data.publicationYear}">
+                <p class="dataset-year">({data.publicationYear})</p>
+            </f:if>
+        </f:else>
+    </f:if>
+
+    <f:if condition="{data.electronicVersions}">
+        <f:then>
+            <f:for each="{data.electronicVersions}" as="version">
+                <f:if condition="{version.doi}">
+                    <p class="dataset-doi">
+                        <a href="https://doi.org/{version.doi}" target="_blank" rel="noopener">DOI: {version.doi}</a>
+                    </p>
+                </f:if>
+            </f:for>
+        </f:then>
+        <f:else>
+            <f:if condition="{data.doi}">
+                <p class="dataset-doi">
+                    <a href="https://doi.org/{data.doi}" target="_blank" rel="noopener">DOI: {data.doi}</a>
+                </p>
+            </f:if>
+        </f:else>
+    </f:if>
+</div>
+</html>

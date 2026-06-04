@@ -9,6 +9,10 @@
 	});
 	</script>
 	<div class="tx_univiepure" >
+		<f:if condition="{debugOutput}">
+			<f:format.raw>{debugOutput}</f:format.raw>
+		</f:if>
+
 		<f:if condition="{error}">
 			<f:then>
 			</f:then>

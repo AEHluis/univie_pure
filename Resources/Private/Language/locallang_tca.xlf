@@ -214,6 +214,18 @@
 			<trans-unit id="flexform.publications.rendering">
 				<source>Citation style (Vancouver, Harvard...):</source>
 			</trans-unit>
+			<trans-unit id="flexform.publications.citationStyle">
+				<source>Citation style:</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.citationStyle.description">
+				<source>Select a citation style. Styles are automatically downloaded from the Citation Style Language repository (10,000+ available).</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.citationStyleCustom">
+				<source>Custom CSL style name:</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.citationStyleCustom.description">
+				<source>Enter a custom CSL style name (overrides selection above). Find style names at https://github.com/citation-style-language/styles - use the filename without .csl extension.</source>
+			</trans-unit>
 			<trans-unit id="flexform.activities">
 				<source>In depth settings for activities</source>
 			</trans-unit>

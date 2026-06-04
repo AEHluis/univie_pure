@@ -1,14 +1,13 @@
 <?php
+
 namespace Univie\UniviePure\Tests\Unit\Controller;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use Univie\UniviePure\Controller\PureController;
-use Univie\UniviePure\Endpoints\DataSets;
-use Univie\UniviePure\Endpoints\ResearchOutput;
-use Univie\UniviePure\Endpoints\Projects;
-use Univie\UniviePure\Endpoints\Equipments;
+use Univie\UniviePure\Service\ApiServiceInterface;
+use Univie\UniviePure\Service\CslRenderingService;
 use Univie\UniviePure\Utility\LanguageUtility;
 use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
@@ -17,9 +16,8 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Http\Response;
-use TYPO3\CMS\Core\Http\Stream;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
-
+use Univie\UniviePure\Service\Enrichment\PublicationInsightsService;
 
 /**
  * Test case for class PureController.
@@ -37,29 +35,24 @@ class PureControllerTest extends UnitTestCase
     protected $configurationManagerMock;
 
     /**
-     * @var ResearchOutput|MockObject
-     */
-    protected $researchOutputMock;
-
-    /**
-     * @var Projects|MockObject
-     */
-    protected $projectsMock;
-
-    /**
-     * @var Equipments|MockObject
-     */
-    protected $equipmentsMock;
-
-    /**
-     * @var DataSets|MockObject
-     */
-    protected $dataSetsMock;
-
-    /**
      * @var FlashMessageService|MockObject
      */
     protected $flashMessageServiceMock;
+
+    /**
+     * @var PublicationInsightsService|MockObject
+     */
+    protected $publicationInsightsServiceMock;
+
+    /**
+     * @var ApiServiceInterface|MockObject
+     */
+    protected $apiServiceMock;
+
+    /**
+     * @var CslRenderingService|MockObject
+     */
+    protected $cslRenderingServiceMock;
 
     /**
      * Set up the test environment.
@@ -70,22 +63,19 @@ class PureControllerTest extends UnitTestCase
 
         // Create mocks for all dependencies
         $this->configurationManagerMock = $this->createMock(ConfigurationManagerInterface::class);
-        $this->researchOutputMock = $this->createMock(ResearchOutput::class);
-        $this->projectsMock = $this->createMock(Projects::class);
-        $this->equipmentsMock = $this->createMock(Equipments::class);
-        $this->dataSetsMock = $this->createMock(DataSets::class);
         $this->flashMessageServiceMock = $this->createMock(FlashMessageService::class);
+        $this->publicationInsightsServiceMock = $this->createMock(PublicationInsightsService::class);
+        $this->apiServiceMock = $this->createMock(ApiServiceInterface::class);
+        $this->cslRenderingServiceMock = $this->createMock(CslRenderingService::class);
 
         // Create a partial mock for PureController
         $this->subject = $this->getMockBuilder(PureController::class)
             ->onlyMethods(['handleContentNotFound', 'htmlResponse', 'redirectToUri', 'getLocale', 'getLocaleShort'])
             ->setConstructorArgs([
                 $this->configurationManagerMock,
-                $this->researchOutputMock,
-                $this->projectsMock,
-                $this->equipmentsMock,
-                $this->dataSetsMock,
-                $this->flashMessageServiceMock
+                $this->apiServiceMock,
+                $this->publicationInsightsServiceMock,
+                $this->cslRenderingServiceMock
             ])
             ->getMock();
 
@@ -100,7 +90,6 @@ class PureControllerTest extends UnitTestCase
         $localeProperty->setAccessible(true);
         $localeProperty->setValue($this->subject, 'en');
 
-        // Add this line to initialize the localeShort property
         if ($reflection->hasProperty('localeShort')) {
             $localeShortProperty = $reflection->getProperty('localeShort');
             $localeShortProperty->setAccessible(true);
@@ -110,13 +99,12 @@ class PureControllerTest extends UnitTestCase
         // Check if the class_alias is already defined to avoid redeclaration
         if (!class_exists('T3luh\T3luhlib\Utils\Page', false)) {
             class_alias(
-                MockPage::class, // Use the class in the current namespace
+                MockPage::class,
                 'T3luh\T3luhlib\Utils\Page'
             );
         }
     }
 
-    // Rest of the test class remains unchanged
     /**
      * Clean up after each test.
      */
@@ -128,10 +116,6 @@ class PureControllerTest extends UnitTestCase
 
     /**
      * Helper method to inject a dependency into a protected property.
-     *
-     * @param object $object
-     * @param string $propertyName
-     * @param mixed $dependency
      */
     protected function inject($object, string $propertyName, $dependency): void
     {
@@ -147,9 +131,6 @@ class PureControllerTest extends UnitTestCase
     #[Test]
     public function listHandlerActionRedirectsToUri(): void
     {
-        // Inject settings with a language value
-        $this->inject($this->subject, 'settings', ['lang' => 'en']);
-
         // Create a mock request object
         $request = $this->createMock(Request::class);
         $request->expects($this->any())
@@ -164,16 +145,21 @@ class PureControllerTest extends UnitTestCase
                 ['filter', 'TestFilter'],
                 ['currentPageNumber', '2'],
             ]);
+        $routing = new class {
+            public function getPageId(): int
+            {
+                return 123;
+            }
+        };
+        $request->expects($this->once())
+            ->method('getAttribute')
+            ->with('routing')
+            ->willReturn($routing);
         $this->inject($this->subject, 'request', $request);
-
-        // Set up a dummy global TSFE object
-        $GLOBALS['TSFE'] = new \stdClass();
-        $GLOBALS['TSFE']->id = 123;
-        $GLOBALS['TSFE']->config = ['config' => ['language' => 'en']];
 
         // Create a mock UriBuilder
         $uriBuilder = $this->createMock(UriBuilder::class);
-        $uriBuilder->expects($this->exactly(2))
+        $uriBuilder->expects($this->once())
             ->method('reset')
             ->willReturnSelf();
         $uriBuilder->expects($this->once())
@@ -181,20 +167,14 @@ class PureControllerTest extends UnitTestCase
             ->with(123)
             ->willReturnSelf();
         $uriBuilder->expects($this->once())
-            ->method('setLanguage')
-            ->with('en')
-            ->willReturnSelf();
-        $uriBuilder->expects($this->once())
             ->method('uriFor')
             ->with(
                 'list',
                 $this->callback(function ($arguments) {
-                    // More flexible type comparison
                     return isset($arguments['filter']) &&
                         $arguments['filter'] === 'testfilter' &&
                         isset($arguments['currentPageNumber']) &&
-                        (int)$arguments['currentPageNumber'] === 2 &&
-                        isset($arguments['lang']);
+                        (int)$arguments['currentPageNumber'] === 2;
                 }),
                 'Pure'
             )
@@ -217,6 +197,68 @@ class PureControllerTest extends UnitTestCase
         $this->assertSame($responseMock, $result);
     }
 
+    /**
+     * Test that listHandlerAction preserves umlauts in sanitized filter values.
+     */
+    #[Test]
+    public function listHandlerActionPreservesUmlautsInFilter(): void
+    {
+        $request = $this->createMock(Request::class);
+        $request->expects($this->any())
+            ->method('hasArgument')
+            ->willReturnMap([
+                ['filter', true],
+                ['currentPageNumber', false],
+            ]);
+        $request->expects($this->once())
+            ->method('getArgument')
+            ->with('filter')
+            ->willReturn('Höll');
+        $routing = new class {
+            public function getPageId(): int
+            {
+                return 123;
+            }
+        };
+        $request->expects($this->once())
+            ->method('getAttribute')
+            ->with('routing')
+            ->willReturn($routing);
+        $this->inject($this->subject, 'request', $request);
+
+        $uriBuilder = $this->createMock(UriBuilder::class);
+        $uriBuilder->expects($this->once())
+            ->method('reset')
+            ->willReturnSelf();
+        $uriBuilder->expects($this->once())
+            ->method('setTargetPageUid')
+            ->with(123)
+            ->willReturnSelf();
+        $uriBuilder->expects($this->once())
+            ->method('uriFor')
+            ->with(
+                'list',
+                $this->callback(function ($arguments) {
+                    return isset($arguments['filter']) &&
+                        $arguments['filter'] === 'höll' &&
+                        isset($arguments['currentPageNumber']) &&
+                        (int)$arguments['currentPageNumber'] === 1;
+                }),
+                'Pure'
+            )
+            ->willReturn('dummyUri');
+        $this->inject($this->subject, 'uriBuilder', $uriBuilder);
+
+        $responseMock = $this->createMock(RedirectResponse::class);
+        $this->subject->expects($this->once())
+            ->method('redirectToUri')
+            ->with('dummyUri')
+            ->willReturn($responseMock);
+
+        $result = $this->subject->listHandlerAction();
+
+        $this->assertSame($responseMock, $result);
+    }
 
     /**
      * Test that listAction with an unknown "what_to_display" setting calls handleContentNotFound.
@@ -243,6 +285,11 @@ class PureControllerTest extends UnitTestCase
         $request = $this->createMock(Request::class);
         $request->method('hasArgument')->willReturn(false);
         $this->inject($this->subject, 'request', $request);
+
+        // Mock the view
+        $viewMock = $this->createMock(\TYPO3Fluid\Fluid\View\ViewInterface::class);
+        $viewMock->method('assign')->willReturnSelf();
+        $this->inject($this->subject, 'view', $viewMock);
 
         // Expect handleContentNotFound to be called
         $this->subject->expects($this->once())
@@ -273,6 +320,11 @@ class PureControllerTest extends UnitTestCase
         $request->method('getArguments')->willReturn([]);
         $this->inject($this->subject, 'request', $request);
 
+        // Mock the view
+        $viewMock = $this->createMock(\TYPO3Fluid\Fluid\View\ViewInterface::class);
+        $viewMock->method('assign')->willReturnSelf();
+        $this->inject($this->subject, 'view', $viewMock);
+
         // Expect handleContentNotFound to be called
         $this->subject->expects($this->once())
             ->method('handleContentNotFound')
@@ -302,6 +354,11 @@ class PureControllerTest extends UnitTestCase
         $request->method('getArguments')->willReturn(['what2show' => 'other']);
         $this->inject($this->subject, 'request', $request);
 
+        // Mock the view
+        $viewMock = $this->createMock(\TYPO3Fluid\Fluid\View\ViewInterface::class);
+        $viewMock->method('assign')->willReturnSelf();
+        $this->inject($this->subject, 'view', $viewMock);
+
         // Expect handleContentNotFound to be called
         $this->subject->expects($this->once())
             ->method('handleContentNotFound')
@@ -322,6 +379,9 @@ class PureControllerTest extends UnitTestCase
     #[Test]
     public function showActionWithValidPublicationReturnsResponse(): void
     {
+        // Enable singleton reset to avoid test isolation issues
+        $this->resetSingletonInstances = true;
+
         // Set up a dummy global TSFE object
         $GLOBALS['TSFE'] = new \stdClass();
         $GLOBALS['TSFE']->config = ['config' => ['language' => 'en']];
@@ -332,26 +392,12 @@ class PureControllerTest extends UnitTestCase
             'title' => [
                 'value' => 'Test Publication Title'
             ],
-            // Add other publication data as needed
         ];
 
-        // Mock the bibtex response
-        $bibtexXml = [
-            'renderings' => [
-                'rendering' => '@article{Test2023, title={Test Publication}}'
-            ]
-        ];
-
-
-        // Set up ResearchOutput mock to return test data
-        $this->researchOutputMock->expects($this->once())
-            ->method('getBibtex')
+        // Set up ApiService mock to return test data
+        $this->apiServiceMock->expects($this->once())
+            ->method('getResearchOutput')
             ->with($uuid, $this->anything())
-            ->willReturn($bibtexXml);
-
-        $this->researchOutputMock->expects($this->once())
-            ->method('getSinglePublication')
-            ->with($uuid)
             ->willReturn($publicationData);
 
         // Create a dummy request with valid arguments
@@ -364,18 +410,24 @@ class PureControllerTest extends UnitTestCase
 
         // Mock the view
         $viewMock = $this->createMock(\TYPO3Fluid\Fluid\View\ViewInterface::class);
+        $viewMock->method('assign')->willReturnSelf();
         $viewMock->expects($this->once())
             ->method('assignMultiple')
             ->with($this->callback(function ($variables) use ($publicationData, $uuid) {
-                return isset($variables['publication'], $variables['bibtex'], $variables['lang']) &&
+                return isset($variables['publication']) &&
+                    isset($variables['citationStyles']) &&
+                    isset($variables['publicationUuid']) &&
+                    isset($variables['lang']) &&
                     $variables['publication'] === $publicationData &&
-                    strpos($variables['bibtex'], '@article') !== false &&
+                    $variables['publicationUuid'] === $uuid &&
+                    is_array($variables['citationStyles']) &&
                     (string)$variables['lang'] === 'en';
             }));
         $this->inject($this->subject, 'view', $viewMock);
 
-        // Create a mock response
+        // Create a mock response with withHeader method
         $responseMock = $this->createMock(ResponseInterface::class);
+        $responseMock->method('withHeader')->willReturnSelf();
         $this->subject->method('htmlResponse')->willReturn($responseMock);
 
         // Execute the action
@@ -395,7 +447,8 @@ class PureControllerTest extends UnitTestCase
         $this->inject($this->subject, 'settings', [
             'what_to_display' => 'PUBLICATIONS',
             'pageSize' => 10,
-            'initialNoResults' => 0
+            'initialNoResults' => 0,
+            'citationStyle' => 'apa'
         ]);
 
         // Set up a dummy global TSFE object
@@ -412,35 +465,30 @@ class PureControllerTest extends UnitTestCase
         $request->method('hasArgument')->willReturn(false);
         $this->inject($this->subject, 'request', $request);
 
-        // Set up mock publication data
-        $publicationData = [
+        // Set up mock publication data from OpenAPI
+        $publicationResponse = [
             'count' => 20,
-            'offset' => 0,
-            'contributionToJournal' => [
+            'items' => [
                 [
-                    'title' => ['value' => 'Publication 1'],
                     'uuid' => 'pub-uuid-1',
-                    'authors' => [
-                        ['name' => 'Author 1'],
-                        ['name' => 'Author 2']
-                    ]
+                    'title' => ['value' => 'Publication 1'],
+                    'rendering' => '<div>Publication 1 rendered</div>',
+                    'publicationYear' => 2024
                 ],
                 [
-                    'title' => ['value' => 'Publication 2'],
                     'uuid' => 'pub-uuid-2',
-                    'authors' => [
-                        ['name' => 'Author 3'],
-                        ['name' => 'Author 4']
-                    ]
+                    'title' => ['value' => 'Publication 2'],
+                    'rendering' => '<div>Publication 2 rendered</div>',
+                    'publicationYear' => 2023
                 ]
             ]
         ];
 
-        // Set up ResearchOutput mock to return test data
-        $this->researchOutputMock->expects($this->once())
-            ->method('getPublicationList')
-            ->with($this->anything(), 1, $this->anything())
-            ->willReturn($publicationData);
+        // Set up ApiService mock to return test data
+        $this->apiServiceMock->expects($this->once())
+            ->method('getResearchOutputs')
+            ->with($this->anything())
+            ->willReturn($publicationResponse);
 
         // Mock the view
         $viewMock = $this->createMock(\TYPO3Fluid\Fluid\View\ViewInterface::class);
@@ -448,8 +496,7 @@ class PureControllerTest extends UnitTestCase
             ->method('assignMultiple')
             ->with($this->callback(function ($variables) {
                 return isset($variables['what_to_display'], $variables['pagination'], $variables['paginator']) &&
-                    $variables['what_to_display'] === 'PUBLICATIONS' &&
-                    $variables['initial_no_results'] === 0;
+                    $variables['what_to_display'] === 'PUBLICATIONS';
             }));
         $this->inject($this->subject, 'view', $viewMock);
 
@@ -463,18 +510,43 @@ class PureControllerTest extends UnitTestCase
         // Assert that the result is the expected response
         $this->assertSame($responseMock, $result);
     }
+
+    /**
+     * Test that getCitationStylesMetadata returns CSL styles.
+     */
+    #[Test]
+    public function getCitationStylesMetadataReturnsCslStyles(): void
+    {
+        // Use reflection to call the private method
+        $reflection = new \ReflectionClass($this->subject);
+        $method = $reflection->getMethod('getCitationStylesMetadata');
+
+        $result = $method->invoke($this->subject);
+
+        // Check that CSL styles are included
+        $styleIds = array_column($result, 'id');
+        $this->assertContains('apa', $styleIds);
+        $this->assertContains('ieee', $styleIds);
+        $this->assertContains('chicago-author-date', $styleIds);
+
+        // Check that CSL styles have isCsl flag
+        $cslStyles = array_filter($result, fn($s) => isset($s['isCsl']) && $s['isCsl'] === true);
+        $this->assertNotEmpty($cslStyles);
+    }
 }
 
-class TestLanguageUtility extends LanguageUtility {
-    public function __toString() {
+class TestLanguageUtility extends LanguageUtility
+{
+    public function __toString()
+    {
         return 'en';
     }
 }
 
-
-// Define the mock class in the same namespace as your test
-class MockPage {
-    public static function updatePageTitle($title) {
-        // Do nothing or add test-specific behavior
+class MockPage
+{
+    public static function updatePageTitle($title)
+    {
+        // Do nothing
     }
 }

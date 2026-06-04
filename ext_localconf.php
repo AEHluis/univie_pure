@@ -2,6 +2,7 @@
 defined('TYPO3') || die();
 
 use Univie\UniviePure\Controller\PureController;
+use Univie\UniviePure\Utility\LibraryLoader;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
@@ -12,6 +13,11 @@ use Psr\Log\LogLevel;
 
 call_user_func(
     function () {
+        // Load bundled citeproc-php library for CSL citation rendering
+        // This must be done early to ensure the autoloader is registered
+        if (LibraryLoader::isCiteprocAvailable()) {
+            LibraryLoader::loadCiteproc();
+        }
         // Register plugin
         ExtensionUtility::configurePlugin(
             'UniviePure',
@@ -26,9 +32,6 @@ call_user_func(
                 PureController::class => 'listHandler',
             ]
         );
-
-        // Note: Citation AJAX is handled by CitationAjaxMiddleware
-        // registered in Configuration/RequestMiddlewares.php
 
         // TypoScript
         ExtensionManagementUtility::addTypoScriptConstants(

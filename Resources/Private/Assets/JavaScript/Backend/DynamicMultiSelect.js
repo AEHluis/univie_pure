@@ -31,17 +31,75 @@
     DynamicMultiSelect.prototype.init = function() {
         // Try immediate init and on DOM ready
         this.setupFields();
+        this.setupCitationStyleFields();
 
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
                 this.setupFields();
+                this.setupCitationStyleFields();
             });
         }
 
         // Also listen for FormEngine ready
         document.addEventListener('typo3:formengine:fieldChanged', () => {
             this.setupFields();
+            this.setupCitationStyleFields();
         });
+    };
+
+    DynamicMultiSelect.prototype.setupCitationStyleFields = function() {
+        const styleSelects = document.querySelectorAll(
+            'select[name*="pi_flexform"][name*="settings.citationStyle"][name*="[vDEF]"]:not([name*="citationStyleCustom"])'
+        );
+
+        styleSelects.forEach((styleSelect) => {
+            if (styleSelect.dataset.citationStyleSyncInit) {
+                this.syncCitationStyleFields(styleSelect);
+                return;
+            }
+
+            const customInput = this.findCitationStyleCustomInput(styleSelect);
+            if (!customInput) {
+                return;
+            }
+
+            styleSelect.dataset.citationStyleSyncInit = 'true';
+            customInput.dataset.citationStyleSyncInit = 'true';
+
+            customInput.addEventListener('input', () => {
+                this.syncCitationStyleFields(styleSelect);
+            });
+
+            customInput.addEventListener('change', () => {
+                this.syncCitationStyleFields(styleSelect);
+            });
+
+            styleSelect.addEventListener('change', () => {
+                if (styleSelect.value !== '' && customInput.value.trim() !== '') {
+                    customInput.value = '';
+                    customInput.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
+
+            this.syncCitationStyleFields(styleSelect);
+        });
+    };
+
+    DynamicMultiSelect.prototype.findCitationStyleCustomInput = function(styleSelect) {
+        const form = styleSelect.closest('form') || document;
+        return form.querySelector(
+            'input[name*="pi_flexform"][name*="settings.citationStyleCustom"][name*="[vDEF]"]'
+        );
+    };
+
+    DynamicMultiSelect.prototype.syncCitationStyleFields = function(styleSelect) {
+        const customInput = this.findCitationStyleCustomInput(styleSelect);
+        if (!customInput || customInput.value.trim() === '' || styleSelect.value === '') {
+            return;
+        }
+
+        styleSelect.value = '';
+        styleSelect.dispatchEvent(new Event('change', { bubbles: true }));
     };
 
     DynamicMultiSelect.prototype.setupFields = function() {

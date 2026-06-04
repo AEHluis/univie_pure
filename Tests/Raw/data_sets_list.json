@@ -1,0 +1,787 @@
+{
+    "test_name": "data_sets_list",
+    "description": "List data sets with pagination",
+    "timestamp": "2026-06-02 13:42:47",
+    "endpoint": "data-sets",
+    "query_params": {
+        "size": 5,
+        "offset": 0
+    },
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 823.3200000000000500222085975110530853271484375,
+        "url": "https://fis.uni-hannover.de/ws/api/data-sets?size=5&offset=0",
+        "curl_error": null,
+        "response": "{\"count\":487,\"pageInformation\":{\"offset\":0,\"size\":5},\"items\":[{\"pureId\":4096234,\"uuid\":\"9f42c951-090c-4364-9936-96a8c9d03efc\",\"createdBy\":\"QK4-FU5\",\"createdDate\":\"2020-06-17T18:18:38.939+02:00\",\"modifiedBy\":\"lp_support\",\"modifiedDate\":\"2024-05-30T09:55:51.323+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/datasets/9f42c951-090c-4364-9936-96a8c9d03efc\",\"prettyUrlIdentifiers\":[\"finite-size-data-for-the-q-deformed-osp32-superspin-chain\"],\"previousUuids\":[\"696f3d57-e45b-4ed8-b67d-38e132116163\"],\"version\":\"c6a507a71f541b1f9ea61efdd0d0d49b38e67e9c\",\"title\":{\"en_GB\":\"Finite size data for the q-deformed OSp(3|2) superspin chain\",\"de_DE\":\"Finite size data for the q-deformed OSp(3|2) superspin chain\"},\"descriptions\":[{\"pureId\":4096237,\"value\":{\"en_GB\":\"Bethe ansatz data (roots, finite size energies, scaling dimensions and conformal spin) for low energy states of the integrable \\\\(U_q[OSp(3|2)]\\\\) superspin chain.\",\"de_DE\":\"Bethe ansatz data (roots, finite size energies, scaling dimensions and conformal spin) for low energy states of the integrable \\\\(U_q[OSp(3|2)]\\\\) superspin chain.\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/descriptions/datasetdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"cd2571a0-bbce-455d-a3bb-27414a805f5b\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/datasettypes/dataset/dataset\",\"term\":{\"en_GB\":\"Dataset\",\"de_DE\":\"Dataset\"}},\"publisher\":{\"systemName\":\"Publisher\",\"uuid\":\"f0890f38-0616-4a92-b4b5-a1ab6db19ca6\"},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"DataSearchImport\",\"value\":\"048051051052054048048047053051056053050046048049:tib.luis\"},{\"typeDiscriminator\":\"Id\",\"pureId\":15569160,\"idSource\":\"tib.luis\",\"value\":\"10.25835/0064330\"}],\"geoLocation\":{},\"persons\":[{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":4096239,\"name\":{\"firstName\":\"Holger\",\"lastName\":\"Frahm\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"c4667652-13e8-4aed-a5dd-84bf891dd7ca\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"cd2571a0-bbce-455d-a3bb-27414a805f5b\"}]},{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":4096241,\"name\":{\"firstName\":\"Konstantin\",\"lastName\":\"Hobuß\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"cd2571a0-bbce-455d-a3bb-27414a805f5b\"}]},{\"typeDiscriminator\":\"ExternalDataSetPersonAssociation\",\"pureId\":4096243,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"efd0a0ed-867a-49d4-ac95-c32b7c5bfa36\"}],\"name\":{\"firstName\":\"Márcio J.\",\"lastName\":\"Martins\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"32a19a27-5643-4577-8c0b-e944b1ff3db5\"}}],\"doi\":{\"pureId\":4096235,\"doi\":\"10.25835/0064330\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"cd2571a0-bbce-455d-a3bb-27414a805f5b\"}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"efd0a0ed-867a-49d4-ac95-c32b7c5bfa36\"}],\"publicationAvailableDate\":{\"year\":2019},\"openAccess\":{\"openAccessPermission\":{\"uri\":\"/dk/atira/pure/dataset/accesspermission/open\",\"term\":{\"en_GB\":\"Open\",\"de_DE\":\"Offen\"}}},\"openAireCompliant\":false,\"license\":{\"uri\":\"/dk/atira/pure/dataset/documentlicenses/cc-by\",\"term\":{\"en_GB\":\"CC BY\",\"de_DE\":\"CC BY\"}},\"projects\":[{\"project\":{\"systemName\":\"Project\",\"uuid\":\"1e1fa5d5-c4dd-4b39-b5cc-25bc4335a613\"}}],\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"7f1bbf72-a5cd-48e3-9266-ad11da2da0f5\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"5863c742-90e0-4f15-92e3-b0b546453942\"}}],\"links\":[{\"pureId\":54784609,\"url\":\"https://data.uni-hannover.de/dataset/finite-size-data-for-the-q-deformed-osp-3-2-superspin-chain\"}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"customDefinedFields\":{},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"systemName\":\"DataSet\"},{\"pureId\":4125182,\"uuid\":\"215e3c5a-79bc-4c58-af1c-5013e72993a5\",\"createdBy\":\"DYN-HH1\",\"createdDate\":\"2020-06-18T09:57:10.046+02:00\",\"modifiedBy\":\"lp_support\",\"modifiedDate\":\"2024-05-30T09:54:23.932+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/datasets/215e3c5a-79bc-4c58-af1c-5013e72993a5\",\"prettyUrlIdentifiers\":[\"replication-data-and-code-materials-for-the-study-explaining-medi\"],\"version\":\"f27eb37ce3eb5e95cec7b03a60da6b245a140395\",\"title\":{\"en_GB\":\"Replication data and code materials for the study: \\\"Explaining media coverage of Constitutional Court decisions in Germany: The role of case characteristics\\\"\",\"de_DE\":\"Replication data and code materials for the study: \\\"Explaining media coverage of Constitutional Court decisions in Germany: The role of case characteristics\\\"\"},\"descriptions\":[{\"pureId\":4125185,\"value\":{\"en_GB\":\"This repository provides the files necessary to replicate the analysis for the study \\\"Explaining media coverage of Constitutional Court decisions in Germany: The role of case characteristics\\\"\\r\\n\\r\\nThe README.html provides the information on all objects which are uploaded in “data_and_code” and “manual_coding”. If you are interested in replicating the analysis reported in the study and the robustness checks reported in the supplementary online appendices, then simply run the “Analysis.Rmd” markdown file in “data_and_code/in/code”.\\r\\n\\r\\nThe Codebook_finaldata_and_alternativeDV_v1.2.pdf provides essential information the operationalization for each variable which was used for the analyses reported in the study (and used in “Analysis.Rmd”).\",\"de_DE\":\"This repository provides the files necessary to replicate the analysis for the study \\\"Explaining media coverage of Constitutional Court decisions in Germany: The role of case characteristics\\\"\\r\\n\\r\\nThe README.html provides the information on all objects which are uploaded in “data_and_code” and “manual_coding”. If you are interested in replicating the analysis reported in the study and the robustness checks reported in the supplementary online appendices, then simply run the “Analysis.Rmd” markdown file in “data_and_code/in/code”.\\r\\n\\r\\nThe Codebook_finaldata_and_alternativeDV_v1.2.pdf provides essential information the operationalization for each variable which was used for the analyses reported in the study (and used in “Analysis.Rmd”).\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/descriptions/datasetdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"dd7c5ba6-bf5f-4310-9951-a3bbedf17232\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/datasettypes/dataset/dataset\",\"term\":{\"en_GB\":\"Dataset\",\"de_DE\":\"Dataset\"}},\"publisher\":{\"systemName\":\"Publisher\",\"uuid\":\"c5f86320-0a2a-4c44-baa0-561e084a9028\"},\"geoLocation\":{},\"persons\":[{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":4125188,\"name\":{\"firstName\":\"Philipp\",\"lastName\":\"Meyer\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"e9b8f266-187c-4f8a-9d7b-76c5e7d24d48\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"dd7c5ba6-bf5f-4310-9951-a3bbedf17232\"}]}],\"doi\":{\"pureId\":4125183,\"doi\":\"10.17605/OSF.IO/HFY4K\"},\"contactPerson\":{\"systemName\":\"Person\",\"uuid\":\"e9b8f266-187c-4f8a-9d7b-76c5e7d24d48\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"dd7c5ba6-bf5f-4310-9951-a3bbedf17232\"}],\"publicationAvailableDate\":{\"year\":2020},\"openAccess\":{\"openAccessPermission\":{\"uri\":\"/dk/atira/pure/dataset/accesspermission/open\",\"term\":{\"en_GB\":\"Open\",\"de_DE\":\"Offen\"}}},\"openAireCompliant\":false,\"license\":{\"uri\":\"/dk/atira/pure/dataset/documentlicenses/cc-by\",\"term\":{\"en_GB\":\"CC BY\",\"de_DE\":\"CC BY\"}},\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"e19806b8-5c4f-436d-ba77-e75f482e728b\"}}],\"links\":[{\"pureId\":4125186,\"url\":\"https://osf.io/hfy4k/?view_only=e643bd6a693c403ab4acb35b0f88833e\"}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"customDefinedFields\":{},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"systemName\":\"DataSet\"},{\"pureId\":4125274,\"uuid\":\"5a67a896-3045-48cf-9015-d66608f7cded\",\"createdBy\":\"DYN-HH1\",\"createdDate\":\"2020-06-18T09:58:06.144+02:00\",\"modifiedBy\":\"lp_support\",\"modifiedDate\":\"2024-05-30T09:51:21.332+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/datasets/5a67a896-3045-48cf-9015-d66608f7cded\",\"prettyUrlIdentifiers\":[\"press-releases-by-the-german-federal-constitutional-court-fcc\"],\"version\":\"3af39a2aba655a59d5d494dbe1980e0dc23f9073\",\"title\":{\"en_GB\":\"Press releases by the German Federal Constitutional Court (FCC)\",\"de_DE\":\"Press releases by the German Federal Constitutional Court (FCC)\"},\"descriptions\":[{\"pureId\":4125276,\"value\":{\"en_GB\":\"This repository provides the files necessary to replicate the analysis for the paper \\\"Judicial public relations: Determinants of press release publication by constitutional courts\\\" published in Politics (https://doi.org/10.1177/0263395719885753). In the folder in/prepareddata, you can find the final data set (finaldata_FCC_PR.csv), which is also uploaded on figshare (https://figshare.com/articles/Judicial_Public_Relations_of_the_Federal_German_Constitutional_Court_FCC_/7628729).\",\"de_DE\":\"This repository provides the files necessary to replicate the analysis for the paper \\\"Judicial public relations: Determinants of press release publication by constitutional courts\\\" published in Politics (https://doi.org/10.1177/0263395719885753). In the folder in/prepareddata, you can find the final data set (finaldata_FCC_PR.csv), which is also uploaded on figshare (https://figshare.com/articles/Judicial_Public_Relations_of_the_Federal_German_Constitutional_Court_FCC_/7628729).\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/descriptions/datasetdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"dd7c5ba6-bf5f-4310-9951-a3bbedf17232\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/datasettypes/dataset/dataset\",\"term\":{\"en_GB\":\"Dataset\",\"de_DE\":\"Dataset\"}},\"publisher\":{\"systemName\":\"Publisher\",\"uuid\":\"0fa4bc79-ad66-4af9-a125-79a2002a8f0c\"},\"geoLocation\":{},\"persons\":[{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":4125279,\"name\":{\"firstName\":\"Philipp\",\"lastName\":\"Meyer\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"e9b8f266-187c-4f8a-9d7b-76c5e7d24d48\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"dd7c5ba6-bf5f-4310-9951-a3bbedf17232\"}]}],\"contactPerson\":{\"systemName\":\"Person\",\"uuid\":\"e9b8f266-187c-4f8a-9d7b-76c5e7d24d48\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"dd7c5ba6-bf5f-4310-9951-a3bbedf17232\"}],\"publicationAvailableDate\":{\"year\":2019},\"openAireCompliant\":false,\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"689f4a75-71de-4f58-9e9f-19fde0dc3912\"}}],\"links\":[{\"pureId\":4125277,\"url\":\"https://github.com/phimeyer/Replication-Data-for-Determinants-of-FCC-Press-Releases\"}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"customDefinedFields\":{},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"systemName\":\"DataSet\"},{\"pureId\":4126280,\"uuid\":\"dbe3315e-d001-40d1-9b61-80b18db9c4d9\",\"createdBy\":\"7P7-HFU\",\"createdDate\":\"2020-06-18T10:14:14.726+02:00\",\"modifiedBy\":\"lp_support\",\"modifiedDate\":\"2024-07-26T08:38:30.878+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/datasets/dbe3315e-d001-40d1-9b61-80b18db9c4d9\",\"prettyUrlIdentifiers\":[\"data-set-köker-philipp-2019-risk-vs-reward-strategies-in-indirect\"],\"version\":\"9e925f068bee9e939562ec93307357bfdf6c71bc\",\"title\":{\"en_GB\":\"DATA SET: Köker, Philipp (2019): Risk vs Reward Strategies in Indirect Presidential Elections: Political Parties and the Selection of Presidential Electors in Germany, 1949–2017. German Politics.\",\"de_DE\":\"DATA SET: Köker, Philipp (2019): Risk vs Reward Strategies in Indirect Presidential Elections: Political Parties and the Selection of Presidential Electors in Germany, 1949–2017. German Politics.\"},\"descriptions\":[{\"pureId\":4126283,\"value\":{\"en_GB\":\"Parties across parliamentary republics compete fiercely over capturing the presidential office. However, they are often torn between seeing their preferred candidate elected and exploiting the election for publicity purposes. The German case, specifically parties’ ability to nominate extra-parliamentarian electors (EPEs) as part of the electoral college, offers a particularly interesting perspective on how parties balance these competing goals. While EPEs allow parties to boost their profile and strengthen ties with selected groups, they also present a risk factor as their voting behaviour is more difficult to predict. Based on a novel data set on party delegations in German presidential elections, 1949-2017, the analysis shows that – contrary to traditional assumptions – competition in the electoral college did not play a role in EPE nominations. Rather, party strategies were influenced by the varying signalling power of the elections. Parties were more risk-averse and nominated fewer EPEs during grand coalitions, when they were part of the federal government, or when federal elections approached, yet nominated more EPEs when they had a larger support base to reward. The results call for further comparative research on indirect elections and different types of EPEs in Germany.\",\"de_DE\":\"Parties across parliamentary republics compete fiercely over capturing the presidential office. However, they are often torn between seeing their preferred candidate elected and exploiting the election for publicity purposes. The German case, specifically parties’ ability to nominate extra-parliamentarian electors (EPEs) as part of the electoral college, offers a particularly interesting perspective on how parties balance these competing goals. While EPEs allow parties to boost their profile and strengthen ties with selected groups, they also present a risk factor as their voting behaviour is more difficult to predict. Based on a novel data set on party delegations in German presidential elections, 1949-2017, the analysis shows that – contrary to traditional assumptions – competition in the electoral college did not play a role in EPE nominations. Rather, party strategies were influenced by the varying signalling power of the elections. Parties were more risk-averse and nominated fewer EPEs during grand coalitions, when they were part of the federal government, or when federal elections approached, yet nominated more EPEs when they had a larger support base to reward. The results call for further comparative research on indirect elections and different types of EPEs in Germany.\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/descriptions/datasetdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"dd7c5ba6-bf5f-4310-9951-a3bbedf17232\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/datasettypes/dataset/dataset\",\"term\":{\"en_GB\":\"Dataset\",\"de_DE\":\"Dataset\"}},\"publisher\":{\"systemName\":\"Publisher\",\"uuid\":\"2494abe1-84fc-43ea-8c94-1922b8999a71\"},\"temporalCoveragePeriod\":{\"startDate\":{\"year\":1949},\"endDate\":{\"year\":2017}},\"geoLocation\":{},\"persons\":[{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":4126285,\"name\":{\"firstName\":\"Philipp\",\"lastName\":\"Köker\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"14e87e80-ed97-4626-bbae-213d5312d4d1\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"dd7c5ba6-bf5f-4310-9951-a3bbedf17232\"}]}],\"doi\":{\"pureId\":4126281,\"doi\":\"10.6084/m9.figshare.6263060\"},\"contactPerson\":{\"systemName\":\"Person\",\"uuid\":\"14e87e80-ed97-4626-bbae-213d5312d4d1\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"dd7c5ba6-bf5f-4310-9951-a3bbedf17232\"}],\"publicationAvailableDate\":{\"year\":2019},\"openAccess\":{\"openAccessPermission\":{\"uri\":\"/dk/atira/pure/dataset/accesspermission/open\",\"term\":{\"en_GB\":\"Open\",\"de_DE\":\"Offen\"}}},\"openAireCompliant\":false,\"license\":{\"uri\":\"/dk/atira/pure/dataset/documentlicenses/cc-by\",\"term\":{\"en_GB\":\"CC BY\",\"de_DE\":\"CC BY\"}},\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"7823e915-069f-4590-99f1-8cc31f381853\"}}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"customDefinedFields\":{},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"systemName\":\"DataSet\"},{\"pureId\":4344960,\"uuid\":\"4aa72df0-b2b6-4b1c-bfe4-455a78bc7914\",\"createdBy\":\"7NU-Q13\",\"createdDate\":\"2020-06-29T12:14:30.48+02:00\",\"modifiedBy\":\"lp_support\",\"modifiedDate\":\"2024-02-29T10:50:47.939+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/datasets/4aa72df0-b2b6-4b1c-bfe4-455a78bc7914\",\"prettyUrlIdentifiers\":[\"open-research-knowledge-graph\"],\"version\":\"c6f61ab94fd65b5abf6f55cc5f0933d2edbe9099\",\"title\":{\"en_GB\":\"Open Research Knowledge Graph\",\"de_DE\":\"Open Research Knowledge Graph\"},\"descriptions\":[{\"pureId\":4344962,\"value\":{\"en_GB\":\"The Open Research Knowledge Graph (ORKG) comprises comprehensive semantic descriptions of scholarly contributions.\",\"de_DE\":\"Der Open Research Knowledge Graph (ORKG) enthält semantische Beschreibungen wissenschaftlicher Publikationen.\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/descriptions/datasetdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"f51ff454-1c84-47cd-9e68-506f952d2ecc\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/datasettypes/dataset/dataset\",\"term\":{\"en_GB\":\"Dataset\",\"de_DE\":\"Dataset\"}},\"publisher\":{\"systemName\":\"Publisher\",\"uuid\":\"d8c5f1ed-3e45-433a-85e5-9f5b8ae0a586\"},\"dataProductionPeriod\":{\"startDate\":{\"year\":2019}},\"geoLocation\":{},\"persons\":[{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":4344965,\"name\":{\"firstName\":\"Sören\",\"lastName\":\"Auer\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"24c9e555-0326-48f9-a049-413851dae647\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"f51ff454-1c84-47cd-9e68-506f952d2ecc\"}]}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"f51ff454-1c84-47cd-9e68-506f952d2ecc\"}],\"publicationAvailableDate\":{\"year\":2019},\"openAccess\":{\"openAccessPermission\":{\"uri\":\"/dk/atira/pure/dataset/accesspermission/open\",\"term\":{\"en_GB\":\"Open\",\"de_DE\":\"Offen\"}}},\"openAireCompliant\":false,\"projects\":[{\"project\":{\"systemName\":\"Project\",\"uuid\":\"4dc9de6d-8296-4093-87a7-f9df2b8422f9\"}}],\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"8827ecec-34a7-49e3-b93b-71036267218c\"}}],\"links\":[{\"pureId\":4344963,\"url\":\"https://orkg.org\"}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"customDefinedFields\":{},\"workflow\":{\"step\":\"forValidation\",\"description\":{\"en_GB\":\"For validation\",\"de_DE\":\"Zur Validierung\"}},\"systemName\":\"DataSet\"}]}",
+        "response_data": {
+            "count": 487,
+            "pageInformation": {
+                "offset": 0,
+                "size": 5
+            },
+            "items": [
+                {
+                    "pureId": 4096234,
+                    "uuid": "9f42c951-090c-4364-9936-96a8c9d03efc",
+                    "createdBy": "QK4-FU5",
+                    "createdDate": "2020-06-17T18:18:38.939+02:00",
+                    "modifiedBy": "lp_support",
+                    "modifiedDate": "2024-05-30T09:55:51.323+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/datasets/9f42c951-090c-4364-9936-96a8c9d03efc",
+                    "prettyUrlIdentifiers": [
+                        "finite-size-data-for-the-q-deformed-osp32-superspin-chain"
+                    ],
+                    "previousUuids": [
+                        "696f3d57-e45b-4ed8-b67d-38e132116163"
+                    ],
+                    "version": "c6a507a71f541b1f9ea61efdd0d0d49b38e67e9c",
+                    "title": {
+                        "en_GB": "Finite size data for the q-deformed OSp(3|2) superspin chain",
+                        "de_DE": "Finite size data for the q-deformed OSp(3|2) superspin chain"
+                    },
+                    "descriptions": [
+                        {
+                            "pureId": 4096237,
+                            "value": {
+                                "en_GB": "Bethe ansatz data (roots, finite size energies, scaling dimensions and conformal spin) for low energy states of the integrable \\(U_q[OSp(3|2)]\\) superspin chain.",
+                                "de_DE": "Bethe ansatz data (roots, finite size energies, scaling dimensions and conformal spin) for low energy states of the integrable \\(U_q[OSp(3|2)]\\) superspin chain."
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/dataset/descriptions/datasetdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "cd2571a0-bbce-455d-a3bb-27414a805f5b"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/dataset/datasettypes/dataset/dataset",
+                        "term": {
+                            "en_GB": "Dataset",
+                            "de_DE": "Dataset"
+                        }
+                    },
+                    "publisher": {
+                        "systemName": "Publisher",
+                        "uuid": "f0890f38-0616-4a92-b4b5-a1ab6db19ca6"
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "DataSearchImport",
+                            "value": "048051051052054048048047053051056053050046048049:tib.luis"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 15569160,
+                            "idSource": "tib.luis",
+                            "value": "10.25835/0064330"
+                        }
+                    ],
+                    "geoLocation": [],
+                    "persons": [
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 4096239,
+                            "name": {
+                                "firstName": "Holger",
+                                "lastName": "Frahm"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "c4667652-13e8-4aed-a5dd-84bf891dd7ca"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "cd2571a0-bbce-455d-a3bb-27414a805f5b"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 4096241,
+                            "name": {
+                                "firstName": "Konstantin",
+                                "lastName": "Hobuß"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "cd2571a0-bbce-455d-a3bb-27414a805f5b"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ExternalDataSetPersonAssociation",
+                            "pureId": 4096243,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "efd0a0ed-867a-49d4-ac95-c32b7c5bfa36"
+                                }
+                            ],
+                            "name": {
+                                "firstName": "Márcio J.",
+                                "lastName": "Martins"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "32a19a27-5643-4577-8c0b-e944b1ff3db5"
+                            }
+                        }
+                    ],
+                    "doi": {
+                        "pureId": 4096235,
+                        "doi": "10.25835/0064330"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "cd2571a0-bbce-455d-a3bb-27414a805f5b"
+                        }
+                    ],
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "efd0a0ed-867a-49d4-ac95-c32b7c5bfa36"
+                        }
+                    ],
+                    "publicationAvailableDate": {
+                        "year": 2019
+                    },
+                    "openAccess": {
+                        "openAccessPermission": {
+                            "uri": "/dk/atira/pure/dataset/accesspermission/open",
+                            "term": {
+                                "en_GB": "Open",
+                                "de_DE": "Offen"
+                            }
+                        }
+                    },
+                    "openAireCompliant": false,
+                    "license": {
+                        "uri": "/dk/atira/pure/dataset/documentlicenses/cc-by",
+                        "term": {
+                            "en_GB": "CC BY",
+                            "de_DE": "CC BY"
+                        }
+                    },
+                    "projects": [
+                        {
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "1e1fa5d5-c4dd-4b39-b5cc-25bc4335a613"
+                            }
+                        }
+                    ],
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "7f1bbf72-a5cd-48e3-9266-ad11da2da0f5"
+                            }
+                        },
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "5863c742-90e0-4f15-92e3-b0b546453942"
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 54784609,
+                            "url": "https://data.uni-hannover.de/dataset/finite-size-data-for-the-q-deformed-osp-3-2-superspin-chain"
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "customDefinedFields": [],
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "systemName": "DataSet"
+                },
+                {
+                    "pureId": 4125182,
+                    "uuid": "215e3c5a-79bc-4c58-af1c-5013e72993a5",
+                    "createdBy": "DYN-HH1",
+                    "createdDate": "2020-06-18T09:57:10.046+02:00",
+                    "modifiedBy": "lp_support",
+                    "modifiedDate": "2024-05-30T09:54:23.932+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/datasets/215e3c5a-79bc-4c58-af1c-5013e72993a5",
+                    "prettyUrlIdentifiers": [
+                        "replication-data-and-code-materials-for-the-study-explaining-medi"
+                    ],
+                    "version": "f27eb37ce3eb5e95cec7b03a60da6b245a140395",
+                    "title": {
+                        "en_GB": "Replication data and code materials for the study: \"Explaining media coverage of Constitutional Court decisions in Germany: The role of case characteristics\"",
+                        "de_DE": "Replication data and code materials for the study: \"Explaining media coverage of Constitutional Court decisions in Germany: The role of case characteristics\""
+                    },
+                    "descriptions": [
+                        {
+                            "pureId": 4125185,
+                            "value": {
+                                "en_GB": "This repository provides the files necessary to replicate the analysis for the study \"Explaining media coverage of Constitutional Court decisions in Germany: The role of case characteristics\"\r\n\r\nThe README.html provides the information on all objects which are uploaded in “data_and_code” and “manual_coding”. If you are interested in replicating the analysis reported in the study and the robustness checks reported in the supplementary online appendices, then simply run the “Analysis.Rmd” markdown file in “data_and_code/in/code”.\r\n\r\nThe Codebook_finaldata_and_alternativeDV_v1.2.pdf provides essential information the operationalization for each variable which was used for the analyses reported in the study (and used in “Analysis.Rmd”).",
+                                "de_DE": "This repository provides the files necessary to replicate the analysis for the study \"Explaining media coverage of Constitutional Court decisions in Germany: The role of case characteristics\"\r\n\r\nThe README.html provides the information on all objects which are uploaded in “data_and_code” and “manual_coding”. If you are interested in replicating the analysis reported in the study and the robustness checks reported in the supplementary online appendices, then simply run the “Analysis.Rmd” markdown file in “data_and_code/in/code”.\r\n\r\nThe Codebook_finaldata_and_alternativeDV_v1.2.pdf provides essential information the operationalization for each variable which was used for the analyses reported in the study (and used in “Analysis.Rmd”)."
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/dataset/descriptions/datasetdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "dd7c5ba6-bf5f-4310-9951-a3bbedf17232"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/dataset/datasettypes/dataset/dataset",
+                        "term": {
+                            "en_GB": "Dataset",
+                            "de_DE": "Dataset"
+                        }
+                    },
+                    "publisher": {
+                        "systemName": "Publisher",
+                        "uuid": "c5f86320-0a2a-4c44-baa0-561e084a9028"
+                    },
+                    "geoLocation": [],
+                    "persons": [
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 4125188,
+                            "name": {
+                                "firstName": "Philipp",
+                                "lastName": "Meyer"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "e9b8f266-187c-4f8a-9d7b-76c5e7d24d48"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "dd7c5ba6-bf5f-4310-9951-a3bbedf17232"
+                                }
+                            ]
+                        }
+                    ],
+                    "doi": {
+                        "pureId": 4125183,
+                        "doi": "10.17605/OSF.IO/HFY4K"
+                    },
+                    "contactPerson": {
+                        "systemName": "Person",
+                        "uuid": "e9b8f266-187c-4f8a-9d7b-76c5e7d24d48"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "dd7c5ba6-bf5f-4310-9951-a3bbedf17232"
+                        }
+                    ],
+                    "publicationAvailableDate": {
+                        "year": 2020
+                    },
+                    "openAccess": {
+                        "openAccessPermission": {
+                            "uri": "/dk/atira/pure/dataset/accesspermission/open",
+                            "term": {
+                                "en_GB": "Open",
+                                "de_DE": "Offen"
+                            }
+                        }
+                    },
+                    "openAireCompliant": false,
+                    "license": {
+                        "uri": "/dk/atira/pure/dataset/documentlicenses/cc-by",
+                        "term": {
+                            "en_GB": "CC BY",
+                            "de_DE": "CC BY"
+                        }
+                    },
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "e19806b8-5c4f-436d-ba77-e75f482e728b"
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 4125186,
+                            "url": "https://osf.io/hfy4k/?view_only=e643bd6a693c403ab4acb35b0f88833e"
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "customDefinedFields": [],
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "systemName": "DataSet"
+                },
+                {
+                    "pureId": 4125274,
+                    "uuid": "5a67a896-3045-48cf-9015-d66608f7cded",
+                    "createdBy": "DYN-HH1",
+                    "createdDate": "2020-06-18T09:58:06.144+02:00",
+                    "modifiedBy": "lp_support",
+                    "modifiedDate": "2024-05-30T09:51:21.332+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/datasets/5a67a896-3045-48cf-9015-d66608f7cded",
+                    "prettyUrlIdentifiers": [
+                        "press-releases-by-the-german-federal-constitutional-court-fcc"
+                    ],
+                    "version": "3af39a2aba655a59d5d494dbe1980e0dc23f9073",
+                    "title": {
+                        "en_GB": "Press releases by the German Federal Constitutional Court (FCC)",
+                        "de_DE": "Press releases by the German Federal Constitutional Court (FCC)"
+                    },
+                    "descriptions": [
+                        {
+                            "pureId": 4125276,
+                            "value": {
+                                "en_GB": "This repository provides the files necessary to replicate the analysis for the paper \"Judicial public relations: Determinants of press release publication by constitutional courts\" published in Politics (https://doi.org/10.1177/0263395719885753). In the folder in/prepareddata, you can find the final data set (finaldata_FCC_PR.csv), which is also uploaded on figshare (https://figshare.com/articles/Judicial_Public_Relations_of_the_Federal_German_Constitutional_Court_FCC_/7628729).",
+                                "de_DE": "This repository provides the files necessary to replicate the analysis for the paper \"Judicial public relations: Determinants of press release publication by constitutional courts\" published in Politics (https://doi.org/10.1177/0263395719885753). In the folder in/prepareddata, you can find the final data set (finaldata_FCC_PR.csv), which is also uploaded on figshare (https://figshare.com/articles/Judicial_Public_Relations_of_the_Federal_German_Constitutional_Court_FCC_/7628729)."
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/dataset/descriptions/datasetdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "dd7c5ba6-bf5f-4310-9951-a3bbedf17232"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/dataset/datasettypes/dataset/dataset",
+                        "term": {
+                            "en_GB": "Dataset",
+                            "de_DE": "Dataset"
+                        }
+                    },
+                    "publisher": {
+                        "systemName": "Publisher",
+                        "uuid": "0fa4bc79-ad66-4af9-a125-79a2002a8f0c"
+                    },
+                    "geoLocation": [],
+                    "persons": [
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 4125279,
+                            "name": {
+                                "firstName": "Philipp",
+                                "lastName": "Meyer"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "e9b8f266-187c-4f8a-9d7b-76c5e7d24d48"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "dd7c5ba6-bf5f-4310-9951-a3bbedf17232"
+                                }
+                            ]
+                        }
+                    ],
+                    "contactPerson": {
+                        "systemName": "Person",
+                        "uuid": "e9b8f266-187c-4f8a-9d7b-76c5e7d24d48"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "dd7c5ba6-bf5f-4310-9951-a3bbedf17232"
+                        }
+                    ],
+                    "publicationAvailableDate": {
+                        "year": 2019
+                    },
+                    "openAireCompliant": false,
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "689f4a75-71de-4f58-9e9f-19fde0dc3912"
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 4125277,
+                            "url": "https://github.com/phimeyer/Replication-Data-for-Determinants-of-FCC-Press-Releases"
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "customDefinedFields": [],
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "systemName": "DataSet"
+                },
+                {
+                    "pureId": 4126280,
+                    "uuid": "dbe3315e-d001-40d1-9b61-80b18db9c4d9",
+                    "createdBy": "7P7-HFU",
+                    "createdDate": "2020-06-18T10:14:14.726+02:00",
+                    "modifiedBy": "lp_support",
+                    "modifiedDate": "2024-07-26T08:38:30.878+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/datasets/dbe3315e-d001-40d1-9b61-80b18db9c4d9",
+                    "prettyUrlIdentifiers": [
+                        "data-set-köker-philipp-2019-risk-vs-reward-strategies-in-indirect"
+                    ],
+                    "version": "9e925f068bee9e939562ec93307357bfdf6c71bc",
+                    "title": {
+                        "en_GB": "DATA SET: Köker, Philipp (2019): Risk vs Reward Strategies in Indirect Presidential Elections: Political Parties and the Selection of Presidential Electors in Germany, 1949–2017. German Politics.",
+                        "de_DE": "DATA SET: Köker, Philipp (2019): Risk vs Reward Strategies in Indirect Presidential Elections: Political Parties and the Selection of Presidential Electors in Germany, 1949–2017. German Politics."
+                    },
+                    "descriptions": [
+                        {
+                            "pureId": 4126283,
+                            "value": {
+                                "en_GB": "Parties across parliamentary republics compete fiercely over capturing the presidential office. However, they are often torn between seeing their preferred candidate elected and exploiting the election for publicity purposes. The German case, specifically parties’ ability to nominate extra-parliamentarian electors (EPEs) as part of the electoral college, offers a particularly interesting perspective on how parties balance these competing goals. While EPEs allow parties to boost their profile and strengthen ties with selected groups, they also present a risk factor as their voting behaviour is more difficult to predict. Based on a novel data set on party delegations in German presidential elections, 1949-2017, the analysis shows that – contrary to traditional assumptions – competition in the electoral college did not play a role in EPE nominations. Rather, party strategies were influenced by the varying signalling power of the elections. Parties were more risk-averse and nominated fewer EPEs during grand coalitions, when they were part of the federal government, or when federal elections approached, yet nominated more EPEs when they had a larger support base to reward. The results call for further comparative research on indirect elections and different types of EPEs in Germany.",
+                                "de_DE": "Parties across parliamentary republics compete fiercely over capturing the presidential office. However, they are often torn between seeing their preferred candidate elected and exploiting the election for publicity purposes. The German case, specifically parties’ ability to nominate extra-parliamentarian electors (EPEs) as part of the electoral college, offers a particularly interesting perspective on how parties balance these competing goals. While EPEs allow parties to boost their profile and strengthen ties with selected groups, they also present a risk factor as their voting behaviour is more difficult to predict. Based on a novel data set on party delegations in German presidential elections, 1949-2017, the analysis shows that – contrary to traditional assumptions – competition in the electoral college did not play a role in EPE nominations. Rather, party strategies were influenced by the varying signalling power of the elections. Parties were more risk-averse and nominated fewer EPEs during grand coalitions, when they were part of the federal government, or when federal elections approached, yet nominated more EPEs when they had a larger support base to reward. The results call for further comparative research on indirect elections and different types of EPEs in Germany."
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/dataset/descriptions/datasetdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "dd7c5ba6-bf5f-4310-9951-a3bbedf17232"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/dataset/datasettypes/dataset/dataset",
+                        "term": {
+                            "en_GB": "Dataset",
+                            "de_DE": "Dataset"
+                        }
+                    },
+                    "publisher": {
+                        "systemName": "Publisher",
+                        "uuid": "2494abe1-84fc-43ea-8c94-1922b8999a71"
+                    },
+                    "temporalCoveragePeriod": {
+                        "startDate": {
+                            "year": 1949
+                        },
+                        "endDate": {
+                            "year": 2017
+                        }
+                    },
+                    "geoLocation": [],
+                    "persons": [
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 4126285,
+                            "name": {
+                                "firstName": "Philipp",
+                                "lastName": "Köker"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "14e87e80-ed97-4626-bbae-213d5312d4d1"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "dd7c5ba6-bf5f-4310-9951-a3bbedf17232"
+                                }
+                            ]
+                        }
+                    ],
+                    "doi": {
+                        "pureId": 4126281,
+                        "doi": "10.6084/m9.figshare.6263060"
+                    },
+                    "contactPerson": {
+                        "systemName": "Person",
+                        "uuid": "14e87e80-ed97-4626-bbae-213d5312d4d1"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "dd7c5ba6-bf5f-4310-9951-a3bbedf17232"
+                        }
+                    ],
+                    "publicationAvailableDate": {
+                        "year": 2019
+                    },
+                    "openAccess": {
+                        "openAccessPermission": {
+                            "uri": "/dk/atira/pure/dataset/accesspermission/open",
+                            "term": {
+                                "en_GB": "Open",
+                                "de_DE": "Offen"
+                            }
+                        }
+                    },
+                    "openAireCompliant": false,
+                    "license": {
+                        "uri": "/dk/atira/pure/dataset/documentlicenses/cc-by",
+                        "term": {
+                            "en_GB": "CC BY",
+                            "de_DE": "CC BY"
+                        }
+                    },
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "7823e915-069f-4590-99f1-8cc31f381853"
+                            }
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "customDefinedFields": [],
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "systemName": "DataSet"
+                },
+                {
+                    "pureId": 4344960,
+                    "uuid": "4aa72df0-b2b6-4b1c-bfe4-455a78bc7914",
+                    "createdBy": "7NU-Q13",
+                    "createdDate": "2020-06-29T12:14:30.48+02:00",
+                    "modifiedBy": "lp_support",
+                    "modifiedDate": "2024-02-29T10:50:47.939+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/datasets/4aa72df0-b2b6-4b1c-bfe4-455a78bc7914",
+                    "prettyUrlIdentifiers": [
+                        "open-research-knowledge-graph"
+                    ],
+                    "version": "c6f61ab94fd65b5abf6f55cc5f0933d2edbe9099",
+                    "title": {
+                        "en_GB": "Open Research Knowledge Graph",
+                        "de_DE": "Open Research Knowledge Graph"
+                    },
+                    "descriptions": [
+                        {
+                            "pureId": 4344962,
+                            "value": {
+                                "en_GB": "The Open Research Knowledge Graph (ORKG) comprises comprehensive semantic descriptions of scholarly contributions.",
+                                "de_DE": "Der Open Research Knowledge Graph (ORKG) enthält semantische Beschreibungen wissenschaftlicher Publikationen."
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/dataset/descriptions/datasetdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "f51ff454-1c84-47cd-9e68-506f952d2ecc"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/dataset/datasettypes/dataset/dataset",
+                        "term": {
+                            "en_GB": "Dataset",
+                            "de_DE": "Dataset"
+                        }
+                    },
+                    "publisher": {
+                        "systemName": "Publisher",
+                        "uuid": "d8c5f1ed-3e45-433a-85e5-9f5b8ae0a586"
+                    },
+                    "dataProductionPeriod": {
+                        "startDate": {
+                            "year": 2019
+                        }
+                    },
+                    "geoLocation": [],
+                    "persons": [
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 4344965,
+                            "name": {
+                                "firstName": "Sören",
+                                "lastName": "Auer"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "24c9e555-0326-48f9-a049-413851dae647"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "f51ff454-1c84-47cd-9e68-506f952d2ecc"
+                                }
+                            ]
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "f51ff454-1c84-47cd-9e68-506f952d2ecc"
+                        }
+                    ],
+                    "publicationAvailableDate": {
+                        "year": 2019
+                    },
+                    "openAccess": {
+                        "openAccessPermission": {
+                            "uri": "/dk/atira/pure/dataset/accesspermission/open",
+                            "term": {
+                                "en_GB": "Open",
+                                "de_DE": "Offen"
+                            }
+                        }
+                    },
+                    "openAireCompliant": false,
+                    "projects": [
+                        {
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "4dc9de6d-8296-4093-87a7-f9df2b8422f9"
+                            }
+                        }
+                    ],
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "8827ecec-34a7-49e3-b93b-71036267218c"
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 4344963,
+                            "url": "https://orkg.org"
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "customDefinedFields": [],
+                    "workflow": {
+                        "step": "forValidation",
+                        "description": {
+                            "en_GB": "For validation",
+                            "de_DE": "Zur Validierung"
+                        }
+                    },
+                    "systemName": "DataSet"
+                }
+            ]
+        },
+        "json_error": "No error"
+    }
+}

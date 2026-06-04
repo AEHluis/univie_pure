@@ -1,0 +1,74 @@
+{
+    "test_name": "person_single",
+    "description": "Get single person by UUID",
+    "timestamp": "2026-06-02 13:42:43",
+    "endpoint": "persons/ce5a0a5e-23de-4801-b89b-00280a81ae2c",
+    "query_params": [],
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 107.530000000000001136868377216160297393798828125,
+        "url": "https://fis.uni-hannover.de/ws/api/persons/ce5a0a5e-23de-4801-b89b-00280a81ae2c",
+        "curl_error": null,
+        "response": "{\"pureId\":2889736,\"uuid\":\"ce5a0a5e-23de-4801-b89b-00280a81ae2c\",\"portalUrl\":\"https://research.uni-hannover.de/en/persons/ce5a0a5e-23de-4801-b89b-00280a81ae2c\",\"prettyUrlIdentifiers\":[\"paul-heitjans\"],\"version\":\"a0523ca9971aabefcf00528d498fd5d062a027e6\",\"name\":{\"firstName\":\"Paul\",\"lastName\":\"Heitjans\"},\"names\":[{\"pureId\":2889739,\"name\":{\"firstName\":\"Paul\",\"lastName\":\"Heitjans\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/sort\",\"term\":{\"en_GB\":\"Sort name\",\"de_DE\":\"Sortiername\"}}}],\"orcid\":\"0000-0003-1563-9176\",\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"synchronisedUnifiedPerson\",\"value\":\"CFB-LWW\"},{\"typeDiscriminator\":\"ClassifiedId\",\"pureId\":2967090,\"id\":\"22997036200\",\"type\":{\"uri\":\"/dk/atira/pure/person/personsources/scopusauthor\",\"term\":{\"en_GB\":\"Scopus Author ID\",\"de_DE\":\"Scopus-ID\"}}}],\"systemName\":\"Person\"}",
+        "response_data": {
+            "pureId": 2889736,
+            "uuid": "ce5a0a5e-23de-4801-b89b-00280a81ae2c",
+            "portalUrl": "https://research.uni-hannover.de/en/persons/ce5a0a5e-23de-4801-b89b-00280a81ae2c",
+            "prettyUrlIdentifiers": [
+                "paul-heitjans"
+            ],
+            "version": "a0523ca9971aabefcf00528d498fd5d062a027e6",
+            "name": {
+                "firstName": "Paul",
+                "lastName": "Heitjans"
+            },
+            "names": [
+                {
+                    "pureId": 2889739,
+                    "name": {
+                        "firstName": "Paul",
+                        "lastName": "Heitjans"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/names/sort",
+                        "term": {
+                            "en_GB": "Sort name",
+                            "de_DE": "Sortiername"
+                        }
+                    }
+                }
+            ],
+            "orcid": "0000-0003-1563-9176",
+            "visibility": {
+                "key": "FREE",
+                "description": {
+                    "en_GB": "Public - No restriction",
+                    "de_DE": "Öffentlich - Keine Einschränkungen"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedUnifiedPerson",
+                    "value": "CFB-LWW"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2967090,
+                    "id": "22997036200",
+                    "type": {
+                        "uri": "/dk/atira/pure/person/personsources/scopusauthor",
+                        "term": {
+                            "en_GB": "Scopus Author ID",
+                            "de_DE": "Scopus-ID"
+                        }
+                    }
+                }
+            ],
+            "systemName": "Person"
+        },
+        "json_error": "No error"
+    }
+}

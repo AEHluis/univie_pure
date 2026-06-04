@@ -782,58 +782,353 @@
                         </TCEforms>
                     </settings.researchOutputOrdering>
 
-                    <settings.rendering>
+                    <settings.citationStyle>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.rendering
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.citationStyle
                             </label>
+                            <description>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.citationStyle.description
+                            </description>
+                            <displayCond>FIELD:sDEF.settings.what_to_display:=:PUBLICATIONS</displayCond>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-
+                                <size>1</size>
                                 <items type="array">
+                                    <numIndex index="-1" type="array">
+                                        <numIndex index="0">— Kein vordefinierter Stil —</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                    <!-- Popular General Styles -->
                                     <numIndex index="0" type="array">
-                                        <numIndex index="0">Vancouver</numIndex>
-                                        <numIndex index="1">vancouver</numIndex>
+                                        <numIndex index="0">── Internationale Standards ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
-                                        <numIndex index="0">Harvard</numIndex>
-                                        <numIndex index="1">harvard</numIndex>
-                                    </numIndex>
-                                    <numIndex index="2" type="array">
-                                        <numIndex index="0">Apa</numIndex>
+                                        <numIndex index="0">APA 7th edition (apa)</numIndex>
                                         <numIndex index="1">apa</numIndex>
                                     </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">APA 6th edition (apa-6th-edition)</numIndex>
+                                        <numIndex index="1">apa-6th-edition</numIndex>
+                                    </numIndex>
                                     <numIndex index="3" type="array">
-                                        <numIndex index="0">MLA</numIndex>
-                                        <numIndex index="1">mla</numIndex>
+                                        <numIndex index="0">Harvard - Cite Them Right (harvard-cite-them-right)</numIndex>
+                                        <numIndex index="1">harvard-cite-them-right</numIndex>
                                     </numIndex>
                                     <numIndex index="4" type="array">
-                                        <numIndex index="0">CBE</numIndex>
-                                        <numIndex index="1">cbe</numIndex>
+                                        <numIndex index="0">Vancouver (elsevier-vancouver)</numIndex>
+                                        <numIndex index="1">elsevier-vancouver</numIndex>
                                     </numIndex>
                                     <numIndex index="5" type="array">
-                                        <numIndex index="0">Author</numIndex>
-                                        <numIndex index="1">author</numIndex>
+                                        <numIndex index="0">IEEE (ieee)</numIndex>
+                                        <numIndex index="1">ieee</numIndex>
                                     </numIndex>
                                     <numIndex index="6" type="array">
-                                        <numIndex index="0">Authorlist</numIndex>
-                                        <numIndex index="1">authorlist</numIndex>
+                                        <numIndex index="0">Chicago Author-Date (chicago-author-date)</numIndex>
+                                        <numIndex index="1">chicago-author-date</numIndex>
                                     </numIndex>
                                     <numIndex index="7" type="array">
-                                        <numIndex index="0">Standard</numIndex>
-                                        <numIndex index="1">standard</numIndex>
+                                        <numIndex index="0">Chicago Notes-Bibliography (chicago-notes-bibliography)</numIndex>
+                                        <numIndex index="1">chicago-notes-bibliography</numIndex>
                                     </numIndex>
                                     <numIndex index="8" type="array">
-                                        <numIndex index="0">Langformat für Dissertationen inkl. Betreuerangabe
-                                        </numIndex>
-                                        <numIndex index="1">luhlong</numIndex>
+                                        <numIndex index="0">MLA 9th edition (modern-language-association)</numIndex>
+                                        <numIndex index="1">modern-language-association</numIndex>
+                                    </numIndex>
+
+                                    <!-- German Standards -->
+                                    <numIndex index="10" type="array">
+                                        <numIndex index="0">── Deutsche Standards ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="11" type="array">
+                                        <numIndex index="0">DIN 1505-2 (din-1505-2)</numIndex>
+                                        <numIndex index="1">din-1505-2</numIndex>
+                                    </numIndex>
+                                    <numIndex index="12" type="array">
+                                        <numIndex index="0">DIN 1505-2 Alphanumerisch (din-1505-2-alphanumeric)</numIndex>
+                                        <numIndex index="1">din-1505-2-alphanumeric</numIndex>
+                                    </numIndex>
+                                    <numIndex index="13" type="array">
+                                        <numIndex index="0">DIN 1505-2 Numerisch (din-1505-2-numeric)</numIndex>
+                                        <numIndex index="1">din-1505-2-numeric</numIndex>
+                                    </numIndex>
+                                    <numIndex index="14" type="array">
+                                        <numIndex index="0">DIN 1505-2 Numerisch-Alphabetisch (din-1505-2-numeric-alphabetical)</numIndex>
+                                        <numIndex index="1">din-1505-2-numeric-alphabetical</numIndex>
+                                    </numIndex>
+
+                                    <!-- German Law / Rechtswissenschaften -->
+                                    <numIndex index="20" type="array">
+                                        <numIndex index="0">── Rechtswissenschaften ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="21" type="array">
+                                        <numIndex index="0">Juristische Zitierweise Stüber (juristische-zitierweise)</numIndex>
+                                        <numIndex index="1">juristische-zitierweise</numIndex>
+                                    </numIndex>
+                                    <numIndex index="22" type="array">
+                                        <numIndex index="0">Computer und Recht (computer-und-recht)</numIndex>
+                                        <numIndex index="1">computer-und-recht</numIndex>
+                                    </numIndex>
+                                    <numIndex index="23" type="array">
+                                        <numIndex index="0">European Journal of International Law (european-journal-of-international-law)</numIndex>
+                                        <numIndex index="1">european-journal-of-international-law</numIndex>
+                                    </numIndex>
+                                    <numIndex index="24" type="array">
+                                        <numIndex index="0">Archiv für die civilistische Praxis (archiv-fur-die-civilistische-praxis)</numIndex>
+                                        <numIndex index="1">archiv-fur-die-civilistische-praxis</numIndex>
+                                    </numIndex>
+                                    <numIndex index="25" type="array">
+                                        <numIndex index="0">Mohr Siebeck Recht (mohr-siebeck-recht)</numIndex>
+                                        <numIndex index="1">mohr-siebeck-recht</numIndex>
+                                    </numIndex>
+
+                                    <!-- Medical / Medizin -->
+                                    <numIndex index="30" type="array">
+                                        <numIndex index="0">── Medizin ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="31" type="array">
+                                        <numIndex index="0">MHH Medizinische Hochschule Hannover (medizinische-hochschule-hannover)</numIndex>
+                                        <numIndex index="1">medizinische-hochschule-hannover</numIndex>
+                                    </numIndex>
+                                    <numIndex index="32" type="array">
+                                        <numIndex index="0">Deutsches Ärzteblatt (deutsches-arzteblatt)</numIndex>
+                                        <numIndex index="1">deutsches-arzteblatt</numIndex>
+                                    </numIndex>
+                                    <numIndex index="34" type="array">
+                                        <numIndex index="0">American Medical Association (american-medical-association)</numIndex>
+                                        <numIndex index="1">american-medical-association</numIndex>
+                                    </numIndex>
+                                    <numIndex index="35" type="array">
+                                        <numIndex index="0">NLM - National Library of Medicine (nlm-citation-sequence)</numIndex>
+                                        <numIndex index="1">nlm-citation-sequence</numIndex>
+                                    </numIndex>
+                                    <numIndex index="36" type="array">
+                                        <numIndex index="0">Nature (nature)</numIndex>
+                                        <numIndex index="1">nature</numIndex>
+                                    </numIndex>
+                                    <numIndex index="37" type="array">
+                                        <numIndex index="0">The Lancet (the-lancet)</numIndex>
+                                        <numIndex index="1">the-lancet</numIndex>
+                                    </numIndex>
+                                    <numIndex index="38" type="array">
+                                        <numIndex index="0">BMJ (bmj)</numIndex>
+                                        <numIndex index="1">bmj</numIndex>
+                                    </numIndex>
+                                    <numIndex index="39" type="array">
+                                        <numIndex index="0">Cell (cell)</numIndex>
+                                        <numIndex index="1">cell</numIndex>
+                                    </numIndex>
+                                    <numIndex index="40" type="array">
+                                        <numIndex index="0">PLOS ONE (plos)</numIndex>
+                                        <numIndex index="1">plos</numIndex>
+                                    </numIndex>
+
+                                    <!-- Engineering / Ingenieurwissenschaften -->
+                                    <numIndex index="50" type="array">
+                                        <numIndex index="0">── Ingenieurwissenschaften ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="51" type="array">
+                                        <numIndex index="0">IEEE (ieee)</numIndex>
+                                        <numIndex index="1">ieee</numIndex>
+                                    </numIndex>
+                                    <numIndex index="52" type="array">
+                                        <numIndex index="0">Springer LNCS (springer-lecture-notes-in-computer-science)</numIndex>
+                                        <numIndex index="1">springer-lecture-notes-in-computer-science</numIndex>
+                                    </numIndex>
+                                    <numIndex index="53" type="array">
+                                        <numIndex index="0">Springer Basic Author-Date (springer-basic-author-date)</numIndex>
+                                        <numIndex index="1">springer-basic-author-date</numIndex>
+                                    </numIndex>
+                                    <numIndex index="54" type="array">
+                                        <numIndex index="0">ACM (association-for-computing-machinery)</numIndex>
+                                        <numIndex index="1">association-for-computing-machinery</numIndex>
+                                    </numIndex>
+                                    <numIndex index="56" type="array">
+                                        <numIndex index="0">AIP American Institute of Physics (american-institute-of-physics)</numIndex>
+                                        <numIndex index="1">american-institute-of-physics</numIndex>
+                                    </numIndex>
+                                    <numIndex index="57" type="array">
+                                        <numIndex index="0">ASME (american-society-of-mechanical-engineers)</numIndex>
+                                        <numIndex index="1">american-society-of-mechanical-engineers</numIndex>
+                                    </numIndex>
+
+                                    <!-- Chemistry / Naturwissenschaften -->
+                                    <numIndex index="60" type="array">
+                                        <numIndex index="0">── Chemie / Physik ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="61" type="array">
+                                        <numIndex index="0">ACS American Chemical Society (american-chemical-society)</numIndex>
+                                        <numIndex index="1">american-chemical-society</numIndex>
+                                    </numIndex>
+                                    <numIndex index="62" type="array">
+                                        <numIndex index="0">Angewandte Chemie (angewandte-chemie)</numIndex>
+                                        <numIndex index="1">angewandte-chemie</numIndex>
+                                    </numIndex>
+                                    <numIndex index="64" type="array">
+                                        <numIndex index="0">APS American Physical Society (american-physics-society)</numIndex>
+                                        <numIndex index="1">american-physics-society</numIndex>
+                                    </numIndex>
+                                    <numIndex index="65" type="array">
+                                        <numIndex index="0">Science (science)</numIndex>
+                                        <numIndex index="1">science</numIndex>
+                                    </numIndex>
+
+                                    <!-- Humanities / Geisteswissenschaften -->
+                                    <numIndex index="70" type="array">
+                                        <numIndex index="0">── Geisteswissenschaften ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="71" type="array">
+                                        <numIndex index="0">Förster Geisteswissenschaft (foerster-geisteswissenschaft)</numIndex>
+                                        <numIndex index="1">foerster-geisteswissenschaft</numIndex>
+                                    </numIndex>
+                                    <numIndex index="72" type="array">
+                                        <numIndex index="0">Deutsche Sprache (deutsche-sprache)</numIndex>
+                                        <numIndex index="1">deutsche-sprache</numIndex>
+                                    </numIndex>
+                                    <numIndex index="73" type="array">
+                                        <numIndex index="0">Zeithistorische Forschungen (zeithistorische-forschungen)</numIndex>
+                                        <numIndex index="1">zeithistorische-forschungen</numIndex>
+                                    </numIndex>
+                                    <numIndex index="74" type="array">
+                                        <numIndex index="0">Archiv für Geschichte der Philosophie (archiv-fur-geschichte-der-philosophie)</numIndex>
+                                        <numIndex index="1">archiv-fur-geschichte-der-philosophie</numIndex>
+                                    </numIndex>
+                                    <numIndex index="75" type="array">
+                                        <numIndex index="0">Digital Humanities DE (digital-humanities-im-deutschsprachigen-raum)</numIndex>
+                                        <numIndex index="1">digital-humanities-im-deutschsprachigen-raum</numIndex>
+                                    </numIndex>
+                                    <numIndex index="76" type="array">
+                                        <numIndex index="0">Zeitschrift f. digitale Geisteswissenschaften (zeitschrift-fur-digitale-geisteswissenschaften)</numIndex>
+                                        <numIndex index="1">zeitschrift-fur-digitale-geisteswissenschaften</numIndex>
+                                    </numIndex>
+                                    <numIndex index="77" type="array">
+                                        <numIndex index="0">Bibliothek f. Bildungsgeschichtliche Forschung (bibliothek-fur-bildungsgeschichtliche-forschung)</numIndex>
+                                        <numIndex index="1">bibliothek-fur-bildungsgeschichtliche-forschung</numIndex>
+                                    </numIndex>
+                                    <numIndex index="78" type="array">
+                                        <numIndex index="0">Chicago Author-Date 17th ed. (chicago-author-date-17th-edition)</numIndex>
+                                        <numIndex index="1">chicago-author-date-17th-edition</numIndex>
+                                    </numIndex>
+                                    <numIndex index="79" type="array">
+                                        <numIndex index="0">Chicago Notes-Bibliography 17th ed. (chicago-notes-bibliography-17th-edition)</numIndex>
+                                        <numIndex index="1">chicago-notes-bibliography-17th-edition</numIndex>
+                                    </numIndex>
+
+                                    <!-- Social Sciences / Sozialwissenschaften -->
+                                    <numIndex index="80" type="array">
+                                        <numIndex index="0">── Sozialwissenschaften ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="81" type="array">
+                                        <numIndex index="0">DGPs Deutsche Gesellschaft f. Psychologie (deutsche-gesellschaft-fur-psychologie)</numIndex>
+                                        <numIndex index="1">deutsche-gesellschaft-fur-psychologie</numIndex>
+                                    </numIndex>
+                                    <numIndex index="82" type="array">
+                                        <numIndex index="0">Kölner Zeitschrift f. Soziologie (kolner-zeitschrift-fur-soziologie-und-sozialpsychologie)</numIndex>
+                                        <numIndex index="1">kolner-zeitschrift-fur-soziologie-und-sozialpsychologie</numIndex>
+                                    </numIndex>
+
+                                    <!-- Economics / Wirtschaftswissenschaften -->
+                                    <numIndex index="90" type="array">
+                                        <numIndex index="0">── Wirtschaftswissenschaften ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="91" type="array">
+                                        <numIndex index="0">Betriebswirtschaftliche Forschung und Praxis (betriebswirtschaftliche-forschung-und-praxis)</numIndex>
+                                        <numIndex index="1">betriebswirtschaftliche-forschung-und-praxis</numIndex>
+                                    </numIndex>
+                                    <numIndex index="92" type="array">
+                                        <numIndex index="0">German Council of Economic Experts (german-council-of-economic-experts)</numIndex>
+                                        <numIndex index="1">german-council-of-economic-experts</numIndex>
+                                    </numIndex>
+
+                                    <!-- Pedagogy / Pädagogik -->
+                                    <numIndex index="100" type="array">
+                                        <numIndex index="0">── Pädagogik ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="101" type="array">
+                                        <numIndex index="0">Beltz Pädagogik (beltz-padagogik)</numIndex>
+                                        <numIndex index="1">beltz-padagogik</numIndex>
+                                    </numIndex>
+
+                                    <!-- Theology / Theologie -->
+                                    <numIndex index="110" type="array">
+                                        <numIndex index="0">── Theologie ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="111" type="array">
+                                        <numIndex index="0">European Journal of Theology (european-journal-of-theology)</numIndex>
+                                        <numIndex index="1">european-journal-of-theology</numIndex>
+                                    </numIndex>
+                                    <numIndex index="112" type="array">
+                                        <numIndex index="0">European Journal for Philosophy of Religion (european-journal-for-philosophy-of-religion)</numIndex>
+                                        <numIndex index="1">european-journal-for-philosophy-of-religion</numIndex>
+                                    </numIndex>
+
+                                    <!-- Publishers / Verlage -->
+                                    <numIndex index="140" type="array">
+                                        <numIndex index="0">── Verlage ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="141" type="array">
+                                        <numIndex index="0">Elsevier Harvard (elsevier-harvard)</numIndex>
+                                        <numIndex index="1">elsevier-harvard</numIndex>
+                                    </numIndex>
+                                    <numIndex index="142" type="array">
+                                        <numIndex index="0">Elsevier Vancouver (elsevier-vancouver)</numIndex>
+                                        <numIndex index="1">elsevier-vancouver</numIndex>
+                                    </numIndex>
+                                    <numIndex index="143" type="array">
+                                        <numIndex index="0">Taylor &amp; Francis Chicago (taylor-and-francis-chicago-author-date)</numIndex>
+                                        <numIndex index="1">taylor-and-francis-chicago-author-date</numIndex>
+                                    </numIndex>
+                                    <numIndex index="144" type="array">
+                                        <numIndex index="0">Cambridge University Press Author-Date (cambridge-university-press-author-date)</numIndex>
+                                        <numIndex index="1">cambridge-university-press-author-date</numIndex>
+                                    </numIndex>
+                                    <numIndex index="145" type="array">
+                                        <numIndex index="0">Cambridge University Press Note (cambridge-university-press-note)</numIndex>
+                                        <numIndex index="1">cambridge-university-press-note</numIndex>
+                                    </numIndex>
+                                    <numIndex index="146" type="array">
+                                        <numIndex index="0">Springer VS Author-Date (springer-vs-author-date)</numIndex>
+                                        <numIndex index="1">springer-vs-author-date</numIndex>
+                                    </numIndex>
+                                    <numIndex index="147" type="array">
+                                        <numIndex index="0">Springer Fachzeitschriften Medizin/Psychologie (springer-fachzeitschriften-medizin-psychologie)</numIndex>
+                                        <numIndex index="1">springer-fachzeitschriften-medizin-psychologie</numIndex>
                                     </numIndex>
                                 </items>
-                                <default>standard</default>
+                                <default>apa</default>
                             </config>
                         </TCEforms>
-                    </settings.rendering>
+                    </settings.citationStyle>
+
+                    <settings.citationStyleCustom>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.citationStyleCustom
+                            </label>
+                            <description>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.citationStyleCustom.description
+                            </description>
+                            <displayCond>FIELD:sDEF.settings.what_to_display:=:PUBLICATIONS</displayCond>
+                            <config>
+                                <type>input</type>
+                                <size>40</size>
+                                <placeholder>e.g., nature-communications, oxford-university-press-note</placeholder>
+                            </config>
+                        </TCEforms>
+                    </settings.citationStyleCustom>
 
                 </el>
             </ROOT>

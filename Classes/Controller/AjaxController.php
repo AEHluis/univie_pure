@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Univie\UniviePure\Controller;
@@ -6,35 +7,31 @@ namespace Univie\UniviePure\Controller;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\JsonResponse;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
-use Univie\UniviePure\Service\WebService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Univie\UniviePure\Service\ApiServiceInterface;
 
 /**
  * AJAX Controller for dynamic loading of Pure data in backend forms
- * Following TYPO3 core patterns for backend AJAX controllers
+ * Uses OpenAPI for all Pure API operations.
  */
 class AjaxController
 {
-    protected WebService $webService;
-    
     private const MIN_SEARCH_LENGTH = 3;
     private const SEARCH_SIZE = 50;
-    private const MIN_RELEVANCE_SCORE = 50; // Only show results with score >= 50
+    private const MIN_RELEVANCE_SCORE = 50;
     private const LOCALE_MAP = [
         'de' => 'de_DE',
         'en' => 'en_GB',
         'default' => 'de_DE'
     ];
 
-    public function __construct()
-    {
-        $this->webService = GeneralUtility::makeInstance(WebService::class);
-    }
-    
+    public function __construct(
+        private readonly ApiServiceInterface $apiService
+    ) {}
+
     /**
      * Get the current backend user's locale
-     * Maps TYPO3 backend language to Pure API locale format
      */
     protected function getBackendUserLocale(): string
     {
@@ -45,45 +42,8 @@ class AjaxController
         } catch (\Exception $e) {
             $lang = 'de';
         }
-        
+
         return self::LOCALE_MAP[$lang] ?? self::LOCALE_MAP['default'];
-    }
-    
-    /**
-     * Build XML query for Pure API
-     */
-    protected function buildXmlQuery(string $queryType, string $searchTerm, string $locale, array $fields, array $additionalElements = []): string
-    {
-        $xml = '<?xml version="1.0"?>';
-        $xml .= '<' . $queryType . '>';
-        $xml .= '<size>' . self::SEARCH_SIZE . '</size>';
-        $xml .= '<offset>0</offset>';
-        $xml .= '<locales><locale>' . htmlspecialchars($locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale></locales>';
-        
-        // Add fields
-        $xml .= '<fields>';
-        foreach ($fields as $field) {
-            $xml .= '<field>' . htmlspecialchars($field, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</field>';
-        }
-        $xml .= '</fields>';
-        
-        // Add additional elements (ordering, filters, etc.)
-        foreach ($additionalElements as $key => $value) {
-            if (is_array($value)) {
-                $xml .= '<' . $key . '>';
-                foreach ($value as $item) {
-                    $xml .= '<' . rtrim($key, 's') . '>' . htmlspecialchars($item, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</' . rtrim($key, 's') . '>';
-                }
-                $xml .= '</' . $key . '>';
-            } else {
-                $xml .= '<' . $key . '>' . htmlspecialchars($value, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</' . $key . '>';
-            }
-        }
-        
-        $xml .= '<searchString>' . htmlspecialchars($searchTerm, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>';
-        $xml .= '</' . $queryType . '>';
-        
-        return trim($xml);
     }
 
     /**
@@ -93,68 +53,50 @@ class AjaxController
     {
         $parsedBody = $request->getParsedBody();
         $searchTerm = trim($parsedBody['searchTerm'] ?? '');
-        
+
         if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
             return new JsonResponse(['results' => []]);
         }
 
         $locale = $this->getBackendUserLocale();
-        
-        $postData = $this->buildXmlQuery(
-            'organisationalUnitsQuery',
-            $searchTerm,
-            $locale,
-            ['uuid', 'name.text.value'],
-            [
-                'orderings' => ['name'],
-                'returnUsedContent' => 'true'
-            ]
-        );
 
-        $organisations = $this->webService->getJson('organisational-units', $postData);
+        try {
+            $response = $this->apiService->getOrganisationalUnits([
+                'search' => $searchTerm,
+                'limit' => self::SEARCH_SIZE,
+                'locale' => $locale,
+            ]);
+        } catch (\Throwable $e) {
+            return new JsonResponse(['results' => [], 'error' => $e->getMessage()]);
+        }
 
         $results = [];
+        $items = $response['items'] ?? [];
 
-        if (is_array($organisations) && isset($organisations['items'])) {
-            foreach ($organisations['items'] as $org) {
-                // Get the best available name for current locale
-                $label = $this->extractLocalizedName($org['name'] ?? [], $locale);
+        foreach ($items as $org) {
+            $label = $this->extractLocalizedName($org['name'] ?? [], $locale);
 
-                // Skip if no label found
-                if (empty($label)) {
-                    continue;
-                }
-
-                // Calculate relevance score to prioritize name matches
-                $score = $this->calculateRelevanceScore($searchTerm, $label, $label);
-
-                // Only include results above minimum relevance threshold
-                if ($score >= self::MIN_RELEVANCE_SCORE) {
-                    $results[] = [
-                        'value' => $org['uuid'],
-                        'label' => $label,
-                        'score' => $score
-                    ];
-                }
+            if (empty($label)) {
+                continue;
             }
 
-            // Sort by relevance score (highest first)
-            usort($results, function($a, $b) {
-                return $b['score'] - $a['score'];
-            });
+            $score = $this->calculateRelevanceScore($searchTerm, $label, $label);
 
-            // Remove score from output (only used for sorting)
-            $results = array_map(function($item) {
-                return ['value' => $item['value'], 'label' => $item['label']];
-            }, $results);
-
-            // Limit to top 20 results after filtering
-            $results = array_slice($results, 0, 20);
+            if ($score >= self::MIN_RELEVANCE_SCORE) {
+                $results[] = [
+                    'value' => $org['uuid'] ?? '',
+                    'label' => $label,
+                    'score' => $score
+                ];
+            }
         }
+
+        usort($results, fn($a, $b) => $b['score'] - $a['score']);
+        $results = array_map(fn($item) => ['value' => $item['value'], 'label' => $item['label']], $results);
+        $results = array_slice($results, 0, 20);
 
         return new JsonResponse(['results' => $results]);
     }
-
 
     /**
      * Search persons with organization via AJAX
@@ -163,71 +105,53 @@ class AjaxController
     {
         $parsedBody = $request->getParsedBody();
         $searchTerm = trim($parsedBody['searchTerm'] ?? '');
-        
+
         if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
             return new JsonResponse(['results' => []]);
         }
 
         $locale = $this->getBackendUserLocale();
-        
-        $postData = $this->buildXmlQuery(
-            'personsQuery',
-            $searchTerm,
-            $locale,
-            [
-                'uuid',
-                'name.*',
-                'honoraryStaffOrganisationAssociations.uuid',
-                'honoraryStaffOrganisationAssociations.period.*',
-                'honoraryStaffOrganisationAssociations.organisationalUnit.uuid',
-                'honoraryStaffOrganisationAssociations.organisationalUnit.name.*'
-            ],
-            [
-                'orderings' => ['lastName'],
-                'employmentStatus' => 'ACTIVE'
-            ]
-        );
 
-        $persons = $this->webService->getJson('persons', $postData);
+        try {
+            $response = $this->apiService->getPersons([
+                'search' => $searchTerm,
+                'limit' => self::SEARCH_SIZE,
+                'locale' => $locale,
+            ]);
+        } catch (\Throwable $e) {
+            return new JsonResponse(['results' => [], 'error' => $e->getMessage()]);
+        }
+
         $results = [];
+        $items = $response['items'] ?? [];
 
-        if (is_array($persons) && isset($persons['items'])) {
-            foreach ($persons['items'] as $person) {
-                $personName = $person['name']['lastName'] . ', ' . $person['name']['firstName'];
-                $organizationNames = $this->getActiveOrganizationNames($person, $locale);
+        foreach ($items as $person) {
+            $lastName = $person['name']['lastName'] ?? '';
+            $firstName = $person['name']['firstName'] ?? '';
+            $personName = $lastName . ', ' . $firstName;
 
-                if (!empty($organizationNames)) {
-                    $displayName = $personName . ' (' . implode(', ', $organizationNames) . ')';
-                } else {
-                    $displayName = $personName;
-                }
+            $organizationNames = $this->getActiveOrganizationNames($person, $locale);
 
-                // Calculate relevance score to prioritize name matches
-                $score = $this->calculateRelevanceScore($searchTerm, $personName, $displayName);
-
-                // Only include results above minimum relevance threshold
-                if ($score >= self::MIN_RELEVANCE_SCORE) {
-                    $results[] = [
-                        'value' => $person['uuid'],
-                        'label' => $displayName,
-                        'score' => $score
-                    ];
-                }
+            if (!empty($organizationNames)) {
+                $displayName = $personName . ' (' . implode(', ', $organizationNames) . ')';
+            } else {
+                $displayName = $personName;
             }
 
-            // Sort by relevance score (highest first)
-            usort($results, function($a, $b) {
-                return $b['score'] - $a['score'];
-            });
+            $score = $this->calculateRelevanceScore($searchTerm, $personName, $displayName);
 
-            // Remove score from output (only used for sorting)
-            $results = array_map(function($item) {
-                return ['value' => $item['value'], 'label' => $item['label']];
-            }, $results);
-
-            // Limit to top 20 results after filtering
-            $results = array_slice($results, 0, 20);
+            if ($score >= self::MIN_RELEVANCE_SCORE) {
+                $results[] = [
+                    'value' => $person['uuid'] ?? '',
+                    'label' => $displayName,
+                    'score' => $score
+                ];
+            }
         }
+
+        usort($results, fn($a, $b) => $b['score'] - $a['score']);
+        $results = array_map(fn($item) => ['value' => $item['value'], 'label' => $item['label']], $results);
+        $results = array_slice($results, 0, 20);
 
         return new JsonResponse(['results' => $results]);
     }
@@ -239,73 +163,57 @@ class AjaxController
     {
         $parsedBody = $request->getParsedBody();
         $searchTerm = trim($parsedBody['searchTerm'] ?? '');
-        
+
         if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
             return new JsonResponse(['results' => []]);
         }
 
         $locale = $this->getBackendUserLocale();
-        
-        $postData = $this->buildXmlQuery(
-            'projectsQuery',
-            $searchTerm,
-            $locale,
-            ['uuid', 'title.*', 'acronym'],
-            [
-                'orderings' => ['title'],
-                'workflowSteps' => ['validated']
-            ]
-        );
 
-        $projects = $this->webService->getJson('projects', $postData);
+        try {
+            $response = $this->apiService->getProjects([
+                'search' => $searchTerm,
+                'limit' => self::SEARCH_SIZE,
+                'locale' => $locale,
+            ]);
+        } catch (\Throwable $e) {
+            return new JsonResponse(['results' => [], 'error' => $e->getMessage()]);
+        }
+
         $results = [];
+        $items = $response['items'] ?? [];
 
-        if (is_array($projects) && isset($projects['items'])) {
-            foreach ($projects['items'] as $project) {
-                // Get the best available title for current locale
-                $title = $this->extractLocalizedName($project['title'] ?? [], $locale);
+        foreach ($items as $project) {
+            $title = $this->extractLocalizedName($project['title'] ?? [], $locale);
 
-                if (empty($title)) {
-                    $title = 'Unknown Project';
-                }
-
-                // Store original title for scoring
-                $originalTitle = $title;
-
-                // Add acronym if available and not already in title
-                if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
-                    $title = $project['acronym'] . ' - ' . $title;
-                }
-
-                // Calculate relevance score (check both title and acronym)
-                $scoreByTitle = $this->calculateRelevanceScore($searchTerm, $originalTitle, $title);
-                $scoreByAcronym = !empty($project['acronym']) ?
-                    $this->calculateRelevanceScore($searchTerm, $project['acronym'], $title) : 0;
-                $score = max($scoreByTitle, $scoreByAcronym);
-
-                // Only include results above minimum relevance threshold
-                if ($score >= self::MIN_RELEVANCE_SCORE) {
-                    $results[] = [
-                        'value' => $project['uuid'],
-                        'label' => $title,
-                        'score' => $score
-                    ];
-                }
+            if (empty($title)) {
+                $title = 'Unknown Project';
             }
 
-            // Sort by relevance score (highest first)
-            usort($results, function($a, $b) {
-                return $b['score'] - $a['score'];
-            });
+            $originalTitle = $title;
 
-            // Remove score from output (only used for sorting)
-            $results = array_map(function($item) {
-                return ['value' => $item['value'], 'label' => $item['label']];
-            }, $results);
+            if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
+                $title = $project['acronym'] . ' - ' . $title;
+            }
 
-            // Limit to top 20 results after filtering
-            $results = array_slice($results, 0, 20);
+            $scoreByTitle = $this->calculateRelevanceScore($searchTerm, $originalTitle, $title);
+            $scoreByAcronym = !empty($project['acronym'])
+                ? $this->calculateRelevanceScore($searchTerm, $project['acronym'], $title)
+                : 0;
+            $score = max($scoreByTitle, $scoreByAcronym);
+
+            if ($score >= self::MIN_RELEVANCE_SCORE) {
+                $results[] = [
+                    'value' => $project['uuid'] ?? '',
+                    'label' => $title,
+                    'score' => $score
+                ];
+            }
         }
+
+        usort($results, fn($a, $b) => $b['score'] - $a['score']);
+        $results = array_map(fn($item) => ['value' => $item['value'], 'label' => $item['label']], $results);
+        $results = array_slice($results, 0, 20);
 
         return new JsonResponse(['results' => $results]);
     }
@@ -317,103 +225,54 @@ class AjaxController
     {
         $parsedBody = $request->getParsedBody();
         $searchTerm = trim($parsedBody['searchTerm'] ?? '');
-        $this->debugLog('searchEquipmentsAction: incoming request', [
-            'searchTerm' => $searchTerm,
-            'searchTermLength' => strlen($searchTerm),
-        ]);
 
         if (strlen($searchTerm) < self::MIN_SEARCH_LENGTH) {
-            $this->debugLog('searchEquipmentsAction: term below min length', [
-                'minLength' => self::MIN_SEARCH_LENGTH
-            ]);
             return new JsonResponse(['results' => []]);
         }
 
         $locale = $this->getBackendUserLocale();
 
-        // NOTE: equipmentsQuery does not support <searchString>.
-        // Use q-search endpoint: GET /equipments?q=...
-        $equipments = $this->webService->getAlternativeSingleResponse('equipments', $searchTerm, 'json', $locale);
-        $this->debugLog('searchEquipmentsAction: API response received', [
-            'responseType' => gettype($equipments),
-            'response' => $equipments,
-        ]);
-        $results = [];
-
-        if (is_array($equipments)) {
-            $items = $equipments['items'] ?? [];
-            if (isset($items['equipment'])) {
-                $items = $items['equipment'];
-            }
-            if (isset($items['uuid']) || isset($items['@attributes'])) {
-                $items = [$items];
-            }
-
-            foreach ($items as $equipment) {
-                if (!is_array($equipment)) {
-                    $this->debugLog('searchEquipmentsAction: skipping non-array item', [
-                        'itemType' => gettype($equipment)
-                    ]);
-                    continue;
-                }
-                $uuid = $this->getUuidFromItem($equipment);
-                if ($uuid === '') {
-                    $this->debugLog('searchEquipmentsAction: skipping item without uuid', [
-                        'itemKeys' => array_keys($equipment),
-                        'item' => $equipment,
-                    ]);
-                    continue;
-                }
-                $label = $this->getEquipmentLabel($equipment, $locale);
-                if (empty($label)) {
-                    $label = $this->extractFallbackString($equipment['title'] ?? null)
-                        ?: $this->extractFallbackString($equipment['name'] ?? null)
-                        ?: 'Unknown Equipment';
-                }
-
-                $score = $this->calculateRelevanceScore($searchTerm, $label, $label);
-                $this->debugLog('searchEquipmentsAction: scored item', [
-                    'uuid' => $uuid,
-                    'label' => $label,
-                    'score' => $score,
-                    'itemKeys' => array_keys($equipment),
-                ]);
-                // Equipment responses can have heterogeneous title shapes; keep lower-score API matches.
-                if ($score >= 10) {
-                    $results[] = [
-                        'value' => $uuid,
-                        'label' => $label,
-                        'score' => $score
-                    ];
-                }
-            }
-
-            usort($results, function($a, $b) {
-                return $b['score'] - $a['score'];
-            });
-
-            $results = array_map(function($item) {
-                return ['value' => $item['value'], 'label' => $item['label']];
-            }, $results);
-
-            $results = array_slice($results, 0, 20);
+        try {
+            $response = $this->apiService->getEquipments([
+                'search' => $searchTerm,
+                'limit' => self::SEARCH_SIZE,
+                'locale' => $locale,
+            ]);
+        } catch (\Throwable $e) {
+            return new JsonResponse(['results' => [], 'error' => $e->getMessage()]);
         }
-        $this->debugLog('searchEquipmentsAction: returning results', [
-            'resultsCount' => count($results),
-            'results' => $results,
-        ]);
+
+        $results = [];
+        $items = $response['items'] ?? [];
+
+        foreach ($items as $equipment) {
+            $label = $this->getEquipmentLabel($equipment, $locale);
+
+            if (empty($label)) {
+                $label = 'Unknown Equipment';
+            }
+
+            $uuid = $equipment['uuid'] ?? '';
+            if (empty($uuid)) {
+                continue;
+            }
+
+            $score = $this->calculateRelevanceScore($searchTerm, $label, $label);
+
+            if ($score >= 10) {
+                $results[] = [
+                    'value' => $uuid,
+                    'label' => $label,
+                    'score' => $score
+                ];
+            }
+        }
+
+        usort($results, fn($a, $b) => $b['score'] - $a['score']);
+        $results = array_map(fn($item) => ['value' => $item['value'], 'label' => $item['label']], $results);
+        $results = array_slice($results, 0, 20);
 
         return new JsonResponse(['results' => $results]);
-    }
-
-    private function debugLog(string $message, array $context = []): void
-    {
-        $line = '[univie_pure][AjaxController] ' . $message;
-        if (!empty($context)) {
-            $json = json_encode($context, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-            $line .= ' | ' . ($json !== false ? $json : 'context_encode_failed');
-        }
-        error_log($line);
     }
 
     /**
@@ -422,47 +281,40 @@ class AjaxController
     private function getActiveOrganizationNames(array $person, string $locale): array
     {
         $organizationNames = [];
-        
-        if (!isset($person['honoraryStaffOrganisationAssociations'])) {
-            return $organizationNames;
-        }
-        
-        $associations = $person['honoraryStaffOrganisationAssociations'];
-        
-        // Handle single association
-        if (isset($associations['organisationalUnit'])) {
+
+        // Try different association field names (OpenAPI structure)
+        $associations = $person['staffOrganizationAssociations']
+            ?? $person['honoraryStaffOrganisationAssociations']
+            ?? $person['organizationAssociations']
+            ?? [];
+
+        if (isset($associations['organisationalUnit']) || isset($associations['organizationalUnit'])) {
             $associations = [$associations];
         }
-        
+
         foreach ($associations as $association) {
-            // Check if association is currently active
-            if (isset($association['period']['endDate']) && 
+            if (isset($association['period']['endDate']) &&
                 !empty($association['period']['endDate']) &&
                 strtotime($association['period']['endDate']) < time()) {
-                continue; // Skip inactive associations
+                continue;
             }
-            
-            if (isset($association['organisationalUnit']['name'])) {
-                // Use the localized name extraction
-                $orgName = $this->extractLocalizedName($association['organisationalUnit']['name'], $locale);
-                
+
+            $orgUnit = $association['organisationalUnit'] ?? $association['organizationalUnit'] ?? [];
+
+            if (isset($orgUnit['name'])) {
+                $orgName = $this->extractLocalizedName($orgUnit['name'], $locale);
+
                 if (!empty($orgName) && !in_array($orgName, $organizationNames)) {
                     $organizationNames[] = $orgName;
                 }
             }
         }
-        
+
         return $organizationNames;
     }
-    
+
     /**
      * Calculate relevance score for search results
-     * Prioritizes matches in name/title fields over matches in other fields
-     *
-     * @param string $searchTerm The search term entered by user
-     * @param string $primaryField The primary field to check (name, title, etc.)
-     * @param string $label The full display label
-     * @return int Relevance score (higher = more relevant)
      */
     private function calculateRelevanceScore(string $searchTerm, string $primaryField, string $label): int
     {
@@ -470,43 +322,31 @@ class AjaxController
         $primaryFieldLower = mb_strtolower($primaryField);
         $labelLower = mb_strtolower($label);
 
-        // Exact match in primary field = highest score
         if ($primaryFieldLower === $searchTermLower) {
             return 100;
         }
 
-        // Starts with search term in primary field = very high score
         if (mb_strpos($primaryFieldLower, $searchTermLower) === 0) {
             return 90;
         }
 
-        // Contains search term as word in primary field = high score
-        // Check if search term appears as a word boundary (e.g., "Lee" in "Lee, John" but not in "Sleeper")
         if (preg_match('/\b' . preg_quote($searchTermLower, '/') . '\b/ui', $primaryFieldLower)) {
             return 80;
         }
 
-        // Contains search term anywhere in primary field = medium score
         if (mb_strpos($primaryFieldLower, $searchTermLower) !== false) {
             return 70;
         }
 
-        // Contains search term in full label (e.g., in organization name) = lower score
         if (mb_strpos($labelLower, $searchTermLower) !== false) {
             return 55;
         }
 
-        // Found by API but not in visible fields = very low score (likely in bio, etc.)
-        // This will be filtered out by MIN_RELEVANCE_SCORE = 50
         return 10;
     }
 
     /**
      * Extract localized name/title from Pure API response structure
-     *
-     * @param array $nameData The name data from API (could be name or title field)
-     * @param string $locale The desired locale (e.g., 'de_DE' or 'en_GB')
-     * @return string The localized name or fallback to first available
      */
     private function extractLocalizedName(array $nameData, string $locale): string
     {
@@ -514,16 +354,14 @@ class AjaxController
             return $nameData['value'];
         }
 
-        // Some API variants provide locale-keyed maps directly.
         if (isset($nameData[$locale]) && is_string($nameData[$locale])) {
             return $nameData[$locale];
         }
 
-        // If there's no text field, return empty
         if (!isset($nameData['text']) || !is_array($nameData['text'])) {
             return '';
         }
-        
+
         $texts = $nameData['text'];
         if (isset($texts[$locale]) && is_string($texts[$locale])) {
             return $texts[$locale];
@@ -531,9 +369,9 @@ class AjaxController
         if (isset($texts['value']) && is_string($texts['value'])) {
             $texts = [$texts];
         }
+
         $fallbackValue = '';
-        
-        // Look for the text entry with matching locale
+
         foreach ($texts as $key => $text) {
             if (is_string($text)) {
                 if ($fallbackValue === '') {
@@ -548,60 +386,26 @@ class AjaxController
             if (!is_array($text) || !isset($text['value'])) {
                 continue;
             }
-            
-            // Store first value as fallback
+
             if (empty($fallbackValue)) {
                 $fallbackValue = $text['value'];
             }
-            
-            // If locale matches, return this value
-            // Try exact match first, then partial match (e.g., 'de' in 'de_DE')
+
             if (isset($text['locale'])) {
                 $textLocale = $text['locale'];
-                if ($textLocale === $locale || 
+                if ($textLocale === $locale ||
                     (strpos($locale, '_') !== false && strpos($textLocale, substr($locale, 0, 2)) === 0) ||
                     (strpos($textLocale, '_') !== false && strpos($locale, substr($textLocale, 0, 2)) === 0)) {
                     return $text['value'];
                 }
             }
         }
-        
-        // Return fallback if no locale match found
+
         return $fallbackValue;
     }
 
     /**
-     * Best-effort extraction of first meaningful string from unknown API field shapes.
-     */
-    private function extractFallbackString($data): string
-    {
-        if (is_string($data)) {
-            $value = trim($data);
-            return $value !== '' ? $value : '';
-        }
-        if (!is_array($data)) {
-            return '';
-        }
-
-        if (isset($data['value']) && is_string($data['value']) && trim($data['value']) !== '') {
-            return trim($data['value']);
-        }
-        if (isset($data['text']) && is_string($data['text']) && trim($data['text']) !== '') {
-            return trim($data['text']);
-        }
-
-        foreach ($data as $value) {
-            $candidate = $this->extractFallbackString($value);
-            if ($candidate !== '') {
-                return $candidate;
-            }
-        }
-
-        return '';
-    }
-
-    /**
-     * Resolve equipment label from multiple possible API field shapes.
+     * Resolve equipment label from API response
      */
     private function getEquipmentLabel(array $equipment, string $locale): string
     {
@@ -620,21 +424,6 @@ class AjaxController
         }
         if (isset($equipment['name']) && is_string($equipment['name'])) {
             return $equipment['name'];
-        }
-
-        return '';
-    }
-
-    /**
-     * Resolve uuid from API payload (field or XML attributes mapping).
-     */
-    private function getUuidFromItem(array $item): string
-    {
-        if (!empty($item['uuid']) && is_string($item['uuid'])) {
-            return $item['uuid'];
-        }
-        if (isset($item['@attributes']['uuid']) && is_string($item['@attributes']['uuid'])) {
-            return $item['@attributes']['uuid'];
         }
 
         return '';

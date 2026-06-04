@@ -12,14 +12,29 @@
                     <span class="type_family">URL<span class="type_family_sep">: </span></span>
                     <span class="type_classification">
                         <f:for each="{item.links}" as="link" iteration="Iter">
-                            <f:if condition="{link.description.text}">
+                            <f:comment>Handle both OpenAPI (description.en_GB/de_DE) and XML (description.text)</f:comment>
+                            <f:if condition="{link.description.en_GB}">
                                 <f:then>
-                                    <f:link.external uri="{link.url}" target="_blank" class="c-link--extern"><strong>{link.description.text}</strong></f:link.external>
+                                    <f:link.external uri="{link.url}" target="_blank" class="c-link--extern"><strong>{link.description.en_GB}</strong></f:link.external>
                                 </f:then>
                                 <f:else>
-                                    <f:link.external uri="{link.url}" target="_blank" class="c-link--extern">
-                                        <strong>{link.url}</strong>
-                                    </f:link.external>
+                                    <f:if condition="{link.description.de_DE}">
+                                        <f:then>
+                                            <f:link.external uri="{link.url}" target="_blank" class="c-link--extern"><strong>{link.description.de_DE}</strong></f:link.external>
+                                        </f:then>
+                                        <f:else>
+                                            <f:if condition="{link.description.text}">
+                                                <f:then>
+                                                    <f:link.external uri="{link.url}" target="_blank" class="c-link--extern"><strong>{link.description.text}</strong></f:link.external>
+                                                </f:then>
+                                                <f:else>
+                                                    <f:link.external uri="{link.url}" target="_blank" class="c-link--extern">
+                                                        <strong>{link.url}</strong>
+                                                    </f:link.external>
+                                                </f:else>
+                                            </f:if>
+                                        </f:else>
+                                    </f:if>
                                 </f:else>
                             </f:if>
                             <f:if condition="{Iter.isLast}"><f:else><br/></f:else></f:if>
@@ -28,18 +43,31 @@
                 </p>
             </f:if>
             <f:if condition="{settings.showDescription}">
-                <f:if condition="{item.description}">
-                    <p class="type">
-                        <span class="type_family"><f:translate
-                                key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.description"/><span
-                                class="type_family_sep">: </span></span>
-                        <span class="type_classification">
-							<f:if condition="{item.description}">
-									<f:format.raw>{item.description}</f:format.raw>
-							</f:if>
-						</span>
-                    </p>
-                </f:if>
+                <p class="type">
+                    <span class="type_family"><f:translate
+                            key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.description"/><span
+                            class="type_family_sep">: </span></span>
+                    <span class="type_classification">
+                        <f:comment>Handle multilingual description (OpenAPI: en_GB/de_DE, XML: direct text)</f:comment>
+                        <f:if condition="{item.description.en_GB}">
+                            <f:then>
+                                <f:format.raw>{item.description.en_GB}</f:format.raw>
+                            </f:then>
+                            <f:else>
+                                <f:if condition="{item.description.de_DE}">
+                                    <f:then>
+                                        <f:format.raw>{item.description.de_DE}</f:format.raw>
+                                    </f:then>
+                                    <f:else>
+                                        <f:if condition="{item.description}">
+                                            <f:format.raw>{item.description}</f:format.raw>
+                                        </f:if>
+                                    </f:else>
+                                </f:if>
+                            </f:else>
+                        </f:if>
+                    </span>
+                </p>
             </f:if>
             <f:if condition="{settings.linkToPortal}">
                 <f:if condition="{item.portaluri}">

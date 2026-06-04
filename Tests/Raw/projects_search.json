@@ -1,0 +1,739 @@
+{
+    "test_name": "projects_search",
+    "description": "Search projects by keyword",
+    "timestamp": "2026-06-02 13:42:46",
+    "endpoint": "projects",
+    "query_params": {
+        "size": 3,
+        "q": "research"
+    },
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 1539.700000000000045474735088646411895751953125,
+        "url": "https://fis.uni-hannover.de/ws/api/projects?size=3&q=research",
+        "curl_error": null,
+        "response": "{\"count\":2347,\"pageInformation\":{\"offset\":0,\"size\":3},\"items\":[{\"typeDiscriminator\":\"BasicProject\",\"pureId\":3297312,\"uuid\":\"d77a4cb6-9e24-47a3-8086-1f7dd99fa589\",\"createdBy\":\"jw_admin\",\"createdDate\":\"2020-03-08T15:32:48.801+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-11-03T16:03:40.492+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/projects/d77a4cb6-9e24-47a3-8086-1f7dd99fa589\",\"prettyUrlIdentifiers\":[\"collaborative-research-centre-1128-sub-project-mgk-integrated-res\"],\"version\":\"d78f5fda03a419369c2505d6c2addd79ea833656\",\"acronym\":\"geo-Q\",\"participants\":[{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3297327,\"name\":{\"firstName\":\"Karsten\",\"lastName\":\"Danzmann\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3297330,\"name\":{\"firstName\":\"Fumiko\",\"lastName\":\"Kawazoe\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}}}],\"descriptions\":[{\"pureId\":3297315,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/projectdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}},{\"pureId\":3297316,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/keyfindings\",\"term\":{\"en_GB\":\"Key findings\",\"de_DE\":\"wichtigste Ergebnisse\"}}}],\"period\":{\"startDate\":\"2014-07-01\",\"endDate\":\"2019-06-30\"},\"natureTypes\":[{\"uri\":\"/dk/atira/pure/upm/nature/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"6e260686-13ef-4e03-9e44-188a36c1247c\"}],\"title\":{\"en_GB\":\"Collaborative Research Centre 1128, sub-project MGK: Integrated Research Training Group (geo-Q Research School)\",\"de_DE\":\"Sonderforschungsbereich 1128, Teilprojekt MGK: Integriertes Graduiertenkolleg (geo-Q Research School)\"},\"type\":{\"uri\":\"/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"links\":[{\"pureId\":3297323,\"url\":\"https://www.geoq.uni-hannover.de/rtg.html\"}],\"keywordGroups\":[{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3297317,\"logicalName\":\"/dk/atira/pure/project/project_funder\",\"name\":{\"en_GB\":\"Funding type\",\"de_DE\":\"Mittelherkunft\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/project/project_funder/germansciencefoundation\",\"term\":{\"en_GB\":\"German Research Foundation (DFG)\",\"de_DE\":\"Deutsche Forschungsgemeinschaft (DFG)\"}}]},{\"typeDiscriminator\":\"FullKeywordGroup\",\"pureId\":74456550,\"logicalName\":\"/dk/atira/pure/project/financingsources\",\"name\":{\"en_GB\":\"Funding scheme\",\"de_DE\":\"Förderprogramme und -linien\"},\"keywordContainers\":[{\"pureId\":74456551,\"structuredKeyword\":{\"uri\":\"/dk/atira/pure/project/financingsources/02/02/03\",\"term\":{\"en_GB\":\"Collaborative Research Centres/Transregios\",\"de_DE\":\"Sonderforschungsbereiche/Transregios\"}}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3297321,\"logicalName\":\"luh_schwerpunkte\",\"name\":{\"en_GB\":\"Key research areas of LUH\",\"de_DE\":\"Etablierte Forschungsschwerpunkte der LUH\"},\"classifications\":[{\"uri\":\"luh_schwerpunkte/quantum_optics_and_gravitational_physics\",\"term\":{\"en_GB\":\"Quantum Optics and Gravitational Physics\",\"de_DE\":\"Quantenoptik und Gravitationsphysik\"}}]}],\"projects\":[{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/contains\",\"term\":{\"en_GB\":\"Contains\",\"de_DE\":\"Enthält\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"2dc28f43-2de9-4e62-a031-8ea20d3bf80b\"}}],\"systemName\":\"Project\"},{\"typeDiscriminator\":\"BasicProject\",\"pureId\":9854584,\"uuid\":\"8248bc6e-b2b2-428a-8425-8986eb693a3f\",\"createdBy\":\"jw_admin\",\"createdDate\":\"2021-03-19T14:33:22.698+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-11-03T16:13:03.136+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/projects/8248bc6e-b2b2-428a-8425-8986eb693a3f\",\"prettyUrlIdentifiers\":[\"collaborative-research-centre-1464-sub-project-mgk-terraq-researc\"],\"version\":\"b8070c2e26a2bd83b3fc908499b7287c2546c647\",\"acronym\":\"TerraQ\",\"participants\":[{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":9854598,\"name\":{\"firstName\":\"Liliane\",\"lastName\":\"Biskupek\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"24da95a7-273a-46ed-a988-1c11b1447acc\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"5f6e3634-3b9e-44b4-b681-4001b081b6f1\"}]},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":9854601,\"name\":{\"firstName\":\"Fumiko\",\"lastName\":\"Kawazoe\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}}}],\"descriptions\":[{\"pureId\":9854587,\"value\":{\"en_GB\":\"The focus of the integrated research training group is to provide a comprehensive education for doctoral researchers and postdocs from a wide range of fields including geodesy, physics, and space engineering, i.e. it focusses equally on doctoral researchers, early postdocs and young PIs. The curriculum consists of several lecture weeks per year. Special programmes are also offered for BSc and MSc students.\"},\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/projectdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}},{\"pureId\":9854588,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/keyfindings\",\"term\":{\"en_GB\":\"Key findings\",\"de_DE\":\"wichtigste Ergebnisse\"}}}],\"period\":{\"startDate\":\"2021-01-01\",\"endDate\":\"2024-12-31\"},\"natureTypes\":[{\"uri\":\"/dk/atira/pure/upm/nature/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"5f6e3634-3b9e-44b4-b681-4001b081b6f1\"}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"5f6e3634-3b9e-44b4-b681-4001b081b6f1\"},\"title\":{\"en_GB\":\"Collaborative Research Centre 1464, sub-project MGK: TerraQ Research Training School\",\"de_DE\":\"Sonderforschungsbereich 1464, Teilprojekt MGK: TerraQ Research Training School \"},\"type\":{\"uri\":\"/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"links\":[{\"pureId\":9854595,\"url\":\"https://www.terraq.uni-hannover.de/en/support-structures/research-training-group/\"}],\"keywordGroups\":[{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":9854589,\"logicalName\":\"/dk/atira/pure/project/project_funder\",\"name\":{\"en_GB\":\"Funding type\",\"de_DE\":\"Mittelherkunft\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/project/project_funder/germansciencefoundation\",\"term\":{\"en_GB\":\"German Research Foundation (DFG)\",\"de_DE\":\"Deutsche Forschungsgemeinschaft (DFG)\"}}]},{\"typeDiscriminator\":\"FullKeywordGroup\",\"pureId\":74463094,\"logicalName\":\"/dk/atira/pure/project/financingsources\",\"name\":{\"en_GB\":\"Funding scheme\",\"de_DE\":\"Förderprogramme und -linien\"},\"keywordContainers\":[{\"pureId\":74463095,\"structuredKeyword\":{\"uri\":\"/dk/atira/pure/project/financingsources/02/02/03\",\"term\":{\"en_GB\":\"Collaborative Research Centres/Transregios\",\"de_DE\":\"Sonderforschungsbereiche/Transregios\"}}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":9854593,\"logicalName\":\"luh_schwerpunkte\",\"name\":{\"en_GB\":\"Key research areas of LUH\",\"de_DE\":\"Etablierte Forschungsschwerpunkte der LUH\"},\"classifications\":[{\"uri\":\"luh_schwerpunkte/quantum_optics_and_gravitational_physics\",\"term\":{\"en_GB\":\"Quantum Optics and Gravitational Physics\",\"de_DE\":\"Quantenoptik und Gravitationsphysik\"}}]}],\"projects\":[{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/contains\",\"term\":{\"en_GB\":\"Contains\",\"de_DE\":\"Enthält\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"8074be21-8671-4dd5-984e-22949a50bac1\"}}],\"systemName\":\"Project\"},{\"typeDiscriminator\":\"BasicProject\",\"pureId\":9191222,\"uuid\":\"39fbf6bb-64dc-4c62-bcfe-46f63e961a26\",\"createdBy\":\"jw_admin\",\"createdDate\":\"2021-01-21T14:12:27.118+01:00\",\"modifiedBy\":\"jw_admin\",\"modifiedDate\":\"2025-11-14T12:27:39.098+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/projects/39fbf6bb-64dc-4c62-bcfe-46f63e961a26\",\"prettyUrlIdentifiers\":[\"cluster-of-excellence-21221-phoenixd-research-school\"],\"version\":\"fb29d7c0baf739b6c768f6647c564a30de3ebec1\",\"acronym\":\"PhoenixD\",\"participants\":[{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":9191240,\"name\":{\"firstName\":\"Peter\",\"lastName\":\"Behrens\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":56751937,\"name\":{\"firstName\":\"Axel\",\"lastName\":\"Günther\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":56751940,\"name\":{\"firstName\":\"Franziska\",\"lastName\":\"Lübkemann-Warwas\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":9191243,\"name\":{\"firstName\":\"Detlev\",\"lastName\":\"Ristau\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}}},{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":9191246,\"name\":{\"firstName\":\"Marc Christopher\",\"lastName\":\"Wurz\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"5da6e6fc-4175-491e-9996-af508c63f66e\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"46658b6c-5cae-4f03-a1de-98875973644c\"},{\"systemName\":\"Organization\",\"uuid\":\"c385c700-5b7d-4dfd-b3c4-0976de158961\"}]}],\"collaborators\":[{\"typeDiscriminator\":\"InternalCollaboratorAssociation\",\"pureId\":9191225,\"leadCollaborator\":true,\"organization\":{\"systemName\":\"Organization\",\"uuid\":\"07adc7bb-b839-4e70-900c-76d494d5b00a\"}},{\"typeDiscriminator\":\"ExternalCollaboratorAssociation\",\"pureId\":9191226,\"leadCollaborator\":false,\"externalOrganization\":{\"systemName\":\"ExternalOrganization\",\"uuid\":\"0955bc9c-5454-47fe-a603-9dd61fb75c81\"}}],\"descriptions\":[{\"pureId\":9191227,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/projectdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}},{\"pureId\":9191228,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/keyfindings\",\"term\":{\"en_GB\":\"Key findings\",\"de_DE\":\"wichtigste Ergebnisse\"}}}],\"period\":{\"startDate\":\"2019-01-01\",\"endDate\":\"2025-12-31\"},\"natureTypes\":[{\"uri\":\"/dk/atira/pure/upm/nature/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"705d49a3-1583-4999-b7a3-5ef5aad6178c\"},{\"systemName\":\"Organization\",\"uuid\":\"c385c700-5b7d-4dfd-b3c4-0976de158961\"},{\"systemName\":\"Organization\",\"uuid\":\"bebed6cc-c284-44ca-9115-8b4f2e13a7cb\"},{\"systemName\":\"Organization\",\"uuid\":\"46658b6c-5cae-4f03-a1de-98875973644c\"},{\"systemName\":\"Organization\",\"uuid\":\"ce282e52-37b2-4a63-a0b6-98714fb94195\"},{\"systemName\":\"Organization\",\"uuid\":\"845a5a77-0728-4784-a889-27d672f84e33\"}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"c385c700-5b7d-4dfd-b3c4-0976de158961\"},\"title\":{\"en_GB\":\"Cluster of Excellence 2122/1: PhoenixD Research School\",\"de_DE\":\"Exzellenzcluster 2122/1: PhoenixD Research School\"},\"type\":{\"uri\":\"/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"links\":[{\"pureId\":9191235,\"url\":\"https://www.phoenixd.uni-hannover.de/de/phoenixd-research-school/\"}],\"keywordGroups\":[{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":9191229,\"logicalName\":\"/dk/atira/pure/project/project_funder\",\"name\":{\"en_GB\":\"Funding type\",\"de_DE\":\"Mittelherkunft\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/project/project_funder/germansciencefoundation\",\"term\":{\"en_GB\":\"German Research Foundation (DFG)\",\"de_DE\":\"Deutsche Forschungsgemeinschaft (DFG)\"}}]},{\"typeDiscriminator\":\"FullKeywordGroup\",\"pureId\":74462270,\"logicalName\":\"/dk/atira/pure/project/financingsources\",\"name\":{\"en_GB\":\"Funding scheme\",\"de_DE\":\"Förderprogramme und -linien\"},\"keywordContainers\":[{\"pureId\":74462271,\"structuredKeyword\":{\"uri\":\"/dk/atira/pure/project/financingsources/02/02/08\",\"term\":{\"en_GB\":\"Clusters of Excellence\",\"de_DE\":\"Exzellenzcluster\"}}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":9191233,\"logicalName\":\"luh_schwerpunkte\",\"name\":{\"en_GB\":\"Key research areas of LUH\",\"de_DE\":\"Etablierte Forschungsschwerpunkte der LUH\"},\"classifications\":[{\"uri\":\"luh_schwerpunkte/optical_technologies\",\"term\":{\"en_GB\":\"Optical Technologies\",\"de_DE\":\"Optische Technologien\"}}]}],\"projects\":[{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/contains\",\"term\":{\"en_GB\":\"Contains\",\"de_DE\":\"Enthält\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"488d3838-7b48-4921-88a3-c21afc99b18d\"}}],\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"e77fdeb6-bf30-4315-951e-60fc438f4a56\"}}],\"systemName\":\"Project\"}]}",
+        "response_data": {
+            "count": 2347,
+            "pageInformation": {
+                "offset": 0,
+                "size": 3
+            },
+            "items": [
+                {
+                    "typeDiscriminator": "BasicProject",
+                    "pureId": 3297312,
+                    "uuid": "d77a4cb6-9e24-47a3-8086-1f7dd99fa589",
+                    "createdBy": "jw_admin",
+                    "createdDate": "2020-03-08T15:32:48.801+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2025-11-03T16:03:40.492+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/projects/d77a4cb6-9e24-47a3-8086-1f7dd99fa589",
+                    "prettyUrlIdentifiers": [
+                        "collaborative-research-centre-1128-sub-project-mgk-integrated-res"
+                    ],
+                    "version": "d78f5fda03a419369c2505d6c2addd79ea833656",
+                    "acronym": "geo-Q",
+                    "participants": [
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3297327,
+                            "name": {
+                                "firstName": "Karsten",
+                                "lastName": "Danzmann"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 3297330,
+                            "name": {
+                                "firstName": "Fumiko",
+                                "lastName": "Kawazoe"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            }
+                        }
+                    ],
+                    "descriptions": [
+                        {
+                            "pureId": 3297315,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/projectdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 3297316,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/keyfindings",
+                                "term": {
+                                    "en_GB": "Key findings",
+                                    "de_DE": "wichtigste Ergebnisse"
+                                }
+                            }
+                        }
+                    ],
+                    "period": {
+                        "startDate": "2014-07-01",
+                        "endDate": "2019-06-30"
+                    },
+                    "natureTypes": [
+                        {
+                            "uri": "/dk/atira/pure/upm/nature/research",
+                            "term": {
+                                "en_GB": "Research",
+                                "de_DE": "Forschung"
+                            }
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "6e260686-13ef-4e03-9e44-188a36c1247c"
+                        }
+                    ],
+                    "title": {
+                        "en_GB": "Collaborative Research Centre 1128, sub-project MGK: Integrated Research Training Group (geo-Q Research School)",
+                        "de_DE": "Sonderforschungsbereich 1128, Teilprojekt MGK: Integriertes Graduiertenkolleg (geo-Q Research School)"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "links": [
+                        {
+                            "pureId": 3297323,
+                            "url": "https://www.geoq.uni-hannover.de/rtg.html"
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3297317,
+                            "logicalName": "/dk/atira/pure/project/project_funder",
+                            "name": {
+                                "en_GB": "Funding type",
+                                "de_DE": "Mittelherkunft"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/project/project_funder/germansciencefoundation",
+                                    "term": {
+                                        "en_GB": "German Research Foundation (DFG)",
+                                        "de_DE": "Deutsche Forschungsgemeinschaft (DFG)"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "FullKeywordGroup",
+                            "pureId": 74456550,
+                            "logicalName": "/dk/atira/pure/project/financingsources",
+                            "name": {
+                                "en_GB": "Funding scheme",
+                                "de_DE": "Förderprogramme und -linien"
+                            },
+                            "keywordContainers": [
+                                {
+                                    "pureId": 74456551,
+                                    "structuredKeyword": {
+                                        "uri": "/dk/atira/pure/project/financingsources/02/02/03",
+                                        "term": {
+                                            "en_GB": "Collaborative Research Centres/Transregios",
+                                            "de_DE": "Sonderforschungsbereiche/Transregios"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 3297321,
+                            "logicalName": "luh_schwerpunkte",
+                            "name": {
+                                "en_GB": "Key research areas of LUH",
+                                "de_DE": "Etablierte Forschungsschwerpunkte der LUH"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "luh_schwerpunkte/quantum_optics_and_gravitational_physics",
+                                    "term": {
+                                        "en_GB": "Quantum Optics and Gravitational Physics",
+                                        "de_DE": "Quantenoptik und Gravitationsphysik"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "projects": [
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/contains",
+                                "term": {
+                                    "en_GB": "Contains",
+                                    "de_DE": "Enthält"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "2dc28f43-2de9-4e62-a031-8ea20d3bf80b"
+                            }
+                        }
+                    ],
+                    "systemName": "Project"
+                },
+                {
+                    "typeDiscriminator": "BasicProject",
+                    "pureId": 9854584,
+                    "uuid": "8248bc6e-b2b2-428a-8425-8986eb693a3f",
+                    "createdBy": "jw_admin",
+                    "createdDate": "2021-03-19T14:33:22.698+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2025-11-03T16:13:03.136+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/projects/8248bc6e-b2b2-428a-8425-8986eb693a3f",
+                    "prettyUrlIdentifiers": [
+                        "collaborative-research-centre-1464-sub-project-mgk-terraq-researc"
+                    ],
+                    "version": "b8070c2e26a2bd83b3fc908499b7287c2546c647",
+                    "acronym": "TerraQ",
+                    "participants": [
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 9854598,
+                            "name": {
+                                "firstName": "Liliane",
+                                "lastName": "Biskupek"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "24da95a7-273a-46ed-a988-1c11b1447acc"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "5f6e3634-3b9e-44b4-b681-4001b081b6f1"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 9854601,
+                            "name": {
+                                "firstName": "Fumiko",
+                                "lastName": "Kawazoe"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            }
+                        }
+                    ],
+                    "descriptions": [
+                        {
+                            "pureId": 9854587,
+                            "value": {
+                                "en_GB": "The focus of the integrated research training group is to provide a comprehensive education for doctoral researchers and postdocs from a wide range of fields including geodesy, physics, and space engineering, i.e. it focusses equally on doctoral researchers, early postdocs and young PIs. The curriculum consists of several lecture weeks per year. Special programmes are also offered for BSc and MSc students."
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/projectdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 9854588,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/keyfindings",
+                                "term": {
+                                    "en_GB": "Key findings",
+                                    "de_DE": "wichtigste Ergebnisse"
+                                }
+                            }
+                        }
+                    ],
+                    "period": {
+                        "startDate": "2021-01-01",
+                        "endDate": "2024-12-31"
+                    },
+                    "natureTypes": [
+                        {
+                            "uri": "/dk/atira/pure/upm/nature/research",
+                            "term": {
+                                "en_GB": "Research",
+                                "de_DE": "Forschung"
+                            }
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "5f6e3634-3b9e-44b4-b681-4001b081b6f1"
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "5f6e3634-3b9e-44b4-b681-4001b081b6f1"
+                    },
+                    "title": {
+                        "en_GB": "Collaborative Research Centre 1464, sub-project MGK: TerraQ Research Training School",
+                        "de_DE": "Sonderforschungsbereich 1464, Teilprojekt MGK: TerraQ Research Training School "
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "links": [
+                        {
+                            "pureId": 9854595,
+                            "url": "https://www.terraq.uni-hannover.de/en/support-structures/research-training-group/"
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 9854589,
+                            "logicalName": "/dk/atira/pure/project/project_funder",
+                            "name": {
+                                "en_GB": "Funding type",
+                                "de_DE": "Mittelherkunft"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/project/project_funder/germansciencefoundation",
+                                    "term": {
+                                        "en_GB": "German Research Foundation (DFG)",
+                                        "de_DE": "Deutsche Forschungsgemeinschaft (DFG)"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "FullKeywordGroup",
+                            "pureId": 74463094,
+                            "logicalName": "/dk/atira/pure/project/financingsources",
+                            "name": {
+                                "en_GB": "Funding scheme",
+                                "de_DE": "Förderprogramme und -linien"
+                            },
+                            "keywordContainers": [
+                                {
+                                    "pureId": 74463095,
+                                    "structuredKeyword": {
+                                        "uri": "/dk/atira/pure/project/financingsources/02/02/03",
+                                        "term": {
+                                            "en_GB": "Collaborative Research Centres/Transregios",
+                                            "de_DE": "Sonderforschungsbereiche/Transregios"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 9854593,
+                            "logicalName": "luh_schwerpunkte",
+                            "name": {
+                                "en_GB": "Key research areas of LUH",
+                                "de_DE": "Etablierte Forschungsschwerpunkte der LUH"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "luh_schwerpunkte/quantum_optics_and_gravitational_physics",
+                                    "term": {
+                                        "en_GB": "Quantum Optics and Gravitational Physics",
+                                        "de_DE": "Quantenoptik und Gravitationsphysik"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "projects": [
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/contains",
+                                "term": {
+                                    "en_GB": "Contains",
+                                    "de_DE": "Enthält"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "8074be21-8671-4dd5-984e-22949a50bac1"
+                            }
+                        }
+                    ],
+                    "systemName": "Project"
+                },
+                {
+                    "typeDiscriminator": "BasicProject",
+                    "pureId": 9191222,
+                    "uuid": "39fbf6bb-64dc-4c62-bcfe-46f63e961a26",
+                    "createdBy": "jw_admin",
+                    "createdDate": "2021-01-21T14:12:27.118+01:00",
+                    "modifiedBy": "jw_admin",
+                    "modifiedDate": "2025-11-14T12:27:39.098+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/projects/39fbf6bb-64dc-4c62-bcfe-46f63e961a26",
+                    "prettyUrlIdentifiers": [
+                        "cluster-of-excellence-21221-phoenixd-research-school"
+                    ],
+                    "version": "fb29d7c0baf739b6c768f6647c564a30de3ebec1",
+                    "acronym": "PhoenixD",
+                    "participants": [
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 9191240,
+                            "name": {
+                                "firstName": "Peter",
+                                "lastName": "Behrens"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 56751937,
+                            "name": {
+                                "firstName": "Axel",
+                                "lastName": "Günther"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 56751940,
+                            "name": {
+                                "firstName": "Franziska",
+                                "lastName": "Lübkemann-Warwas"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalParticipantAssociation",
+                            "pureId": 9191243,
+                            "name": {
+                                "firstName": "Detlev",
+                                "lastName": "Ristau"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalParticipantAssociation",
+                            "pureId": 9191246,
+                            "name": {
+                                "firstName": "Marc Christopher",
+                                "lastName": "Wurz"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                                "term": {
+                                    "en_GB": "Principal Investigator",
+                                    "de_DE": "Projektleiter*in (Principal Investigator)"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "5da6e6fc-4175-491e-9996-af508c63f66e"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "46658b6c-5cae-4f03-a1de-98875973644c"
+                                },
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "c385c700-5b7d-4dfd-b3c4-0976de158961"
+                                }
+                            ]
+                        }
+                    ],
+                    "collaborators": [
+                        {
+                            "typeDiscriminator": "InternalCollaboratorAssociation",
+                            "pureId": 9191225,
+                            "leadCollaborator": true,
+                            "organization": {
+                                "systemName": "Organization",
+                                "uuid": "07adc7bb-b839-4e70-900c-76d494d5b00a"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalCollaboratorAssociation",
+                            "pureId": 9191226,
+                            "leadCollaborator": false,
+                            "externalOrganization": {
+                                "systemName": "ExternalOrganization",
+                                "uuid": "0955bc9c-5454-47fe-a603-9dd61fb75c81"
+                            }
+                        }
+                    ],
+                    "descriptions": [
+                        {
+                            "pureId": 9191227,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/projectdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 9191228,
+                            "type": {
+                                "uri": "/dk/atira/pure/upmproject/descriptions/keyfindings",
+                                "term": {
+                                    "en_GB": "Key findings",
+                                    "de_DE": "wichtigste Ergebnisse"
+                                }
+                            }
+                        }
+                    ],
+                    "period": {
+                        "startDate": "2019-01-01",
+                        "endDate": "2025-12-31"
+                    },
+                    "natureTypes": [
+                        {
+                            "uri": "/dk/atira/pure/upm/nature/research",
+                            "term": {
+                                "en_GB": "Research",
+                                "de_DE": "Forschung"
+                            }
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "705d49a3-1583-4999-b7a3-5ef5aad6178c"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "c385c700-5b7d-4dfd-b3c4-0976de158961"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "bebed6cc-c284-44ca-9115-8b4f2e13a7cb"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "46658b6c-5cae-4f03-a1de-98875973644c"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "ce282e52-37b2-4a63-a0b6-98714fb94195"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "845a5a77-0728-4784-a889-27d672f84e33"
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "c385c700-5b7d-4dfd-b3c4-0976de158961"
+                    },
+                    "title": {
+                        "en_GB": "Cluster of Excellence 2122/1: PhoenixD Research School",
+                        "de_DE": "Exzellenzcluster 2122/1: PhoenixD Research School"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "links": [
+                        {
+                            "pureId": 9191235,
+                            "url": "https://www.phoenixd.uni-hannover.de/de/phoenixd-research-school/"
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 9191229,
+                            "logicalName": "/dk/atira/pure/project/project_funder",
+                            "name": {
+                                "en_GB": "Funding type",
+                                "de_DE": "Mittelherkunft"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/project/project_funder/germansciencefoundation",
+                                    "term": {
+                                        "en_GB": "German Research Foundation (DFG)",
+                                        "de_DE": "Deutsche Forschungsgemeinschaft (DFG)"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "FullKeywordGroup",
+                            "pureId": 74462270,
+                            "logicalName": "/dk/atira/pure/project/financingsources",
+                            "name": {
+                                "en_GB": "Funding scheme",
+                                "de_DE": "Förderprogramme und -linien"
+                            },
+                            "keywordContainers": [
+                                {
+                                    "pureId": 74462271,
+                                    "structuredKeyword": {
+                                        "uri": "/dk/atira/pure/project/financingsources/02/02/08",
+                                        "term": {
+                                            "en_GB": "Clusters of Excellence",
+                                            "de_DE": "Exzellenzcluster"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 9191233,
+                            "logicalName": "luh_schwerpunkte",
+                            "name": {
+                                "en_GB": "Key research areas of LUH",
+                                "de_DE": "Etablierte Forschungsschwerpunkte der LUH"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "luh_schwerpunkte/optical_technologies",
+                                    "term": {
+                                        "en_GB": "Optical Technologies",
+                                        "de_DE": "Optische Technologien"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "projects": [
+                        {
+                            "relationType": {
+                                "uri": "/dk/atira/pure/association/bidirectional/upmproject/contains",
+                                "term": {
+                                    "en_GB": "Contains",
+                                    "de_DE": "Enthält"
+                                }
+                            },
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "488d3838-7b48-4921-88a3-c21afc99b18d"
+                            }
+                        }
+                    ],
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "e77fdeb6-bf30-4315-951e-60fc438f4a56"
+                            }
+                        }
+                    ],
+                    "systemName": "Project"
+                }
+            ]
+        },
+        "json_error": "No error"
+    }
+}

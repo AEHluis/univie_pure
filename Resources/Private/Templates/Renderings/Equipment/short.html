@@ -1,50 +1,14 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <div class="rendering_equipment rendering_short" data-uuid="{data.uuid}">
-    <f:comment>Title - handle both OpenAPI and XML structures</f:comment>
     <h4 class="equipment-title">
-        <f:if condition="{data.title.value}">
-            <f:then>
-                <f:format.raw>{data.title.value}</f:format.raw>
-            </f:then>
-            <f:else>
-                <f:if condition="{data.title.en_GB}">
-                    <f:then>
-                        <f:format.raw>{data.title.en_GB}</f:format.raw>
-                    </f:then>
-                    <f:else>
-                        <f:if condition="{data.title.de_DE}">
-                            <f:then>
-                                <f:format.raw>{data.title.de_DE}</f:format.raw>
-                            </f:then>
-                            <f:else>
-                                <f:if condition="{data.title}">
-                                    <f:format.raw>{data.title}</f:format.raw>
-                                </f:if>
-                            </f:else>
-                        </f:then>
-                    </f:else>
-                </f:then>
-            </f:else>
-        </f:if>
+        <f:render partial="Pure/LocalizedText" arguments="{textData: data.title, lang: locale, fallback: ''}" />
     </h4>
 
-    <f:comment>Type - handle term structure</f:comment>
-    <f:if condition="{data.type.term.en_GB}">
-        <f:then>
-            <p class="equipment-type">{data.type.term.en_GB}</p>
-        </f:then>
-        <f:else>
-            <f:if condition="{data.type.term.de_DE}">
-                <f:then>
-                    <p class="equipment-type">{data.type.term.de_DE}</p>
-                </f:then>
-                <f:else>
-                    <f:if condition="{data.type}">
-                        <p class="equipment-type">{data.type}</p>
-                    </f:if>
-                </f:else>
-            </f:then>
-        </f:else>
+    <f:if condition="{data.type.term}">
+        <p class="equipment-type">
+            <span class="equipment-type-label"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.type"/></span>
+            <span class="equipment-type-value"><f:render partial="Pure/LocalizedText" arguments="{textData: data.type.term, lang: locale, fallback: ''}" /></span>
+        </p>
     </f:if>
 </div>
 </html>

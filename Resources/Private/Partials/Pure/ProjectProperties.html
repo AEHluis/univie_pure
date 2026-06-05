@@ -1,0 +1,144 @@
+<div class="tx-univie-pure project">
+
+	<h1 class="content-element-margin">
+		<f:render partial="Pure/LocalizedHtml" arguments="{textData: project.title, lang: lang}" />
+	</h1>
+
+	<f:if condition="{project.acronym}">
+		<h2 class="content-element-margin project-section-title"><strong>{project.acronym}</strong></h2>
+	</f:if>
+
+	<section class="project-block project-details-block">
+		<h3 class="project-section-title project-section-title--details">
+			<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.details" />
+		</h3>
+		<dl>
+			<!-- TYPE -->
+			<f:if condition="{project.type.term}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.type" /></dt>
+				<dd>
+					<f:render partial="Pure/LocalizedText" arguments="{textData: project.type.term, lang: lang}" />
+				</dd>
+			</f:if>
+
+			<!-- STATUS -->
+			<f:if condition="{project.status.term}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.status" /></dt>
+				<dd>
+					<f:render partial="Pure/LocalizedText" arguments="{textData: project.status.term, lang: lang}" />
+				</dd>
+			</f:if>
+
+			<!-- ORGANIZATIONS -->
+			<f:if condition="{project.organizationsNames}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.units" /></dt>
+				<dd>
+					<f:for each="{project.organizationsNames}" as="orgName" iteration="orgIter">
+						<f:render partial="Pure/LocalizedText" arguments="{textData: orgName, lang: lang}" /><f:if condition="{orgIter.isLast}"><f:else>, </f:else></f:if>
+					</f:for>
+				</dd>
+			</f:if>
+
+			<!-- DURATION -->
+			<f:if condition="{project.period.startDate}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.duration" /></dt>
+				<dd>
+					<f:format.date format="d.m.Y">{project.period.startDate}</f:format.date><f:if condition="{project.period.endDate}"> - <f:format.date format="d.m.Y">{project.period.endDate}</f:format.date></f:if>
+				</dd>
+			</f:if>
+
+			<!-- FUNDING / KEYWORDS -->
+			<f:if condition="{project.keywordGroups}">
+				<f:for each="{project.keywordGroups}" as="keywordGroup">
+					<f:if condition="{keywordGroup.classifications}">
+						<dt><f:render partial="Pure/LocalizedText" arguments="{textData: keywordGroup.name, lang: lang}" /></dt>
+						<dd>
+							<f:for each="{keywordGroup.classifications}" as="classification" iteration="classIter">
+								<f:render partial="Pure/LocalizedText" arguments="{textData: classification.term, lang: lang}" /><f:if condition="{classIter.isLast}"><f:else>, </f:else></f:if>
+							</f:for>
+						</dd>
+					</f:if>
+					<f:if condition="{keywordGroup.keywordContainers}">
+						<dt><f:render partial="Pure/LocalizedText" arguments="{textData: keywordGroup.name, lang: lang}" /></dt>
+						<dd>
+							<f:for each="{keywordGroup.keywordContainers}" as="container" iteration="containerIter">
+								<f:render partial="Pure/LocalizedText" arguments="{textData: container.structuredKeyword.term, lang: lang}" /><f:if condition="{containerIter.isLast}"><f:else>, </f:else></f:if>
+							</f:for>
+						</dd>
+					</f:if>
+				</f:for>
+			</f:if>
+
+			<!-- PARTICIPANTS -->
+			<f:if condition="{project.participants}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.participants" /></dt>
+				<dd class="content-element-margin-small">
+					<ul class="project-participants-list">
+						<f:for each="{project.participants}" as="participant">
+							<f:if condition="{participant.name.firstName} || {participant.name.lastName}">
+								<li>
+									{participant.name.firstName} {participant.name.lastName}<f:if condition="{participant.role.term}"> (<f:render partial="Pure/LocalizedText" arguments="{textData: participant.role.term, lang: lang}" />)</f:if>
+								</li>
+							</f:if>
+						</f:for>
+					</ul>
+				</dd>
+			</f:if>
+
+			<!-- LINKS -->
+			<f:if condition="{project.links}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.links" /></dt>
+				<dd>
+					<f:for each="{project.links}" as="link">
+						<f:if condition="{link.url}">
+							<a href="{link.url}" target="_blank" rel="noopener noreferrer" class="c-link--extern">{link.url}</a><br/>
+						</f:if>
+					</f:for>
+				</dd>
+			</f:if>
+
+			<!-- RELATED RESEARCH OUTPUTS COUNT -->
+			<f:if condition="{project.researchOutputs}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.researchOutputs" /></dt>
+				<dd>{project.researchOutputs -> f:count()} <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.publications" /></dd>
+			</f:if>
+
+			<!-- PORTAL URL -->
+			<f:if condition="{showLinkToPortal}">
+				<f:if condition="{project.portalUrl}">
+					<dt><f:format.htmlentitiesDecode>&nbsp;</f:format.htmlentitiesDecode></dt>
+					<dd class="content-element-margin-small">
+						<p class="type project-portal-link-row">
+							<f:link.external uri="{project.portalUrl}" target="_blank" rel="noopener noreferrer" class="c-button u-icon-after u-icon-after--new-tab"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" /></f:link.external>
+						</p>
+					</dd>
+				</f:if>
+			</f:if>
+		</dl>
+	</section>
+
+	<!-- DESCRIPTION -->
+	<f:if condition="{project.description}">
+		<section class="project-block project-abstract-block">
+			<h3 class="project-section-title"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.description" /></h3>
+			<div class="project-abstract-content">
+				<f:render partial="Pure/LocalizedHtml" arguments="{textData: project.description, lang: lang}" />
+			</div>
+		</section>
+	</f:if>
+
+	<!-- MULTIPLE DESCRIPTIONS (if available) -->
+	<f:if condition="{project.descriptions}">
+		<f:for each="{project.descriptions}" as="desc">
+			<f:if condition="{desc.value}">
+				<section class="project-block project-description-block">
+					<h3 class="project-section-title"><f:render partial="Pure/LocalizedText" arguments="{textData: desc.type.term, lang: lang, fallback: 'Description'}" /></h3>
+					<div class="project-description-content">
+						<f:render partial="Pure/LocalizedHtml" arguments="{textData: desc.value, lang: lang}" />
+					</div>
+				</section>
+			</f:if>
+		</f:for>
+	</f:if>
+
+</div>

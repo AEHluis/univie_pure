@@ -1,27 +1,9 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <div class="rendering_researchoutput rendering_short" data-uuid="{data.uuid}">
-    <f:comment>
-        OpenAPI Response Structure:
-        - title is in title.value
-        - publicationYear is in publicationStatuses array (find current=true)
-        - journal is in journalAssociation.title.title
-        - DOI is in electronicVersions array
-    </f:comment>
-
     <f:if condition="{data.title.value}">
-        <f:then>
-            <h4 class="publication-title">
-                <f:format.raw>{data.title.value}</f:format.raw>
-            </h4>
-        </f:then>
-        <f:else>
-            <f:comment>Fallback for XML API (title is string)</f:comment>
-            <f:if condition="{data.title}">
-                <h4 class="publication-title">
-                    <f:format.raw>{data.title}</f:format.raw>
-                </h4>
-            </f:if>
-        </f:else>
+        <h4 class="publication-title">
+            <f:format.raw>{data.title.value}</f:format.raw>
+        </h4>
     </f:if>
 
     <p class="publication-meta">
@@ -30,7 +12,7 @@
                 <f:for each="{data.contributors}" as="contributor" iteration="iter">
                     <f:if condition="{iter.index} < 3">
                         <f:if condition="{contributor.name.lastName}">
-                            <span class="author">{contributor.name.lastName}<f:if condition="{contributor.name.firstName}">, {contributor.name.firstName -> f:format.raw() -> f:format.crop(maxCharacters: 1)}.</f:if></span>
+                            <span class="author">{contributor.name.lastName}<f:if condition="{contributor.name.firstName}">, {contributor.name.firstName -> f:format.raw() -> f:format.crop(maxCharacters: 1, append: '')}.</f:if></span>
                             <f:if condition="!{iter.isLast} && {iter.index} < 2">; </f:if>
                         </f:if>
                     </f:if>
@@ -41,54 +23,23 @@
             </span>
         </f:if>
 
-        <f:comment>Publication Year from publicationStatuses (OpenAPI) or direct field (XML)</f:comment>
-        <f:if condition="{data.publicationStatuses}">
-            <f:then>
-                <f:for each="{data.publicationStatuses}" as="status">
-                    <f:if condition="{status.current}">
-                        <span class="year">({status.publicationDate.year})</span>
-                    </f:if>
-                </f:for>
-            </f:then>
-            <f:else>
-                <f:if condition="{data.publicationYear}">
-                    <span class="year">({data.publicationYear})</span>
-                </f:if>
-            </f:else>
-        </f:if>
+        <f:for each="{data.publicationStatuses}" as="status">
+            <f:if condition="{status.current}">
+                <span class="year">({status.publicationDate.year})</span>
+            </f:if>
+        </f:for>
 
-        <f:comment>Journal from journalAssociation (OpenAPI) or journal (XML)</f:comment>
         <f:if condition="{data.journalAssociation.title.title}">
-            <f:then>
-                <span class="journal"><em>{data.journalAssociation.title.title}</em></span>
-            </f:then>
-            <f:else>
-                <f:if condition="{data.journal.title}">
-                    <span class="journal"><em>{data.journal.title}</em>
-                    </span>
-                </f:if>
-            </f:else>
+            <span class="journal"><em>{data.journalAssociation.title.title}</em></span>
         </f:if>
 
-        <f:comment>DOI from electronicVersions (OpenAPI) or direct field (XML)</f:comment>
-        <f:if condition="{data.electronicVersions}">
-            <f:then>
-                <f:for each="{data.electronicVersions}" as="version">
-                    <f:if condition="{version.doi}">
-                        <span class="doi">
-                            <a href="https://doi.org/{version.doi}" target="_blank" rel="noopener">DOI: {version.doi}</a>
-                        </span>
-                    </f:if>
-                </f:for>
-            </f:then>
-            <f:else>
-                <f:if condition="{data.doi}">
-                    <span class="doi">
-                        <a href="https://doi.org/{data.doi}" target="_blank" rel="noopener">DOI: {data.doi}</a>
-                    </span>
-                </f:if>
-            </f:else>
-        </f:if>
+        <f:for each="{data.electronicVersions}" as="version">
+            <f:if condition="{version.doi}">
+                <span class="doi">
+                    <a href="https://doi.org/{version.doi}" target="_blank" rel="noopener">DOI: {version.doi}</a>
+                </span>
+            </f:if>
+        </f:for>
     </p>
 </div>
 </html>

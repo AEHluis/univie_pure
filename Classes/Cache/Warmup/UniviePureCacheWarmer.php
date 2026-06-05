@@ -36,55 +36,40 @@ class UniviePureCacheWarmer
     {
         $logger = $this->logManager->getLogger(__CLASS__);
 
-        // For CLI output
-        echo PHP_EOL . '=== Warming up T3LUH FIS caches ===' . PHP_EOL;
-        flush();
-
         // Only warm up our specific cache
         if ($event->hasGroup('all') || $event->hasGroup('univie_pure')) {
-            echo 'T3LUH FIS Cache warmup started.' . PHP_EOL;
             $logger->info('T3LUH FIS Cache warmup started.');
-            flush();
 
-            // Process each supported language
-            foreach ($this->supportedLanguages as $language) {
+            try {
+                // Process each supported language
+                foreach ($this->supportedLanguages as $language) {
+                    $logger->info("Processing language: {$language}");
+                    $this->setTemporaryLanguage($language);
 
-                echo PHP_EOL . "Processing language: {$language}" . PHP_EOL;
-                $logger->info("Processing language: {$language}");
-                flush();
+                    // Preloading different caches
+                    $config = ['items' => []];
 
-                // Set the language for the current operation
-                $this->setTemporaryLanguage($language);
+                    $logger->info("Custom cache \"T3LUH FIS\" ... doing organisations for {$language}.");
+                    $this->classificationScheme->getOrganisations($config);
 
-                // Preloading different caches
+                    $logger->info("Custom cache \"T3LUH FIS\" ... doing projects for {$language}.");
+                    $this->classificationScheme->getProjects($config);
+                }
+
                 $config = ['items' => []];
 
-                echo "Custom cache \"T3LUH FIS\" ... doing organisations for {$language}." . PHP_EOL;
-                flush();
-                $logger->info("Custom cache \"T3LUH FIS\" ... doing organisations for {$language}.");
-                $this->classificationScheme->getOrganisations($config);
+                $logger->info('Custom cache "T3LUH FIS" ... doing persons.');
+                $this->classificationScheme->getPersons($config);
 
-                echo "Custom cache \"T3LUH FIS\" ... doing projects for {$language}." . PHP_EOL;
-                flush();
-                $logger->info("Custom cache \"T3LUH FIS\" ... doing projects for {$language}.");
-                $this->classificationScheme->getProjects($config);
+                $logger->info('Custom cache "T3LUH FIS" ... doing publication types.');
+                $this->classificationScheme->getTypesFromPublications($config);
+
+                $logger->info('Custom cache "T3LUH FIS" has been warmed up.');
+            } catch (\Throwable $e) {
+                $logger->warning('T3LUH FIS cache warmup skipped because API preload failed.', [
+                    'error' => $e->getMessage(),
+                ]);
             }
-
-            $config = ['items' => []];
-
-            echo 'Custom cache "T3LUH FIS" ... doing persons.' . PHP_EOL;
-            flush();
-            $logger->info('Custom cache "T3LUH FIS" ... doing persons.');
-            $this->classificationScheme->getPersons($config);
-
-            echo 'Custom cache "T3LUH FIS" ... doing classification-schemes.' . PHP_EOL;
-            flush();
-            $logger->info('Custom cache "T3LUH FIS" ... doing classification-schemes.');
-            $this->classificationScheme->getTypesFromPublications($config);
-
-            echo 'Custom cache "T3LUH FIS" has been warmed up.' . PHP_EOL;
-            flush();
-            $logger->info('Custom cache "T3LUH FIS" has been warmed up.');
         }
     }
 

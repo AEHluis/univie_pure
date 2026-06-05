@@ -16,8 +16,8 @@ class ProjectEndpoint extends AbstractEndpoint
         return '/projects';
     }
 
-    protected function renderItem(array $item, string $view): string
+    protected function renderItem(array $item, string $view, string $locale = 'en_GB'): string
     {
-        return $this->renderingService->renderProject($item, $view);
+        return $this->renderingService->renderProject($item, $view, $locale);
     }
 }

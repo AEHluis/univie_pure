@@ -469,7 +469,7 @@ class CslDataTransformerTest extends TestCase
     #[Test]
     public function transformResearchOutputHandlesStringCurrentStatus(): void
     {
-        // XML API returns string 'true'
+        // Some Pure payloads return boolean-like strings.
         $pureData = [
             'uuid' => 'test-uuid',
             'publicationStatuses' => [

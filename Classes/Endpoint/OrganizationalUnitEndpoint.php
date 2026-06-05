@@ -8,17 +8,17 @@ namespace Univie\UniviePure\Endpoint;
  * Organizational unit endpoint for Pure API
  *
  * Handles all organizational-unit-related API calls.
- * Note: OpenAPI uses 'organizational-units' (American spelling)
+ * Note: OpenAPI uses 'organizations' for organizational units.
  */
 class OrganizationalUnitEndpoint extends AbstractEndpoint
 {
     protected function getEndpointPath(): string
     {
-        return '/organizational-units';
+        return '/organizations';
     }
 
-    protected function renderItem(array $item, string $view): string
+    protected function renderItem(array $item, string $view, string $locale = 'en_GB'): string
     {
-        return $this->renderingService->renderOrganisation($item, $view);
+        return $this->renderingService->renderOrganisation($item, $view, $locale);
     }
 }

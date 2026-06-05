@@ -18,6 +18,7 @@ use Psr\Log\LoggerInterface;
 class RenderingService
 {
     private const CACHE_LIFETIME = 14400; // 4 hours (same as API cache)
+    private const TEMPLATE_CACHE_VERSION = '20260605-v8-equipment-details';
 
     public function __construct(
         private readonly FrontendInterface $cache,
@@ -113,11 +114,12 @@ class RenderingService
      *
      * @param array $data Person data from API
      * @param string $view View type (short, detailed)
+     * @param string $locale Content locale for multilingual data (e.g., 'de_DE', 'en_GB')
      * @return string Rendered HTML
      */
-    public function renderPerson(array $data, string $view = 'short'): string
+    public function renderPerson(array $data, string $view = 'short', string $locale = 'en_GB'): string
     {
-        return $this->render('Person', $data, $view);
+        return $this->render('Person', $data, $view, $locale);
     }
 
     /**
@@ -125,11 +127,12 @@ class RenderingService
      *
      * @param array $data Project data from API
      * @param string $view View type (short, detailed)
+     * @param string $locale Content locale for multilingual data (e.g., 'de_DE', 'en_GB')
      * @return string Rendered HTML
      */
-    public function renderProject(array $data, string $view = 'short'): string
+    public function renderProject(array $data, string $view = 'short', string $locale = 'en_GB'): string
     {
-        return $this->render('Project', $data, $view);
+        return $this->render('Project', $data, $view, $locale);
     }
 
     /**
@@ -137,11 +140,12 @@ class RenderingService
      *
      * @param array $data Organisation data from API
      * @param string $view View type (short, detailed)
+     * @param string $locale Content locale for multilingual data (e.g., 'de_DE', 'en_GB')
      * @return string Rendered HTML
      */
-    public function renderOrganisation(array $data, string $view = 'short'): string
+    public function renderOrganisation(array $data, string $view = 'short', string $locale = 'en_GB'): string
     {
-        return $this->render('Organisation', $data, $view);
+        return $this->render('Organisation', $data, $view, $locale);
     }
 
     /**
@@ -149,11 +153,12 @@ class RenderingService
      *
      * @param array $data Data set data from API
      * @param string $view View type (short, detailed)
+     * @param string $locale Content locale for multilingual data (e.g., 'de_DE', 'en_GB')
      * @return string Rendered HTML
      */
-    public function renderDataSet(array $data, string $view = 'short'): string
+    public function renderDataSet(array $data, string $view = 'short', string $locale = 'en_GB'): string
     {
-        return $this->render('DataSet', $data, $view);
+        return $this->render('DataSet', $data, $view, $locale);
     }
 
     /**
@@ -161,11 +166,12 @@ class RenderingService
      *
      * @param array $data Equipment data from API
      * @param string $view View type (short, detailed)
+     * @param string $locale Content locale for multilingual data (e.g., 'de_DE', 'en_GB')
      * @return string Rendered HTML
      */
-    public function renderEquipment(array $data, string $view = 'short'): string
+    public function renderEquipment(array $data, string $view = 'short', string $locale = 'en_GB'): string
     {
-        return $this->render('Equipment', $data, $view);
+        return $this->render('Equipment', $data, $view, $locale);
     }
 
     /**
@@ -273,7 +279,7 @@ class RenderingService
      */
     private function getCacheKey(string $type, string $uuid, string $view, string $locale = 'en_GB'): string
     {
-        return 'rendering_' . md5($type . '_' . $uuid . '_' . $view . '_' . $locale);
+        return 'rendering_' . md5(self::TEMPLATE_CACHE_VERSION . '_' . $type . '_' . $uuid . '_' . $view . '_' . $locale);
     }
 
     /**
@@ -311,7 +317,7 @@ class RenderingService
     private function renderFallback(array $data, string $type): string
     {
         $uuid = $data['uuid'] ?? 'unknown';
-        $title = $data['title'] ?? $data['name'] ?? 'Untitled';
+        $title = $this->extractFallbackTitle($data);
 
         return sprintf(
             '<div class="rendering_%s fallback" data-uuid="%s">
@@ -321,6 +327,27 @@ class RenderingService
             htmlspecialchars($uuid, ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($title, ENT_QUOTES, 'UTF-8')
         );
+    }
+
+    private function extractFallbackTitle(array $data): string
+    {
+        foreach (['title', 'name'] as $field) {
+            $value = $data[$field] ?? null;
+
+            if (is_string($value) && $value !== '') {
+                return $value;
+            }
+
+            if (is_array($value)) {
+                foreach (['value', 'en_GB', 'de_DE', 'en_US', 'de_AT'] as $localeKey) {
+                    if (!empty($value[$localeKey]) && is_string($value[$localeKey])) {
+                        return $value[$localeKey];
+                    }
+                }
+            }
+        }
+
+        return 'Untitled';
     }
 
     /**

@@ -19,7 +19,7 @@
 						<f:if condition="{textData.en_GB}">
 							<f:then><f:format.html>{textData.en_GB}</f:format.html></f:then>
 							<f:else>
-								<f:comment><!-- Try text array format (legacy) --></f:comment>
+								<f:comment><!-- Try normalized text array format --></f:comment>
 								<f:if condition="{textData.text}">
 									<f:then>
 										<f:for each="{textData.text}" as="textItem">
@@ -51,7 +51,7 @@
 						<f:if condition="{textData.de_DE}">
 							<f:then><f:format.html>{textData.de_DE}</f:format.html></f:then>
 							<f:else>
-								<f:comment><!-- Try text array format (legacy) --></f:comment>
+								<f:comment><!-- Try normalized text array format --></f:comment>
 								<f:if condition="{textData.text}">
 									<f:then>
 										<f:for each="{textData.text}" as="textItem">

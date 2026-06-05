@@ -130,6 +130,30 @@ class OpenApiService implements ApiServiceInterface
     /**
      * {@inheritdoc}
      */
+    public function getResearchOutputsByUuids(array $uuids, array $params = []): array
+    {
+        return $this->researchOutputEndpoint->getByUuids($uuids, $params);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getResearchOutputTypes(): array
+    {
+        return $this->client->get('/research-outputs/allowed-types');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEquipmentTypes(): array
+    {
+        return $this->client->get('/equipment/allowed-types');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getProjects(array $params = []): array
     {
         return $this->projectEndpoint->getAll($params);

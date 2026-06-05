@@ -59,7 +59,6 @@ class OpenApiClient
         // Check multiple possible env var names for flexibility
         $apiKey = $envVars['PURE_API_KEY']
             ?? $envVars['PURE_OPENAPI_KEY']
-            ?? $envVars['PURE_APIKEY']
             ?? $envVars['PURE_BEARER_TOKEN']
             ?? null;
 

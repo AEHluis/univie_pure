@@ -95,6 +95,57 @@
     line-height: 1.5;
 }
 
+.tx-univie-pure .c-search__item--equipment {
+    margin-bottom: 1.25rem;
+}
+
+.tx-univie-pure .rendering_equipment.rendering_short {
+    margin: 0;
+}
+
+.tx-univie-pure .rendering_equipment.rendering_short p:empty,
+.tx-univie-pure .rendering_equipment.rendering_short p:has(> br:only-child) {
+    display: none;
+}
+
+.tx-univie-pure .rendering_equipment.rendering_short .equipment-title {
+    margin: 0 0 .35rem;
+    line-height: 1.35;
+}
+
+.tx-univie-pure .rendering_equipment.rendering_short .equipment-type {
+    margin: 0 0 .5rem;
+    font-size: .95rem;
+}
+
+.tx-univie-pure .equipment-meta {
+    margin: .2rem 0;
+}
+
+.tx-univie-pure .equipment-portal-link {
+    margin-top: .75rem;
+}
+
+.tx-univie-pure .publication-portal-link-row,
+.tx-univie-pure .project-portal-link-row,
+.tx-univie-pure .dataset-portal,
+.tx-univie-pure .dataset-portal-link,
+.tx-univie-pure .equipment-portal,
+.tx-univie-pure .equipment-portal-link {
+    text-align: center;
+}
+
+.tx-univie-pure .publication-portal-link-row .c-button,
+.tx-univie-pure .project-portal-link-row .c-button,
+.tx-univie-pure .dataset-portal .c-button,
+.tx-univie-pure .dataset-portal-link .c-button,
+.tx-univie-pure .equipment-portal .c-button,
+.tx-univie-pure .equipment-portal-link .c-button {
+    display: inline-flex;
+    justify-content: center;
+    text-align: center;
+}
+
 .tx-univie-pure .c-pagination__totalResults {
     text-decoration: none !important;
     float: left;
@@ -200,7 +251,10 @@
     border-bottom: 0px;
 }
 
-.tx-univie-pure.publication .publication-details-block {
+.tx-univie-pure.publication .publication-details-block,
+.tx-univie-pure.project .project-details-block,
+.tx-univie-pure.dataset .dataset-details-block,
+.tx-univie-pure.equipment .equipment-details-block {
     margin-top: 1.25rem;
     padding: 0.9rem 1rem;
     border: 1px solid #e6e6e6;
@@ -216,8 +270,82 @@
     text-align: left;
 }
 
-.tx-univie-pure.publication .publication-section-title--details {
+.tx-univie-pure.dataset {
+    margin: 0 auto;
+    max-width: 64rem;
+    padding: 0.5rem 0;
+}
+
+.tx-univie-pure.dataset h1 {
+    margin-bottom: 1.25rem;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.tx-univie-pure.dataset .dataset-block {
+    margin: 1rem 0 1.25rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 0;
+}
+
+.tx-univie-pure.dataset .dataset-section-title {
+    margin: 0 0 0.55rem;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #1f1f1f;
+    text-align: left;
+}
+
+.tx-univie-pure.publication .publication-section-title--details,
+.tx-univie-pure.project .project-section-title--details,
+.tx-univie-pure.dataset .dataset-section-title--details,
+.tx-univie-pure.equipment .equipment-section-title--details {
     margin-top: 1.2rem;
+}
+
+.tx-univie-pure.dataset .dataset-details-block dl {
+    margin-top: 0.2rem;
+}
+
+.tx-univie-pure.dataset .dataset-description-content {
+    line-height: 1.6;
+}
+
+.tx-univie-pure.dataset .dataset-description-content p {
+    margin: 0 0 0.5rem;
+    line-height: 1.6;
+    font-size: 1rem;
+    height: auto;
+}
+
+.tx-univie-pure.dataset .dataset-description-content p:last-child {
+    margin-bottom: 0;
+}
+
+.tx-univie-pure.dataset .dataset-links-block p,
+.tx-univie-pure.dataset .dataset-publisher,
+.tx-univie-pure.dataset .dataset-organizations-list,
+.tx-univie-pure.dataset .dataset-projects-list,
+.tx-univie-pure.dataset .dataset-researchoutputs-list {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.tx-univie-pure.dataset .dataset-organizations-list,
+.tx-univie-pure.dataset .dataset-projects-list,
+.tx-univie-pure.dataset .dataset-researchoutputs-list {
+    padding-left: 1.25rem;
+}
+
+.tx-univie-pure.dataset .dataset-organizations-list li,
+.tx-univie-pure.dataset .dataset-projects-list li,
+.tx-univie-pure.dataset .dataset-researchoutputs-list li {
+    margin: 0 0 0.35rem;
+}
+
+.tx-univie-pure.dataset .dataset-researchoutputs-list li:last-child {
+    margin-bottom: 0;
 }
 
 .tx-univie-pure.publication .publication-authors-list {
@@ -233,7 +361,10 @@
     margin-top: 1rem;
 }
 
-.tx-univie-pure.publication dl {
+.tx-univie-pure.publication dl,
+.tx-univie-pure.project dl,
+.tx-univie-pure.dataset dl,
+.tx-univie-pure.equipment dl {
     display: grid;
     grid-template-columns: minmax(12rem, 28%) 1fr;
     column-gap: 1.75rem;
@@ -242,31 +373,109 @@
 }
 
 .tx-univie-pure.publication dt,
-.tx-univie-pure.publication dd {
+.tx-univie-pure.publication dd,
+.tx-univie-pure.project dt,
+.tx-univie-pure.project dd,
+.tx-univie-pure.dataset dt,
+.tx-univie-pure.dataset dd,
+.tx-univie-pure.equipment dt,
+.tx-univie-pure.equipment dd {
     float: none;
     width: auto;
     margin: 0;
     padding: 0.35rem 0;
 }
 
-.tx-univie-pure.publication dt {
+.tx-univie-pure.publication dt,
+.tx-univie-pure.project dt,
+.tx-univie-pure.dataset dt,
+.tx-univie-pure.equipment dt {
     font-weight: 600;
     color: #1f1f1f;
     font-size: 0.97rem;
     letter-spacing: 0.01em;
 }
 
-.tx-univie-pure.publication dd {
+.tx-univie-pure.publication dd,
+.tx-univie-pure.project dd,
+.tx-univie-pure.dataset dd,
+.tx-univie-pure.equipment dd {
     line-height: 1.55;
     color: #2a2a2a;
 }
 
-.tx-univie-pure.publication dd + dt {
+.tx-univie-pure.publication dd + dt,
+.tx-univie-pure.project dd + dt,
+.tx-univie-pure.dataset dd + dt,
+.tx-univie-pure.equipment dd + dt {
     margin-top: 0.25rem;
 }
 
 .tx-univie-pure.publication dd a {
     overflow-wrap: anywhere;
+}
+
+.tx-univie-pure.equipment {
+    margin: 0 auto;
+    max-width: 64rem;
+    padding: 0.5rem 0;
+}
+
+.tx-univie-pure.equipment h1 {
+    margin-bottom: 1.25rem;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.tx-univie-pure.equipment .equipment-block {
+    margin: 1rem 0 1.25rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 0;
+}
+
+.tx-univie-pure .equipment-section-title {
+    margin: 0 0 0.55rem;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #1f1f1f;
+    text-align: left;
+}
+
+.tx-univie-pure.equipment dl {
+    display: grid;
+    grid-template-columns: minmax(12rem, 28%) 1fr;
+    column-gap: 1.75rem;
+    row-gap: 0.35rem;
+    align-items: start;
+}
+
+.tx-univie-pure.equipment dt,
+.tx-univie-pure.equipment dd {
+    float: none;
+    width: auto;
+    margin: 0;
+    padding: 0.35rem 0;
+}
+
+.tx-univie-pure.equipment dt {
+    font-weight: 600;
+    color: #1f1f1f;
+    font-size: 0.97rem;
+}
+
+.tx-univie-pure.equipment dd {
+    line-height: 1.55;
+    color: #2a2a2a;
+}
+
+.tx-univie-pure.equipment dd a,
+.tx-univie-pure.equipment .equipment-links-block a {
+    overflow-wrap: anywhere;
+}
+
+.tx-univie-pure.equipment .equipment-footer {
+    margin-top: 1.5rem;
 }
 
 .tx-univie-pure.publication-citations {
@@ -373,7 +582,16 @@
         row-gap: 0.25rem;
     }
 
+    .tx-univie-pure.equipment dl {
+        grid-template-columns: 1fr;
+        row-gap: 0.25rem;
+    }
+
     .tx-univie-pure.publication dt {
+        margin-top: 0.5rem;
+    }
+
+    .tx-univie-pure.equipment dt {
         margin-top: 0.5rem;
     }
 

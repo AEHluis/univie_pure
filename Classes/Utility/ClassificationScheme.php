@@ -389,14 +389,66 @@ class ClassificationScheme
 
     public function getTypesFromPublications(&$config): void
     {
-        // Classification schemes via OpenAPI would require dedicated endpoint
-        // For now, return empty without showing a message on every page load
+        try {
+            $publicationTypes = $this->apiService->getResearchOutputTypes();
+        } catch (\Throwable $e) {
+            $this->addFlashMessage(
+                'Could not fetch publication types from the API: ' . $e->getMessage(),
+                'Publication Types Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            return;
+        }
+
+        $this->classificationRefs2items($publicationTypes, $config);
     }
 
     public function getEquipmentTypes(&$config): void
     {
-        // Classification schemes via OpenAPI would require dedicated endpoint
-        // For now, return empty without showing a message on every page load
+        try {
+            $equipmentTypes = $this->apiService->getEquipmentTypes();
+        } catch (\Throwable $e) {
+            $this->addFlashMessage(
+                'Could not fetch equipment types from the API: ' . $e->getMessage(),
+                'Equipment Types Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            return;
+        }
+
+        $this->classificationRefs2items($equipmentTypes, $config);
+    }
+
+    public function classificationRefs2items(array $classificationRefList, array &$config): void
+    {
+        $classifications = $classificationRefList['classifications'] ?? [];
+        if (!is_array($classifications)) {
+            return;
+        }
+
+        foreach ($classifications as $classification) {
+            if (!is_array($classification)) {
+                continue;
+            }
+
+            $uri = $classification['uri'] ?? '';
+            if ($uri === '') {
+                continue;
+            }
+
+            $title = $this->extractLocalizedName($classification['term'] ?? [], $this->locale);
+            if ($title === '') {
+                $title = $classification['term']['text'][0]['value']
+                    ?? $classification['term']['value']
+                    ?? $uri;
+            }
+
+            if ($title === '<placeholder>') {
+                continue;
+            }
+
+            $config['items'][] = [$title, $uri];
+        }
     }
 
     public function sorted2items($sorted, &$config): void
@@ -431,18 +483,28 @@ class ClassificationScheme
                 if (isset($parent['classificationRelations'])) {
                     $children = array_values(array_filter(
                         array_map(function ($relation) use ($unsorted) {
-                            if ($relation['relationType']['uri'] !== '/dk/atira/pure/core/hierarchies/child') {
+                            if (($relation['relationType']['uri'] ?? '') !== '/dk/atira/pure/core/hierarchies/child') {
                                 return null;
                             }
 
-                            $relatedUri = $relation['relatedTo'][0]['uri'] ?? '';
+                            $relatedTo = $relation['relatedTo'] ?? [];
+                            if (isset($relatedTo[0]) && is_array($relatedTo[0])) {
+                                $relatedTo = $relatedTo[0];
+                            }
+
+                            $relatedUri = $relatedTo['uri'] ?? '';
                             if ($this->isChildEnabledOnRootLevel($unsorted, $relatedUri)) {
                                 return null;
                             }
 
+                            $title = $this->extractLocalizedName($relatedTo['term'] ?? [], $this->locale);
+                            if ($title === '') {
+                                $title = $relatedTo['term']['text'][0]['value'] ?? '';
+                            }
+
                             return [
-                                'uri' => $relation['relatedTo']['uri'] ?? '',
-                                'title' => $relation['relatedTo']['term']['text'][0]['value'] ?? ''
+                                'uri' => $relatedUri,
+                                'title' => $title
                             ];
                         }, $parent['classificationRelations'])
                     ));
@@ -454,7 +516,8 @@ class ClassificationScheme
 
                 return [
                     'uri' => $parent['uri'],
-                    'title' => $parent['term']['text'][0]['value'] ?? 'Unknown title',
+                    'title' => $this->extractLocalizedName($parent['term'] ?? [], $this->locale)
+                        ?: ($parent['term']['text'][0]['value'] ?? 'Unknown title'),
                     'child' => $children
                 ];
             }, $unsorted['items'][0]['containedClassifications'])
@@ -468,8 +531,18 @@ class ClassificationScheme
         }
 
         foreach ($parent['classificationRelations'] as $child) {
-            if ($child['relationType']['uri'] === '/dk/atira/pure/core/hierarchies/child'
-                && $child['relatedTo']['term']['text'][0]['value'] !== '<placeholder>'
+            $relatedTo = $child['relatedTo'] ?? [];
+            if (isset($relatedTo[0]) && is_array($relatedTo[0])) {
+                $relatedTo = $relatedTo[0];
+            }
+
+            $title = $this->extractLocalizedName($relatedTo['term'] ?? [], $this->locale);
+            if ($title === '') {
+                $title = $relatedTo['term']['text'][0]['value'] ?? '';
+            }
+
+            if (($child['relationType']['uri'] ?? '') === '/dk/atira/pure/core/hierarchies/child'
+                && $title !== '<placeholder>'
             ) {
                 return true;
             }
@@ -511,7 +584,7 @@ class ClassificationScheme
         $languageService = $GLOBALS['LANG'];
 
         $config['items'][] = [
-            $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectBlank'),
+            $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectBlank'),
             -1
         ];
 
@@ -521,75 +594,75 @@ class ClassificationScheme
         switch ($whatToDisplay) {
             case 'PUBLICATIONS':
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByUnit'),
                     0
                 ];
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByPerson'),
                     1
                 ];
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByProject'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByProject'),
                     2
                 ];
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByEquipment'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByEquipment'),
                     4
                 ];
                 break;
 
             case 'PROJECTS':
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByUnit'),
                     0
                 ];
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByPerson'),
                     1
                 ];
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByEquipment'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByEquipment'),
                     4
                 ];
                 break;
 
             case 'EQUIPMENTS':
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByUnit'),
                     0
                 ];
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByPerson'),
                     1
                 ];
                 break;
 
             case 'DATASETS':
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByUnit'),
                     0
                 ];
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByPerson'),
                     1
                 ];
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByProject'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByProject'),
                     2
                 ];
                 break;
 
             default:
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByUnit'),
                     0
                 ];
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByPerson'),
                     1
                 ];
                 $config['items'][] = [
-                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByProject'),
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByProject'),
                     2
                 ];
                 break;

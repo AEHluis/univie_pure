@@ -1,11 +1,33 @@
 <f:if condition="{settings.pager.insertAbove}">
     <f:render partial="Pure/Paginate/Pagination" arguments="{pagination:pagination}"/>
 </f:if>
-<div class="c-search__list"></div>
+
+<div class="c-search__list">
 <f:for each="{dataSets}" as="item">
-    <f:if condition="{item.renderings.rendering.html}">
+    <f:if condition="{item.rendering}">
         <div class="c-search__item">
-            <f:format.html>{item.renderings.rendering.html}</f:format.html>
+            <f:format.raw>{item.rendering}</f:format.raw>
+            <f:if condition="{settings.singlePid}">
+                <div class="more">
+                    <f:link.action action="show" arguments="{uuid: item.uuid, what2show: 'dset'}"
+                                   controller="Pure"
+                                   pageUid="{settings.singlePid}">
+                        <strong>
+                            <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.more"/>
+                        </strong>
+                    </f:link.action>
+                </div>
+            </f:if>
+            <f:if condition="{settings.linkToPortal}">
+                <f:if condition="{item.portalUrl}">
+                    <div class="dataset-portal-link">
+                        <f:link.external uri="{item.portalUrl}" target="_blank" rel="noopener noreferrer"
+                                         class="c-button u-icon-after u-icon-after--new-tab">
+                            <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong"/>
+                        </f:link.external>
+                    </div>
+                </f:if>
+            </f:if>
         </div>
     </f:if>
 </f:for>

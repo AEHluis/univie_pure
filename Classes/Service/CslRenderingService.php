@@ -257,26 +257,6 @@ class CslRenderingService
     }
 
     /**
-     * @deprecated Use LibraryLoader::loadCiteproc() instead
-     */
-    private function ensureCiteprocLoadedLegacy(): void
-    {
-        // Legacy method kept for reference
-        $autoloadPath = GeneralUtility::getFileAbsFileName(
-            'EXT:univie_pure/Libraries/citeproc-php/vendor/autoload.php'
-        );
-
-        if (file_exists($autoloadPath)) {
-            require_once $autoloadPath;
-            return;
-        }
-
-        throw new \RuntimeException(
-            'citeproc-php library not found. Please install via composer or bundle in Libraries/citeproc-php/'
-        );
-    }
-
-    /**
      * Generate cache key
      *
      * @param string $uuid Item UUID
@@ -347,7 +327,7 @@ class CslRenderingService
 
         $year = $data['publicationYear'] ?? $data['year'] ?? '';
 
-        // Handle title - OpenAPI has title.value, XML has direct string
+        // Handle title from OpenAPI payloads and defensive string fallbacks.
         $title = 'Untitled';
         if (isset($data['title'])) {
             if (is_array($data['title']) && isset($data['title']['value'])) {

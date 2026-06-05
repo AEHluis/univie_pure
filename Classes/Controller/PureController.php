@@ -47,12 +47,12 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     protected function getLocale(): string
     {
-        return LanguageUtility::getLocale(null);
+        return LanguageUtility::getLocale();
     }
 
     protected function getLocaleShort(): string
     {
-        return LanguageUtility::getLocale(null);
+        return LanguageUtility::getLocale();
     }
 
     /**
@@ -93,20 +93,6 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->settings = $settings;
     }
 
-    /**
-     * A helper function to sanitize strings.
-     */
-    private function clean_string(string $content): string
-    {
-        $content = strtolower($content);
-        $content = substr($content, 0, 500);
-        $content = filter_var($content, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW);
-        $content = preg_replace('/\s+/', ' ', trim($content));
-        $content = preg_replace('/[<>"\';&\x00-\x1F\x7F]/u', '', $content);
-        $content = preg_replace("/\(([^()]*+|(?R))*\)/", " ", $content);
-        $content = preg_replace('/[^\p{L}\p{N} .–_]/u', " ", urldecode($content));
-        return $content;
-    }
 
     /**
      * listHandlerAction: Processes filtering and redirects to listAction.
@@ -117,10 +103,10 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $filter = "";
 
         if ($this->request->hasArgument('filter')) {
-            $filter = $this->clean_string($this->request->getArgument('filter'));
+            $filter = CommonUtilities::cleanSearchString($this->request->getArgument('filter'));
         }
         if ($this->request->hasArgument('currentPageNumber')) {
-            $currentPageNumber = (int)$this->clean_string($this->request->getArgument('currentPageNumber'));
+            $currentPageNumber = (int)CommonUtilities::cleanSearchString($this->request->getArgument('currentPageNumber'));
         }
         $arguments = [
             'currentPageNumber' => $currentPageNumber,
@@ -148,7 +134,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $locale = $this->locale;
 
         if ($this->request->hasArgument('filter')) {
-            $filterValue = $this->clean_string($this->request->getArgument('filter'));
+            $filterValue = CommonUtilities::cleanSearchString($this->request->getArgument('filter'));
             $this->settings['filter'] = $filterValue;
             $this->view->assign('filter', $filterValue);
         }
@@ -206,6 +192,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 'rendering' => $rendering,
                 'sort' => $this->settings['researchOutputOrdering'] ?? '-publicationYear',
             ];
+            $params = array_merge($params, CommonUtilities::buildFilterParams($this->settings));
 
             if (!empty($this->settings['filter'])) {
                 $params['search'] = $this->settings['filter'];
@@ -222,33 +209,8 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $items = $response['items'] ?? [];
             $totalCount = $response['count'] ?? 0;
 
-            $publications = [];
-            foreach ($items as $item) {
-                $renderingHtml = $item['rendering'] ?? '';
-
-                $year = '';
-                if (isset($item['publicationStatuses']) && is_array($item['publicationStatuses'])) {
-                    foreach ($item['publicationStatuses'] as $status) {
-                        if ($status['current'] ?? false) {
-                            $year = $status['publicationDate']['year'] ?? '';
-                            break;
-                        }
-                    }
-                }
-                if (empty($year)) {
-                    $year = $item['publicationYear'] ?? '';
-                }
-
-                $publications[] = [
-                    'uuid' => $item['uuid'] ?? '',
-                    'rendering' => $renderingHtml,
-                    'portalUri' => $item['info']['portalUrl'] ?? $item['portalUrl'] ?? '',
-                    'year' => $year,
-                ];
-            }
-
             $allItems = array_fill(0, $totalCount, null);
-            array_splice($allItems, $offset, count($publications), $publications);
+            array_splice($allItems, $offset, count($items), $items);
 
             $paginator = new ArrayPaginator($allItems, $currentPageNumber, $itemsPerPage);
             $pagination = new NumberedPagination($paginator, $paginationMaxLinks);
@@ -290,6 +252,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'locale' => $this->locale,
             'rendering' => $this->settings['rendering'] ?? 'short',
         ];
+        $params = array_merge($params, CommonUtilities::buildFilterParams($this->settings));
 
         try {
             $response = $apiService->getEquipments($params);
@@ -312,7 +275,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'what_to_display' => $this->settings['what_to_display'],
             'pagination' => $pagination,
             'paginator' => $paginator,
-            'showLinkToPortal' => $this->settings['linkToPortal'] ?? null,
+            'showLinkToPortal' => $this->isLinkToPortalEnabled(),
         ]);
     }
 
@@ -333,6 +296,11 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'locale' => $this->locale,
             'rendering' => $this->settings['rendering'] ?? 'short',
         ];
+        $params = array_merge($params, CommonUtilities::buildFilterParams($this->settings));
+
+        if (!empty($this->settings['orderProjects'])) {
+            $params['sort'] = $this->settings['orderProjects'];
+        }
 
         try {
             $response = $apiService->getProjects($params);
@@ -375,6 +343,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'locale' => $this->locale,
             'rendering' => $this->settings['rendering'] ?? 'short',
         ];
+        $params = array_merge($params, CommonUtilities::buildFilterParams($this->settings));
 
         try {
             $response = $apiService->getDataSets($params);
@@ -416,7 +385,14 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $this->handleContentNotFound();
                 }
 
-                $view = $this->getSinglePublication($uuid, $locale);
+                try {
+                    $view = $this->apiService->getResearchOutput($uuid, [
+                        'locale' => $locale,
+                        'rendering' => 'detailed',
+                    ]);
+                } catch (Throwable $e) {
+                    $view = null;
+                }
 
                 if (!is_array($view) || CommonUtilities::getArrayValue($view, 'code', 0) > 200) {
                     $this->handleContentNotFound();
@@ -432,7 +408,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
                 $this->setMetaAccessHeader($isRestricted ? 'luhintern' : 'default');
 
-                $titleValue = $this->extractTitle($view);
+                $titleValue = CommonUtilities::extractLocalizedText($view['title'] ?? [], $locale);
                 if (!empty($titleValue)) {
                     $this->updatePageTitle($titleValue);
                 }
@@ -445,7 +421,172 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'publicationUuid' => $uuid,
                     'publicationInsights' => $this->publicationInsightsService->build($view, $locale),
                     'lang' => $this->locale,
-                    'showLinkToPortal' => CommonUtilities::getArrayValue($this->settings, 'linkToPortal', null),
+                    'showLinkToPortal' => $this->isLinkToPortalEnabled(),
+                ]);
+                break;
+
+            case 'proj':
+                $uuid = CommonUtilities::getArrayValue($arguments, 'uuid', '');
+                $locale = $this->localeShort;
+
+                if (empty($uuid)) {
+                    $this->handleContentNotFound();
+                }
+
+                try {
+                    $view = $this->apiService->getProject($uuid, [
+                        'locale' => $locale,
+                        'rendering' => 'detailed',
+                    ]);
+                } catch (Throwable $e) {
+                    $view = null;
+                }
+
+                if (!is_array($view) || CommonUtilities::getArrayValue($view, 'code', 0) > 200) {
+                    $this->handleContentNotFound();
+                }
+
+                $titleValue = CommonUtilities::extractLocalizedText($view['title'] ?? [], $locale);
+                if (!empty($titleValue)) {
+                    $this->updatePageTitle($titleValue);
+                }
+
+                $this->view->assignMultiple([
+                    'project' => $view,
+                    'projectUuid' => $uuid,
+                    'lang' => $this->locale,
+                    'showLinkToPortal' => $this->isLinkToPortalEnabled(),
+                ]);
+                break;
+
+            case 'dset':
+                $uuid = CommonUtilities::getArrayValue($arguments, 'uuid', '');
+                $locale = $this->localeShort;
+
+                if (empty($uuid)) {
+                    $this->handleContentNotFound();
+                }
+
+                try {
+                    $view = $this->apiService->getDataSet($uuid, [
+                        'locale' => $locale,
+                        'rendering' => 'detailed',
+                    ]);
+                } catch (Throwable $e) {
+                    $view = null;
+                }
+
+                if (!is_array($view) || CommonUtilities::getArrayValue($view, 'code', 0) > 200) {
+                    $this->handleContentNotFound();
+                }
+
+                $titleValue = CommonUtilities::extractLocalizedText($view['title'] ?? [], $locale);
+                if (!empty($titleValue)) {
+                    $this->updatePageTitle($titleValue);
+                }
+
+                // Resolve related organizations
+                $relatedOrganizations = [];
+                $orgUuids = [];
+                if (!empty($view['managingOrganization']['uuid'])) {
+                    $orgUuids[] = $view['managingOrganization']['uuid'];
+                }
+                foreach ($view['organizations'] ?? [] as $org) {
+                    if (!empty($org['uuid']) && !in_array($org['uuid'], $orgUuids)) {
+                        $orgUuids[] = $org['uuid'];
+                    }
+                }
+                if (!empty($orgUuids)) {
+                    try {
+                        $orgsResponse = $this->apiService->getOrganisationalUnitsByUuids($orgUuids, ['locale' => $locale]);
+                        $relatedOrganizations = $orgsResponse['items'] ?? [];
+                    } catch (Throwable $e) {
+                        // Silently fail
+                    }
+                }
+
+                // Resolve related projects
+                $relatedProjects = [];
+                $projectUuids = [];
+                foreach ($view['projects'] ?? [] as $proj) {
+                    if (!empty($proj['project']['uuid'])) {
+                        $projectUuids[] = $proj['project']['uuid'];
+                    }
+                }
+                if (!empty($projectUuids)) {
+                    try {
+                        $projResponse = $this->apiService->getProjectsByUuids($projectUuids, ['locale' => $locale]);
+                        $relatedProjects = $projResponse['items'] ?? [];
+                    } catch (Throwable $e) {
+                        // Silently fail
+                    }
+                }
+
+                // Resolve related research outputs
+                $relatedResearchOutputs = [];
+                $roUuids = [];
+                foreach ($view['researchOutputs'] ?? [] as $ro) {
+                    if (!empty($ro['researchOutput']['uuid'])) {
+                        $roUuids[] = $ro['researchOutput']['uuid'];
+                    }
+                }
+                if (!empty($roUuids)) {
+                    try {
+                        $roResponse = $this->apiService->getResearchOutputsByUuids($roUuids, ['locale' => $locale]);
+                        $relatedResearchOutputs = $roResponse['items'] ?? [];
+                    } catch (Throwable $e) {
+                        // Silently fail
+                    }
+                }
+
+                $this->view->assignMultiple([
+                    'dataSet' => $view,
+                    'dataSetUuid' => $uuid,
+                    'lang' => $this->locale,
+                    'showLinkToPortal' => $this->isLinkToPortalEnabled(),
+                    'relatedOrganizations' => $relatedOrganizations,
+                    'relatedProjects' => $relatedProjects,
+                    'relatedResearchOutputs' => $relatedResearchOutputs,
+                ]);
+                break;
+
+            case 'equip':
+                $uuid = CommonUtilities::getArrayValue($arguments, 'uuid', '');
+                $locale = $this->localeShort;
+
+                if (empty($uuid)) {
+                    $this->handleContentNotFound();
+                }
+
+                try {
+                    $view = $this->apiService->getEquipment($uuid, [
+                        'locale' => $locale,
+                        'rendering' => 'detailed',
+                    ]);
+                } catch (Throwable $e) {
+                    $view = null;
+                }
+
+                if (!is_array($view) || CommonUtilities::getArrayValue($view, 'code', 0) > 200) {
+                    $this->handleContentNotFound();
+                }
+
+                $titleValue = CommonUtilities::extractLocalizedText($view['title'] ?? [], $locale);
+                if (empty($titleValue)) {
+                    $titleValue = CommonUtilities::extractLocalizedText($view['name'] ?? [], $locale);
+                }
+                if (!empty($titleValue)) {
+                    $this->updatePageTitle($titleValue);
+                }
+
+                $relatedOrganizations = $this->resolveOrganizationReferences($view, $locale);
+
+                $this->view->assignMultiple([
+                    'equipment' => $view,
+                    'equipmentUuid' => $uuid,
+                    'lang' => $this->locale,
+                    'showLinkToPortal' => $this->isLinkToPortalEnabled(),
+                    'relatedOrganizations' => $relatedOrganizations,
                 ]);
                 break;
 
@@ -463,45 +604,6 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'X-Robots-Tag',
             'noindex, nofollow, noarchive, nosnippet, noimageindex'
         );
-    }
-
-    /**
-     * Get single publication via OpenAPI
-     */
-    private function getSinglePublication(string $uuid, string $locale): ?array
-    {
-        try {
-            $apiService = $this->getApiService();
-            return $apiService->getResearchOutput($uuid, [
-                'locale' => $locale,
-                'rendering' => 'detailed',
-            ]);
-        } catch (Throwable $e) {
-            return null;
-        }
-    }
-
-    /**
-     * Extract title from publication data
-     */
-    private function extractTitle(array $publication): string
-    {
-        $title = $publication['title'] ?? '';
-        if (is_string($title) && !empty($title)) {
-            return $title;
-        }
-
-        $titleValue = CommonUtilities::getNestedArrayValue($publication, 'title.value', '');
-        if (!empty($titleValue)) {
-            return $titleValue;
-        }
-
-        $localizedTitles = $publication['title']['text'] ?? [];
-        if (is_array($localizedTitles) && !empty($localizedTitles)) {
-            return $localizedTitles[0]['value'] ?? '';
-        }
-
-        return '';
     }
 
     /**
@@ -527,6 +629,40 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         return $baseStyles;
+    }
+
+    private function isLinkToPortalEnabled(): bool
+    {
+        $value = CommonUtilities::getArrayValue($this->settings, 'linkToPortal', false);
+
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
+
+    private function resolveOrganizationReferences(array $item, string $locale): array
+    {
+        $orgUuids = [];
+
+        if (!empty($item['managingOrganization']['uuid'])) {
+            $orgUuids[] = $item['managingOrganization']['uuid'];
+        }
+
+        foreach ($item['organizations'] ?? [] as $org) {
+            if (!empty($org['uuid'])) {
+                $orgUuids[] = $org['uuid'];
+            }
+        }
+
+        $orgUuids = array_values(array_unique($orgUuids));
+        if (empty($orgUuids)) {
+            return [];
+        }
+
+        try {
+            $response = $this->apiService->getOrganisationalUnitsByUuids($orgUuids, ['locale' => $locale]);
+            return $response['items'] ?? [];
+        } catch (Throwable) {
+            return [];
+        }
     }
 
     /**
@@ -563,11 +699,7 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     private function getPublicationVisibilityKey(array $publication): string
     {
-        $visibilityKey = (string)CommonUtilities::getNestedArrayValue($publication, 'visibility.@attributes.key', '');
-        if ($visibilityKey === '') {
-            $visibilityKey = (string)CommonUtilities::getNestedArrayValue($publication, 'visibility.key', '');
-        }
-        return $visibilityKey;
+        return (string)CommonUtilities::getNestedArrayValue($publication, 'visibility.key', '');
     }
 
     private function isRestrictedVisibility(string $visibilityKey): bool

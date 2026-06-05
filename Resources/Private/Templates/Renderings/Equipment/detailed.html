@@ -1,124 +1,32 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <div class="rendering_equipment rendering_detailed" data-uuid="{data.uuid}">
-    <f:comment>Title - handle multilingual structures</f:comment>
     <h3 class="equipment-title">
-        <f:if condition="{data.title.value}">
+        <f:if condition="{data.title}">
             <f:then>
-                <f:format.raw>{data.title.value}</f:format.raw>
+                <f:render partial="Pure/LocalizedText" arguments="{textData: data.title, lang: locale, fallback: 'Untitled'}" />
             </f:then>
             <f:else>
-                <f:if condition="{data.title.en_GB}">
-                    <f:then>
-                        <f:format.raw>{data.title.en_GB}</f:format.raw>
-                    </f:then>
-                    <f:else>
-                        <f:if condition="{data.title.de_DE}">
-                            <f:then>
-                                <f:format.raw>{data.title.de_DE}</f:format.raw>
-                            </f:then>
-                            <f:else>
-                                <f:if condition="{data.title}">
-                                    <f:format.raw>{data.title}</f:format.raw>
-                                </f:if>
-                            </f:else>
-                        </f:then>
-                    </f:else>
-                </f:then>
+                <f:render partial="Pure/LocalizedText" arguments="{textData: data.name, lang: locale, fallback: 'Untitled'}" />
             </f:else>
         </f:if>
     </h3>
 
-    <div class="equipment-details">
-        <dl>
-            <f:comment>Type with term structure</f:comment>
-            <f:if condition="{data.type.term.en_GB}">
-                <f:then>
-                    <dt>Type</dt>
-                    <dd>{data.type.term.en_GB}</dd>
-                </f:then>
-                <f:else>
-                    <f:if condition="{data.type.term.de_DE}">
-                        <f:then>
-                            <dt>Type</dt>
-                            <dd>{data.type.term.de_DE}</dd>
-                        </f:then>
-                        <f:else>
-                            <f:if condition="{data.type}">
-                                <dt>Type</dt>
-                                <dd>{data.type}</dd>
-                            </f:if>
-                        </f:else>
-                    </f:then>
-                </f:else>
-            </f:if>
+    <f:if condition="{data.type.term}">
+        <p class="equipment-type">
+            <span class="equipment-type-label"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.type"/></span>
+            <span class="equipment-type-value"><f:render partial="Pure/LocalizedText" arguments="{textData: data.type.term, lang: locale, fallback: ''}" /></span>
+        </p>
+    </f:if>
 
-            <f:if condition="{data.manufacturer}">
-                <dt>Manufacturer</dt>
-                <dd>
-                    <f:if condition="{data.manufacturer.name}">
-                        <f:then>{data.manufacturer.name}</f:then>
-                        <f:else>{data.manufacturer}</f:else>
-                    </f:if>
-                </dd>
+    <f:if condition="{data.descriptions}">
+        <f:for each="{data.descriptions}" as="desc">
+            <f:if condition="{desc.value}">
+                <div class="equipment-description">
+                    <h5><f:render partial="Pure/LocalizedText" arguments="{textData: desc.type.term, lang: locale, fallback: 'Description'}" /></h5>
+                    <f:render partial="Pure/LocalizedHtml" arguments="{textData: desc.value, lang: locale}" />
+                </div>
             </f:if>
-
-            <f:if condition="{data.model}">
-                <dt>Model</dt>
-                <dd>{data.model}</dd>
-            </f:if>
-
-            <f:if condition="{data.location}">
-                <dt>Location</dt>
-                <dd>
-                    <f:if condition="{data.location.name}">
-                        <f:then>{data.location.name}</f:then>
-                        <f:else>{data.location}</f:else>
-                    </f:if>
-                </dd>
-            </f:if>
-
-            <f:comment>Portal URL - OpenAPI: portalUrl (top-level), XML: info.portalUrl</f:comment>
-            <f:if condition="{data.portalUrl}">
-                <f:then>
-                    <dt>Portal</dt>
-                    <dd><a href="{data.portalUrl}" target="_blank" rel="noopener">View in Pure</a></dd>
-                </f:then>
-                <f:else>
-                    <f:if condition="{data.info.portalUrl}">
-                        <dt>Portal</dt>
-                        <dd><a href="{data.info.portalUrl}" target="_blank" rel="noopener">View in Pure</a></dd>
-                    </f:if>
-                </f:else>
-            </f:if>
-        </dl>
-    </div>
-
-    <f:comment>Description - handle multilingual</f:comment>
-    <f:if condition="{data.description.en_GB}">
-        <f:then>
-            <div class="equipment-description">
-                <h5>Description</h5>
-                <p><f:format.raw>{data.description.en_GB}</f:format.raw></p>
-            </div>
-        </f:then>
-        <f:else>
-            <f:if condition="{data.description.de_DE}">
-                <f:then>
-                    <div class="equipment-description">
-                        <h5>Description</h5>
-                        <p><f:format.raw>{data.description.de_DE}</f:format.raw></p>
-                    </div>
-                </f:then>
-                <f:else>
-                    <f:if condition="{data.description}">
-                        <div class="equipment-description">
-                            <h5>Description</h5>
-                            <p><f:format.raw>{data.description}</f:format.raw></p>
-                        </div>
-                    </f:if>
-                </f:else>
-            </f:then>
-        </f:else>
+        </f:for>
     </f:if>
 </div>
 </html>

@@ -16,8 +16,8 @@ class DataSetEndpoint extends AbstractEndpoint
         return '/data-sets';
     }
 
-    protected function renderItem(array $item, string $view): string
+    protected function renderItem(array $item, string $view, string $locale = 'en_GB'): string
     {
-        return $this->renderingService->renderDataSet($item, $view);
+        return $this->renderingService->renderDataSet($item, $view, $locale);
     }
 }

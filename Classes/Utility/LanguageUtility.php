@@ -17,12 +17,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class LanguageUtility
 {
 
-    /**
-     * Get XML locale string for API requests
-     *
-     * @return string XML formatted locale string
-     */
-    public static function getLocale(?string $type='xml'): string
+    public static function getLocale(): string
     {
         $lang = 'de_DE'; // Default fallback
 
@@ -33,16 +28,7 @@ class LanguageUtility
                 $lang = $languageCode === 'de' ? 'de_DE' : 'en_GB';
             }
         }
-        if ($type=='xml'){
-            return '<locales><locale>' . $lang . '</locale></locales>';
-        }
-        if ($type=='json'){
-            return json_encode(['locales' => ['locale' => $lang]]);
-        }
-        else{
-            return $lang;
-        }
-
+        return $lang;
     }
 
 

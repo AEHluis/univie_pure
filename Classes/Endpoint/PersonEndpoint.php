@@ -16,8 +16,8 @@ class PersonEndpoint extends AbstractEndpoint
         return '/persons';
     }
 
-    protected function renderItem(array $item, string $view): string
+    protected function renderItem(array $item, string $view, string $locale = 'en_GB'): string
     {
-        return $this->renderingService->renderPerson($item, $view);
+        return $this->renderingService->renderPerson($item, $view, $locale);
     }
 }

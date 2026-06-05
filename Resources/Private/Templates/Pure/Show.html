@@ -1,7 +1,18 @@
 <f:layout name="Default" />
 <f:section name="main">
   <f:flashMessages  />
-  <f:render partial="Pure/Properties" arguments="{publication:publication, publicationInsights:publicationInsights, lang:lang, showLinkToPortal:showLinkToPortal}" />
+  <f:if condition="{publication}">
+    <f:render partial="Pure/Properties" arguments="{publication:publication, publicationInsights:publicationInsights, lang:lang, showLinkToPortal:showLinkToPortal}" />
+  </f:if>
+  <f:if condition="{project}">
+    <f:render partial="Pure/ProjectProperties" arguments="{project:project, lang:lang, showLinkToPortal:showLinkToPortal}" />
+  </f:if>
+  <f:if condition="{dataSet}">
+    <f:render partial="Pure/DataSetProperties" arguments="{dataSet:dataSet, lang:lang, showLinkToPortal:showLinkToPortal, relatedOrganizations:relatedOrganizations, relatedProjects:relatedProjects, relatedResearchOutputs:relatedResearchOutputs}" />
+  </f:if>
+  <f:if condition="{equipment}">
+    <f:render partial="Pure/EquipmentProperties" arguments="{equipment:equipment, lang:lang, showLinkToPortal:showLinkToPortal, relatedOrganizations:relatedOrganizations}" />
+  </f:if>
   <f:if condition="{settings.showBibtex}">
     <f:if condition="{citationStyles}">
       <div class="tx-univie-pure publication-citations"

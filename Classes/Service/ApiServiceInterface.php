@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Univie\UniviePure\Service;
 
 /**
- * Interface for Pure API service implementations
- *
- * Provides a unified interface for both XML-based and OpenAPI implementations.
- * This allows seamless migration between API versions with feature flag toggles.
+ * Interface for the Pure OpenAPI service implementation.
  */
 interface ApiServiceInterface
 {
@@ -66,6 +63,32 @@ interface ApiServiceInterface
      * @return string|null BibTeX formatted string or null if not found
      */
     public function getResearchOutputBibtex(string $uuid, array $params = []): ?string;
+
+    /**
+     * Get multiple research outputs by UUIDs in a single bulk query
+     *
+     * Efficiently fetches multiple research outputs by their UUIDs in a single API call,
+     * avoiding N+1 query problems.
+     *
+     * @param array $uuids Array of research output UUIDs
+     * @param array $params Additional parameters (fields, rendering, etc.)
+     * @return array Array of research output data (same format as getResearchOutputs)
+     */
+    public function getResearchOutputsByUuids(array $uuids, array $params = []): array;
+
+    /**
+     * Get allowed research output types.
+     *
+     * @return array ClassificationRefList response
+     */
+    public function getResearchOutputTypes(): array;
+
+    /**
+     * Get allowed equipment types.
+     *
+     * @return array ClassificationRefList response
+     */
+    public function getEquipmentTypes(): array;
 
     /**
      * Get list of projects
@@ -169,7 +192,7 @@ interface ApiServiceInterface
     /**
      * Get API type identifier
      *
-     * @return string 'xml' or 'openapi'
+     * @return string API type identifier
      */
     public function getApiType(): string;
 }

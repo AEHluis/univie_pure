@@ -143,7 +143,7 @@ class UnifiedCacheManager
      *
      * @param string $endpoint API endpoint
      * @param array $params Request parameters
-     * @param string $format Response format (json/xml)
+     * @param string $format Response format
      * @return string Cache key
      */
     public function generateApiCacheKey(string $endpoint, array $params = [], string $format = 'json'): string

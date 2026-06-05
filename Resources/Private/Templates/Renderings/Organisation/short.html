@@ -5,20 +5,17 @@
             <f:then><f:format.raw>{data.name.en_GB}</f:format.raw></f:then>
             <f:else>
                 <f:if condition="{data.name.de_DE}">
-                    <f:then><f:format.raw>{data.name.de_DE}</f:format.raw></f:then>
-                    <f:else><f:format.raw>{data.name}</f:format.raw></f:else>
+                    <f:format.raw>{data.name.de_DE}</f:format.raw>
                 </f:if>
             </f:else>
         </f:if>
     </h4>
 
     <f:if condition="{data.type.term.en_GB}">
-        <f:then>
-            <p class="organisation-type">{data.type.term.en_GB}</p>
-        </f:then>
+        <f:then><p class="organisation-type">{data.type.term.en_GB}</p></f:then>
         <f:else>
-            <f:if condition="{data.type}">
-                <p class="organisation-type">{data.type}</p>
+            <f:if condition="{data.type.term.de_DE}">
+                <p class="organisation-type">{data.type.term.de_DE}</p>
             </f:if>
         </f:else>
     </f:if>

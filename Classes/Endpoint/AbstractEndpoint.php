@@ -23,7 +23,8 @@ abstract class AbstractEndpoint
     private const VIEW_MAP = [
         'portal-short' => 'short',
         'detailsPortal' => 'detailed',
-        'standard' => 'standard',
+        'standard' => 'short',
+        'extended' => 'detailed',
         'bibtex' => 'bibtex',
     ];
 
@@ -60,9 +61,10 @@ abstract class AbstractEndpoint
      *
      * @param array $item Item data
      * @param string $view View name
+     * @param string $locale Locale for rendering (e.g., 'de_DE', 'en_GB')
      * @return string Rendered HTML
      */
-    abstract protected function renderItem(array $item, string $view): string;
+    abstract protected function renderItem(array $item, string $view, string $locale = 'en_GB'): string;
 
     /**
      * Convert input parameters to OpenAPI query parameters
@@ -115,6 +117,30 @@ abstract class AbstractEndpoint
             $queryParams['fields'] = is_array($params['fields'])
                 ? implode(',', $params['fields'])
                 : $params['fields'];
+        }
+
+        foreach (['organizationUuids', 'personUuids', 'projectUuids', 'equipmentUuids'] as $filterKey) {
+            if (!empty($params[$filterKey])) {
+                $uuids = is_array($params[$filterKey])
+                    ? array_filter($params[$filterKey])
+                    : explode(',', $params[$filterKey]);
+
+                // Limit number of UUIDs to avoid HTTP 414 errors
+                if (count($uuids) > self::MAX_UUIDS_PER_REQUEST) {
+                    $this->logger->warning('Too many UUIDs for filter, truncating', [
+                        'filter' => $filterKey,
+                        'count' => count($uuids),
+                        'max' => self::MAX_UUIDS_PER_REQUEST,
+                    ]);
+                    $uuids = array_slice($uuids, 0, self::MAX_UUIDS_PER_REQUEST);
+                }
+
+                $queryParams[$filterKey] = implode(',', $uuids);
+            }
+        }
+
+        if (isset($params['includeSubUnits'])) {
+            $queryParams['includeSubUnits'] = $params['includeSubUnits'] ? 'true' : 'false';
         }
 
         return $queryParams;
@@ -179,6 +205,12 @@ abstract class AbstractEndpoint
     }
 
     /**
+     * Maximum number of UUIDs to include in a single request
+     * to avoid HTTP 414 Request-URI Too Long errors
+     */
+    private const MAX_UUIDS_PER_REQUEST = 50;
+
+    /**
      * Get multiple items
      *
      * @param array $params Query parameters
@@ -192,9 +224,10 @@ abstract class AbstractEndpoint
 
         $view = $params['view'] ?? $params['rendering'] ?? $this->getDefaultListView();
         $view = $this->mapView($view);
+        $locale = $params['locale'] ?? 'en_GB';
 
         foreach ($collection['items'] as &$item) {
-            $item['rendering'] = $this->renderItem($item, $view);
+            $item['rendering'] = $this->renderItem($item, $view, $locale);
         }
         unset($item);
 
@@ -217,7 +250,8 @@ abstract class AbstractEndpoint
 
             $view = $params['view'] ?? $params['rendering'] ?? $this->getDefaultDetailView();
             $view = $this->mapView($view);
-            $response['rendering'] = $this->renderItem($response, $view);
+            $locale = $params['locale'] ?? 'en_GB';
+            $response['rendering'] = $this->renderItem($response, $view, $locale);
 
             return $response;
         } catch (OpenApiException $e) {
@@ -250,9 +284,10 @@ abstract class AbstractEndpoint
 
         $view = $params['view'] ?? $params['rendering'] ?? $this->getDefaultListView();
         $view = $this->mapView($view);
+        $locale = $params['locale'] ?? 'en_GB';
 
         foreach ($collection['items'] as &$item) {
-            $item['rendering'] = $this->renderItem($item, $view);
+            $item['rendering'] = $this->renderItem($item, $view, $locale);
         }
         unset($item);
 

@@ -91,7 +91,7 @@
                             <label>
                                 LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.linkToPortal
                             </label>
-                            <displayCond>FIELD:settings.what_to_display:IN:DETAIL,PROJECTS,PUBLICATIONS,EQUIPMENTS
+                            <displayCond>FIELD:settings.what_to_display:IN:DETAIL,PROJECTS,PUBLICATIONS,EQUIPMENTS,DATASETS
                             </displayCond>
                             <config>
                                 <type>check</type>
@@ -103,7 +103,7 @@
                         <TCEforms>
                             <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.singlePid
                             </label>
-                            <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS</displayCond>
+                            <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS</displayCond>
                             <config>
                                 <type>group</type>
                                 <allowed>pages</allowed>

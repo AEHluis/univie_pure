@@ -6,24 +6,8 @@
         </f:if>
     </h4>
 
-    <f:if condition="{data.title}">
-        <p class="person-title">{data.title}</p>
-    </f:if>
-
-    <f:if condition="{data.organisationalUnits}">
-        <p class="person-organisation">
-            <f:for each="{data.organisationalUnits}" as="unit" iteration="iter">
-                <f:if condition="{unit.name.en_GB}">
-                    <f:then>{unit.name.en_GB}</f:then>
-                    <f:else>
-                        <f:if condition="{unit.name.de_DE}">
-                            <f:then>{unit.name.de_DE}</f:then>
-                            <f:else>{unit.name}</f:else>
-                        </f:if>
-                    </f:else>
-                </f:if><f:if condition="!{iter.isLast}">, </f:if>
-            </f:for>
-        </p>
+    <f:if condition="{data.title.value}">
+        <p class="person-title">{data.title.value}</p>
     </f:if>
 
     <f:if condition="{data.email}">

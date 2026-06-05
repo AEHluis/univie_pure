@@ -8,14 +8,22 @@
 
     <div class="person-details">
         <dl>
-            <f:if condition="{data.title}">
+            <f:if condition="{data.title.value}">
                 <dt>Title</dt>
-                <dd>{data.title}</dd>
+                <dd>{data.title.value}</dd>
             </f:if>
 
-            <f:if condition="{data.jobDescription}">
-                <dt>Position</dt>
-                <dd>{data.jobDescription}</dd>
+            <f:if condition="{data.jobDescription.en_GB}">
+                <f:then>
+                    <dt>Position</dt>
+                    <dd>{data.jobDescription.en_GB}</dd>
+                </f:then>
+                <f:else>
+                    <f:if condition="{data.jobDescription.de_DE}">
+                        <dt>Position</dt>
+                        <dd>{data.jobDescription.de_DE}</dd>
+                    </f:if>
+                </f:else>
             </f:if>
 
             <f:if condition="{data.email}">
@@ -33,32 +41,11 @@
                 <dd>{data.phone}</dd>
             </f:if>
 
-            <f:if condition="{data.info.portalUrl}">
+            <f:if condition="{data.portalUrl}">
                 <dt>Profile</dt>
-                <dd><a href="{data.info.portalUrl}" target="_blank" rel="noopener">View in Pure</a></dd>
+                <dd><a href="{data.portalUrl}" target="_blank" rel="noopener">View in Pure</a></dd>
             </f:if>
         </dl>
     </div>
-
-    <f:if condition="{data.organisationalUnits}">
-        <div class="person-organisations">
-            <h5>Affiliations</h5>
-            <ul>
-                <f:for each="{data.organisationalUnits}" as="unit">
-                    <li>
-                        <f:if condition="{unit.name.en_GB}">
-                            <f:then>{unit.name.en_GB}</f:then>
-                            <f:else>
-                                <f:if condition="{unit.name.de_DE}">
-                                    <f:then>{unit.name.de_DE}</f:then>
-                                    <f:else>{unit.name}</f:else>
-                                </f:if>
-                            </f:else>
-                        </f:if>
-                    </li>
-                </f:for>
-            </ul>
-        </div>
-    </f:if>
 </div>
 </html>

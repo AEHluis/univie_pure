@@ -240,6 +240,21 @@ class CommonUtilities
     }
 
     /**
+     * Sanitize a search string for safe use in API queries.
+     */
+    public static function cleanSearchString(string $content): string
+    {
+        $content = strtolower($content);
+        $content = substr($content, 0, 500);
+        $content = filter_var($content, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW);
+        $content = preg_replace('/\s+/', ' ', trim($content));
+        $content = preg_replace('/[<>"\';&\x00-\x1F\x7F]/u', '', $content);
+        $content = preg_replace("/\(([^()]*+|(?R))*\)/", " ", $content);
+        $content = preg_replace('/[^\p{L}\p{N} .–_]/u', " ", urldecode($content));
+        return $content;
+    }
+
+    /**
      * Extract localized text from Pure API name/title structures
      */
     public static function extractLocalizedText($fieldData, string $locale): string

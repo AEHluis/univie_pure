@@ -5,8 +5,7 @@
             <f:then><f:format.raw>{data.title.en_GB}</f:format.raw></f:then>
             <f:else>
                 <f:if condition="{data.title.de_DE}">
-                    <f:then><f:format.raw>{data.title.de_DE}</f:format.raw></f:then>
-                    <f:else><f:format.raw>{data.title}</f:format.raw></f:else>
+                    <f:format.raw>{data.title.de_DE}</f:format.raw>
                 </f:if>
             </f:else>
         </f:if>
@@ -26,9 +25,17 @@
                 </dd>
             </f:if>
 
-            <f:if condition="{data.status}">
-                <dt>Status</dt>
-                <dd>{data.status}</dd>
+            <f:if condition="{data.status.term.en_GB}">
+                <f:then>
+                    <dt>Status</dt>
+                    <dd>{data.status.term.en_GB}</dd>
+                </f:then>
+                <f:else>
+                    <f:if condition="{data.status.term.de_DE}">
+                        <dt>Status</dt>
+                        <dd>{data.status.term.de_DE}</dd>
+                    </f:if>
+                </f:else>
             </f:if>
 
             <f:if condition="{data.type.term.en_GB}">
@@ -37,25 +44,35 @@
                     <dd>{data.type.term.en_GB}</dd>
                 </f:then>
                 <f:else>
-                    <f:if condition="{data.type}">
+                    <f:if condition="{data.type.term.de_DE}">
                         <dt>Type</dt>
-                        <dd>{data.type}</dd>
+                        <dd>{data.type.term.de_DE}</dd>
                     </f:if>
                 </f:else>
             </f:if>
 
-            <f:if condition="{data.info.portalUrl}">
+            <f:if condition="{data.portalUrl}">
                 <dt>Portal</dt>
-                <dd><a href="{data.info.portalUrl}" target="_blank" rel="noopener">View in Pure</a></dd>
+                <dd><a href="{data.portalUrl}" target="_blank" rel="noopener">View in Pure</a></dd>
             </f:if>
         </dl>
     </div>
 
-    <f:if condition="{data.description}">
-        <div class="project-description">
-            <h5>Description</h5>
-            <p><f:format.raw>{data.description}</f:format.raw></p>
-        </div>
+    <f:if condition="{data.description.en_GB}">
+        <f:then>
+            <div class="project-description">
+                <h5>Description</h5>
+                <p><f:format.raw>{data.description.en_GB}</f:format.raw></p>
+            </div>
+        </f:then>
+        <f:else>
+            <f:if condition="{data.description.de_DE}">
+                <div class="project-description">
+                    <h5>Description</h5>
+                    <p><f:format.raw>{data.description.de_DE}</f:format.raw></p>
+                </div>
+            </f:if>
+        </f:else>
     </f:if>
 
     <f:if condition="{data.participants}">
@@ -63,7 +80,9 @@
             <h5>Participants</h5>
             <ul>
                 <f:for each="{data.participants}" as="participant">
-                    <li>{participant.name}</li>
+                    <f:if condition="{participant.name.lastName}">
+                        <li>{participant.name.firstName} {participant.name.lastName}</li>
+                    </f:if>
                 </f:for>
             </ul>
         </div>

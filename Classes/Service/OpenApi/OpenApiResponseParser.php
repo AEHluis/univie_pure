@@ -39,8 +39,10 @@ class OpenApiResponseParser
             throw new OpenApiException('Empty response received', $statusCode);
         }
 
-        // Verify content type - if not JSON, provide helpful error
-        if (!str_contains($contentType, 'application/json')) {
+        // Verify content type - if not JSON, provide helpful error.
+        // Pure returns RFC 7807 problem details as application/problem+json for
+        // 4xx responses; those are JSON and should be parsed normally.
+        if (!$this->isJsonContentType($contentType)) {
             $this->logger->error('Unexpected content type from API', [
                 'expected' => 'application/json',
                 'received' => $contentType,
@@ -80,6 +82,14 @@ class OpenApiResponseParser
         $this->checkForErrors($data, $statusCode);
 
         return $data;
+    }
+
+    private function isJsonContentType(string $contentType): bool
+    {
+        $contentType = strtolower($contentType);
+
+        return str_contains($contentType, 'application/json')
+            || str_contains($contentType, '+json');
     }
 
     /**

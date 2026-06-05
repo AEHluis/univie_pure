@@ -1,19 +1,9 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <div class="rendering_researchoutput rendering_detailed" data-uuid="{data.uuid}">
-    <f:comment>Title - OpenAPI: title.value, XML: title</f:comment>
     <f:if condition="{data.title.value}">
-        <f:then>
-            <h3 class="publication-title">
-                <f:format.raw>{data.title.value}</f:format.raw>
-            </h3>
-        </f:then>
-        <f:else>
-            <f:if condition="{data.title}">
-                <h3 class="publication-title">
-                    <f:format.raw>{data.title}</f:format.raw>
-                </h3>
-            </f:if>
-        </f:else>
+        <h3 class="publication-title">
+            <f:format.raw>{data.title.value}</f:format.raw>
+        </h3>
     </f:if>
 
     <div class="publication-authors">
@@ -32,149 +22,68 @@
                 </f:for>
             </ul>
         </f:if>
-        <f:if condition="{data.personAssociations}">
-            <h5>Authors</h5>
-            <ul class="author-list">
-                <f:for each="{data.personAssociations}" as="assoc">
-                    <f:if condition="{assoc.name.lastName}">
-                        <li class="author">
-                            <span class="name">{assoc.name.lastName}<f:if condition="{assoc.name.firstName}">, {assoc.name.firstName}</f:if></span>
-                        </li>
-                    </f:if>
-                </f:for>
-            </ul>
-        </f:if>
     </div>
 
     <div class="publication-details">
         <dl>
-            <f:comment>Publication Year - OpenAPI: publicationStatuses array, XML: publicationYear</f:comment>
-            <f:if condition="{data.publicationStatuses}">
-                <f:then>
-                    <f:for each="{data.publicationStatuses}" as="status">
-                        <f:if condition="{status.current}">
-                            <dt>Year</dt>
-                            <dd>{status.publicationDate.year}</dd>
-                        </f:if>
-                    </f:for>
-                </f:then>
-                <f:else>
-                    <f:if condition="{data.publicationYear}">
-                        <dt>Year</dt>
-                        <dd>{data.publicationYear}</dd>
-                    </f:if>
-                </f:else>
-            </f:if>
+            <f:for each="{data.publicationStatuses}" as="status">
+                <f:if condition="{status.current}">
+                    <dt>Year</dt>
+                    <dd>{status.publicationDate.year}</dd>
+                </f:if>
+            </f:for>
 
-            <f:comment>Type - OpenAPI: type.term.en_GB or de_DE</f:comment>
             <f:if condition="{data.type.term.en_GB}">
                 <f:then>
                     <dt>Type</dt>
                     <dd>{data.type.term.en_GB}</dd>
                 </f:then>
                 <f:else>
-                    <f:if condition="{data.type}">
+                    <f:if condition="{data.type.term.de_DE}">
                         <dt>Type</dt>
-                        <dd>{data.type}</dd>
+                        <dd>{data.type.term.de_DE}</dd>
                     </f:if>
                 </f:else>
             </f:if>
 
-            <f:comment>Journal - OpenAPI: journalAssociation.title.title, XML: journal.title</f:comment>
             <f:if condition="{data.journalAssociation.title.title}">
-                <f:then>
-                    <dt>Journal</dt>
-                    <dd><em>{data.journalAssociation.title.title}</em></dd>
-                </f:then>
-                <f:else>
-                    <f:if condition="{data.journal.title}">
-                        <dt>Journal</dt>
-                        <dd><em>{data.journal.title}</em></dd>
-                    </f:if>
-                </f:else>
+                <dt>Journal</dt>
+                <dd><em>{data.journalAssociation.title.title}</em></dd>
             </f:if>
 
-            <f:comment>Volume - OpenAPI: volume (top-level), XML: journal.volume</f:comment>
             <f:if condition="{data.volume}">
-                <f:then>
-                    <dt>Volume</dt>
-                    <dd>{data.volume}<f:if condition="{data.journalNumber}">({data.journalNumber})</f:if></dd>
-                </f:then>
-                <f:else>
-                    <f:if condition="{data.journal.volume}">
-                        <dt>Volume</dt>
-                        <dd>{data.journal.volume}<f:if condition="{data.journal.issue}">({data.journal.issue})</f:if></dd>
-                    </f:if>
-                </f:else>
+                <dt>Volume</dt>
+                <dd>{data.volume}<f:if condition="{data.journalNumber}">({data.journalNumber})</f:if></dd>
             </f:if>
 
-            <f:comment>Pages - OpenAPI: pages (top-level), XML: journal.pages</f:comment>
             <f:if condition="{data.pages}">
-                <f:then>
-                    <dt>Pages</dt>
-                    <dd>{data.pages}</dd>
-                </f:then>
-                <f:else>
-                    <f:if condition="{data.journal.pages}">
-                        <dt>Pages</dt>
-                        <dd>{data.journal.pages}</dd>
-                    </f:if>
-                </f:else>
+                <dt>Pages</dt>
+                <dd>{data.pages}</dd>
             </f:if>
 
-            <f:if condition="{data.publisher}">
+            <f:if condition="{data.publisher.name}">
                 <dt>Publisher</dt>
-                <dd>
-                    <f:if condition="{data.publisher.name}">
-                        <f:then>{data.publisher.name}</f:then>
-                        <f:else>{data.publisher}</f:else>
-                    </f:if>
-                </dd>
+                <dd>{data.publisher.name}</dd>
             </f:if>
 
-            <f:comment>DOI - OpenAPI: electronicVersions array, XML: doi</f:comment>
-            <f:if condition="{data.electronicVersions}">
-                <f:then>
-                    <f:for each="{data.electronicVersions}" as="version">
-                        <f:if condition="{version.doi}">
-                            <dt>DOI</dt>
-                            <dd>
-                                <a href="https://doi.org/{version.doi}" target="_blank" rel="noopener">{version.doi}</a>
-                            </dd>
-                        </f:if>
-                    </f:for>
-                </f:then>
-                <f:else>
-                    <f:if condition="{data.doi}">
-                        <dt>DOI</dt>
-                        <dd>
-                            <a href="https://doi.org/{data.doi}" target="_blank" rel="noopener">{data.doi}</a>
-                        </dd>
-                    </f:if>
-                </f:else>
-            </f:if>
-
-            <f:comment>Portal URL - OpenAPI: portalUrl (top-level), XML: info.portalUrl</f:comment>
-            <f:if condition="{data.portalUrl}">
-                <f:then>
-                    <dt>Pure Portal</dt>
+            <f:for each="{data.electronicVersions}" as="version">
+                <f:if condition="{version.doi}">
+                    <dt>DOI</dt>
                     <dd>
-                        <a href="{data.portalUrl}" target="_blank" rel="noopener">View in Pure</a>
+                        <a href="https://doi.org/{version.doi}" target="_blank" rel="noopener">{version.doi}</a>
                     </dd>
-                </f:then>
-                <f:else>
-                    <f:if condition="{data.info.portalUrl}">
-                        <dt>Pure Portal</dt>
-                        <dd>
-                            <a href="{data.info.portalUrl}" target="_blank" rel="noopener">View in Pure</a>
-                        </dd>
-                    </f:if>
-                </f:else>
+                </f:if>
+            </f:for>
+
+            <f:if condition="{data.portalUrl}">
+                <dt>Pure Portal</dt>
+                <dd>
+                    <a href="{data.portalUrl}" target="_blank" rel="noopener">View in Pure</a>
+                </dd>
             </f:if>
         </dl>
     </div>
 
-    <f:comment>Abstract - OpenAPI: abstract.en_GB or de_DE, XML: abstract</f:comment>
     <f:if condition="{data.abstract.en_GB}">
         <f:then>
             <div class="publication-abstract">
@@ -184,56 +93,27 @@
         </f:then>
         <f:else>
             <f:if condition="{data.abstract.de_DE}">
-                <f:then>
-                    <div class="publication-abstract">
-                        <h5>Abstract</h5>
-                        <p><f:format.raw>{data.abstract.de_DE}</f:format.raw></p>
-                    </div>
-                </f:then>
-                <f:else>
-                    <f:if condition="{data.abstract}">
-                        <div class="publication-abstract">
-                            <h5>Abstract</h5>
-                            <p><f:format.raw>{data.abstract}</f:format.raw></p>
-                        </div>
-                    </f:if>
-                </f:else>
+                <div class="publication-abstract">
+                    <h5>Abstract</h5>
+                    <p><f:format.raw>{data.abstract.de_DE}</f:format.raw></p>
+                </div>
             </f:if>
         </f:else>
     </f:if>
 
-    <f:comment>Keywords - OpenAPI: in keywordGroups, XML: keywords array</f:comment>
     <f:if condition="{data.keywordGroups}">
-        <f:then>
-            <div class="publication-keywords">
-                <h5>Keywords</h5>
-                <ul class="keyword-list">
-                    <f:for each="{data.keywordGroups}" as="group">
-                        <f:if condition="{group.keywords}">
-                            <f:for each="{group.keywords}" as="keywordObj">
-                                <f:if condition="{keywordObj.freeKeywords}">
-                                    <f:for each="{keywordObj.freeKeywords}" as="keyword">
-                                        <li class="keyword">{keyword}</li>
-                                    </f:for>
-                                </f:if>
-                            </f:for>
-                        </f:if>
-                    </f:for>
-                </ul>
-            </div>
-        </f:then>
-        <f:else>
-            <f:if condition="{data.keywords}">
-                <div class="publication-keywords">
-                    <h5>Keywords</h5>
-                    <ul class="keyword-list">
-                        <f:for each="{data.keywords}" as="keyword">
+        <div class="publication-keywords">
+            <h5>Keywords</h5>
+            <ul class="keyword-list">
+                <f:for each="{data.keywordGroups}" as="group">
+                    <f:for each="{group.keywords}" as="keywordObj">
+                        <f:for each="{keywordObj.freeKeywords}" as="keyword">
                             <li class="keyword">{keyword}</li>
                         </f:for>
-                    </ul>
-                </div>
-            </f:if>
-        </f:else>
+                    </f:for>
+                </f:for>
+            </ul>
+        </div>
     </f:if>
 </div>
 </html>

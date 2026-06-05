@@ -22,9 +22,9 @@ class ResearchOutputEndpoint extends AbstractEndpoint
         return '/research-outputs';
     }
 
-    protected function renderItem(array $item, string $view): string
+    protected function renderItem(array $item, string $view, string $locale = 'en_GB'): string
     {
-        return $this->renderingService->renderResearchOutput($item, $view);
+        return $this->renderingService->renderResearchOutput($item, $view, null, $locale);
     }
 
     /**
@@ -55,6 +55,12 @@ class ResearchOutputEndpoint extends AbstractEndpoint
             } else {
                 $this->addIndividualRendering($collection['items'], $view, $locale);
             }
+
+            // Normalize items for view templates
+            foreach ($collection['items'] as &$item) {
+                $this->normalizeItemForView($item);
+            }
+            unset($item);
 
             return $this->normalizeCollectionResponse($collection);
         } catch (\Throwable $e) {
@@ -127,10 +133,7 @@ class ResearchOutputEndpoint extends AbstractEndpoint
     }
 
     /**
-     * Transform OpenAPI research output response to template-compatible format
-     *
-     * OpenAPI returns flat localized structures (term.en_GB, term.de_DE)
-     * but templates expect array-based structures (term.text.0.value with locale).
+     * Normalize OpenAPI research output response for local Fluid templates.
      *
      * @param array $response Raw OpenAPI response
      * @param string $locale Current locale (e.g., 'de_DE', 'en_GB')
@@ -158,14 +161,12 @@ class ResearchOutputEndpoint extends AbstractEndpoint
             $response['abstract'] = $this->transformLocalizedContent($response['abstract']);
         }
 
-        // Transform organisations (organizations in OpenAPI) with names
         if (isset($response['organizations']) && is_array($response['organizations'])) {
-            $response['organisationalUnits'] = $this->enrichOrganizations($response['organizations'], $locale);
+            $response['organizationsDetailed'] = $this->enrichOrganizations($response['organizations'], $locale);
         }
 
-        // Transform external organizations with names
         if (isset($response['externalOrganizations']) && is_array($response['externalOrganizations'])) {
-            $response['externalOrganisations'] = $this->enrichExternalOrganizations($response['externalOrganizations'], $locale);
+            $response['externalOrganizationsDetailed'] = $this->enrichExternalOrganizations($response['externalOrganizations'], $locale);
         }
 
         // Transform journal association
@@ -197,19 +198,11 @@ class ResearchOutputEndpoint extends AbstractEndpoint
             unset($ev);
         }
 
-        // Add info.portalUrl wrapper for backward compatibility
-        if (isset($response['portalUrl']) && !isset($response['info']['portalUrl'])) {
-            $response['info']['portalUrl'] = $response['portalUrl'];
-        }
-
         return $response;
     }
 
     /**
-     * Transform localized term from OpenAPI format to template format
-     *
-     * OpenAPI: { "en_GB": "Article", "de_DE": "Artikel" }
-     * Template: { "text": [{ "value": "Article", "locale": "en_GB" }, ...] }
+     * Add text-list variants for reusable localized partials.
      */
     private function transformLocalizedTerm(array $term): array
     {
@@ -332,7 +325,7 @@ class ResearchOutputEndpoint extends AbstractEndpoint
             }
 
             try {
-                $orgDetails = $this->client->get("/organizational-units/{$uuid}", ['locale' => $locale]);
+                $orgDetails = $this->client->get("/organizations/{$uuid}", ['locale' => $locale]);
                 $name = $this->extractOrganizationName($orgDetails, $locale);
             } catch (\Throwable $e) {
                 $name = null;
@@ -500,13 +493,9 @@ class ResearchOutputEndpoint extends AbstractEndpoint
      */
     private function renderFallbackEntry(array $item): string
     {
-        $title = 'Untitled';
-        if (isset($item['title'])) {
-            if (is_array($item['title']) && isset($item['title']['value'])) {
-                $title = $item['title']['value'];
-            } elseif (is_string($item['title'])) {
-                $title = $item['title'];
-            }
+        $title = $this->extractTitle($item);
+        if ($title === '') {
+            $title = 'Untitled';
         }
 
         $year = $item['publicationYear'] ?? '';
@@ -516,5 +505,66 @@ class ResearchOutputEndpoint extends AbstractEndpoint
             htmlspecialchars($title, ENT_QUOTES, 'UTF-8'),
             $year ? ' (' . htmlspecialchars((string)$year, ENT_QUOTES, 'UTF-8') . ')' : ''
         );
+    }
+
+    /**
+     * Normalize research output item for view templates.
+     *
+     * Extracts year, portalUrl, title into simple formats for easy template consumption.
+     */
+    private function normalizeItemForView(array &$item): void
+    {
+        $item['year'] = $this->extractPublicationYear($item);
+        $item['portalUrl'] = is_string($item['portalUrl'] ?? null) ? $item['portalUrl'] : '';
+    }
+
+    /**
+     * Extract publication year from research output.
+     */
+    private function extractPublicationYear(array $item): string
+    {
+        // Try to get year from current publication status
+        if (isset($item['publicationStatuses']) && is_array($item['publicationStatuses'])) {
+            foreach ($item['publicationStatuses'] as $status) {
+                if ($status['current'] ?? false) {
+                    return (string)($status['publicationDate']['year'] ?? '');
+                }
+            }
+        }
+
+        return (string)($item['publicationYear'] ?? '');
+    }
+
+    /**
+     * Extract title from research output data.
+     */
+    public function extractTitle(array $publication): string
+    {
+        $title = $publication['title'] ?? '';
+
+        if (is_string($title) && $title !== '') {
+            return $title;
+        }
+
+        if (is_array($title)) {
+            // Try direct value
+            if (!empty($title['value'])) {
+                return $title['value'];
+            }
+
+            // Try localized text array
+            if (isset($title['text']) && is_array($title['text']) && !empty($title['text'])) {
+                return $title['text'][0]['value'] ?? '';
+            }
+
+            // Try locale keys directly (e.g., en_GB, de_DE)
+            foreach (['en_GB', 'de_DE', 'en', 'de'] as $locale) {
+                if (!empty($title[$locale])) {
+                    return $title[$locale];
+                }
+            }
+        }
+
+        return '';
     }
 }

@@ -36,8 +36,8 @@
 				<target>betreut von</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.units">
-				<source>Organisational Unit(s)</source>
-				<target>Organisationseinheit(en)</target>
+				<source>Organisational Unit(s):</source>
+				<target>Organisationseinheit(en):</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.extunits">
 				<source>External Organisation(s)</source>
@@ -99,9 +99,65 @@
 				<source>Link</source>
 				<target>Link</target>
 			</trans-unit>
+			<trans-unit id="univiepur.datasets.type">
+				<source>Type: </source>
+				<target>Typ: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.year">
+				<source>Year: </source>
+				<target>Jahr: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.creators">
+				<source>Creators: </source>
+				<target>Urheber: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.license">
+				<source>License: </source>
+				<target>Lizenz: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.publisher">
+				<source>Publisher</source>
+				<target>Herausgeber</target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.relatedProjects">
+				<source>Related Projects</source>
+				<target>Verknüpfte Projekte</target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.relatedResearchOutputs">
+				<source>Related Research Outputs</source>
+				<target>Verknüpfte Forschungsleistungen</target>
+			</trans-unit>
 			<trans-unit id="univiepur.projects.description">
 				<source>Abstract</source>
 				<target>Abstract</target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.type">
+				<source>Type: </source>
+				<target>Typ: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.status">
+				<source>Status: </source>
+				<target>Status: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.duration">
+				<source>Duration</source>
+				<target>Laufzeit</target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.participants">
+				<source>Participants</source>
+				<target>Beteiligte</target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.links">
+				<source>Links</source>
+				<target>Links</target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.researchOutputs">
+				<source>Research Outputs</source>
+				<target>Forschungsleistungen</target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.publications">
+				<source>publications</source>
+				<target>Publikationen</target>
 			</trans-unit>
 			<trans-unit id="univiepur.equipments.contactPerson">
 				<source>Contact person(s) for booking:</source>
@@ -114,6 +170,10 @@
 			<trans-unit id="univiepur.equipments.webAddress">
 				<source>URL(s):</source>
 				<target>URL(s):</target>
+			</trans-unit>
+			<trans-unit id="univiepur.equipments.type">
+				<source>Type:</source>
+				<target>Typ:</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.portalUrlLong">
                 <source>Details in the research portal "Research@Leibniz University"</source>

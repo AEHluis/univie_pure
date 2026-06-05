@@ -1,37 +1,62 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <div class="rendering_dataset rendering_detailed" data-uuid="{data.uuid}">
     <h3 class="dataset-title">
-        <f:format.raw>{data.title}</f:format.raw>
+        <f:render partial="Pure/LocalizedText" arguments="{textData: data.title, lang: locale, fallback: 'Untitled'}" />
     </h3>
 
-    <div class="dataset-details">
-        <dl>
-            <f:if condition="{data.publicationYear}">
-                <dt>Year</dt>
-                <dd>{data.publicationYear}</dd>
-            </f:if>
+    <f:if condition="{data.type.term}">
+        <p class="dataset-type">
+            <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.datasets.type"/>
+            <f:render partial="Pure/LocalizedText" arguments="{textData: data.type.term, lang: locale, fallback: ''}" />
+        </p>
+    </f:if>
 
-            <f:if condition="{data.type}">
-                <dt>Type</dt>
-                <dd>{data.type}</dd>
-            </f:if>
+    <f:if condition="{data.publicationAvailableDate.year}">
+        <p class="dataset-year">({data.publicationAvailableDate.year})</p>
+    </f:if>
 
-            <f:if condition="{data.doi}">
-                <dt>DOI</dt>
-                <dd><a href="https://doi.org/{data.doi}" target="_blank" rel="noopener">{data.doi}</a></dd>
-            </f:if>
+    <f:if condition="{data.doi.doi}">
+        <p class="dataset-doi">
+            <a href="https://doi.org/{data.doi.doi}" target="_blank" rel="noopener">DOI: {data.doi.doi}</a>
+        </p>
+    </f:if>
 
-            <f:if condition="{data.info.portalUrl}">
-                <dt>Portal</dt>
-                <dd><a href="{data.info.portalUrl}" target="_blank" rel="noopener">View in Pure</a></dd>
-            </f:if>
-        </dl>
-    </div>
+    <f:if condition="{data.persons}">
+        <p class="dataset-persons">
+            <f:for each="{data.persons}" as="person" iteration="iter">
+                <f:if condition="{person.name.firstName} || {person.name.lastName}">
+                    <span class="person">{person.name.firstName} {person.name.lastName}<f:if condition="{person.role.term}"> (<f:render partial="Pure/LocalizedText" arguments="{textData: person.role.term, lang: locale, fallback: ''}" />)</f:if></span><f:if condition="{iter.isLast}"><f:else>, </f:else></f:if>
+                </f:if>
+            </f:for>
+        </p>
+    </f:if>
 
-    <f:if condition="{data.description}">
-        <div class="dataset-description">
-            <h5>Description</h5>
-            <p><f:format.raw>{data.description}</f:format.raw></p>
+    <f:if condition="{data.license.term}">
+        <p class="dataset-license">
+            <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.datasets.license"/>
+            <f:render partial="Pure/LocalizedText" arguments="{textData: data.license.term, lang: locale, fallback: ''}" />
+        </p>
+    </f:if>
+
+    <f:if condition="{data.descriptions}">
+        <f:for each="{data.descriptions}" as="desc">
+            <f:if condition="{desc.value}">
+                <div class="dataset-description">
+                    <h5><f:render partial="Pure/LocalizedText" arguments="{textData: desc.type.term, lang: locale, fallback: 'Beschreibung'}" /></h5>
+                    <f:render partial="Pure/LocalizedHtml" arguments="{textData: desc.value, lang: locale}" />
+                </div>
+            </f:if>
+        </f:for>
+    </f:if>
+
+    <f:if condition="{data.links}">
+        <div class="dataset-links">
+            <h5><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.links" /></h5>
+            <f:for each="{data.links}" as="link">
+                <f:if condition="{link.url}">
+                    <p><a href="{link.url}" target="_blank" rel="noopener noreferrer" class="c-link--extern">{link.url}</a></p>
+                </f:if>
+            </f:for>
         </div>
     </f:if>
 </div>

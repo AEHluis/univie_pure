@@ -77,7 +77,7 @@ class DoiExtractor
             return [];
         }
 
-        // Single object-like array from XML/JSON conversion
+        // Single object-like array from decoded API data.
         $isAssoc = array_keys($value) !== range(0, count($value) - 1);
         if ($isAssoc) {
             if (isset($value['doi']) || isset($value['link'])) {
@@ -92,4 +92,3 @@ class DoiExtractor
         return $value;
     }
 }
-

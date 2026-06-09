@@ -145,7 +145,7 @@ $endpoints = [
     'research-outputs?size=2',
     'persons?size=2',
     'projects?size=2',
-    'organizational-units?size=2',
+    'organizations?size=2',
     'data-sets?size=2',
 ];
 

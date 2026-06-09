@@ -16,8 +16,7 @@ ini_set('display_errors', '1');
 // Configuration
 $config = [
     'api_key' => '3420b029-821c-44aa-9371-73b3067b42f8',
-    'base_url' => 'https://fis.uni-hannover.de/ws/api',  // OpenAPI (ohne /524)
-    'base_url_legacy' => 'https://fis.uni-hannover.de/ws/api/524',  // Legacy XML API
+    'base_url' => 'https://fis.uni-hannover.de/ws/api',
     'proxy' => 'http://proxy.luis.uni-hannover.de:3128',
     'output_dir' => __DIR__ . '/openapi_test_results',
     'timeout' => 30,
@@ -308,7 +307,7 @@ if ($testResults['projects_list']['success']
 $testResults['organizational_units_list'] = testEndpoint(
     $config,
     'organizational_units_list',
-    'organizational-units',
+    'organizations',
     ['size' => 5, 'offset' => 0],
     'List organizational units with pagination'
 );
@@ -316,7 +315,7 @@ $testResults['organizational_units_list'] = testEndpoint(
 $testResults['organizational_units_search'] = testEndpoint(
     $config,
     'organizational_units_search',
-    'organizational-units',
+    'organizations',
     ['size' => 3, 'q' => 'Institut'],
     'Search organizational units by name'
 );
@@ -329,7 +328,7 @@ if ($testResults['organizational_units_list']['success']
     $testResults['organizational_unit_single'] = testEndpoint(
         $config,
         'organizational_unit_single',
-        "organizational-units/{$firstOrgUnitUuid}",
+        "organizations/{$firstOrgUnitUuid}",
         [],
         'Get single organizational unit by UUID'
     );
@@ -376,7 +375,7 @@ if ($testResults['data_sets_list']['success']
 $testResults['equipments_list'] = testEndpoint(
     $config,
     'equipments_list',
-    'equipments',
+    'equipment',
     ['size' => 5, 'offset' => 0],
     'List equipments with pagination'
 );
@@ -384,7 +383,7 @@ $testResults['equipments_list'] = testEndpoint(
 $testResults['equipments_search'] = testEndpoint(
     $config,
     'equipments_search',
-    'equipments',
+    'equipment',
     ['size' => 3, 'q' => 'microscope'],
     'Search equipments by keyword'
 );
@@ -397,7 +396,7 @@ if ($testResults['equipments_list']['success']
     $testResults['equipment_single'] = testEndpoint(
         $config,
         'equipment_single',
-        "equipments/{$firstEquipmentUuid}",
+        "equipment/{$firstEquipmentUuid}",
         [],
         'Get single equipment by UUID'
     );

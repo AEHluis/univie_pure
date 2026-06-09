@@ -380,7 +380,7 @@ if ($testResults['projects_list']['success']
 $testResults['organizational_units_list'] = testEndpoint(
     $config,
     'organizational_units_list',
-    'organizational-units',
+    'organizations',
     ['size' => 5, 'offset' => 0],
     'List organizational units with pagination'
 );
@@ -392,7 +392,7 @@ if ($testResults['organizational_units_list']['success']
     $testResults['organizational_unit_single'] = testEndpoint(
         $config,
         'organizational_unit_single',
-        "organizational-units/{$firstOrgUnitUuid}",
+        "organizations/{$firstOrgUnitUuid}",
         [],
         'Get single organizational unit by UUID'
     );

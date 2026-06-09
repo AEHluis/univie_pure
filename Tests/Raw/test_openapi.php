@@ -153,7 +153,7 @@ $endpoints = [
     '/persons?size=2',
     '/research-outputs?size=2',
     '/projects?size=2',
-    '/organizational-units?size=2',
+    '/organizations?size=2',
 ];
 
 foreach ($endpoints as $endpoint) {

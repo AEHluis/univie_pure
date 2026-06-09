@@ -72,7 +72,7 @@ function extractFields(array $data, string $prefix = ''): array
                 // It's a list - analyze first item
                 $fields[$fullKey] = ['type' => 'array', 'sample_count' => count($value)];
                 if (!empty($value[0]) && is_array($value[0])) {
-                    $fields = array_merge($fields, extractFields($value[0], "$fullKey[]"));
+                    $fields = array_merge($fields, extractFields($value[0], "{$fullKey}[]"));
                 } else {
                     $fields[$fullKey]['item_type'] = gettype($value[0]);
                 }
@@ -162,9 +162,9 @@ $endpointTypes = [
     'research-outputs' => [],
     'persons' => [],
     'projects' => [],
-    'organizational-units' => [],
+    'organizations' => [],
     'data-sets' => [],
-    'equipments' => [],
+    'equipment' => [],
 ];
 
 foreach ($testResults as $testName => $testData) {

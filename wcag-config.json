@@ -1,0 +1,54 @@
+{
+  "extension_name": "univie_pure",
+  "target_mail_address": "typo3team@luis.uni-hannover.de",
+  "allowedStandards": "WCAG2AA",
+  "deploy": {
+    "vhost": "cmsdev1",
+    "typo3version": "v12.4",
+    "git_snipped": "git:t3luh/univie_pure",
+    "instance": "fis-dev"
+  },
+  "viewports": [
+    {
+      "comment": "Mobile",
+      "width": 375,
+      "height": 812,
+      "deviceScaleFactor": 2,
+      "isMobile": true
+    },
+    {
+      "comment": "Desktop",
+      "width": 1366,
+      "height": 768,
+      "deviceScaleFactor": 1,
+      "isMobile": false
+    }
+  ],
+  "level": "error",
+  "defaults": {
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox"]
+    },
+    "timeout": 60000
+  },
+  "urls": [
+    "https://www.fis-dev.t3luh.uni-hannover.de/publikationen/person",
+    "https://www.fis-dev.t3luh.uni-hannover.de/publikationen/person-1",
+    "https://www.fis-dev.t3luh.uni-hannover.de/publikationen/details/fis-details/publ/cf0ec8db-5345-435a-9c6b-51b2ddd0a3b6?cHash=d457725558ae829b9659c71cc1e56487",
+    "https://www.fis-dev.t3luh.uni-hannover.de/publikationen/equipment-1",
+    "https://www.fis-dev.t3luh.uni-hannover.de/publikationen/projekte-1",
+    "https://www.fis-dev.t3luh.uni-hannover.de/publikationen/projekte-terraq",
+    "https://www.fis-dev.t3luh.uni-hannover.de/publikationen/orgs",
+    "https://www.fis-dev.t3luh.uni-hannover.de/der-sfb/default-title",
+    "https://www.fis-dev.t3luh.uni-hannover.de/der-sfb/default-title-1",
+    "https://www.fis-dev.t3luh.uni-hannover.de/der-sfb/default-title-2",
+    "https://www.fis-dev.t3luh.uni-hannover.de/der-sfb/equipment",
+    "https://www.fis-dev.t3luh.uni-hannover.de/der-sfb/p",
+    "https://www.fis-dev.t3luh.uni-hannover.de/der-sfb/dataaset-persons",
+    "https://www.fis-dev.t3luh.uni-hannover.de/projekte/details/fis-details/proj/a769a670-fb6e-46cb-9cee-e12fa2bf99f9?cHash=163aa7684f6aa53428d25b1bd0a6a55b",
+    "https://www.fis-dev.t3luh.uni-hannover.de/equipments/details/fis-details/equip/c20f68ec-590a-4c8f-98ee-62403d8dc0c4?cHash=7cd526dc63170692b18ef769c9d5c257",
+    "https://www.fis-dev.t3luh.uni-hannover.de/datasets/org",
+    "https://www.fis-dev.t3luh.uni-hannover.de/datasets/org-1",
+    "https://www.fis-dev.t3luh.uni-hannover.de/datasets/details/fis-details/dset/9f42c951-090c-4364-9936-96a8c9d03efc?cHash=1562a51346e5ef6910f0427bbc8ca393"
+  ]
+}

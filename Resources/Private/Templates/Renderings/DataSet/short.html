@@ -1,0 +1,32 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="rendering_dataset rendering_short" data-uuid="{data.uuid}">
+    <h4 class="dataset-title"><f:render partial="Pure/LocalizedText" arguments="{textData: data.title, lang: locale, fallback: ''}" /></h4>
+
+    <f:if condition="{data.type.term}">
+        <p class="dataset-type">
+            <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.datasets.type"/>
+            <f:render partial="Pure/LocalizedText" arguments="{textData: data.type.term, lang: locale, fallback: ''}" />
+        </p>
+    </f:if>
+
+    <f:if condition="{data.publicationAvailableDate.year}">
+        <p class="dataset-year">({data.publicationAvailableDate.year})</p>
+    </f:if>
+
+    <f:if condition="{data.doi.doi}">
+        <p class="dataset-doi">
+            <a href="https://doi.org/{data.doi.doi}" target="_blank" rel="noopener">DOI: {data.doi.doi}</a>
+        </p>
+    </f:if>
+
+    <f:if condition="{data.persons}">
+        <p class="dataset-persons">
+            <f:for each="{data.persons}" as="person" iteration="iter">
+                <f:if condition="{person.name.firstName} || {person.name.lastName}">
+                    <span class="person">{person.name.firstName} {person.name.lastName}</span><f:if condition="!{iter.isLast}">, </f:if>
+                </f:if>
+            </f:for>
+        </p>
+    </f:if>
+</div>
+</html>

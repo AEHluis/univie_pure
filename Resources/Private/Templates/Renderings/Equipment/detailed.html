@@ -1,0 +1,32 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="rendering_equipment rendering_detailed" data-uuid="{data.uuid}">
+    <h3 class="equipment-title">
+        <f:if condition="{data.title}">
+            <f:then>
+                <f:render partial="Pure/LocalizedText" arguments="{textData: data.title, lang: locale, fallback: 'Untitled'}" />
+            </f:then>
+            <f:else>
+                <f:render partial="Pure/LocalizedText" arguments="{textData: data.name, lang: locale, fallback: 'Untitled'}" />
+            </f:else>
+        </f:if>
+    </h3>
+
+    <f:if condition="{data.type.term}">
+        <p class="equipment-type">
+            <span class="equipment-type-label"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.type"/></span>
+            <span class="equipment-type-value"><f:render partial="Pure/LocalizedText" arguments="{textData: data.type.term, lang: locale, fallback: ''}" /></span>
+        </p>
+    </f:if>
+
+    <f:if condition="{data.descriptions}">
+        <f:for each="{data.descriptions}" as="desc">
+            <f:if condition="{desc.value}">
+                <div class="equipment-description">
+                    <h5><f:render partial="Pure/LocalizedText" arguments="{textData: desc.type.term, lang: locale, fallback: 'Description'}" /></h5>
+                    <f:render partial="Pure/LocalizedHtml" arguments="{textData: desc.value, lang: locale}" />
+                </div>
+            </f:if>
+        </f:for>
+    </f:if>
+</div>
+</html>

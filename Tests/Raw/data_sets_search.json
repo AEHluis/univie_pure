@@ -1,0 +1,592 @@
+{
+    "test_name": "data_sets_search",
+    "description": "Search data sets by keyword",
+    "timestamp": "2026-06-02 13:42:48",
+    "endpoint": "data-sets",
+    "query_params": {
+        "size": 3,
+        "q": "data"
+    },
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 861.4099999999999681676854379475116729736328125,
+        "url": "https://fis.uni-hannover.de/ws/api/data-sets?size=3&q=data",
+        "curl_error": null,
+        "response": "{\"count\":348,\"pageInformation\":{\"offset\":0,\"size\":3},\"items\":[{\"pureId\":15572096,\"uuid\":\"7110b9d5-33f5-401d-8de3-395c7c256812\",\"createdBy\":\"jg_admin\",\"createdDate\":\"2022-02-21T13:48:42.668+01:00\",\"modifiedBy\":\"lp_support\",\"modifiedDate\":\"2024-04-04T10:38:00.629+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/datasets/7110b9d5-33f5-401d-8de3-395c7c256812\",\"prettyUrlIdentifiers\":[\"oer-sample-data-set\"],\"version\":\"4a876db9b1cd983b565eb70c9e46b366e743b232\",\"title\":{\"en_GB\":\"OER sample data-set\",\"de_DE\":\"OER sample data-set\"},\"descriptions\":[{\"pureId\":15572099,\"value\":{\"en_GB\":\"This data-set includes information about a sample of 8,887 of Open Educational Resources (OERs) from SkillsCommons website. It contains title, description, URL, type, availability date, issued date, subjects, and the availability of following metadata: level, time_required to finish, and accessibility.\\r\\n\\r\\nThis data-set has been used to build a metadata scoring and quality prediction model for OERs.\",\"de_DE\":\"This data-set includes information about a sample of 8,887 of Open Educational Resources (OERs) from SkillsCommons website. It contains title, description, URL, type, availability date, issued date, subjects, and the availability of following metadata: level, time_required to finish, and accessibility.\\r\\n\\r\\nThis data-set has been used to build a metadata scoring and quality prediction model for OERs.\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/descriptions/datasetdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"17e854ed-2ce5-42d7-875f-0177522eec40\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/datasettypes/dataset/dataset\",\"term\":{\"en_GB\":\"Dataset\",\"de_DE\":\"Dataset\"}},\"publisher\":{\"systemName\":\"Publisher\",\"uuid\":\"f0890f38-0616-4a92-b4b5-a1ab6db19ca6\"},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"DataSearchImport\",\"value\":\"052053055052057048048047053051056053050046048049:tib.luis\"},{\"typeDiscriminator\":\"Id\",\"pureId\":15572109,\"idSource\":\"tib.luis\",\"value\":\"10.25835/0094754\"},{\"typeDiscriminator\":\"Id\",\"pureId\":15572110,\"idSource\":\"tib.luis\",\"value\":\"10.25835/0094754\"}],\"geoLocation\":{},\"persons\":[{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":15572103,\"name\":{\"firstName\":\"Mohammadreza\",\"lastName\":\"Tavakoli\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"period\":{\"startDate\":\"2020-01-01\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"17e854ed-2ce5-42d7-875f-0177522eec40\"}]},{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":15572105,\"name\":{\"firstName\":\"Gabor\",\"lastName\":\"Kismihok\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"period\":{\"startDate\":\"2020-01-01\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"17e854ed-2ce5-42d7-875f-0177522eec40\"},{\"systemName\":\"Organization\",\"uuid\":\"f51ff454-1c84-47cd-9e68-506f952d2ecc\"}]}],\"doi\":{\"pureId\":15572097,\"doi\":\"10.25835/0094754\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"17e854ed-2ce5-42d7-875f-0177522eec40\"},{\"systemName\":\"Organization\",\"uuid\":\"f51ff454-1c84-47cd-9e68-506f952d2ecc\"}],\"publicationAvailableDate\":{\"year\":2020},\"openAccess\":{\"openAccessPermission\":{\"uri\":\"/dk/atira/pure/dataset/accesspermission/open\",\"term\":{\"en_GB\":\"Open\",\"de_DE\":\"Offen\"}}},\"openAireCompliant\":false,\"license\":{\"uri\":\"/dk/atira/pure/dataset/documentlicenses/cc-by-nc\",\"term\":{\"en_GB\":\"CC BY-NC\",\"de_DE\":\"CC BY-NC\"}},\"links\":[{\"pureId\":15572100,\"url\":\"https://data.uni-hannover.de/dataset/1cac4023-cce8-4205-8b71-75e79094dded\"}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"customDefinedFields\":{},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"systemName\":\"DataSet\"},{\"pureId\":15572054,\"uuid\":\"a84dd608-6121-4f0f-82b8-c5eb7e8f2102\",\"createdBy\":\"jg_admin\",\"createdDate\":\"2022-02-21T13:40:26.789+01:00\",\"modifiedBy\":\"lp_support\",\"modifiedDate\":\"2024-04-04T10:53:17.355+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/datasets/a84dd608-6121-4f0f-82b8-c5eb7e8f2102\",\"prettyUrlIdentifiers\":[\"news-data-and-embeddings\"],\"version\":\"39b00e75e81947f8d9022949787c7c9dbcff1fe2\",\"title\":{\"en_GB\":\"News Data and Embeddings\",\"de_DE\":\"News Data and Embeddings\"},\"descriptions\":[{\"pureId\":15572057,\"value\":{\"en_GB\":\"This is the text data and the trained embeddings that we used in our paper \\\"Debiasing Word Embeddings from Sentiment Associations in Names\\\".\",\"de_DE\":\"This is the text data and the trained embeddings that we used in our paper \\\"Debiasing Word Embeddings from Sentiment Associations in Names\\\".\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/descriptions/datasetdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"17e854ed-2ce5-42d7-875f-0177522eec40\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/datasettypes/dataset/dataset\",\"term\":{\"en_GB\":\"Dataset\",\"de_DE\":\"Dataset\"}},\"publisher\":{\"systemName\":\"Publisher\",\"uuid\":\"f0890f38-0616-4a92-b4b5-a1ab6db19ca6\"},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"DataSearchImport\",\"value\":\"049054056054051048048047053051056053050046048049:tib.luis\"},{\"typeDiscriminator\":\"Id\",\"pureId\":15572063,\"idSource\":\"tib.luis\",\"value\":\"10.25835/0036861\"},{\"typeDiscriminator\":\"Id\",\"pureId\":15572064,\"idSource\":\"tib.luis\",\"value\":\"10.25835/0036861\"}],\"geoLocation\":{},\"persons\":[{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":15572060,\"name\":{\"firstName\":\"Christoph\",\"lastName\":\"Hube\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"period\":{\"startDate\":\"2019-01-01\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"17e854ed-2ce5-42d7-875f-0177522eec40\"}]}],\"doi\":{\"pureId\":15572055,\"doi\":\"10.25835/0036861\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"17e854ed-2ce5-42d7-875f-0177522eec40\"}],\"publicationAvailableDate\":{\"year\":2019},\"openAccess\":{\"openAccessPermission\":{\"uri\":\"/dk/atira/pure/dataset/accesspermission/open\",\"term\":{\"en_GB\":\"Open\",\"de_DE\":\"Offen\"}}},\"openAireCompliant\":false,\"license\":{\"uri\":\"/dk/atira/pure/dataset/documentlicenses/cc-by\",\"term\":{\"en_GB\":\"CC BY\",\"de_DE\":\"CC BY\"}},\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"c0b3d3e2-ab96-4aed-8c52-b1e4b3201626\"}}],\"links\":[{\"pureId\":15572058,\"url\":\"https://data.uni-hannover.de/dataset/128e47f6-4cae-4b20-8815-4bb94abb8df5\"}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"customDefinedFields\":{},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"systemName\":\"DataSet\"},{\"pureId\":36749661,\"uuid\":\"1b1e64f2-4f6b-4de6-8a87-41c7fcc66f60\",\"createdBy\":\"lp_support\",\"createdDate\":\"2023-07-13T12:59:18.279+02:00\",\"modifiedBy\":\"lp_support\",\"modifiedDate\":\"2024-03-28T09:58:24.711+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/datasets/1b1e64f2-4f6b-4de6-8a87-41c7fcc66f60\",\"prettyUrlIdentifiers\":[\"1b1e64f2-4f6b-4de6-8a87-41c7fcc66f60\",\"bike-sensor-data-set-for-vehicle-encounters-a-comprehensive-open-\"],\"version\":\"34cb33a9b55912b748eca08e136bc742b83b0cc7\",\"title\":{\"de_DE\":\"Bike Sensor Data Set for Vehicle Encounters: A Comprehensive Open Data Resource\"},\"descriptions\":[{\"pureId\":36749664,\"value\":{\"de_DE\":\"# Description: The Bike Sensor Data Set for Vehicle Encounters is a comprehensive collection of open data aimed at studying and analyzing encounter between bicycles and vehicles in urban environments. This dataset combines data captured by a sensor platform integrated with a smartphone mounted on a bike. By including various smartphone sensors and timestamps for overtaking events, this dataset offers a rich source of information for investigating and understanding the dynamics of vehicle encounters from the perspective of cyclists. ![Photo of the measurement setup of the prototype sensor platform on a bicycle. The logging unit is located on the luggage rack and the side sensor below it at the height of the rear wheel.](https://data.uni-hannover.de/dataset/98d83b12-493d-40af-8c4e-58e8064795c5/resource/3d19a3a2-73fc-408b-9d1c-87800b7d4b79/download/mounted_platform.png) The dataset contains sensor streams recorded during vehicle encounters, including: * inertial measurement unit * magnetic field sesnor * GNSS * illuminance sensor * barometric pressure sensor * side viewing range sensor These sensors provide a multidimensional view of the cyclist's environment, capturing physical movements, orientation, environmental conditions, and the proximity of vehicles alongside the cyclist. This data enables researchers to analyze overtaking positions, distance statistics, and potential collision scenarios, enhancing our understanding of vehicle encounters and supporting interventions for cyclist safety. # Key Features of the Bike Sensor Data Set: * Sensor Streams: The data set provides synchronized streams of data from the smartphone sensors, offering valuable insights into the cyclist's experiences during vehicle encounters. * Timestamps: Each overtaking event is annotated with a timestamp, allowing for temporal analysis and correlation with the other provided data sources. * Comprehensive Smartphone Sensor Data: The data set encompasses data from a wide array of privacy preserving smartphone sensors, enabling researchers to explore different dimensions of the vehicle encounter experience, such as speed, acceleration, heading, ambient conditions, and sound levels. * Trajectory Metadata: Each trajectory is accompanied by a JSON file containing metadata such as date, time, location, duration, as well as metadata for each sensor stream. The inclusion of weather information from the Bright Sky API adds an environmental dimension to the dataset. # Potential Applications: The Bike Sensor Data Set for Vehicle Encounters holds significant potential for a variety of applications, including but not limited to: * Transportation and urban planning research * Machine learning and data mining algorithms for cyclist safety prediction * Human factors research in transportation and mobility * Development and testing of cyclist-oriented mobile applications By utilizing this data set, researchers and practitioners can gain valuable insights into the dynamics of vehicle encounters from a cyclist's perspective. This, in turn, can contribute to the development of safer and more cyclist-friendly urban environments, promoting sustainable and active transportation alternatives.\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/descriptions/datasetdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"d9d475c8-936f-4dc3-8415-9b946dc3e7b3\"},\"type\":{\"uri\":\"/dk/atira/pure/dataset/datasettypes/dataset/dataset\",\"term\":{\"en_GB\":\"Dataset\",\"de_DE\":\"Dataset\"}},\"publisher\":{\"systemName\":\"Publisher\",\"uuid\":\"f0890f38-0616-4a92-b4b5-a1ab6db19ca6\"},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"DataSearchImport\",\"value\":\"057111120103097105054101047053051056053050046048049:tib.luis\"},{\"typeDiscriminator\":\"Id\",\"pureId\":36749675,\"idSource\":\"tib.luis\",\"value\":\"10.25835/e6iagxo9\"},{\"typeDiscriminator\":\"Id\",\"pureId\":36749676,\"idSource\":\"tib.luis\",\"value\":\"10.25835/e6iagxo9\"}],\"geoLocation\":{},\"persons\":[{\"typeDiscriminator\":\"ExternalDataSetPersonAssociation\",\"pureId\":36749667,\"name\":{\"firstName\":\"Tim P. J.\",\"lastName\":\"Schimansky\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"period\":{\"startDate\":\"2023-01-01\"},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"d9175020-5ad6-464e-8498-bfb95c2da90d\"}},{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":36749668,\"name\":{\"firstName\":\"Oskar\",\"lastName\":\"Wage\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"period\":{\"startDate\":\"2023-01-01\"},\"person\":{\"systemName\":\"Person\",\"uuid\":\"a2d4cf01-5898-4ed4-bf1d-8597f3b75cfd\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"d9d475c8-936f-4dc3-8415-9b946dc3e7b3\"}]},{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":36749670,\"name\":{\"firstName\":\"Jens\",\"lastName\":\"Golze\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"period\":{\"startDate\":\"2023-01-01\"},\"person\":{\"systemName\":\"Person\",\"uuid\":\"f8a836bf-d5dd-4219-a4fa-378ea386e1c9\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"d9d475c8-936f-4dc3-8415-9b946dc3e7b3\"}]},{\"typeDiscriminator\":\"InternalDataSetPersonAssociation\",\"pureId\":36749672,\"name\":{\"firstName\":\"Udo\",\"lastName\":\"Feuerhake\"},\"role\":{\"uri\":\"/dk/atira/pure/dataset/roles/dataset/creator\",\"term\":{\"en_GB\":\"Creator\",\"de_DE\":\"Urheber*in\"}},\"period\":{\"startDate\":\"2023-01-01\"},\"person\":{\"systemName\":\"Person\",\"uuid\":\"608d83ac-17bf-4e81-866f-b63f633375c5\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"d9d475c8-936f-4dc3-8415-9b946dc3e7b3\"}]}],\"doi\":{\"pureId\":36749662,\"doi\":\"10.25835/e6iagxo9\"},\"contactPerson\":{\"systemName\":\"Person\",\"uuid\":\"f8a836bf-d5dd-4219-a4fa-378ea386e1c9\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"d9d475c8-936f-4dc3-8415-9b946dc3e7b3\"}],\"publicationAvailableDate\":{\"year\":2023},\"openAccess\":{\"openAccessPermission\":{\"uri\":\"/dk/atira/pure/dataset/accesspermission/open\",\"term\":{\"en_GB\":\"Open\",\"de_DE\":\"Offen\"}}},\"openAireCompliant\":false,\"license\":{\"uri\":\"/dk/atira/pure/dataset/documentlicenses/cc-by-nc\",\"term\":{\"en_GB\":\"CC BY-NC\",\"de_DE\":\"CC BY-NC\"}},\"links\":[{\"pureId\":36749665,\"url\":\"https://data.uni-hannover.de/dataset/98d83b12-493d-40af-8c4e-58e8064795c5\"}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"customDefinedFields\":{},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"systemName\":\"DataSet\"}]}",
+        "response_data": {
+            "count": 348,
+            "pageInformation": {
+                "offset": 0,
+                "size": 3
+            },
+            "items": [
+                {
+                    "pureId": 15572096,
+                    "uuid": "7110b9d5-33f5-401d-8de3-395c7c256812",
+                    "createdBy": "jg_admin",
+                    "createdDate": "2022-02-21T13:48:42.668+01:00",
+                    "modifiedBy": "lp_support",
+                    "modifiedDate": "2024-04-04T10:38:00.629+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/datasets/7110b9d5-33f5-401d-8de3-395c7c256812",
+                    "prettyUrlIdentifiers": [
+                        "oer-sample-data-set"
+                    ],
+                    "version": "4a876db9b1cd983b565eb70c9e46b366e743b232",
+                    "title": {
+                        "en_GB": "OER sample data-set",
+                        "de_DE": "OER sample data-set"
+                    },
+                    "descriptions": [
+                        {
+                            "pureId": 15572099,
+                            "value": {
+                                "en_GB": "This data-set includes information about a sample of 8,887 of Open Educational Resources (OERs) from SkillsCommons website. It contains title, description, URL, type, availability date, issued date, subjects, and the availability of following metadata: level, time_required to finish, and accessibility.\r\n\r\nThis data-set has been used to build a metadata scoring and quality prediction model for OERs.",
+                                "de_DE": "This data-set includes information about a sample of 8,887 of Open Educational Resources (OERs) from SkillsCommons website. It contains title, description, URL, type, availability date, issued date, subjects, and the availability of following metadata: level, time_required to finish, and accessibility.\r\n\r\nThis data-set has been used to build a metadata scoring and quality prediction model for OERs."
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/dataset/descriptions/datasetdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "17e854ed-2ce5-42d7-875f-0177522eec40"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/dataset/datasettypes/dataset/dataset",
+                        "term": {
+                            "en_GB": "Dataset",
+                            "de_DE": "Dataset"
+                        }
+                    },
+                    "publisher": {
+                        "systemName": "Publisher",
+                        "uuid": "f0890f38-0616-4a92-b4b5-a1ab6db19ca6"
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "DataSearchImport",
+                            "value": "052053055052057048048047053051056053050046048049:tib.luis"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 15572109,
+                            "idSource": "tib.luis",
+                            "value": "10.25835/0094754"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 15572110,
+                            "idSource": "tib.luis",
+                            "value": "10.25835/0094754"
+                        }
+                    ],
+                    "geoLocation": [],
+                    "persons": [
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 15572103,
+                            "name": {
+                                "firstName": "Mohammadreza",
+                                "lastName": "Tavakoli"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "period": {
+                                "startDate": "2020-01-01"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "17e854ed-2ce5-42d7-875f-0177522eec40"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 15572105,
+                            "name": {
+                                "firstName": "Gabor",
+                                "lastName": "Kismihok"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "period": {
+                                "startDate": "2020-01-01"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "17e854ed-2ce5-42d7-875f-0177522eec40"
+                                },
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "f51ff454-1c84-47cd-9e68-506f952d2ecc"
+                                }
+                            ]
+                        }
+                    ],
+                    "doi": {
+                        "pureId": 15572097,
+                        "doi": "10.25835/0094754"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "17e854ed-2ce5-42d7-875f-0177522eec40"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "f51ff454-1c84-47cd-9e68-506f952d2ecc"
+                        }
+                    ],
+                    "publicationAvailableDate": {
+                        "year": 2020
+                    },
+                    "openAccess": {
+                        "openAccessPermission": {
+                            "uri": "/dk/atira/pure/dataset/accesspermission/open",
+                            "term": {
+                                "en_GB": "Open",
+                                "de_DE": "Offen"
+                            }
+                        }
+                    },
+                    "openAireCompliant": false,
+                    "license": {
+                        "uri": "/dk/atira/pure/dataset/documentlicenses/cc-by-nc",
+                        "term": {
+                            "en_GB": "CC BY-NC",
+                            "de_DE": "CC BY-NC"
+                        }
+                    },
+                    "links": [
+                        {
+                            "pureId": 15572100,
+                            "url": "https://data.uni-hannover.de/dataset/1cac4023-cce8-4205-8b71-75e79094dded"
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "customDefinedFields": [],
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "systemName": "DataSet"
+                },
+                {
+                    "pureId": 15572054,
+                    "uuid": "a84dd608-6121-4f0f-82b8-c5eb7e8f2102",
+                    "createdBy": "jg_admin",
+                    "createdDate": "2022-02-21T13:40:26.789+01:00",
+                    "modifiedBy": "lp_support",
+                    "modifiedDate": "2024-04-04T10:53:17.355+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/datasets/a84dd608-6121-4f0f-82b8-c5eb7e8f2102",
+                    "prettyUrlIdentifiers": [
+                        "news-data-and-embeddings"
+                    ],
+                    "version": "39b00e75e81947f8d9022949787c7c9dbcff1fe2",
+                    "title": {
+                        "en_GB": "News Data and Embeddings",
+                        "de_DE": "News Data and Embeddings"
+                    },
+                    "descriptions": [
+                        {
+                            "pureId": 15572057,
+                            "value": {
+                                "en_GB": "This is the text data and the trained embeddings that we used in our paper \"Debiasing Word Embeddings from Sentiment Associations in Names\".",
+                                "de_DE": "This is the text data and the trained embeddings that we used in our paper \"Debiasing Word Embeddings from Sentiment Associations in Names\"."
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/dataset/descriptions/datasetdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "17e854ed-2ce5-42d7-875f-0177522eec40"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/dataset/datasettypes/dataset/dataset",
+                        "term": {
+                            "en_GB": "Dataset",
+                            "de_DE": "Dataset"
+                        }
+                    },
+                    "publisher": {
+                        "systemName": "Publisher",
+                        "uuid": "f0890f38-0616-4a92-b4b5-a1ab6db19ca6"
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "DataSearchImport",
+                            "value": "049054056054051048048047053051056053050046048049:tib.luis"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 15572063,
+                            "idSource": "tib.luis",
+                            "value": "10.25835/0036861"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 15572064,
+                            "idSource": "tib.luis",
+                            "value": "10.25835/0036861"
+                        }
+                    ],
+                    "geoLocation": [],
+                    "persons": [
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 15572060,
+                            "name": {
+                                "firstName": "Christoph",
+                                "lastName": "Hube"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "period": {
+                                "startDate": "2019-01-01"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "17e854ed-2ce5-42d7-875f-0177522eec40"
+                                }
+                            ]
+                        }
+                    ],
+                    "doi": {
+                        "pureId": 15572055,
+                        "doi": "10.25835/0036861"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "17e854ed-2ce5-42d7-875f-0177522eec40"
+                        }
+                    ],
+                    "publicationAvailableDate": {
+                        "year": 2019
+                    },
+                    "openAccess": {
+                        "openAccessPermission": {
+                            "uri": "/dk/atira/pure/dataset/accesspermission/open",
+                            "term": {
+                                "en_GB": "Open",
+                                "de_DE": "Offen"
+                            }
+                        }
+                    },
+                    "openAireCompliant": false,
+                    "license": {
+                        "uri": "/dk/atira/pure/dataset/documentlicenses/cc-by",
+                        "term": {
+                            "en_GB": "CC BY",
+                            "de_DE": "CC BY"
+                        }
+                    },
+                    "researchOutputs": [
+                        {
+                            "researchOutput": {
+                                "systemName": "ResearchOutput",
+                                "uuid": "c0b3d3e2-ab96-4aed-8c52-b1e4b3201626"
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 15572058,
+                            "url": "https://data.uni-hannover.de/dataset/128e47f6-4cae-4b20-8815-4bb94abb8df5"
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "customDefinedFields": [],
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "systemName": "DataSet"
+                },
+                {
+                    "pureId": 36749661,
+                    "uuid": "1b1e64f2-4f6b-4de6-8a87-41c7fcc66f60",
+                    "createdBy": "lp_support",
+                    "createdDate": "2023-07-13T12:59:18.279+02:00",
+                    "modifiedBy": "lp_support",
+                    "modifiedDate": "2024-03-28T09:58:24.711+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/datasets/1b1e64f2-4f6b-4de6-8a87-41c7fcc66f60",
+                    "prettyUrlIdentifiers": [
+                        "1b1e64f2-4f6b-4de6-8a87-41c7fcc66f60",
+                        "bike-sensor-data-set-for-vehicle-encounters-a-comprehensive-open-"
+                    ],
+                    "version": "34cb33a9b55912b748eca08e136bc742b83b0cc7",
+                    "title": {
+                        "de_DE": "Bike Sensor Data Set for Vehicle Encounters: A Comprehensive Open Data Resource"
+                    },
+                    "descriptions": [
+                        {
+                            "pureId": 36749664,
+                            "value": {
+                                "de_DE": "# Description: The Bike Sensor Data Set for Vehicle Encounters is a comprehensive collection of open data aimed at studying and analyzing encounter between bicycles and vehicles in urban environments. This dataset combines data captured by a sensor platform integrated with a smartphone mounted on a bike. By including various smartphone sensors and timestamps for overtaking events, this dataset offers a rich source of information for investigating and understanding the dynamics of vehicle encounters from the perspective of cyclists. ![Photo of the measurement setup of the prototype sensor platform on a bicycle. The logging unit is located on the luggage rack and the side sensor below it at the height of the rear wheel.](https://data.uni-hannover.de/dataset/98d83b12-493d-40af-8c4e-58e8064795c5/resource/3d19a3a2-73fc-408b-9d1c-87800b7d4b79/download/mounted_platform.png) The dataset contains sensor streams recorded during vehicle encounters, including: * inertial measurement unit * magnetic field sesnor * GNSS * illuminance sensor * barometric pressure sensor * side viewing range sensor These sensors provide a multidimensional view of the cyclist's environment, capturing physical movements, orientation, environmental conditions, and the proximity of vehicles alongside the cyclist. This data enables researchers to analyze overtaking positions, distance statistics, and potential collision scenarios, enhancing our understanding of vehicle encounters and supporting interventions for cyclist safety. # Key Features of the Bike Sensor Data Set: * Sensor Streams: The data set provides synchronized streams of data from the smartphone sensors, offering valuable insights into the cyclist's experiences during vehicle encounters. * Timestamps: Each overtaking event is annotated with a timestamp, allowing for temporal analysis and correlation with the other provided data sources. * Comprehensive Smartphone Sensor Data: The data set encompasses data from a wide array of privacy preserving smartphone sensors, enabling researchers to explore different dimensions of the vehicle encounter experience, such as speed, acceleration, heading, ambient conditions, and sound levels. * Trajectory Metadata: Each trajectory is accompanied by a JSON file containing metadata such as date, time, location, duration, as well as metadata for each sensor stream. The inclusion of weather information from the Bright Sky API adds an environmental dimension to the dataset. # Potential Applications: The Bike Sensor Data Set for Vehicle Encounters holds significant potential for a variety of applications, including but not limited to: * Transportation and urban planning research * Machine learning and data mining algorithms for cyclist safety prediction * Human factors research in transportation and mobility * Development and testing of cyclist-oriented mobile applications By utilizing this data set, researchers and practitioners can gain valuable insights into the dynamics of vehicle encounters from a cyclist's perspective. This, in turn, can contribute to the development of safer and more cyclist-friendly urban environments, promoting sustainable and active transportation alternatives."
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/dataset/descriptions/datasetdescription",
+                                "term": {
+                                    "en_GB": "Description",
+                                    "de_DE": "Beschreibung"
+                                }
+                            }
+                        }
+                    ],
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "d9d475c8-936f-4dc3-8415-9b946dc3e7b3"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/dataset/datasettypes/dataset/dataset",
+                        "term": {
+                            "en_GB": "Dataset",
+                            "de_DE": "Dataset"
+                        }
+                    },
+                    "publisher": {
+                        "systemName": "Publisher",
+                        "uuid": "f0890f38-0616-4a92-b4b5-a1ab6db19ca6"
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "DataSearchImport",
+                            "value": "057111120103097105054101047053051056053050046048049:tib.luis"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 36749675,
+                            "idSource": "tib.luis",
+                            "value": "10.25835/e6iagxo9"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 36749676,
+                            "idSource": "tib.luis",
+                            "value": "10.25835/e6iagxo9"
+                        }
+                    ],
+                    "geoLocation": [],
+                    "persons": [
+                        {
+                            "typeDiscriminator": "ExternalDataSetPersonAssociation",
+                            "pureId": 36749667,
+                            "name": {
+                                "firstName": "Tim P. J.",
+                                "lastName": "Schimansky"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "period": {
+                                "startDate": "2023-01-01"
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "d9175020-5ad6-464e-8498-bfb95c2da90d"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 36749668,
+                            "name": {
+                                "firstName": "Oskar",
+                                "lastName": "Wage"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "period": {
+                                "startDate": "2023-01-01"
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "a2d4cf01-5898-4ed4-bf1d-8597f3b75cfd"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "d9d475c8-936f-4dc3-8415-9b946dc3e7b3"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 36749670,
+                            "name": {
+                                "firstName": "Jens",
+                                "lastName": "Golze"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "period": {
+                                "startDate": "2023-01-01"
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "f8a836bf-d5dd-4219-a4fa-378ea386e1c9"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "d9d475c8-936f-4dc3-8415-9b946dc3e7b3"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalDataSetPersonAssociation",
+                            "pureId": 36749672,
+                            "name": {
+                                "firstName": "Udo",
+                                "lastName": "Feuerhake"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/dataset/roles/dataset/creator",
+                                "term": {
+                                    "en_GB": "Creator",
+                                    "de_DE": "Urheber*in"
+                                }
+                            },
+                            "period": {
+                                "startDate": "2023-01-01"
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "608d83ac-17bf-4e81-866f-b63f633375c5"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "d9d475c8-936f-4dc3-8415-9b946dc3e7b3"
+                                }
+                            ]
+                        }
+                    ],
+                    "doi": {
+                        "pureId": 36749662,
+                        "doi": "10.25835/e6iagxo9"
+                    },
+                    "contactPerson": {
+                        "systemName": "Person",
+                        "uuid": "f8a836bf-d5dd-4219-a4fa-378ea386e1c9"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "d9d475c8-936f-4dc3-8415-9b946dc3e7b3"
+                        }
+                    ],
+                    "publicationAvailableDate": {
+                        "year": 2023
+                    },
+                    "openAccess": {
+                        "openAccessPermission": {
+                            "uri": "/dk/atira/pure/dataset/accesspermission/open",
+                            "term": {
+                                "en_GB": "Open",
+                                "de_DE": "Offen"
+                            }
+                        }
+                    },
+                    "openAireCompliant": false,
+                    "license": {
+                        "uri": "/dk/atira/pure/dataset/documentlicenses/cc-by-nc",
+                        "term": {
+                            "en_GB": "CC BY-NC",
+                            "de_DE": "CC BY-NC"
+                        }
+                    },
+                    "links": [
+                        {
+                            "pureId": 36749665,
+                            "url": "https://data.uni-hannover.de/dataset/98d83b12-493d-40af-8c4e-58e8064795c5"
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "customDefinedFields": [],
+                    "workflow": {
+                        "step": "validated",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "systemName": "DataSet"
+                }
+            ]
+        },
+        "json_error": "No error"
+    }
+}

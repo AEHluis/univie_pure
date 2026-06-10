@@ -2,9 +2,9 @@
 
 namespace Univie\UniviePure\Utility;
 
-use Univie\UniviePure\Service\WebService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Core\Environment;
 
 /*
  * This file is part of the "T3LUH FIS" Extension for TYPO3 CMS.
@@ -14,11 +14,36 @@ use TYPO3\CMS\Core\Context\Context;
  */
 
 /**
- * Helpers for all endpoints
- *
+ * Common utility helpers
  */
 class CommonUtilities
 {
+    protected static function getLogger()
+    {
+        return GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+    }
+
+    public static function debugLog(string $message, array $context = []): void
+    {
+        $line = '[univie_pure] ' . $message;
+        if (!empty($context)) {
+            $json = json_encode($context, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+            $line .= ' | ' . ($json !== false ? $json : 'context_encode_failed');
+        }
+
+        error_log($line);
+
+        try {
+            $logDir = Environment::getVarPath() . '/log';
+            if (!is_dir($logDir)) {
+                @mkdir($logDir, 0775, true);
+            }
+            @file_put_contents($logDir . '/univie_pure_debug.log', date('c') . ' ' . $line . PHP_EOL, FILE_APPEND);
+        } catch (\Throwable $e) {
+            // Keep runtime unaffected if file logging fails.
+        }
+    }
+
     public static function getArrayValue($array, $key, $default = null)
     {
         return self::arrayKeyExists($key, $array) ? $array[$key] : $default;
@@ -31,7 +56,6 @@ class CommonUtilities
 
     public static function getNestedArrayValue($array, string $path, $default = null)
     {
-        // Return default if input is not an array
         if (!is_array($array)) {
             return $default;
         }
@@ -40,7 +64,6 @@ class CommonUtilities
         $current = $array;
 
         foreach ($keys as $key) {
-            // Check if current is an array and if the key exists
             if (!is_array($current) || !array_key_exists($key, $current)) {
                 return $default;
             }
@@ -50,353 +73,238 @@ class CommonUtilities
         return $current;
     }
 
-
-    public static function getPageSize($pageSize)
-    {
-        if ($pageSize == 0 || $pageSize === null) {
-            $pageSize = 20;
-        }
-        return '<size>' . (int)$pageSize . '</size>';
-    }
-
     /**
-     * keep track of the counter
-     * @return String xml
+     * Extract organization UUIDs from settings
      */
-    public static function getOffset($pageSize, $currentPage)
+    public static function getOrganizationUuids(array $settings): array
     {
-        $offset = $currentPage;
-        $offset = ($offset - 1 < 0) ? 0 : $offset - 1;
-        return '<offset>' . (int)($offset * (int)$pageSize) . '</offset>';
-    }
-
-
-    /**
-     * Either send a request for a unit or for persons
-     * @return String xml
-     */
-    public static function getPersonsOrOrganisationsXml($settings)
-    {
-        $xml = "";
-        // If settings isn't an array, return empty string
-        if (!is_array($settings)) {
-            return $xml;
+        $chooseSelector = (int)self::getArrayValue($settings, 'chooseSelector', -1);
+        if ($chooseSelector !== 0) {
+            return [];
         }
 
-        // Get the chooseSelector value with a default of -1
-        $chooseSelector = self::getArrayValue($settings, 'chooseSelector', -1);
-
-        // Based on chooseSelector value, generate appropriate XML
-        switch ($chooseSelector) {
-            case 0:
-                // Resarch-output for organisations:
-                $xml = self::getOrganisationsXml($settings);
-                break;
-            case 1:
-                // Research-output for persons:
-                $xml = self::getPersonsXml($settings);
-                break;
-            case 3:
-                // Research-output for persons with organization:
-                $xml = self::getPersonsWithOrganizationXml($settings);
-                break;
-            // Default case returns empty string
-        }
-
-        return $xml;
-    }
-
-
-    /**
-     * Organisations query
-     * @return String xml
-     */
-    public static function getOrganisationsXml($settings)
-    {
-// Safely read relevant keys:
         $selectorOrganisations = self::getArrayValue($settings, 'selectorOrganisations', '');
-        $narrowBySearch = self::getArrayValue($settings, 'narrowBySearch', '');
-
-        if ($selectorOrganisations === '' && $narrowBySearch !== '') {
-            return '';
+        if ($selectorOrganisations === '') {
+            return [];
         }
 
-        $xml = '<forOrganisationalUnits><uuids>';
+        $uuids = [];
         $organisations = explode(',', $selectorOrganisations);
-        foreach ((array)$organisations as $org) {
+        foreach ($organisations as $org) {
+            $org = trim($org);
             if (strpos($org, '|') !== false) {
                 $org = explode('|', $org)[0];
             }
-            $sanitizedOrgUuid = htmlspecialchars($org, ENT_QUOTES | ENT_XML1, 'UTF-8');
-            $xml .= '<uuid>' . $sanitizedOrgUuid . '</uuid>';
-            // check for sub units
-            if (self::getArrayValue($settings, 'includeSubUnits', 0) == 1) {
-                $subUnits = self::getSubUnits($org);
-                if (is_array($subUnits) && count($subUnits) > 1) {
-                    foreach ($subUnits as $subUnit) {
-                        if (self::getArrayValue($subUnit, 'uuid') !== $org) {
-                            $sanitizedSubUnitUuid = htmlspecialchars($subUnit['uuid'], ENT_QUOTES | ENT_XML1, 'UTF-8');
-                            $xml .= '<uuid>' . $sanitizedSubUnitUuid . '</uuid>';
-                        }
-                    }
-                }
+            if (!empty($org)) {
+                $uuids[] = $org;
             }
         }
-        $xml .= '</uuids><hierarchyDepth>100</hierarchyDepth></forOrganisationalUnits>';
-        return $xml;
+
+        return $uuids;
     }
 
     /**
-     * Persons query
-     * @return String xml
+     * Extract person UUIDs from settings
      */
-    public static function getPersonsXml($settings)
+    public static function getPersonUuids(array $settings): array
     {
-        $selectorPersons = self::getArrayValue($settings, 'selectorPersons', '');
-        $narrowBySearch = self::getArrayValue($settings, 'narrowBySearch', '');
-
-        if ($selectorPersons === '' && $narrowBySearch !== '') {
-            return '';
+        $chooseSelector = (int)self::getArrayValue($settings, 'chooseSelector', -1);
+        if ($chooseSelector !== 1 && $chooseSelector !== 3) {
+            return [];
         }
 
-        $xml = '<forPersons><uuids>';
+        $selectorPersons = $chooseSelector === 3
+            ? self::getArrayValue($settings, 'selectorPersonsWithOrganization', '')
+            : self::getArrayValue($settings, 'selectorPersons', '');
+
+        if ($selectorPersons === '') {
+            return [];
+        }
+
+        $uuids = [];
         $persons = explode(',', $selectorPersons);
-        foreach ((array)$persons as $person) {
+        foreach ($persons as $person) {
+            $person = trim($person);
             if (strpos($person, '|') !== false) {
                 $person = explode('|', $person)[0];
             }
-            $sanitizedPersonUuid = htmlspecialchars($person, ENT_QUOTES | ENT_XML1, 'UTF-8');
-            $xml .= '<uuid>' . $sanitizedPersonUuid . '</uuid>';
-        }
-        $xml .= '</uuids></forPersons>';
-        return $xml;
-    }
-
-    /**
-     * Persons with organization query
-     * @return String xml
-     */
-    public static function getPersonsWithOrganizationXml($settings)
-    {
-        $selectorPersonsWithOrganization = self::getArrayValue($settings, 'selectorPersonsWithOrganization', '');
-        $narrowBySearch = self::getArrayValue($settings, 'narrowBySearch', '');
-
-        if ($selectorPersonsWithOrganization === '' && $narrowBySearch !== '') {
-            return '';
-        }
-
-        $xml = '<forPersons><uuids>';
-        $persons = explode(',', $selectorPersonsWithOrganization);
-        foreach ((array)$persons as $person) {
-            if (strpos($person, '|') !== false) {
-                $person = explode('|', $person)[0];
+            if (!empty($person)) {
+                $uuids[] = $person;
             }
-            $sanitizedPersonUuid = htmlspecialchars($person, ENT_QUOTES | ENT_XML1, 'UTF-8');
-            $xml .= '<uuid>' . $sanitizedPersonUuid . '</uuid>';
         }
-        $xml .= '</uuids></forPersons>';
-        return $xml;
+
+        return $uuids;
     }
 
     /**
-     * Projects query
-     * @return String xml | boolean
+     * Extract project UUIDs from settings
      */
-    public static function getProjectsXml(array $settings)
+    public static function getProjectUuids(array $settings): array
     {
-        // Safely retrieve settings
-        $selectorProjects = self::getArrayValue($settings, 'selectorProjects', '');
-        $narrowBySearch = self::getArrayValue($settings, 'narrowBySearch', '');
-        $chooseSelector = self::getArrayValue($settings, 'chooseSelector', -1);
-
-        // 1) If no selectorProjects but user did enter a search, return empty string
-        if ($selectorProjects === '' && $narrowBySearch !== '') {
-            return '';
-        }
-
-        // 2) If not choosing "2", then we do nothing special here
+        $chooseSelector = (int)self::getArrayValue($settings, 'chooseSelector', -1);
         if ($chooseSelector !== 2) {
-            return false;
+            return [];
         }
 
-// Build the request XML for the selected projects
-        $xmlProjects = '<?xml version="1.0"?><projectsQuery><uuids>';
+        $selectorProjects = self::getArrayValue($settings, 'selectorProjects', '');
+        if ($selectorProjects === '') {
+            return [];
+        }
+
+        $uuids = [];
         $projects = explode(',', $selectorProjects);
-        foreach ($projects as $proj) {
-            // If user appended "|something", strip that off
-            if (strpos($proj, '|') !== false) {
-                $proj = explode('|', $proj)[0];
+        foreach ($projects as $project) {
+            $project = trim($project);
+            if (strpos($project, '|') !== false) {
+                $project = explode('|', $project)[0];
             }
-            if (!empty($proj)) {
-                $sanitizedProjUuid = htmlspecialchars($proj, ENT_QUOTES | ENT_XML1, 'UTF-8');
-                $xmlProjects .= '<uuid>' . $sanitizedProjUuid . '</uuid>';
-            }
-        }
-        $xmlProjects .= '</uuids>
-    <size>99999</size>
-    <linkingStrategy>string</linkingStrategy>
-    <locales><locale>de_DE</locale></locales>
-    <fields><field>relatedResearchOutputs.uuid</field></fields>
-    <orderings><ordering>title</ordering></orderings>
-</projectsQuery>';
-
-        // 4) Call the webservice
-        $webservice = new WebService;
-        $publications = $webservice->getJson('projects', $xmlProjects);
-
-        // 5) Build the final return XML with related research outputs
-        $xml = '';
-        if (is_array($publications) && isset($publications['items'])) {
-            $hasResearchOutputs = false;
-            $xmlTemp = "";
-            foreach ($publications['items'] as $researchOutputs) {
-                if (!empty($researchOutputs) && isset($researchOutputs['relatedResearchOutputs'])) {
-                    foreach ($researchOutputs['relatedResearchOutputs'] as $researchOutput) {
-                        $sanitizedResearchUuid = htmlspecialchars($researchOutput['uuid'], ENT_QUOTES | ENT_XML1, 'UTF-8');
-                        $xmlTemp .= '<uuid>' . $sanitizedResearchUuid . '</uuid>';
-                        $hasResearchOutputs = true;
-                    }
-                }
-            }
-
-            if ($hasResearchOutputs) {
-                $xml .= "<uuids>" . $xmlTemp . "</uuids>";
-            } else {
-                // Force no results by providing a non-existent UUID when no research outputs exist
-                $xml .= "<uuids><uuid>NO_RESEARCH_OUTPUTS_FOUND</uuid></uuids>";
+            if (!empty($project)) {
+                $uuids[] = $project;
             }
         }
-        return $xml;
+
+        return $uuids;
     }
 
     /**
-     * Projects query
-     * @return String xml | boolean
+     * Extract equipment UUIDs from settings
      */
-    public static function getProjectsForDatasetsXml($settings)
+    public static function getEquipmentUuids(array $settings): array
     {
-        // Ensure $settings is an array
-        if (!is_array($settings)) {
-            $settings = [];
+        $chooseSelector = (int)self::getArrayValue($settings, 'chooseSelector', -1);
+        if ($chooseSelector !== 4) {
+            return [];
         }
 
-        // Safely retrieve keys
-        $narrowBySearch = self::getArrayValue($settings, 'narrowBySearch', '');
-        $chooseSelector = self::getArrayValue($settings, 'chooseSelector', null);
-        $selectorProjects = self::getArrayValue($settings, 'selectorProjects', '');
+        $selectorEquipments = self::getArrayValue($settings, 'selectorEquipments', '');
+        if ($selectorEquipments === '') {
+            return [];
+        }
 
-        // If no projects were set but search is given:
-        if ($selectorProjects === '' && $narrowBySearch !== '') {
+        $uuids = [];
+        $equipments = explode(',', $selectorEquipments);
+        foreach ($equipments as $equipment) {
+            $equipment = trim($equipment);
+            if (strpos($equipment, '|') !== false) {
+                $equipment = explode('|', $equipment)[0];
+            }
+            if (!empty($equipment)) {
+                $uuids[] = $equipment;
+            }
+        }
+
+        return $uuids;
+    }
+
+    /**
+     * Get filter parameters from settings for API calls
+     */
+    public static function buildFilterParams(array $settings): array
+    {
+        $params = [];
+
+        // Search filter
+        $narrowBySearch = self::getArrayValue($settings, 'narrowBySearch', '');
+        $filter = self::getArrayValue($settings, 'filter', '');
+        $search = trim($narrowBySearch . ' ' . $filter);
+        if ($search !== '') {
+            $params['search'] = $search;
+        }
+
+        // Organization filter
+        $orgUuids = self::getOrganizationUuids($settings);
+        if (!empty($orgUuids)) {
+            $params['organizationUuids'] = $orgUuids;
+            $params['includeSubUnits'] = (int)self::getArrayValue($settings, 'includeSubUnits', 0) === 1;
+        }
+
+        // Person filter
+        $personUuids = self::getPersonUuids($settings);
+        if (!empty($personUuids)) {
+            $params['personUuids'] = $personUuids;
+        }
+
+        // Project filter
+        $projectUuids = self::getProjectUuids($settings);
+        if (!empty($projectUuids)) {
+            $params['projectUuids'] = $projectUuids;
+        }
+
+        // Equipment filter
+        $equipmentUuids = self::getEquipmentUuids($settings);
+        if (!empty($equipmentUuids)) {
+            $params['equipmentUuids'] = $equipmentUuids;
+        }
+
+        return $params;
+    }
+
+    /**
+     * Sanitize a search string for safe use in API queries.
+     */
+    public static function cleanSearchString(string $content): string
+    {
+        $content = strtolower($content);
+        $content = substr($content, 0, 500);
+        $content = filter_var($content, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW);
+        $content = preg_replace('/\s+/', ' ', trim($content));
+        $content = preg_replace('/[<>"\';&\x00-\x1F\x7F]/u', '', $content);
+        $content = preg_replace("/\(([^()]*+|(?R))*\)/", " ", $content);
+        $content = preg_replace('/[^\p{L}\p{N} .–_]/u', " ", urldecode($content));
+        return $content;
+    }
+
+    /**
+     * Extract localized text from Pure API name/title structures
+     */
+    public static function extractLocalizedText($fieldData, string $locale): string
+    {
+        if (is_string($fieldData) && trim($fieldData) !== '') {
+            return $fieldData;
+        }
+        if (!is_array($fieldData)) {
+            return '';
+        }
+        if (isset($fieldData['value']) && is_string($fieldData['value'])) {
+            return $fieldData['value'];
+        }
+
+        $texts = $fieldData['text'] ?? null;
+        if (is_string($texts) && trim($texts) !== '') {
+            return $texts;
+        }
+        if (!is_array($texts)) {
             return '';
         }
 
-        if ($chooseSelector === 2) {
-            // Build Projects query
-            $xmlProjects = '<?xml version="1.0"?><projectsQuery><uuids>';
-            $projectsArray = explode(',', $selectorProjects);
-
-            foreach ($projectsArray as $project) {
-                if (strpos($project, "|") !== false) {
-                    $project = explode("|", $project)[0];
-                }
-                if (!empty($project)) {
-                    $sanitizedProjectUuid = htmlspecialchars($project, ENT_QUOTES | ENT_XML1, 'UTF-8');
-                    $xmlProjects .= '<uuid>' . $sanitizedProjectUuid . '</uuid>';
-                }
-            }
-
-            $xmlProjects .= '</uuids>
-    <size>99999</size>
-    <linkingStrategy>string</linkingStrategy>
-    <locales><locale>de_DE</locale></locales>
-    <fields><field>relatedDataSets.uuid</field></fields>
-    <orderings><ordering>title</ordering></orderings>
-</projectsQuery>';
-
-            $webservice = new WebService;
-            $datasets = $webservice->getJson('projects', $xmlProjects);
-
-            // Build final XML with the relatedDataSets
-            $xml = "";
-            if (is_array($datasets) && isset($datasets['items'])) {
-                $hasDatasets = false;
-                $xmlTemp = "";
-                foreach ($datasets['items'] as $d) {
-                    if (!empty($d) && isset($d['relatedDataSets'])) {
-                        foreach ($d['relatedDataSets'] as $i) {
-                            $sanitizedDatasetUuid = htmlspecialchars($i['uuid'], ENT_QUOTES | ENT_XML1, 'UTF-8');
-                            $xmlTemp .= '<uuid>' . $sanitizedDatasetUuid . '</uuid>';
-                            $hasDatasets = true;
-                        }
-                    }
-                }
-
-                if ($hasDatasets) {
-                    $xml .= "<uuids>" . $xmlTemp . "</uuids>";
-                } else {
-                    // Force no results by providing a non-existent UUID when no datasets exist
-                    $xml .= "<uuids><uuid>NO_DATASETS_FOUND</uuid></uuids>";
-                }
-            }
-            return $xml;
+        if (isset($texts[$locale]) && is_string($texts[$locale])) {
+            return $texts[$locale];
+        }
+        if (isset($texts['value']) && is_string($texts['value'])) {
+            $texts = [$texts];
         }
 
-        // Default (not chooseSelector = 2)
-        return false;
-    }
-
-    /**
-     * query sub organisations for a unit
-     * @return array subUnits Array of all Units connected
-     */
-    public static function getSubUnits($orgId)
-    {
-        $orgName = self::getNameForUuid($orgId);
-        $xml = '<?xml version="1.0"?>
-<organisationalUnitsQuery>
-    <size>300</size>
-    <fields><field>uuid</field></fields>
-    <orderings><ordering>type</ordering></orderings>
-    <returnUsedContent>true</returnUsedContent>
-    <navigationLink>true</navigationLink>
-    <searchString>"' . htmlspecialchars($orgName, ENT_QUOTES | ENT_XML1, 'UTF-8') . '"</searchString>
-</organisationalUnitsQuery>';
-        $webservice = new WebService;
-        $subUnits = $webservice->getJson('organisational-units', $xml);
-
-// Safely verify structure before returning
-        if (is_array($subUnits) && isset($subUnits['count'])
-            && $subUnits['count'] > 1
-            && isset($subUnits['items'])
-        ) {
-            return $subUnits['items'];
-        }
-        return [];
-    }
-
-    /*
-     * query name by uuid
-     * @return string name
-     */
-    public static function getNameForUuid($orgId)
-    {
-        $xml = '<?xml version="1.0"?>
-<organisationalUnitsQuery>
-    <uuids><uuid>' . htmlspecialchars($orgId, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</uuid></uuids>
-    <size>1</size>
-    <offset>0</offset>
-    <locales><locale>de_DE</locale></locales>
-    <fields><field>name.text.value</field></fields>
-</organisationalUnitsQuery>';
-        $webservice = new WebService;
-        $orgName = $webservice->getJson('organisational-units', $xml);
-
-        if (is_array($orgName) && ($orgName['count'] ?? 0) === 1) {
-            $items = $orgName['items'] ?? [];
-            if (isset($items[0]['name']['text'][0]['value'])) {
-                return $items[0]['name']['text'][0]['value'];
+        $fallback = '';
+        foreach ($texts as $textEntry) {
+            if (!is_array($textEntry)) {
+                continue;
+            }
+            $value = (string)($textEntry['value'] ?? '');
+            if ($value === '') {
+                continue;
+            }
+            if ($fallback === '') {
+                $fallback = $value;
+            }
+            $entryLocale = (string)($textEntry['locale'] ?? '');
+            if ($entryLocale === $locale) {
+                return $value;
+            }
+            if ($entryLocale !== '' && strpos($locale, '_') !== false && strpos($entryLocale, substr($locale, 0, 2)) === 0) {
+                return $value;
             }
         }
-        return '';
+
+        return $fallback;
     }
 }

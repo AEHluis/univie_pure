@@ -1,0 +1,115 @@
+<div class="tx-univie-pure equipment">
+
+	<h1 class="content-element-margin">
+		<f:if condition="{equipment.title}">
+			<f:then>
+				<f:render partial="Pure/LocalizedText" arguments="{textData: equipment.title, lang: lang, fallback: 'Untitled'}" />
+			</f:then>
+			<f:else>
+				<f:render partial="Pure/LocalizedText" arguments="{textData: equipment.name, lang: lang, fallback: 'Untitled'}" />
+			</f:else>
+		</f:if>
+	</h1>
+
+	<section class="equipment-block equipment-details-block">
+		<h3 class="equipment-section-title equipment-section-title--details">
+			<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.details" />
+		</h3>
+
+		<dl>
+			<f:if condition="{equipment.type.term}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.type" /></dt>
+				<dd>
+					<f:render partial="Pure/LocalizedText" arguments="{textData: equipment.type.term, lang: lang, fallback: ''}" />
+				</dd>
+			</f:if>
+
+			<f:if condition="{equipment.contactPerson}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.contactPerson" /></dt>
+				<dd>
+					<f:for each="{equipment.contactPerson}" as="person" iteration="personIter">
+						{person}<f:if condition="{personIter.isLast}"><f:else>, </f:else></f:if>
+					</f:for>
+				</dd>
+			</f:if>
+
+			<f:if condition="{equipment.email}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.contactMail" /></dt>
+				<dd>
+					<f:for each="{equipment.email}" as="email" iteration="emailIter">
+						<f:link.email class="c-link c-link--inline" email="{email}">{email}</f:link.email><f:if condition="{emailIter.isLast}"><f:else>, </f:else></f:if>
+					</f:for>
+				</dd>
+			</f:if>
+
+			<f:if condition="{equipment.webAddress}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.equipments.webAddress" /></dt>
+				<dd>
+					<f:for each="{equipment.webAddress}" as="url">
+						<a href="{url}" target="_blank" rel="noopener noreferrer" class="c-link--extern">{url}</a><br/>
+					</f:for>
+				</dd>
+			</f:if>
+
+			<f:if condition="{relatedOrganizations}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.units" /></dt>
+				<dd>
+					<f:for each="{relatedOrganizations}" as="org" iteration="orgIter">
+						<f:render partial="Pure/LocalizedText" arguments="{textData: org.name, lang: lang, fallback: ''}" /><f:if condition="{orgIter.isLast}"><f:else>, </f:else></f:if>
+					</f:for>
+				</dd>
+			</f:if>
+			<f:if condition="!{relatedOrganizations} && {equipment.organizations}">
+				<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.units" /></dt>
+				<dd>
+					<f:for each="{equipment.organizations}" as="org" iteration="orgIter">
+						{org.uuid}<f:if condition="{orgIter.isLast}"><f:else>, </f:else></f:if>
+					</f:for>
+				</dd>
+			</f:if>
+		</dl>
+	</section>
+
+	<f:if condition="{equipment.descriptions}">
+		<f:for each="{equipment.descriptions}" as="desc">
+			<f:if condition="{desc.value}">
+				<section class="equipment-block equipment-description-block">
+					<h3 class="equipment-section-title">
+						<f:render partial="Pure/LocalizedText" arguments="{textData: desc.type.term, lang: lang, fallback: 'Description'}" />
+					</h3>
+					<div class="equipment-description-content">
+						<f:render partial="Pure/LocalizedHtml" arguments="{textData: desc.value, lang: lang}" />
+					</div>
+				</section>
+			</f:if>
+		</f:for>
+	</f:if>
+
+	<f:if condition="{equipment.links}">
+		<section class="equipment-block equipment-links-block">
+			<h3 class="equipment-section-title">
+				<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.links" />
+			</h3>
+			<f:for each="{equipment.links}" as="link">
+				<f:if condition="{link.url}">
+					<p>
+						<a href="{link.url}" target="_blank" rel="noopener noreferrer" class="c-link--extern">{link.url}</a>
+					</p>
+				</f:if>
+			</f:for>
+		</section>
+	</f:if>
+
+	<f:if condition="{showLinkToPortal}">
+		<f:if condition="{equipment.portalUrl}">
+			<footer class="equipment-footer">
+				<p class="equipment-portal">
+					<f:link.external uri="{equipment.portalUrl}" target="_blank" rel="noopener noreferrer" class="c-button u-icon-after u-icon-after--new-tab">
+						<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" />
+					</f:link.external>
+				</p>
+			</footer>
+		</f:if>
+	</f:if>
+
+</div>

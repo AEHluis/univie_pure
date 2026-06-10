@@ -1,79 +1,229 @@
 <f:layout name="Default" />
 <f:section name="main">
   <f:flashMessages  />
-  <f:render partial="Pure/Properties" arguments="{publication:publication, lang:lang, showLinkToPortal:showLinkToPortal}" />
-  <f:if condition="{settings.showBibtex}">
-
-    <script>
-      // Ultra simple accordion with ready state check
-      (function() {
-        function initAccordion() {
-          var title = document.querySelector('.accordion-title');
-          if (title) {
-            title.onclick = function(e) {
-              e.preventDefault();
-              var content = document.getElementById('bibtex-accordion');
-              if (content) {
-                content.style.display = content.style.display === 'none' ? 'block' : 'none';
-              }
-            };
-            console.log("Accordion initialized");
-          }
-        }
-
-        // Check if document is already loaded
-        if (document.readyState === 'complete') {
-          initAccordion();
-        } else {
-          window.addEventListener('load', initAccordion);
-        }
-      })();
-    </script>
-    <style>
-      /* Basic styling */
-
-      .accordion-item {
-        border: 1px solid #ddd;
-        margin-bottom: 10px;
-        list-style-type: none;
-      }
-
-      .accordion-title {
-        display: block;
-        padding: 10px;
-        background-color: #f5f5f5;
-        color: #333;
-        text-decoration: none;
-        font-weight: bold;
-      }
-
-      .accordion-title:hover {
-        background-color: #e5e5e5;
-      }
-
-      .accordion-content {
-        padding: 15px;
-        background-color: #fff;
-        border-top: 1px solid #ddd;
-      }
-
-      /* Animation */
-      .accordion-content {
-        transition: height 0.3s ease-out;
-      }
-    </style>
-    <div class="c-section" style="width:100%">
-      <ul class="accordion c-accordion" data-accordion="insxal-accordion" data-allow-all-closed="true" data-multi-expand="false" role="tablist">
-        <li class="accordion-item c-accordion__item" data-accordion-item="">
-          <a href="#" class="accordion-title c-accordion__headline c-headline--medium u-text--hyphens" aria-controls="bibtex-accordion" role="tab" id="bibtex-accordion-label" aria-expanded="false" aria-selected="false">BibTeX</a>
-          <div class="accordion-content c-accordion__content" data-tab-content="" role="tabpanel" aria-labelledby="bibtex-accordion-label" aria-hidden="true" id="bibtex-accordion" style="display: none;">
-            <div id="c2881" class="c-section__element">
-              <f:format.raw>{bibtex}</f:format.raw>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
+  <f:if condition="{publication}">
+    <f:render partial="Pure/Properties" arguments="{publication:publication, publicationInsights:publicationInsights, lang:lang, showLinkToPortal:showLinkToPortal}" />
   </f:if>
-  <hr>
+  <f:if condition="{project}">
+    <f:render partial="Pure/ProjectProperties" arguments="{project:project, lang:lang, showLinkToPortal:showLinkToPortal}" />
+  </f:if>
+  <f:if condition="{dataSet}">
+    <f:render partial="Pure/DataSetProperties" arguments="{dataSet:dataSet, lang:lang, showLinkToPortal:showLinkToPortal, relatedOrganizations:relatedOrganizations, relatedProjects:relatedProjects, relatedResearchOutputs:relatedResearchOutputs}" />
+  </f:if>
+  <f:if condition="{equipment}">
+    <f:render partial="Pure/EquipmentProperties" arguments="{equipment:equipment, lang:lang, showLinkToPortal:showLinkToPortal, relatedOrganizations:relatedOrganizations}" />
+  </f:if>
+  <f:if condition="{settings.showBibtex}">
+    <f:if condition="{citationStyles}">
+      <div class="tx-univie-pure publication-citations"
+           data-citation-uuid="{publicationUuid}"
+           data-citation-locale="{lang}"
+           data-citation-endpoint="/?eID=univie_pure_citation">
+        <h3 class="publication-section-title"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citations" /></h3>
+        <ul class="publication-citations__tabs" role="tablist">
+          <f:for each="{citationStyles}" as="style" iteration="tabIter">
+            <li>
+              <button type="button"
+                      class="publication-citations__tab<f:if condition='{tabIter.isFirst}'><f:then> is-active</f:then></f:if>"
+                      role="tab"
+                      id="citation-tab-{style.id}"
+                      data-style="{style.id}"
+                      data-target="citation-pane-{style.id}"
+                      aria-controls="citation-pane-{style.id}"
+                      tabindex="<f:if condition='{tabIter.isFirst}'><f:then>0</f:then><f:else>-1</f:else></f:if>"
+                      aria-selected="<f:if condition='{tabIter.isFirst}'><f:then>true</f:then><f:else>false</f:else></f:if>">
+                <f:translate key="{style.labelKey}" />
+              </button>
+            </li>
+          </f:for>
+        </ul>
+        <div class="publication-citations__panes">
+          <f:for each="{citationStyles}" as="style" iteration="paneIter">
+            <div class="publication-citations__pane<f:if condition='{paneIter.isFirst}'><f:then> is-active</f:then></f:if>"
+                 role="tabpanel"
+                 id="citation-pane-{style.id}"
+                 data-style="{style.id}"
+                 data-loaded="false"
+                 aria-hidden="<f:if condition='{paneIter.isFirst}'><f:then>false</f:then><f:else>true</f:else></f:if>"
+                 <f:if condition="{paneIter.isFirst}"><f:else>hidden="hidden"</f:else></f:if>
+                 aria-labelledby="citation-tab-{style.id}">
+              <div class="publication-citations__content">
+                <span class="publication-citations__placeholder"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citation.clickToLoad" /></span>
+              </div>
+            </div>
+          </f:for>
+        </div>
+        <div class="publication-citations__messages" aria-live="polite">
+          <span class="publication-citations__loading" hidden><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citation.loading" /></span>
+          <span class="publication-citations__error" hidden><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.citation.error" /></span>
+        </div>
+      </div>
+      <script>
+        (function() {
+          var citationCache = {};
+
+          function initCitationTabs() {
+            var container = document.querySelector('.publication-citations');
+            if (!container) {
+              return;
+            }
+
+            var uuid = container.getAttribute('data-citation-uuid');
+            var locale = container.getAttribute('data-citation-locale') || 'de_DE';
+            var endpoint = container.getAttribute('data-citation-endpoint');
+            var tabs = container.querySelectorAll('.publication-citations__tab');
+            var panes = container.querySelectorAll('.publication-citations__pane');
+            var loadingEl = container.querySelector('.publication-citations__loading');
+            var errorEl = container.querySelector('.publication-citations__error');
+
+            function showLoading(show) {
+              if (loadingEl) {
+                loadingEl.hidden = !show;
+              }
+            }
+
+            function showError(show) {
+              if (errorEl) {
+                errorEl.hidden = !show;
+              }
+            }
+
+            function loadCitation(style, pane) {
+              if (pane.getAttribute('data-loaded') === 'true') {
+                return;
+              }
+
+              var cacheKey = uuid + ':' + style + ':' + locale;
+              if (citationCache[cacheKey]) {
+                renderCitation(pane, citationCache[cacheKey]);
+                return;
+              }
+
+              showLoading(true);
+              showError(false);
+
+              var url = endpoint + '&uuid=' + encodeURIComponent(uuid) +
+                        '&style=' + encodeURIComponent(style) +
+                        '&locale=' + encodeURIComponent(locale);
+
+              fetch(url)
+                .then(function(response) {
+                  if (!response.ok) {
+                    throw new Error('HTTP ' + response.status);
+                  }
+                  return response.json();
+                })
+                .then(function(data) {
+                  showLoading(false);
+                  if (data.success && data.content) {
+                    citationCache[cacheKey] = data;
+                    renderCitation(pane, data);
+                  } else {
+                    showError(true);
+                  }
+                })
+                .catch(function(err) {
+                  showLoading(false);
+                  showError(true);
+                  console.error('Citation load failed:', err);
+                });
+            }
+
+            function renderCitation(pane, data) {
+              var contentEl = pane.querySelector('.publication-citations__content');
+              if (!contentEl) {
+                return;
+              }
+
+              if (data.isPreformatted) {
+                contentEl.innerHTML = '<pre>' + escapeHtml(data.content) + '</pre>';
+              } else {
+                contentEl.innerHTML = data.content;
+              }
+
+              pane.setAttribute('data-loaded', 'true');
+            }
+
+            function escapeHtml(text) {
+              var div = document.createElement('div');
+              div.textContent = text;
+              return div.innerHTML;
+            }
+
+            function activateTab(tab) {
+              var targetId = tab.getAttribute('data-target');
+              var style = tab.getAttribute('data-style');
+
+              tabs.forEach(function(t) {
+                t.classList.remove('is-active');
+                t.setAttribute('aria-selected', 'false');
+                t.setAttribute('tabindex', '-1');
+              });
+
+              panes.forEach(function(p) {
+                p.classList.remove('is-active');
+                p.setAttribute('aria-hidden', 'true');
+                p.setAttribute('hidden', 'hidden');
+              });
+
+              tab.classList.add('is-active');
+              tab.setAttribute('aria-selected', 'true');
+              tab.setAttribute('tabindex', '0');
+
+              var target = container.querySelector('#' + targetId);
+              if (target) {
+                target.classList.add('is-active');
+                target.setAttribute('aria-hidden', 'false');
+                target.removeAttribute('hidden');
+
+                loadCitation(style, target);
+              }
+            }
+
+            tabs.forEach(function(tab) {
+              tab.addEventListener('keydown', function(event) {
+                var key = event.key;
+                var currentIndex = Array.prototype.indexOf.call(tabs, tab);
+                var targetIndex = currentIndex;
+
+                if (key === 'ArrowRight') {
+                  targetIndex = (currentIndex + 1) % tabs.length;
+                } else if (key === 'ArrowLeft') {
+                  targetIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                } else if (key === 'Home') {
+                  targetIndex = 0;
+                } else if (key === 'End') {
+                  targetIndex = tabs.length - 1;
+                } else {
+                  return;
+                }
+
+                event.preventDefault();
+                tabs[targetIndex].focus();
+                activateTab(tabs[targetIndex]);
+              });
+
+              tab.addEventListener('click', function() {
+                activateTab(tab);
+              });
+            });
+
+            // Load the first (active) citation on page load
+            var firstActivePane = container.querySelector('.publication-citations__pane.is-active');
+            var firstActiveTab = container.querySelector('.publication-citations__tab.is-active');
+            if (firstActivePane && firstActiveTab) {
+              var style = firstActiveTab.getAttribute('data-style');
+              loadCitation(style, firstActivePane);
+            }
+          }
+
+          if (document.readyState !== 'loading') {
+            initCitationTabs();
+          } else {
+            document.addEventListener('DOMContentLoaded', initCitationTabs);
+          }
+        })();
+      </script>
+    </f:if>
+  </f:if>
 </f:section>

@@ -1,0 +1,951 @@
+{
+    "test_name": "research_outputs_search",
+    "description": "Search research outputs by keyword",
+    "timestamp": "2026-06-02 13:42:42",
+    "endpoint": "research-outputs",
+    "query_params": {
+        "size": 3,
+        "q": "machine learning"
+    },
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 1912.8800000000001091393642127513885498046875,
+        "url": "https://fis.uni-hannover.de/ws/api/research-outputs?size=3&q=machine+learning",
+        "curl_error": null,
+        "response": "{\"count\":1267,\"pageInformation\":{\"offset\":0,\"size\":3},\"items\":[{\"typeDiscriminator\":\"ContributionToJournal\",\"pureId\":24961205,\"uuid\":\"49316f6e-9f9d-449f-8469-52458027bee8\",\"createdBy\":\"EC6-GRK\",\"createdDate\":\"2022-12-09T10:35:08.43+01:00\",\"modifiedBy\":\"sb_admin\",\"modifiedDate\":\"2026-03-31T15:52:37.992+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/publications/49316f6e-9f9d-449f-8469-52458027bee8\",\"prettyUrlIdentifiers\":[\"predicting-machine-learning-pipeline-runtimes-in-the-context-of-a\"],\"previousUuids\":[\"be948c54-a406-4497-a511-36ee42f7abc9\"],\"version\":\"aa04f6d983e2dd617f6a2212b37844e86bca7fd0\",\"title\":{\"value\":\"Predicting Machine Learning Pipeline Runtimes in the Context of Automated Machine Learning\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article\",\"term\":{\"en_GB\":\"Article\",\"de_DE\":\"Artikel\"}},\"category\":{\"uri\":\"/dk/atira/pure/researchoutput/category/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"peerReview\":true,\"publicationStatuses\":[{\"pureId\":24961214,\"current\":true,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/published\",\"term\":{\"en_GB\":\"Published\",\"de_DE\":\"Veröffentlicht\"}},\"publicationDate\":{\"year\":2021,\"month\":9,\"day\":1}}],\"language\":{\"uri\":\"/dk/atira/pure/core/languages/en_GB\",\"term\":{\"en_GB\":\"English\",\"de_DE\":\"Englisch\"}},\"contributors\":[{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":56289321,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"2860da1f-3a6b-45b8-929b-b53b24c46e32\"}],\"hidden\":false,\"correspondingAuthor\":true,\"name\":{\"firstName\":\"Felix\",\"lastName\":\"Mohr\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"56934fff-6240-49d6-9f32-9f856ab24192\"}},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":56289322,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"c6ac142e-bc9c-414e-b4f6-486246baffc5\"},{\"systemName\":\"ExternalOrganization\",\"uuid\":\"e85e13f9-2c43-413b-91c3-8a062485de40\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Marcel\",\"lastName\":\"Wever\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"3c80b49e-d133-4787-ad61-e0550656a212\"}},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":56289323,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"e85e13f9-2c43-413b-91c3-8a062485de40\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Alexander\",\"lastName\":\"Tornede\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"40a81787-45a2-4cb4-a8d7-62789e395c85\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":56289324,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"e85e13f9-2c43-413b-91c3-8a062485de40\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Eyke\",\"lastName\":\"Hullermeier\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"bdba02ff-db9c-4c9e-a387-6e07097bf877\"}}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"2860da1f-3a6b-45b8-929b-b53b24c46e32\"},{\"systemName\":\"ExternalOrganization\",\"uuid\":\"c6ac142e-bc9c-414e-b4f6-486246baffc5\"},{\"systemName\":\"ExternalOrganization\",\"uuid\":\"e85e13f9-2c43-413b-91c3-8a062485de40\"}],\"totalNumberOfContributors\":4,\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"07d9cfb1-e8af-4076-8e9a-fdb8c24cc1f9\"},\"submissionYear\":2021,\"electronicVersions\":[{\"typeDiscriminator\":\"DoiElectronicVersion\",\"pureId\":25378537,\"accessType\":{\"uri\":\"/dk/atira/pure/core/openaccesspermission/closed\",\"term\":{\"en_GB\":\"Closed\",\"de_DE\":\"Geschlossen\"}},\"doi\":\"10.1109/tpami.2021.3056950\",\"versionType\":{\"uri\":\"/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion\",\"term\":{\"en_GB\":\"Final published version\",\"de_DE\":\"Endgültige, publizierte Fassung\"}}}],\"links\":[{\"pureId\":25378547,\"url\":\"http://www.scopus.com/inward/record.url?scp=85100855731&partnerID=8YFLogxK\",\"description\":{\"en_GB\":\"Link to publication in Scopus\",\"de_DE\":\"Verknüpfung zur Publikation in Scopus\"},\"linkType\":{\"uri\":\"/dk/atira/pure/links/researchoutput/scopuspublication\",\"term\":{\"en_GB\":\"Scopus publication\",\"de_DE\":\"Scopus-Publikation\"}}}],\"keywordGroups\":[{\"typeDiscriminator\":\"FreeKeywordsKeywordGroup\",\"pureId\":25378538,\"logicalName\":\"keywordContainers\",\"name\":{\"en_GB\":\"Keywords\",\"de_DE\":\"Schlagwörter\"},\"keywords\":[{\"pureId\":25378540,\"locale\":\"en_GB\",\"freeKeywords\":[\"Automated machine learning\",\"hierarchical runtime prediction\",\"runtime prediction for classifiers and pipelines\"]}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":25378541,\"logicalName\":\"ASJCSubjectAreas\",\"name\":{\"en_GB\":\"ASJC Scopus subject areas\",\"de_DE\":\"ASJC Scopus Sachgebiete\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/subjectarea/asjc/1700/1712\",\"term\":{\"en_GB\":\"Software\",\"de_DE\":\"Software\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/1700/1707\",\"term\":{\"en_GB\":\"Computer Vision and Pattern Recognition\",\"de_DE\":\"Maschinelles Sehen und Mustererkennung\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/1700/1703\",\"term\":{\"en_GB\":\"Computational Theory and Mathematics\",\"de_DE\":\"Theoretische Informatik und Mathematik\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/1700/1702\",\"term\":{\"en_GB\":\"Artificial Intelligence\",\"de_DE\":\"Artificial intelligence\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2600/2604\",\"term\":{\"en_GB\":\"Applied Mathematics\",\"de_DE\":\"Angewandte Mathematik\"}}]}],\"bibliographicalNote\":{\"en_GB\":\"Publisher Copyright:\\r\\n© 1979-2012 IEEE.\",\"de_DE\":\"Publisher Copyright:\\r\\n© 1979-2012 IEEE.\"},\"descriptions\":[{\"pureId\":24961207,\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/descriptions/contributiontojournal/further_bibliographic_information\",\"term\":{\"en_GB\":\"Further bibliographic information\",\"de_DE\":\"Weitere bibliographische Informationen\"}}}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"workflow\":{\"step\":\"forApproval\",\"description\":{\"en_GB\":\"For validation\",\"de_DE\":\"Zur Validierung\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"ORCID\",\"value\":\"/0000-0002-2415-2186/work/102812546\"},{\"typeDiscriminator\":\"Id\",\"pureId\":24968557,\"idSource\":\"Scopus\",\"value\":\"85100855731\"},{\"typeDiscriminator\":\"Id\",\"pureId\":25378548,\"idSource\":\"unpaywall\",\"value\":\"10.1109/tpami.2021.3056950\"},{\"typeDiscriminator\":\"Id\",\"pureId\":56289325,\"idSource\":\"PubMed\",\"value\":\"33539291\"},{\"typeDiscriminator\":\"Id\",\"pureId\":58665062,\"idSource\":\"ORCID\",\"value\":\"/0000-0001-9782-6818/work/173228071\"}],\"customDefinedFields\":{},\"fundingText\":{\"de_DE\":\"This work was supported in part by the German Research Foundation (DFG) within the Collaborative Research Center “On-The-Fly Computing” (SFB 901/3 Project no. 160364472). The authors gratefully acknowledge support by the Pader-born Center for Parallel Computing (PC2), which provided computational resources and computing time.\"},\"pages\":\"3055-3066\",\"volume\":\"43\",\"journalAssociation\":{\"pureId\":24961206,\"title\":{\"pureId\":684003,\"title\":\"IEEE Transactions on Pattern Analysis and Machine Intelligence\"},\"issn\":{\"pureId\":245365,\"issn\":\"0162-8828\"},\"journal\":{\"systemName\":\"Journal\",\"uuid\":\"aefe0b90-0fbe-4486-b0ec-97b8c414dc29\"}},\"articleNumber\":\"9347828\",\"journalNumber\":\"9\",\"numberOfPages\":12,\"abstract\":{\"en_GB\":\"<p>Automated machine learning (AutoML) seeks to automatically find so-called machine learning pipelines that maximize the prediction performance when being used to train a model on a given dataset. One of the main and yet open challenges in AutoMLis an effective use of computational resources: An AutoML process involves the evaluation of many candidate pipelines, which are costly but often ineffective because they are canceled due to a timeout. In this paper, we present an approach to predict the runtime of two-step machine learning pipelines with up to one pre-processor, which can be used to anticipate whether or not a pipeline will time out. Separate runtime models are trained offline for each algorithm that may be used in a pipeline, and an overall prediction is derived from these models. We empirically show that the approach increases successful evaluations made by an AutoML tool while preserving or even improving on the previously best solutions.</p>\"},\"systemName\":\"ResearchOutput\"},{\"typeDiscriminator\":\"ContributionToBookAnthology\",\"pureId\":71774382,\"uuid\":\"ed9287d9-5a66-4b5c-8081-ce5e2bebd8d0\",\"createdBy\":\"25F-AZD\",\"createdDate\":\"2025-09-09T17:12:54.127+02:00\",\"modifiedBy\":\"lo_pubadmin\",\"modifiedDate\":\"2025-09-10T10:56:02.655+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/publications/ed9287d9-5a66-4b5c-8081-ce5e2bebd8d0\",\"prettyUrlIdentifiers\":[\"automated-data-preparation-for-machine-learning\"],\"version\":\"e94858bfd2656b54d18c7a27e69a52323d84441d\",\"title\":{\"value\":\"Automated Data Preparation for Machine Learning\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/researchoutputtypes/contributiontobookanthology/conference\",\"term\":{\"en_GB\":\"Conference contribution\",\"de_DE\":\"Aufsatz in Konferenzband\"}},\"category\":{\"uri\":\"/dk/atira/pure/researchoutput/category/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"peerReview\":false,\"publicationStatuses\":[{\"pureId\":71774391,\"current\":true,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/epub\",\"term\":{\"en_GB\":\"E-pub ahead of print\",\"de_DE\":\"Elektronisch veröffentlicht (E-Pub)\"}},\"publicationDate\":{\"year\":2025}}],\"language\":{\"uri\":\"/dk/atira/pure/core/languages/de_DE\",\"term\":{\"en_GB\":\"German\",\"de_DE\":\"Deutsch\"}},\"contributors\":[{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":71774387,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"44af8a1f-73af-4ee0-8593-e90e5aff42ca\"}],\"hidden\":false,\"country\":{\"uri\":\"/dk/atira/pure/core/countries/fr\",\"term\":{\"en_GB\":\"France\",\"de_DE\":\"Frankreich\"}},\"correspondingAuthor\":true,\"name\":{\"firstName\":\"Sasa\",\"lastName\":\"Mladenovic\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontobookanthology/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"c092633d-ceb7-4d23-a65f-32ceae0d5500\"}},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":71774388,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Marius\",\"lastName\":\"Lindauer\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontobookanthology/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"c790035d-e016-4bfb-a6d7-155c62ae2f71\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"07d9cfb1-e8af-4076-8e9a-fdb8c24cc1f9\"}]},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":71774390,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Carola\",\"lastName\":\"Doerr\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontobookanthology/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"892f79b7-33af-499a-9143-468a6e194f24\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"07d9cfb1-e8af-4076-8e9a-fdb8c24cc1f9\"}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"44af8a1f-73af-4ee0-8593-e90e5aff42ca\"}],\"totalNumberOfContributors\":3,\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"07d9cfb1-e8af-4076-8e9a-fdb8c24cc1f9\"},\"electronicVersions\":[{\"typeDiscriminator\":\"LinkElectronicVersion\",\"pureId\":71774385,\"accessType\":{\"uri\":\"/dk/atira/pure/core/openaccesspermission/open\",\"term\":{\"en_GB\":\"Open\",\"de_DE\":\"Offen\"}},\"licenseType\":{\"uri\":\"/dk/atira/pure/core/document/licenses/cc_by_4_0\",\"term\":{\"en_GB\":\"CC BY 4.0\",\"de_DE\":\"CC BY 4.0\"}},\"visibleOnPortalDate\":\"2025-09-09\",\"link\":\"https://openreview.net/forum?id=qjLJgQNipN\",\"versionType\":{\"uri\":\"/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion\",\"term\":{\"en_GB\":\"Final published version\",\"de_DE\":\"Endgültige, publizierte Fassung\"}}}],\"descriptions\":[{\"pureId\":71774384,\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/descriptions/contributiontobookanthology/further_bibliographic_information\",\"term\":{\"en_GB\":\"Further bibliographic information\",\"de_DE\":\"Weitere bibliographische Informationen\"}}}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"workflow\":{\"step\":\"forApproval\",\"description\":{\"en_GB\":\"For validation\",\"de_DE\":\"Zur Validierung\"}},\"projects\":[{\"project\":{\"systemName\":\"Project\",\"uuid\":\"254cc6b9-bb7c-4d3c-888a-780785ff3712\"}}],\"customDefinedFields\":{},\"hostPublicationTitle\":{\"value\":\"4th International Conference on Automated Machine Learning\"},\"hostPublicationSubTitle\":{\"value\":\"Non-Archival Track\"},\"systemName\":\"ResearchOutput\"},{\"typeDiscriminator\":\"ContributionToJournal\",\"pureId\":56284847,\"uuid\":\"ac0870d8-2064-4e81-a5ae-39bea4c07c54\",\"createdBy\":\"15H-T9Q\",\"createdDate\":\"2024-08-05T07:36:54.987+02:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2026-05-24T03:40:55.507+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/publications/ac0870d8-2064-4e81-a5ae-39bea4c07c54\",\"prettyUrlIdentifiers\":[\"naive-automated-machine-learning\"],\"previousUuids\":[\"736189c4-d6ea-455a-999d-654496327865\"],\"version\":\"35bc4e400d15022f5c1513e53b95922140609801\",\"title\":{\"value\":\"Naive automated machine learning\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article\",\"term\":{\"en_GB\":\"Article\",\"de_DE\":\"Artikel\"}},\"category\":{\"uri\":\"/dk/atira/pure/researchoutput/category/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"peerReview\":true,\"publicationStatuses\":[{\"pureId\":56311277,\"current\":true,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/published\",\"term\":{\"en_GB\":\"Published\",\"de_DE\":\"Veröffentlicht\"}},\"publicationDate\":{\"year\":2023,\"month\":4}}],\"language\":{\"uri\":\"/dk/atira/pure/core/languages/en_GB\",\"term\":{\"en_GB\":\"English\",\"de_DE\":\"Englisch\"}},\"contributors\":[{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":56284864,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"2860da1f-3a6b-45b8-929b-b53b24c46e32\"}],\"hidden\":false,\"correspondingAuthor\":true,\"name\":{\"firstName\":\"Felix\",\"lastName\":\"Mohr\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"56934fff-6240-49d6-9f32-9f856ab24192\"}},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":56284865,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"e85e13f9-2c43-413b-91c3-8a062485de40\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Marcel\",\"lastName\":\"Wever\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"3c80b49e-d133-4787-ad61-e0550656a212\"}}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"2860da1f-3a6b-45b8-929b-b53b24c46e32\"},{\"systemName\":\"ExternalOrganization\",\"uuid\":\"e85e13f9-2c43-413b-91c3-8a062485de40\"}],\"totalNumberOfContributors\":2,\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"07d9cfb1-e8af-4076-8e9a-fdb8c24cc1f9\"},\"submissionYear\":2023,\"electronicVersions\":[{\"typeDiscriminator\":\"DoiElectronicVersion\",\"pureId\":56284850,\"accessType\":{\"uri\":\"/dk/atira/pure/core/openaccesspermission/open\",\"term\":{\"en_GB\":\"Open\",\"de_DE\":\"Offen\"}},\"visibleOnPortalDate\":\"2024-08-05\",\"doi\":\"10.1007/s10994-022-06200-0\",\"versionType\":{\"uri\":\"/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion\",\"term\":{\"en_GB\":\"Final published version\",\"de_DE\":\"Endgültige, publizierte Fassung\"}}},{\"typeDiscriminator\":\"LinkElectronicVersion\",\"pureId\":56311276,\"accessType\":{\"uri\":\"/dk/atira/pure/core/openaccesspermission/unknown\",\"term\":{\"en_GB\":\"Unknown\",\"de_DE\":\"Unbekannt\"}},\"link\":\"https://arxiv.org/abs/2103.10496\"}],\"links\":[{\"pureId\":56284863,\"url\":\"http://www.scopus.com/inward/record.url?scp=85139115238&partnerID=8YFLogxK\",\"description\":{\"en_GB\":\"Link to publication in Scopus\",\"de_DE\":\"Verknüpfung zur Publikation in Scopus\"},\"linkType\":{\"uri\":\"/dk/atira/pure/links/researchoutput/scopuspublication\",\"term\":{\"en_GB\":\"Scopus publication\",\"de_DE\":\"Scopus-Publikation\"}}}],\"keywordGroups\":[{\"typeDiscriminator\":\"FreeKeywordsKeywordGroup\",\"pureId\":56284857,\"logicalName\":\"keywordContainers\",\"name\":{\"en_GB\":\"Keywords\",\"de_DE\":\"Schlagwörter\"},\"keywords\":[{\"pureId\":56284859,\"locale\":\"en_GB\",\"freeKeywords\":[\"Automated Machine Learning\",\"Black-Box Optimization\",\"Data Science\"]}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":56284860,\"logicalName\":\"ASJCSubjectAreas\",\"name\":{\"en_GB\":\"ASJC Scopus subject areas\",\"de_DE\":\"ASJC Scopus Sachgebiete\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/subjectarea/asjc/1700/1712\",\"term\":{\"en_GB\":\"Software\",\"de_DE\":\"Software\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/1700/1702\",\"term\":{\"en_GB\":\"Artificial Intelligence\",\"de_DE\":\"Artificial intelligence\"}}]}],\"bibliographicalNote\":{\"en_GB\":\"Publisher Copyright:\\r\\n© 2022, The Author(s).\",\"de_DE\":\"Publisher Copyright:\\r\\n© 2022, The Author(s).\"},\"descriptions\":[{\"pureId\":56284849,\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/descriptions/contributiontojournal/further_bibliographic_information\",\"term\":{\"en_GB\":\"Further bibliographic information\",\"de_DE\":\"Weitere bibliographische Informationen\"}}}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"workflow\":{\"step\":\"forApproval\",\"description\":{\"en_GB\":\"For validation\",\"de_DE\":\"Zur Validierung\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"Scopus\",\"value\":\"85139115238\"},{\"typeDiscriminator\":\"Id\",\"pureId\":56311278,\"idSource\":\"dblp\",\"value\":\"journals/corr/abs-2103-10496\"},{\"typeDiscriminator\":\"Id\",\"pureId\":58665044,\"idSource\":\"ORCID\",\"value\":\"/0000-0001-9782-6818/work/173228091\"}],\"customDefinedFields\":{},\"fundingText\":{\"en_GB\":\"Open Access funding provided by Colombia Consortium. This work was supported by the CAPSAB Research Group at Universidad de La Sabana and the German Research Foundation (DFG) within the Collaborative Research Center “On-The-Fly Computing” (SFB 901)\\r\\n\\r\\nWe thank Matthias Feurer and Pieter Gijsbers for their remarkable support in adjusting and for our evaluations. We also thank the anonymous reviewers who considerably helped us improve this manuscript and its contribution. Finally, the authors gratefully acknowledge support of this project by the Paderborn Center for Parallel Computing (PC), which provided the computational resources and computing time to run our experiments. This work was supported by the CAPSAB Research Group at Universidad de La Sabana and the German Research Foundation (DFG) within the Collaborative Research Center “On-The-Fly Computing” (SFB 901).\",\"de_DE\":\"Open Access funding provided by Colombia Consortium. This work was supported by the CAPSAB Research Group at Universidad de La Sabana and the German Research Foundation (DFG) within the Collaborative Research Center “On-The-Fly Computing” (SFB 901)\\r\\n\\r\\nWe thank Matthias Feurer and Pieter Gijsbers for their remarkable support in adjusting and for our evaluations. We also thank the anonymous reviewers who considerably helped us improve this manuscript and its contribution. Finally, the authors gratefully acknowledge support of this project by the Paderborn Center for Parallel Computing (PC), which provided the computational resources and computing time to run our experiments. This work was supported by the CAPSAB Research Group at Universidad de La Sabana and the German Research Foundation (DFG) within the Collaborative Research Center “On-The-Fly Computing” (SFB 901).\"},\"pages\":\"1131-1170\",\"volume\":\"112\",\"journalAssociation\":{\"pureId\":56284848,\"title\":{\"pureId\":350935,\"title\":\"Machine learning\"},\"issn\":{\"pureId\":350930,\"issn\":\"0885-6125\"},\"journal\":{\"systemName\":\"Journal\",\"uuid\":\"e4698e05-7dac-4d62-8f45-f945bf86b7d3\"}},\"journalNumber\":\"4\",\"numberOfPages\":40,\"abstract\":{\"en_GB\":\"<p>An essential task of automated machine learning (AutoML) is the problem of automatically finding the pipeline with the best generalization performance on a given dataset. This problem has been addressed with sophisticated black-box optimization techniques such as Bayesian optimization, grammar-based genetic algorithms, and tree search algorithms. Most of the current approaches are motivated by the assumption that optimizing the components of a pipeline in isolation may yield sub-optimal results. We present Naive AutoML , an approach that precisely realizes such an in-isolation optimization of the different components of a pre-defined pipeline scheme. The returned pipeline is obtained by just taking the best algorithm of each slot. The isolated optimization leads to substantially reduced search spaces, and, surprisingly, this approach yields comparable and sometimes even better performance than current state-of-the-art optimizers.</p>\"},\"systemName\":\"ResearchOutput\"}]}",
+        "response_data": {
+            "count": 1267,
+            "pageInformation": {
+                "offset": 0,
+                "size": 3
+            },
+            "items": [
+                {
+                    "typeDiscriminator": "ContributionToJournal",
+                    "pureId": 24961205,
+                    "uuid": "49316f6e-9f9d-449f-8469-52458027bee8",
+                    "createdBy": "EC6-GRK",
+                    "createdDate": "2022-12-09T10:35:08.43+01:00",
+                    "modifiedBy": "sb_admin",
+                    "modifiedDate": "2026-03-31T15:52:37.992+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/publications/49316f6e-9f9d-449f-8469-52458027bee8",
+                    "prettyUrlIdentifiers": [
+                        "predicting-machine-learning-pipeline-runtimes-in-the-context-of-a"
+                    ],
+                    "previousUuids": [
+                        "be948c54-a406-4497-a511-36ee42f7abc9"
+                    ],
+                    "version": "aa04f6d983e2dd617f6a2212b37844e86bca7fd0",
+                    "title": {
+                        "value": "Predicting Machine Learning Pipeline Runtimes in the Context of Automated Machine Learning"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article",
+                        "term": {
+                            "en_GB": "Article",
+                            "de_DE": "Artikel"
+                        }
+                    },
+                    "category": {
+                        "uri": "/dk/atira/pure/researchoutput/category/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "peerReview": true,
+                    "publicationStatuses": [
+                        {
+                            "pureId": 24961214,
+                            "current": true,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/published",
+                                "term": {
+                                    "en_GB": "Published",
+                                    "de_DE": "Veröffentlicht"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2021,
+                                "month": 9,
+                                "day": 1
+                            }
+                        }
+                    ],
+                    "language": {
+                        "uri": "/dk/atira/pure/core/languages/en_GB",
+                        "term": {
+                            "en_GB": "English",
+                            "de_DE": "Englisch"
+                        }
+                    },
+                    "contributors": [
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 56289321,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "2860da1f-3a6b-45b8-929b-b53b24c46e32"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": true,
+                            "name": {
+                                "firstName": "Felix",
+                                "lastName": "Mohr"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "56934fff-6240-49d6-9f32-9f856ab24192"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 56289322,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "c6ac142e-bc9c-414e-b4f6-486246baffc5"
+                                },
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "e85e13f9-2c43-413b-91c3-8a062485de40"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Marcel",
+                                "lastName": "Wever"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "3c80b49e-d133-4787-ad61-e0550656a212"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 56289323,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "e85e13f9-2c43-413b-91c3-8a062485de40"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Alexander",
+                                "lastName": "Tornede"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "40a81787-45a2-4cb4-a8d7-62789e395c85"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 56289324,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "e85e13f9-2c43-413b-91c3-8a062485de40"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Eyke",
+                                "lastName": "Hullermeier"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "bdba02ff-db9c-4c9e-a387-6e07097bf877"
+                            }
+                        }
+                    ],
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "2860da1f-3a6b-45b8-929b-b53b24c46e32"
+                        },
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "c6ac142e-bc9c-414e-b4f6-486246baffc5"
+                        },
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "e85e13f9-2c43-413b-91c3-8a062485de40"
+                        }
+                    ],
+                    "totalNumberOfContributors": 4,
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "07d9cfb1-e8af-4076-8e9a-fdb8c24cc1f9"
+                    },
+                    "submissionYear": 2021,
+                    "electronicVersions": [
+                        {
+                            "typeDiscriminator": "DoiElectronicVersion",
+                            "pureId": 25378537,
+                            "accessType": {
+                                "uri": "/dk/atira/pure/core/openaccesspermission/closed",
+                                "term": {
+                                    "en_GB": "Closed",
+                                    "de_DE": "Geschlossen"
+                                }
+                            },
+                            "doi": "10.1109/tpami.2021.3056950",
+                            "versionType": {
+                                "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                                "term": {
+                                    "en_GB": "Final published version",
+                                    "de_DE": "Endgültige, publizierte Fassung"
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 25378547,
+                            "url": "http://www.scopus.com/inward/record.url?scp=85100855731&partnerID=8YFLogxK",
+                            "description": {
+                                "en_GB": "Link to publication in Scopus",
+                                "de_DE": "Verknüpfung zur Publikation in Scopus"
+                            },
+                            "linkType": {
+                                "uri": "/dk/atira/pure/links/researchoutput/scopuspublication",
+                                "term": {
+                                    "en_GB": "Scopus publication",
+                                    "de_DE": "Scopus-Publikation"
+                                }
+                            }
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                            "pureId": 25378538,
+                            "logicalName": "keywordContainers",
+                            "name": {
+                                "en_GB": "Keywords",
+                                "de_DE": "Schlagwörter"
+                            },
+                            "keywords": [
+                                {
+                                    "pureId": 25378540,
+                                    "locale": "en_GB",
+                                    "freeKeywords": [
+                                        "Automated machine learning",
+                                        "hierarchical runtime prediction",
+                                        "runtime prediction for classifiers and pipelines"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 25378541,
+                            "logicalName": "ASJCSubjectAreas",
+                            "name": {
+                                "en_GB": "ASJC Scopus subject areas",
+                                "de_DE": "ASJC Scopus Sachgebiete"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/1700/1712",
+                                    "term": {
+                                        "en_GB": "Software",
+                                        "de_DE": "Software"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/1700/1707",
+                                    "term": {
+                                        "en_GB": "Computer Vision and Pattern Recognition",
+                                        "de_DE": "Maschinelles Sehen und Mustererkennung"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/1700/1703",
+                                    "term": {
+                                        "en_GB": "Computational Theory and Mathematics",
+                                        "de_DE": "Theoretische Informatik und Mathematik"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/1700/1702",
+                                    "term": {
+                                        "en_GB": "Artificial Intelligence",
+                                        "de_DE": "Artificial intelligence"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2600/2604",
+                                    "term": {
+                                        "en_GB": "Applied Mathematics",
+                                        "de_DE": "Angewandte Mathematik"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "bibliographicalNote": {
+                        "en_GB": "Publisher Copyright:\r\n© 1979-2012 IEEE.",
+                        "de_DE": "Publisher Copyright:\r\n© 1979-2012 IEEE."
+                    },
+                    "descriptions": [
+                        {
+                            "pureId": 24961207,
+                            "type": {
+                                "uri": "/dk/atira/pure/researchoutput/descriptions/contributiontojournal/further_bibliographic_information",
+                                "term": {
+                                    "en_GB": "Further bibliographic information",
+                                    "de_DE": "Weitere bibliographische Informationen"
+                                }
+                            }
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "workflow": {
+                        "step": "forApproval",
+                        "description": {
+                            "en_GB": "For validation",
+                            "de_DE": "Zur Validierung"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "ORCID",
+                            "value": "/0000-0002-2415-2186/work/102812546"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 24968557,
+                            "idSource": "Scopus",
+                            "value": "85100855731"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 25378548,
+                            "idSource": "unpaywall",
+                            "value": "10.1109/tpami.2021.3056950"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 56289325,
+                            "idSource": "PubMed",
+                            "value": "33539291"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 58665062,
+                            "idSource": "ORCID",
+                            "value": "/0000-0001-9782-6818/work/173228071"
+                        }
+                    ],
+                    "customDefinedFields": [],
+                    "fundingText": {
+                        "de_DE": "This work was supported in part by the German Research Foundation (DFG) within the Collaborative Research Center “On-The-Fly Computing” (SFB 901/3 Project no. 160364472). The authors gratefully acknowledge support by the Pader-born Center for Parallel Computing (PC2), which provided computational resources and computing time."
+                    },
+                    "pages": "3055-3066",
+                    "volume": "43",
+                    "journalAssociation": {
+                        "pureId": 24961206,
+                        "title": {
+                            "pureId": 684003,
+                            "title": "IEEE Transactions on Pattern Analysis and Machine Intelligence"
+                        },
+                        "issn": {
+                            "pureId": 245365,
+                            "issn": "0162-8828"
+                        },
+                        "journal": {
+                            "systemName": "Journal",
+                            "uuid": "aefe0b90-0fbe-4486-b0ec-97b8c414dc29"
+                        }
+                    },
+                    "articleNumber": "9347828",
+                    "journalNumber": "9",
+                    "numberOfPages": 12,
+                    "abstract": {
+                        "en_GB": "<p>Automated machine learning (AutoML) seeks to automatically find so-called machine learning pipelines that maximize the prediction performance when being used to train a model on a given dataset. One of the main and yet open challenges in AutoMLis an effective use of computational resources: An AutoML process involves the evaluation of many candidate pipelines, which are costly but often ineffective because they are canceled due to a timeout. In this paper, we present an approach to predict the runtime of two-step machine learning pipelines with up to one pre-processor, which can be used to anticipate whether or not a pipeline will time out. Separate runtime models are trained offline for each algorithm that may be used in a pipeline, and an overall prediction is derived from these models. We empirically show that the approach increases successful evaluations made by an AutoML tool while preserving or even improving on the previously best solutions.</p>"
+                    },
+                    "systemName": "ResearchOutput"
+                },
+                {
+                    "typeDiscriminator": "ContributionToBookAnthology",
+                    "pureId": 71774382,
+                    "uuid": "ed9287d9-5a66-4b5c-8081-ce5e2bebd8d0",
+                    "createdBy": "25F-AZD",
+                    "createdDate": "2025-09-09T17:12:54.127+02:00",
+                    "modifiedBy": "lo_pubadmin",
+                    "modifiedDate": "2025-09-10T10:56:02.655+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/publications/ed9287d9-5a66-4b5c-8081-ce5e2bebd8d0",
+                    "prettyUrlIdentifiers": [
+                        "automated-data-preparation-for-machine-learning"
+                    ],
+                    "version": "e94858bfd2656b54d18c7a27e69a52323d84441d",
+                    "title": {
+                        "value": "Automated Data Preparation for Machine Learning"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontobookanthology/conference",
+                        "term": {
+                            "en_GB": "Conference contribution",
+                            "de_DE": "Aufsatz in Konferenzband"
+                        }
+                    },
+                    "category": {
+                        "uri": "/dk/atira/pure/researchoutput/category/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "peerReview": false,
+                    "publicationStatuses": [
+                        {
+                            "pureId": 71774391,
+                            "current": true,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/epub",
+                                "term": {
+                                    "en_GB": "E-pub ahead of print",
+                                    "de_DE": "Elektronisch veröffentlicht (E-Pub)"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2025
+                            }
+                        }
+                    ],
+                    "language": {
+                        "uri": "/dk/atira/pure/core/languages/de_DE",
+                        "term": {
+                            "en_GB": "German",
+                            "de_DE": "Deutsch"
+                        }
+                    },
+                    "contributors": [
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 71774387,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "44af8a1f-73af-4ee0-8593-e90e5aff42ca"
+                                }
+                            ],
+                            "hidden": false,
+                            "country": {
+                                "uri": "/dk/atira/pure/core/countries/fr",
+                                "term": {
+                                    "en_GB": "France",
+                                    "de_DE": "Frankreich"
+                                }
+                            },
+                            "correspondingAuthor": true,
+                            "name": {
+                                "firstName": "Sasa",
+                                "lastName": "Mladenovic"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontobookanthology/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "c092633d-ceb7-4d23-a65f-32ceae0d5500"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 71774388,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Marius",
+                                "lastName": "Lindauer"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontobookanthology/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "c790035d-e016-4bfb-a6d7-155c62ae2f71"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "07d9cfb1-e8af-4076-8e9a-fdb8c24cc1f9"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 71774390,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Carola",
+                                "lastName": "Doerr"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontobookanthology/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "892f79b7-33af-499a-9143-468a6e194f24"
+                            }
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "07d9cfb1-e8af-4076-8e9a-fdb8c24cc1f9"
+                        }
+                    ],
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "44af8a1f-73af-4ee0-8593-e90e5aff42ca"
+                        }
+                    ],
+                    "totalNumberOfContributors": 3,
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "07d9cfb1-e8af-4076-8e9a-fdb8c24cc1f9"
+                    },
+                    "electronicVersions": [
+                        {
+                            "typeDiscriminator": "LinkElectronicVersion",
+                            "pureId": 71774385,
+                            "accessType": {
+                                "uri": "/dk/atira/pure/core/openaccesspermission/open",
+                                "term": {
+                                    "en_GB": "Open",
+                                    "de_DE": "Offen"
+                                }
+                            },
+                            "licenseType": {
+                                "uri": "/dk/atira/pure/core/document/licenses/cc_by_4_0",
+                                "term": {
+                                    "en_GB": "CC BY 4.0",
+                                    "de_DE": "CC BY 4.0"
+                                }
+                            },
+                            "visibleOnPortalDate": "2025-09-09",
+                            "link": "https://openreview.net/forum?id=qjLJgQNipN",
+                            "versionType": {
+                                "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                                "term": {
+                                    "en_GB": "Final published version",
+                                    "de_DE": "Endgültige, publizierte Fassung"
+                                }
+                            }
+                        }
+                    ],
+                    "descriptions": [
+                        {
+                            "pureId": 71774384,
+                            "type": {
+                                "uri": "/dk/atira/pure/researchoutput/descriptions/contributiontobookanthology/further_bibliographic_information",
+                                "term": {
+                                    "en_GB": "Further bibliographic information",
+                                    "de_DE": "Weitere bibliographische Informationen"
+                                }
+                            }
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "workflow": {
+                        "step": "forApproval",
+                        "description": {
+                            "en_GB": "For validation",
+                            "de_DE": "Zur Validierung"
+                        }
+                    },
+                    "projects": [
+                        {
+                            "project": {
+                                "systemName": "Project",
+                                "uuid": "254cc6b9-bb7c-4d3c-888a-780785ff3712"
+                            }
+                        }
+                    ],
+                    "customDefinedFields": [],
+                    "hostPublicationTitle": {
+                        "value": "4th International Conference on Automated Machine Learning"
+                    },
+                    "hostPublicationSubTitle": {
+                        "value": "Non-Archival Track"
+                    },
+                    "systemName": "ResearchOutput"
+                },
+                {
+                    "typeDiscriminator": "ContributionToJournal",
+                    "pureId": 56284847,
+                    "uuid": "ac0870d8-2064-4e81-a5ae-39bea4c07c54",
+                    "createdBy": "15H-T9Q",
+                    "createdDate": "2024-08-05T07:36:54.987+02:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2026-05-24T03:40:55.507+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/publications/ac0870d8-2064-4e81-a5ae-39bea4c07c54",
+                    "prettyUrlIdentifiers": [
+                        "naive-automated-machine-learning"
+                    ],
+                    "previousUuids": [
+                        "736189c4-d6ea-455a-999d-654496327865"
+                    ],
+                    "version": "35bc4e400d15022f5c1513e53b95922140609801",
+                    "title": {
+                        "value": "Naive automated machine learning"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article",
+                        "term": {
+                            "en_GB": "Article",
+                            "de_DE": "Artikel"
+                        }
+                    },
+                    "category": {
+                        "uri": "/dk/atira/pure/researchoutput/category/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "peerReview": true,
+                    "publicationStatuses": [
+                        {
+                            "pureId": 56311277,
+                            "current": true,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/published",
+                                "term": {
+                                    "en_GB": "Published",
+                                    "de_DE": "Veröffentlicht"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2023,
+                                "month": 4
+                            }
+                        }
+                    ],
+                    "language": {
+                        "uri": "/dk/atira/pure/core/languages/en_GB",
+                        "term": {
+                            "en_GB": "English",
+                            "de_DE": "Englisch"
+                        }
+                    },
+                    "contributors": [
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 56284864,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "2860da1f-3a6b-45b8-929b-b53b24c46e32"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": true,
+                            "name": {
+                                "firstName": "Felix",
+                                "lastName": "Mohr"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "56934fff-6240-49d6-9f32-9f856ab24192"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 56284865,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "e85e13f9-2c43-413b-91c3-8a062485de40"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Marcel",
+                                "lastName": "Wever"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "3c80b49e-d133-4787-ad61-e0550656a212"
+                            }
+                        }
+                    ],
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "2860da1f-3a6b-45b8-929b-b53b24c46e32"
+                        },
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "e85e13f9-2c43-413b-91c3-8a062485de40"
+                        }
+                    ],
+                    "totalNumberOfContributors": 2,
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "07d9cfb1-e8af-4076-8e9a-fdb8c24cc1f9"
+                    },
+                    "submissionYear": 2023,
+                    "electronicVersions": [
+                        {
+                            "typeDiscriminator": "DoiElectronicVersion",
+                            "pureId": 56284850,
+                            "accessType": {
+                                "uri": "/dk/atira/pure/core/openaccesspermission/open",
+                                "term": {
+                                    "en_GB": "Open",
+                                    "de_DE": "Offen"
+                                }
+                            },
+                            "visibleOnPortalDate": "2024-08-05",
+                            "doi": "10.1007/s10994-022-06200-0",
+                            "versionType": {
+                                "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                                "term": {
+                                    "en_GB": "Final published version",
+                                    "de_DE": "Endgültige, publizierte Fassung"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "LinkElectronicVersion",
+                            "pureId": 56311276,
+                            "accessType": {
+                                "uri": "/dk/atira/pure/core/openaccesspermission/unknown",
+                                "term": {
+                                    "en_GB": "Unknown",
+                                    "de_DE": "Unbekannt"
+                                }
+                            },
+                            "link": "https://arxiv.org/abs/2103.10496"
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 56284863,
+                            "url": "http://www.scopus.com/inward/record.url?scp=85139115238&partnerID=8YFLogxK",
+                            "description": {
+                                "en_GB": "Link to publication in Scopus",
+                                "de_DE": "Verknüpfung zur Publikation in Scopus"
+                            },
+                            "linkType": {
+                                "uri": "/dk/atira/pure/links/researchoutput/scopuspublication",
+                                "term": {
+                                    "en_GB": "Scopus publication",
+                                    "de_DE": "Scopus-Publikation"
+                                }
+                            }
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                            "pureId": 56284857,
+                            "logicalName": "keywordContainers",
+                            "name": {
+                                "en_GB": "Keywords",
+                                "de_DE": "Schlagwörter"
+                            },
+                            "keywords": [
+                                {
+                                    "pureId": 56284859,
+                                    "locale": "en_GB",
+                                    "freeKeywords": [
+                                        "Automated Machine Learning",
+                                        "Black-Box Optimization",
+                                        "Data Science"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 56284860,
+                            "logicalName": "ASJCSubjectAreas",
+                            "name": {
+                                "en_GB": "ASJC Scopus subject areas",
+                                "de_DE": "ASJC Scopus Sachgebiete"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/1700/1712",
+                                    "term": {
+                                        "en_GB": "Software",
+                                        "de_DE": "Software"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/1700/1702",
+                                    "term": {
+                                        "en_GB": "Artificial Intelligence",
+                                        "de_DE": "Artificial intelligence"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "bibliographicalNote": {
+                        "en_GB": "Publisher Copyright:\r\n© 2022, The Author(s).",
+                        "de_DE": "Publisher Copyright:\r\n© 2022, The Author(s)."
+                    },
+                    "descriptions": [
+                        {
+                            "pureId": 56284849,
+                            "type": {
+                                "uri": "/dk/atira/pure/researchoutput/descriptions/contributiontojournal/further_bibliographic_information",
+                                "term": {
+                                    "en_GB": "Further bibliographic information",
+                                    "de_DE": "Weitere bibliographische Informationen"
+                                }
+                            }
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "workflow": {
+                        "step": "forApproval",
+                        "description": {
+                            "en_GB": "For validation",
+                            "de_DE": "Zur Validierung"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "Scopus",
+                            "value": "85139115238"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 56311278,
+                            "idSource": "dblp",
+                            "value": "journals/corr/abs-2103-10496"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 58665044,
+                            "idSource": "ORCID",
+                            "value": "/0000-0001-9782-6818/work/173228091"
+                        }
+                    ],
+                    "customDefinedFields": [],
+                    "fundingText": {
+                        "en_GB": "Open Access funding provided by Colombia Consortium. This work was supported by the CAPSAB Research Group at Universidad de La Sabana and the German Research Foundation (DFG) within the Collaborative Research Center “On-The-Fly Computing” (SFB 901)\r\n\r\nWe thank Matthias Feurer and Pieter Gijsbers for their remarkable support in adjusting and for our evaluations. We also thank the anonymous reviewers who considerably helped us improve this manuscript and its contribution. Finally, the authors gratefully acknowledge support of this project by the Paderborn Center for Parallel Computing (PC), which provided the computational resources and computing time to run our experiments. This work was supported by the CAPSAB Research Group at Universidad de La Sabana and the German Research Foundation (DFG) within the Collaborative Research Center “On-The-Fly Computing” (SFB 901).",
+                        "de_DE": "Open Access funding provided by Colombia Consortium. This work was supported by the CAPSAB Research Group at Universidad de La Sabana and the German Research Foundation (DFG) within the Collaborative Research Center “On-The-Fly Computing” (SFB 901)\r\n\r\nWe thank Matthias Feurer and Pieter Gijsbers for their remarkable support in adjusting and for our evaluations. We also thank the anonymous reviewers who considerably helped us improve this manuscript and its contribution. Finally, the authors gratefully acknowledge support of this project by the Paderborn Center for Parallel Computing (PC), which provided the computational resources and computing time to run our experiments. This work was supported by the CAPSAB Research Group at Universidad de La Sabana and the German Research Foundation (DFG) within the Collaborative Research Center “On-The-Fly Computing” (SFB 901)."
+                    },
+                    "pages": "1131-1170",
+                    "volume": "112",
+                    "journalAssociation": {
+                        "pureId": 56284848,
+                        "title": {
+                            "pureId": 350935,
+                            "title": "Machine learning"
+                        },
+                        "issn": {
+                            "pureId": 350930,
+                            "issn": "0885-6125"
+                        },
+                        "journal": {
+                            "systemName": "Journal",
+                            "uuid": "e4698e05-7dac-4d62-8f45-f945bf86b7d3"
+                        }
+                    },
+                    "journalNumber": "4",
+                    "numberOfPages": 40,
+                    "abstract": {
+                        "en_GB": "<p>An essential task of automated machine learning (AutoML) is the problem of automatically finding the pipeline with the best generalization performance on a given dataset. This problem has been addressed with sophisticated black-box optimization techniques such as Bayesian optimization, grammar-based genetic algorithms, and tree search algorithms. Most of the current approaches are motivated by the assumption that optimizing the components of a pipeline in isolation may yield sub-optimal results. We present Naive AutoML , an approach that precisely realizes such an in-isolation optimization of the different components of a pre-defined pipeline scheme. The returned pipeline is obtained by just taking the best algorithm of each slot. The isolated optimization leads to substantially reduced search spaces, and, surprisingly, this approach yields comparable and sometimes even better performance than current state-of-the-art optimizers.</p>"
+                    },
+                    "systemName": "ResearchOutput"
+                }
+            ]
+        },
+        "json_error": "No error"
+    }
+}

@@ -17,7 +17,7 @@
                         <TCEforms>
                             <onChange>reload</onChange>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display
                             </label>
                             <config>
                                 <type>select</type>
@@ -26,41 +26,41 @@
 
                                     <numIndex index="-1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectBlank
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectBlank
                                         </numIndex>
                                         <numIndex index="-1"></numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.detail
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display.detail
                                         </numIndex>
                                         <numIndex index="1">DETAIL</numIndex>
                                     </numIndex>
 
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.publications
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display.publications
                                         </numIndex>
                                         <numIndex index="1">PUBLICATIONS</numIndex>
                                     </numIndex>
 
                                     <numIndex index="5" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.projects
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display.projects
                                         </numIndex>
                                         <numIndex index="1">PROJECTS</numIndex>
                                     </numIndex>
 
                                     <numIndex index="6" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.equipments
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display.equipments
                                         </numIndex>
                                         <numIndex index="1">EQUIPMENTS</numIndex>
                                     </numIndex>
 
                                     <numIndex index="7" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.what_to_display.data_sets
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.what_to_display.data_sets
                                         </numIndex>
                                         <numIndex index="1">DATASETS</numIndex>
                                     </numIndex>
@@ -77,7 +77,7 @@
                     <settings.showBibtex>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.showBibtex
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.showBibtex
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:DETAIL</displayCond>
                             <config>
@@ -89,9 +89,9 @@
                     <settings.linkToPortal>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.linkToPortal
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.linkToPortal
                             </label>
-                            <displayCond>FIELD:settings.what_to_display:IN:DETAIL,PROJECTS,PUBLICATIONS,EQUIPMENTS
+                            <displayCond>FIELD:settings.what_to_display:IN:DETAIL,PROJECTS,PUBLICATIONS,EQUIPMENTS,DATASETS
                             </displayCond>
                             <config>
                                 <type>check</type>
@@ -101,38 +101,26 @@
                     </settings.linkToPortal>
                     <settings.singlePid>
                         <TCEforms>
-                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.singlePid
+                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.singlePid
                             </label>
-                            <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS</displayCond>
+                            <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS</displayCond>
                             <config>
-                                <type>input</type>
-                                <size>7</size>
+                                <type>group</type>
                                 <allowed>pages</allowed>
-                                <wizards type="array">
-                                    <link type="array">
-                                        <type>popup</type>
-                                        <title>LLL:EXT:cms/locallang_ttc.xlf:header_link_formlabel</title>
-                                        <params type="array">
-                                            <blindLinkOptions>url,mail,spec,file,folder</blindLinkOptions>
-                                        </params>
-                                        <icon>link_popup.gif</icon>
-                                        <module type="array">
-                                            <name>wizard_element_browser</name>
-                                            <urlParameters type="array">
-                                                <mode>wizard</mode>
-                                                <act>file</act>
-                                            </urlParameters>
-                                        </module>
-                                        <JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1
-                                        </JSopenParams>
-                                    </link>
-                                </wizards>
+                                <maxitems>1</maxitems>
+                                <minitems>0</minitems>
+                                <size>1</size>
+                                <suggestOptions>
+                                    <default>
+                                        <searchWholePhrase>true</searchWholePhrase>
+                                    </default>
+                                </suggestOptions>
                             </config>
                         </TCEforms>
                     </settings.singlePid>
                     <settings.pageSize>
                         <TCEforms>
-                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.pageSize
+                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.pageSize
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS
                             </displayCond>
@@ -149,7 +137,7 @@
                     <settings.showSearchForm>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.showSearchForm
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.showSearchForm
                             </label>
 
 
@@ -165,7 +153,7 @@
                     <settings.showDescription>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.showDescription
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.showDescription
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:PROJECTS</displayCond>
                             <config>
@@ -177,7 +165,7 @@
                     <settings.pager.insertAbove>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.pager.insertAbove
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.pager.insertAbove
                             </label>
                             <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS
                             </displayCond>
@@ -187,11 +175,25 @@
                             </config>
                         </TCEforms>
                     </settings.pager.insertAbove>
+                    
+                    <settings.pager.insertBelow>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.pager.insertBelow
+                            </label>
+                            <displayCond>FIELD:settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS
+                            </displayCond>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.pager.insertBelow>
 
                     <settings.initialNoResults>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.initialnoResults
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.initialnoResults
                             </label>
                             <displayCond>FIELD:settings.what_to_display:=:PUBLICATIONS</displayCond>
                             <config>
@@ -209,7 +211,7 @@
             <ROOT>
                 <TCEforms>
                     <sheetTitle>
-                        LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.settings
+                        LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.settings
                     </sheetTitle>
                     <displayCond>FIELD:sDEF.settings.what_to_display:IN:PUBLICATIONS,PROJECTS,EQUIPMENTS,DATASETS</displayCond>
                 </TCEforms>
@@ -218,7 +220,7 @@
                     <settings.chooseSelector>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.ChooseSelector
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.ChooseSelector
                             </label>
                             <onChange>reload</onChange>
                             <config>
@@ -232,7 +234,7 @@
                     <settings.selectorOrganisations>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectOrganisation
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectOrganisation
                             </label>
                             <displayCond>FIELD:settings.chooseSelector:=:0</displayCond>
                             <config>
@@ -240,8 +242,17 @@
                                 <renderType>selectMultipleSideBySide</renderType>
                                 <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getOrganisations
                                 </itemsProcFunc>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">─────────────────────</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.searchForMore</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                </items>
                                 <size>10</size>
-                                <autoSizeMax>20</autoSizeMax>
                                 <maxitems>9999</maxitems>
                                 <minitems>0</minitems>
                                 <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>
@@ -251,17 +262,28 @@
                     <settings.selectorPersons>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectPerson
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectPerson
                             </label>
+                            <description>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectPerson.description
+                            </description>
                             <displayCond>FIELD:settings.chooseSelector:=:1</displayCond>
                             <config>
                                 <type>select</type>
 
-                                <items type="array"></items>
                                 <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getPersons
                                 </itemsProcFunc>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">─────────────────────</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.searchForMore</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                </items>
                                 <size>15</size>
-                                <autoSizeMax>25</autoSizeMax>
                                 <maxitems>20000</maxitems>
                                 <minitems>0</minitems>
                                 <renderType>selectMultipleSideBySide</renderType>
@@ -272,17 +294,28 @@
                     <settings.selectorPersonsWithOrganization>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectPerson
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectPerson
                             </label>
+                            <description>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectPerson.description
+                            </description>
                             <displayCond>FIELD:settings.chooseSelector:=:3</displayCond>
                             <config>
                                 <type>select</type>
 
-                                <items type="array"></items>
-                                <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getPersonsByOrganization
+                                <itemsProcFunc>Univie\UniviePure\Utility\ClassificationScheme->getPersons
                                 </itemsProcFunc>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">─────────────────────</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.searchForMore</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                </items>
                                 <size>15</size>
-                                <autoSizeMax>25</autoSizeMax>
                                 <maxitems>20000</maxitems>
                                 <minitems>0</minitems>
                                 <renderType>selectMultipleSideBySide</renderType>
@@ -293,7 +326,7 @@
                     <settings.luhPubsOnly>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.luhPubsOnly
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.luhPubsOnly
                             </label>
                             <displayCond>
                                 <and>
@@ -311,7 +344,7 @@
                     <settings.selectorProjects>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectProject
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectProject
                             </label>
                             <displayCond>FIELD:settings.chooseSelector:=:2</displayCond>
 
@@ -321,7 +354,16 @@
                                 <itemsProcFunc>
                                     Univie\UniviePure\Utility\ClassificationScheme->getProjects
                                 </itemsProcFunc>
-                                <items type="array"></items>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">─────────────────────</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.searchForMore</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                </items>
                                 <size>15</size>
                                 <maxitems>9999</maxitems>
                                 <minitems>0</minitems>
@@ -331,6 +373,38 @@
                             </config>
                         </TCEforms>
                     </settings.selectorProjects>
+                    <settings.selectorEquipments>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectEquipment
+                            </label>
+                            <displayCond>FIELD:settings.chooseSelector:=:4</displayCond>
+
+                            <config>
+                                <type>select</type>
+
+                                <itemsProcFunc>
+                                    Univie\UniviePure\Utility\ClassificationScheme->getEquipments
+                                </itemsProcFunc>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">─────────────────────</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.searchForMore</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                </items>
+                                <size>15</size>
+                                <maxitems>9999</maxitems>
+                                <minitems>0</minitems>
+                                <renderType>selectMultipleSideBySide</renderType>
+                                <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>
+
+                            </config>
+                        </TCEforms>
+                    </settings.selectorEquipments>
 
                 </el>
             </ROOT>
@@ -339,7 +413,7 @@
         <Equipments>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.equipments
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments
                     </sheetTitle>
                     <displayCond>FIELD:sDEF.settings.what_to_display:=:EQUIPMENTS</displayCond>
                 </TCEforms>
@@ -348,17 +422,95 @@
                     <settings.narrowBySearch>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.equipments.narrowBySearch
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.narrowBySearch
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.searchPlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>
                         </TCEforms>
                     </settings.narrowBySearch>
+                    <settings.orderEquipments>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.orderEquipments
+                            </label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.orderEquipments.title.asc
+                                        </numIndex>
+                                        <numIndex index="1">title</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.orderEquipments.title.desc
+                                        </numIndex>
+                                        <numIndex index="1">-title</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.orderEquipments.created.desc
+                                        </numIndex>
+                                        <numIndex index="1">-created</numIndex>
+                                    </numIndex>
+                                    <numIndex index="3" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.orderEquipments.created.asc
+                                        </numIndex>
+                                        <numIndex index="1">created</numIndex>
+                                    </numIndex>
+                                </items>
+                                <default>title</default>
+                            </config>
+                        </TCEforms>
+                    </settings.orderEquipments>
+                    <settings.narrowByEquipmentType>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.narrowByEquipmentType
+                            </label>
+                            <onChange>reload</onChange>
+                            <config>
+                                <type>check</type>
+                            </config>
+                        </TCEforms>
+                    </settings.narrowByEquipmentType>
+                    <settings.selectorEquipmentType>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.equipments.selectEquipmentType
+                            </label>
+                            <displayCond>FIELD:settings.narrowByEquipmentType:REQ:true</displayCond>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectMultipleSideBySide</renderType>
+                                <itemsProcFunc>
+                                    Univie\UniviePure\Utility\ClassificationScheme->getEquipmentTypes
+                                </itemsProcFunc>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">─────────────────────</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.searchForMore</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                </items>
+                                <size>10</size>
+                                <maxitems>9999</maxitems>
+                                <minitems>0</minitems>
+                                <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>
+                            </config>
+                        </TCEforms>
+                    </settings.selectorEquipmentType>
                 </el>
             </ROOT>
         </Equipments>
@@ -366,7 +518,7 @@
         <DataSets>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.data_sets
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.data_sets
                     </sheetTitle>
                     <displayCond>FIELD:sDEF.settings.what_to_display:=:DATASETS</displayCond>
                 </TCEforms>
@@ -375,12 +527,12 @@
                     <settings.narrowBySearch>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.data_sets.narrowBySearch
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.data_sets.narrowBySearch
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.searchPlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>
@@ -389,7 +541,7 @@
                     <settings.rendering>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.data_sets.rendering
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.data_sets.rendering
                             </label>
                             <config>
                                 <type>select</type>
@@ -418,7 +570,7 @@
         <Publication>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications
                     </sheetTitle>
                     <displayCond>FIELD:sDEF.settings.what_to_display:=:PUBLICATIONS</displayCond>
                 </TCEforms>
@@ -427,7 +579,7 @@
                     <settings.narrowByPublicationType>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.narrowByPublicationType
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.narrowByPublicationType
                             </label>
                             <onChange>reload</onChange>
                             <config>
@@ -438,7 +590,7 @@
                     <settings.selectorPublicationType>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.selectPublicationType
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.selectPublicationType
                             </label>
                             <displayCond>FIELD:settings.narrowByPublicationType:REQ:true</displayCond>
                             <config>
@@ -447,8 +599,17 @@
                                 <itemsProcFunc>
                                     Univie\UniviePure\Utility\ClassificationScheme->getTypesFromPublications
                                 </itemsProcFunc>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">─────────────────────</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.searchForMore</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                </items>
                                 <size>10</size>
-                                <autoSizeMax>20</autoSizeMax>
                                 <maxitems>9999</maxitems>
                                 <minitems>0</minitems>
                                 <enableMultiSelectFilterTextfield>TRUE</enableMultiSelectFilterTextfield>
@@ -459,7 +620,7 @@
                     <settings.peerReviewedOnly>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.peerReviewedOnly
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.peerReviewedOnly
                             </label>
                             <config>
                                 <type>check</type>
@@ -468,7 +629,7 @@
                     </settings.peerReviewedOnly>
                     <settings.inPress>
                         <TCEforms>
-                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.inPress
+                            <label>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.inPress
                             </label>
                             <config>
                                 <type>check</type>
@@ -479,7 +640,7 @@
                     <settings.notPeerReviewedOrNotSetOnly>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.notPeerReviewedOrNotSetOnly
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.notPeerReviewedOrNotSetOnly
                             </label>
                             <config>
                                 <type>check</type>
@@ -490,12 +651,12 @@
                     <settings.narrowBySearch>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.narrowBySearch
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.narrowBySearch
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.searchPlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>
@@ -505,12 +666,12 @@
                     <settings.publishedAfterDate>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedAfterDate
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.publishedAfterDate
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedAfterPlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.publishedAfterPlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>
@@ -520,12 +681,12 @@
                     <settings.publishedBeforeDate>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedBeforeDate
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.publishedBeforeDate
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.publishedBeforePlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.publishedBeforePlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>
@@ -536,7 +697,7 @@
                     <settings.groupByYear>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.groupByYear
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.groupByYear
                             </label>
                             <config>
                                 <type>check</type>
@@ -548,7 +709,7 @@
                     <settings.researchOutputOrdering>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering
                             </label>
                             <config>
                                 <type>select</type>
@@ -557,62 +718,62 @@
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationYearAndAuthor-desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.publicationYearAndAuthor-desc
                                         </numIndex>
                                         <numIndex index="1">-publicationYearAndAuthor</numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationYearAndAuthor-asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.publicationYearAndAuthor-asc
                                         </numIndex>
                                         <numIndex index="1">publicationYearAndAuthor</numIndex>
                                     </numIndex>
 
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.year-desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.year-desc
                                         </numIndex>
                                         <numIndex index="1">-publicationYear</numIndex>
                                     </numIndex>
                                     <numIndex index="3" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.year-asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.year-asc
                                         </numIndex>
                                         <numIndex index="1">publicationYear</numIndex>
                                     </numIndex>
                                     <numIndex index="4" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.authorLastName-asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.authorLastName-asc
                                         </numIndex>
                                         <numIndex index="1">authorLastName</numIndex>
                                     </numIndex>
                                     <numIndex index="5" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.authorLastName-desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.authorLastName-desc
                                         </numIndex>
                                         <numIndex index="1">-authorLastName</numIndex>
                                     </numIndex>
                                     <numIndex index="6" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.title-asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.title-asc
                                         </numIndex>
                                         <numIndex index="1">title</numIndex>
                                     </numIndex>
                                     <numIndex index="7" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.title-desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.title-desc
                                         </numIndex>
                                         <numIndex index="1">-title</numIndex>
                                     </numIndex>
                                     <numIndex index="8" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationDate-asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.publicationDate-asc
                                         </numIndex>
                                         <numIndex index="1">publicationDate</numIndex>
                                     </numIndex>
                                     <numIndex index="9" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.ordering.publicationDate-desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.ordering.publicationDate-desc
                                         </numIndex>
                                         <numIndex index="1">-publicationDate</numIndex>
                                     </numIndex>
@@ -621,58 +782,353 @@
                         </TCEforms>
                     </settings.researchOutputOrdering>
 
-                    <settings.rendering>
+                    <settings.citationStyle>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.rendering
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.citationStyle
                             </label>
+                            <description>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.citationStyle.description
+                            </description>
+                            <displayCond>FIELD:sDEF.settings.what_to_display:=:PUBLICATIONS</displayCond>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-
+                                <size>1</size>
                                 <items type="array">
+                                    <numIndex index="-1" type="array">
+                                        <numIndex index="0">— Kein vordefinierter Stil —</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                    <!-- Popular General Styles -->
                                     <numIndex index="0" type="array">
-                                        <numIndex index="0">Vancouver</numIndex>
-                                        <numIndex index="1">vancouver</numIndex>
+                                        <numIndex index="0">── Internationale Standards ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
-                                        <numIndex index="0">Harvard</numIndex>
-                                        <numIndex index="1">harvard</numIndex>
-                                    </numIndex>
-                                    <numIndex index="2" type="array">
-                                        <numIndex index="0">Apa</numIndex>
+                                        <numIndex index="0">APA 7th edition (apa)</numIndex>
                                         <numIndex index="1">apa</numIndex>
                                     </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">APA 6th edition (apa-6th-edition)</numIndex>
+                                        <numIndex index="1">apa-6th-edition</numIndex>
+                                    </numIndex>
                                     <numIndex index="3" type="array">
-                                        <numIndex index="0">MLA</numIndex>
-                                        <numIndex index="1">mla</numIndex>
+                                        <numIndex index="0">Harvard - Cite Them Right (harvard-cite-them-right)</numIndex>
+                                        <numIndex index="1">harvard-cite-them-right</numIndex>
                                     </numIndex>
                                     <numIndex index="4" type="array">
-                                        <numIndex index="0">CBE</numIndex>
-                                        <numIndex index="1">cbe</numIndex>
+                                        <numIndex index="0">Vancouver (elsevier-vancouver)</numIndex>
+                                        <numIndex index="1">elsevier-vancouver</numIndex>
                                     </numIndex>
                                     <numIndex index="5" type="array">
-                                        <numIndex index="0">Author</numIndex>
-                                        <numIndex index="1">author</numIndex>
+                                        <numIndex index="0">IEEE (ieee)</numIndex>
+                                        <numIndex index="1">ieee</numIndex>
                                     </numIndex>
                                     <numIndex index="6" type="array">
-                                        <numIndex index="0">Authorlist</numIndex>
-                                        <numIndex index="1">authorlist</numIndex>
+                                        <numIndex index="0">Chicago Author-Date (chicago-author-date)</numIndex>
+                                        <numIndex index="1">chicago-author-date</numIndex>
                                     </numIndex>
                                     <numIndex index="7" type="array">
-                                        <numIndex index="0">Standard</numIndex>
-                                        <numIndex index="1">standard</numIndex>
+                                        <numIndex index="0">Chicago Notes-Bibliography (chicago-notes-bibliography)</numIndex>
+                                        <numIndex index="1">chicago-notes-bibliography</numIndex>
                                     </numIndex>
                                     <numIndex index="8" type="array">
-                                        <numIndex index="0">Langformat für Dissertationen inkl. Betreuerangabe
-                                        </numIndex>
-                                        <numIndex index="1">luhlong</numIndex>
+                                        <numIndex index="0">MLA 9th edition (modern-language-association)</numIndex>
+                                        <numIndex index="1">modern-language-association</numIndex>
+                                    </numIndex>
+
+                                    <!-- German Standards -->
+                                    <numIndex index="10" type="array">
+                                        <numIndex index="0">── Deutsche Standards ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="11" type="array">
+                                        <numIndex index="0">DIN 1505-2 (din-1505-2)</numIndex>
+                                        <numIndex index="1">din-1505-2</numIndex>
+                                    </numIndex>
+                                    <numIndex index="12" type="array">
+                                        <numIndex index="0">DIN 1505-2 Alphanumerisch (din-1505-2-alphanumeric)</numIndex>
+                                        <numIndex index="1">din-1505-2-alphanumeric</numIndex>
+                                    </numIndex>
+                                    <numIndex index="13" type="array">
+                                        <numIndex index="0">DIN 1505-2 Numerisch (din-1505-2-numeric)</numIndex>
+                                        <numIndex index="1">din-1505-2-numeric</numIndex>
+                                    </numIndex>
+                                    <numIndex index="14" type="array">
+                                        <numIndex index="0">DIN 1505-2 Numerisch-Alphabetisch (din-1505-2-numeric-alphabetical)</numIndex>
+                                        <numIndex index="1">din-1505-2-numeric-alphabetical</numIndex>
+                                    </numIndex>
+
+                                    <!-- German Law / Rechtswissenschaften -->
+                                    <numIndex index="20" type="array">
+                                        <numIndex index="0">── Rechtswissenschaften ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="21" type="array">
+                                        <numIndex index="0">Juristische Zitierweise Stüber (juristische-zitierweise)</numIndex>
+                                        <numIndex index="1">juristische-zitierweise</numIndex>
+                                    </numIndex>
+                                    <numIndex index="22" type="array">
+                                        <numIndex index="0">Computer und Recht (computer-und-recht)</numIndex>
+                                        <numIndex index="1">computer-und-recht</numIndex>
+                                    </numIndex>
+                                    <numIndex index="23" type="array">
+                                        <numIndex index="0">European Journal of International Law (european-journal-of-international-law)</numIndex>
+                                        <numIndex index="1">european-journal-of-international-law</numIndex>
+                                    </numIndex>
+                                    <numIndex index="24" type="array">
+                                        <numIndex index="0">Archiv für die civilistische Praxis (archiv-fur-die-civilistische-praxis)</numIndex>
+                                        <numIndex index="1">archiv-fur-die-civilistische-praxis</numIndex>
+                                    </numIndex>
+                                    <numIndex index="25" type="array">
+                                        <numIndex index="0">Mohr Siebeck Recht (mohr-siebeck-recht)</numIndex>
+                                        <numIndex index="1">mohr-siebeck-recht</numIndex>
+                                    </numIndex>
+
+                                    <!-- Medical / Medizin -->
+                                    <numIndex index="30" type="array">
+                                        <numIndex index="0">── Medizin ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="31" type="array">
+                                        <numIndex index="0">MHH Medizinische Hochschule Hannover (medizinische-hochschule-hannover)</numIndex>
+                                        <numIndex index="1">medizinische-hochschule-hannover</numIndex>
+                                    </numIndex>
+                                    <numIndex index="32" type="array">
+                                        <numIndex index="0">Deutsches Ärzteblatt (deutsches-arzteblatt)</numIndex>
+                                        <numIndex index="1">deutsches-arzteblatt</numIndex>
+                                    </numIndex>
+                                    <numIndex index="34" type="array">
+                                        <numIndex index="0">American Medical Association (american-medical-association)</numIndex>
+                                        <numIndex index="1">american-medical-association</numIndex>
+                                    </numIndex>
+                                    <numIndex index="35" type="array">
+                                        <numIndex index="0">NLM - National Library of Medicine (nlm-citation-sequence)</numIndex>
+                                        <numIndex index="1">nlm-citation-sequence</numIndex>
+                                    </numIndex>
+                                    <numIndex index="36" type="array">
+                                        <numIndex index="0">Nature (nature)</numIndex>
+                                        <numIndex index="1">nature</numIndex>
+                                    </numIndex>
+                                    <numIndex index="37" type="array">
+                                        <numIndex index="0">The Lancet (the-lancet)</numIndex>
+                                        <numIndex index="1">the-lancet</numIndex>
+                                    </numIndex>
+                                    <numIndex index="38" type="array">
+                                        <numIndex index="0">BMJ (bmj)</numIndex>
+                                        <numIndex index="1">bmj</numIndex>
+                                    </numIndex>
+                                    <numIndex index="39" type="array">
+                                        <numIndex index="0">Cell (cell)</numIndex>
+                                        <numIndex index="1">cell</numIndex>
+                                    </numIndex>
+                                    <numIndex index="40" type="array">
+                                        <numIndex index="0">PLOS ONE (plos)</numIndex>
+                                        <numIndex index="1">plos</numIndex>
+                                    </numIndex>
+
+                                    <!-- Engineering / Ingenieurwissenschaften -->
+                                    <numIndex index="50" type="array">
+                                        <numIndex index="0">── Ingenieurwissenschaften ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="51" type="array">
+                                        <numIndex index="0">IEEE (ieee)</numIndex>
+                                        <numIndex index="1">ieee</numIndex>
+                                    </numIndex>
+                                    <numIndex index="52" type="array">
+                                        <numIndex index="0">Springer LNCS (springer-lecture-notes-in-computer-science)</numIndex>
+                                        <numIndex index="1">springer-lecture-notes-in-computer-science</numIndex>
+                                    </numIndex>
+                                    <numIndex index="53" type="array">
+                                        <numIndex index="0">Springer Basic Author-Date (springer-basic-author-date)</numIndex>
+                                        <numIndex index="1">springer-basic-author-date</numIndex>
+                                    </numIndex>
+                                    <numIndex index="54" type="array">
+                                        <numIndex index="0">ACM (association-for-computing-machinery)</numIndex>
+                                        <numIndex index="1">association-for-computing-machinery</numIndex>
+                                    </numIndex>
+                                    <numIndex index="56" type="array">
+                                        <numIndex index="0">AIP American Institute of Physics (american-institute-of-physics)</numIndex>
+                                        <numIndex index="1">american-institute-of-physics</numIndex>
+                                    </numIndex>
+                                    <numIndex index="57" type="array">
+                                        <numIndex index="0">ASME (american-society-of-mechanical-engineers)</numIndex>
+                                        <numIndex index="1">american-society-of-mechanical-engineers</numIndex>
+                                    </numIndex>
+
+                                    <!-- Chemistry / Naturwissenschaften -->
+                                    <numIndex index="60" type="array">
+                                        <numIndex index="0">── Chemie / Physik ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="61" type="array">
+                                        <numIndex index="0">ACS American Chemical Society (american-chemical-society)</numIndex>
+                                        <numIndex index="1">american-chemical-society</numIndex>
+                                    </numIndex>
+                                    <numIndex index="62" type="array">
+                                        <numIndex index="0">Angewandte Chemie (angewandte-chemie)</numIndex>
+                                        <numIndex index="1">angewandte-chemie</numIndex>
+                                    </numIndex>
+                                    <numIndex index="64" type="array">
+                                        <numIndex index="0">APS American Physical Society (american-physics-society)</numIndex>
+                                        <numIndex index="1">american-physics-society</numIndex>
+                                    </numIndex>
+                                    <numIndex index="65" type="array">
+                                        <numIndex index="0">Science (science)</numIndex>
+                                        <numIndex index="1">science</numIndex>
+                                    </numIndex>
+
+                                    <!-- Humanities / Geisteswissenschaften -->
+                                    <numIndex index="70" type="array">
+                                        <numIndex index="0">── Geisteswissenschaften ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="71" type="array">
+                                        <numIndex index="0">Förster Geisteswissenschaft (foerster-geisteswissenschaft)</numIndex>
+                                        <numIndex index="1">foerster-geisteswissenschaft</numIndex>
+                                    </numIndex>
+                                    <numIndex index="72" type="array">
+                                        <numIndex index="0">Deutsche Sprache (deutsche-sprache)</numIndex>
+                                        <numIndex index="1">deutsche-sprache</numIndex>
+                                    </numIndex>
+                                    <numIndex index="73" type="array">
+                                        <numIndex index="0">Zeithistorische Forschungen (zeithistorische-forschungen)</numIndex>
+                                        <numIndex index="1">zeithistorische-forschungen</numIndex>
+                                    </numIndex>
+                                    <numIndex index="74" type="array">
+                                        <numIndex index="0">Archiv für Geschichte der Philosophie (archiv-fur-geschichte-der-philosophie)</numIndex>
+                                        <numIndex index="1">archiv-fur-geschichte-der-philosophie</numIndex>
+                                    </numIndex>
+                                    <numIndex index="75" type="array">
+                                        <numIndex index="0">Digital Humanities DE (digital-humanities-im-deutschsprachigen-raum)</numIndex>
+                                        <numIndex index="1">digital-humanities-im-deutschsprachigen-raum</numIndex>
+                                    </numIndex>
+                                    <numIndex index="76" type="array">
+                                        <numIndex index="0">Zeitschrift f. digitale Geisteswissenschaften (zeitschrift-fur-digitale-geisteswissenschaften)</numIndex>
+                                        <numIndex index="1">zeitschrift-fur-digitale-geisteswissenschaften</numIndex>
+                                    </numIndex>
+                                    <numIndex index="77" type="array">
+                                        <numIndex index="0">Bibliothek f. Bildungsgeschichtliche Forschung (bibliothek-fur-bildungsgeschichtliche-forschung)</numIndex>
+                                        <numIndex index="1">bibliothek-fur-bildungsgeschichtliche-forschung</numIndex>
+                                    </numIndex>
+                                    <numIndex index="78" type="array">
+                                        <numIndex index="0">Chicago Author-Date 17th ed. (chicago-author-date-17th-edition)</numIndex>
+                                        <numIndex index="1">chicago-author-date-17th-edition</numIndex>
+                                    </numIndex>
+                                    <numIndex index="79" type="array">
+                                        <numIndex index="0">Chicago Notes-Bibliography 17th ed. (chicago-notes-bibliography-17th-edition)</numIndex>
+                                        <numIndex index="1">chicago-notes-bibliography-17th-edition</numIndex>
+                                    </numIndex>
+
+                                    <!-- Social Sciences / Sozialwissenschaften -->
+                                    <numIndex index="80" type="array">
+                                        <numIndex index="0">── Sozialwissenschaften ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="81" type="array">
+                                        <numIndex index="0">DGPs Deutsche Gesellschaft f. Psychologie (deutsche-gesellschaft-fur-psychologie)</numIndex>
+                                        <numIndex index="1">deutsche-gesellschaft-fur-psychologie</numIndex>
+                                    </numIndex>
+                                    <numIndex index="82" type="array">
+                                        <numIndex index="0">Kölner Zeitschrift f. Soziologie (kolner-zeitschrift-fur-soziologie-und-sozialpsychologie)</numIndex>
+                                        <numIndex index="1">kolner-zeitschrift-fur-soziologie-und-sozialpsychologie</numIndex>
+                                    </numIndex>
+
+                                    <!-- Economics / Wirtschaftswissenschaften -->
+                                    <numIndex index="90" type="array">
+                                        <numIndex index="0">── Wirtschaftswissenschaften ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="91" type="array">
+                                        <numIndex index="0">Betriebswirtschaftliche Forschung und Praxis (betriebswirtschaftliche-forschung-und-praxis)</numIndex>
+                                        <numIndex index="1">betriebswirtschaftliche-forschung-und-praxis</numIndex>
+                                    </numIndex>
+                                    <numIndex index="92" type="array">
+                                        <numIndex index="0">German Council of Economic Experts (german-council-of-economic-experts)</numIndex>
+                                        <numIndex index="1">german-council-of-economic-experts</numIndex>
+                                    </numIndex>
+
+                                    <!-- Pedagogy / Pädagogik -->
+                                    <numIndex index="100" type="array">
+                                        <numIndex index="0">── Pädagogik ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="101" type="array">
+                                        <numIndex index="0">Beltz Pädagogik (beltz-padagogik)</numIndex>
+                                        <numIndex index="1">beltz-padagogik</numIndex>
+                                    </numIndex>
+
+                                    <!-- Theology / Theologie -->
+                                    <numIndex index="110" type="array">
+                                        <numIndex index="0">── Theologie ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="111" type="array">
+                                        <numIndex index="0">European Journal of Theology (european-journal-of-theology)</numIndex>
+                                        <numIndex index="1">european-journal-of-theology</numIndex>
+                                    </numIndex>
+                                    <numIndex index="112" type="array">
+                                        <numIndex index="0">European Journal for Philosophy of Religion (european-journal-for-philosophy-of-religion)</numIndex>
+                                        <numIndex index="1">european-journal-for-philosophy-of-religion</numIndex>
+                                    </numIndex>
+
+                                    <!-- Publishers / Verlage -->
+                                    <numIndex index="140" type="array">
+                                        <numIndex index="0">── Verlage ──</numIndex>
+                                        <numIndex index="1">--div--</numIndex>
+                                    </numIndex>
+                                    <numIndex index="141" type="array">
+                                        <numIndex index="0">Elsevier Harvard (elsevier-harvard)</numIndex>
+                                        <numIndex index="1">elsevier-harvard</numIndex>
+                                    </numIndex>
+                                    <numIndex index="142" type="array">
+                                        <numIndex index="0">Elsevier Vancouver (elsevier-vancouver)</numIndex>
+                                        <numIndex index="1">elsevier-vancouver</numIndex>
+                                    </numIndex>
+                                    <numIndex index="143" type="array">
+                                        <numIndex index="0">Taylor &amp; Francis Chicago (taylor-and-francis-chicago-author-date)</numIndex>
+                                        <numIndex index="1">taylor-and-francis-chicago-author-date</numIndex>
+                                    </numIndex>
+                                    <numIndex index="144" type="array">
+                                        <numIndex index="0">Cambridge University Press Author-Date (cambridge-university-press-author-date)</numIndex>
+                                        <numIndex index="1">cambridge-university-press-author-date</numIndex>
+                                    </numIndex>
+                                    <numIndex index="145" type="array">
+                                        <numIndex index="0">Cambridge University Press Note (cambridge-university-press-note)</numIndex>
+                                        <numIndex index="1">cambridge-university-press-note</numIndex>
+                                    </numIndex>
+                                    <numIndex index="146" type="array">
+                                        <numIndex index="0">Springer VS Author-Date (springer-vs-author-date)</numIndex>
+                                        <numIndex index="1">springer-vs-author-date</numIndex>
+                                    </numIndex>
+                                    <numIndex index="147" type="array">
+                                        <numIndex index="0">Springer Fachzeitschriften Medizin/Psychologie (springer-fachzeitschriften-medizin-psychologie)</numIndex>
+                                        <numIndex index="1">springer-fachzeitschriften-medizin-psychologie</numIndex>
                                     </numIndex>
                                 </items>
-                                <default>standard</default>
+                                <default>apa</default>
                             </config>
                         </TCEforms>
-                    </settings.rendering>
+                    </settings.citationStyle>
+
+                    <settings.citationStyleCustom>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.citationStyleCustom
+                            </label>
+                            <description>
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.citationStyleCustom.description
+                            </description>
+                            <displayCond>FIELD:sDEF.settings.what_to_display:=:PUBLICATIONS</displayCond>
+                            <config>
+                                <type>input</type>
+                                <size>40</size>
+                                <placeholder>e.g., nature-communications, oxford-university-press-note</placeholder>
+                            </config>
+                        </TCEforms>
+                    </settings.citationStyleCustom>
 
                 </el>
             </ROOT>
@@ -680,7 +1136,7 @@
         <Projects>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects
+                    <sheetTitle>LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects
                     </sheetTitle>
                     <displayCond>FIELD:sDEF.settings.what_to_display:=:PROJECTS</displayCond>
                 </TCEforms>
@@ -689,7 +1145,7 @@
                     <settings.orderProjects>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.orderProjects
                             </label>
                             <config>
                                 <type>select</type>
@@ -697,25 +1153,25 @@
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.startDate.desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.orderProjects.startDate.desc
                                         </numIndex>
                                         <numIndex index="1">-startDate</numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.startDate.asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.orderProjects.startDate.asc
                                         </numIndex>
                                         <numIndex index="1">startDate</numIndex>
                                     </numIndex>
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.title.asc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.orderProjects.title.asc
                                         </numIndex>
                                         <numIndex index="1">title</numIndex>
                                     </numIndex>
                                     <numIndex index="3" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.orderProjects.title.desc
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.orderProjects.title.desc
                                         </numIndex>
                                         <numIndex index="1">-title</numIndex>
                                     </numIndex>
@@ -726,7 +1182,7 @@
                     <settings.filterProjects>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.filterProjects
                             </label>
                             <config>
                                 <type>select</type>
@@ -735,25 +1191,25 @@
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.none
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.filterProjects.none
                                         </numIndex>
                                         <numIndex index="1"></numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.not-started
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.filterProjects.not-started
                                         </numIndex>
                                         <numIndex index="1">NOT_STARTED</numIndex>
                                     </numIndex>
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.running
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.filterProjects.running
                                         </numIndex>
                                         <numIndex index="1">RUNNING</numIndex>
                                     </numIndex>
                                     <numIndex index="3" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.filterProjects.finished
+                                            LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.filterProjects.finished
                                         </numIndex>
                                         <numIndex index="1">FINISHED</numIndex>
                                     </numIndex>
@@ -764,12 +1220,12 @@
                     <settings.narrowBySearch>
                         <TCEforms>
                             <label>
-                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.projects.narrowBySearch
+                                LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.projects.narrowBySearch
                             </label>
                             <config>
                                 <type>input</type>
                                 <placeholder>
-                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.publications.searchPlaceholder
+                                    LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.publications.searchPlaceholder
                                 </placeholder>
                                 <mode>useOrOverridePlaceholder</mode>
                             </config>

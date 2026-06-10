@@ -9,6 +9,10 @@
 	});
 	</script>
 	<div class="tx_univiepure" >
+		<f:if condition="{debugOutput}">
+			<f:format.raw>{debugOutput}</f:format.raw>
+		</f:if>
+
 		<f:if condition="{error}">
 			<f:then>
 			</f:then>
@@ -38,7 +42,7 @@
 					<f:then>
 							<f:if condition="{paginator.paginatedItems}">
 								<f:then>
-									<f:render partial="Pure/Publications" arguments="{pagination:pagination, paginator:paginator, publications:paginator.paginatedItems}"/>
+									<f:render partial="Pure/Publications" arguments="{pagination:pagination, paginator:paginator, publications:publicationsForView, settings:settings}"/>
 								</f:then>
 							</f:if>
 						</f:then>
@@ -48,7 +52,7 @@
 						<f:then>
 							<f:if condition="{paginator.paginatedItems}">
 								<f:then>
-									<f:render partial="Pure/Projects" arguments="{pagination:pagination, projects:paginator.paginatedItems}"/>
+									<f:render partial="Pure/Projects" arguments="{pagination:pagination, projects:paginator.paginatedItems, settings:settings}"/>
 								</f:then>
 							</f:if>
 						</f:then>
@@ -59,7 +63,7 @@
 						<f:then>
 							<f:if condition="{paginator.paginatedItems}">
 								<f:then>
-									<f:render partial="Pure/Equipments" arguments="{pagination:pagination, equipments:paginator.paginatedItems}"/>
+									<f:render partial="Pure/Equipments" arguments="{pagination:pagination, equipments:paginator.paginatedItems, settings:settings}"/>
 								</f:then>
 							</f:if>
 						</f:then>
@@ -69,7 +73,7 @@
 						<f:then>
 							<f:if condition="{paginator.paginatedItems}">
 								<f:then>
-									<f:render partial="Pure/DataSets" arguments="{pagination:pagination, dataSets:paginator.paginatedItems}"/>
+									<f:render partial="Pure/DataSets" arguments="{pagination:pagination, dataSets:paginator.paginatedItems, settings:settings}"/>
 								</f:then>
 							</f:if>
 						</f:then>

@@ -1,12 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Univie\UniviePure\Utility;
 
-use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Univie\UniviePure\Service\WebService;
+use Univie\UniviePure\Service\ApiServiceInterface;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -20,22 +20,138 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
 
 class ClassificationScheme
 {
-    private const RESEARCHOUTPUT = '/dk/atira/pure/researchoutput/researchoutputtypes';
-    private const PROJECTS = '/dk/atira/pure/upm/fundingprogramme';
-    private const CACHE_LIFETIME = 86400; // 24 hours
-
     private string $locale;
-    private FrontendInterface $cache;
-    private WebService $webService;
+    private ApiServiceInterface $apiService;
 
-    public function __construct(?WebService $webService = null)
+    public function __construct(?ApiServiceInterface $apiService = null)
     {
-        $this->locale = LanguageUtility::getBackendLanguage();
-        $this->cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('univie_pure');
-        $this->webService = $webService ?? GeneralUtility::makeInstance(WebService::class);
+        $this->locale = $this->getBackendUserLocale();
+        $this->apiService = $apiService ?? GeneralUtility::makeInstance(ApiServiceInterface::class);
     }
 
-    // Add this method to your ClassificationScheme class
+    /**
+     * Get the current backend user's locale using TYPO3 v12.4 best practices
+     * Maps TYPO3 backend language to Pure API locale format
+     */
+    protected function getBackendUserLocale(): string
+    {
+        try {
+            $languageServiceFactory = GeneralUtility::makeInstance(LanguageServiceFactory::class);
+            $languageService = $languageServiceFactory->createFromUserPreferences($GLOBALS['BE_USER']);
+            $lang = $languageService->lang ?? '';
+
+            if (empty($lang)) {
+                $lang = $GLOBALS['BE_USER']->uc['lang'] ?? '';
+            }
+
+            if (empty($lang)) {
+                $lang = 'de';
+            }
+        } catch (\Exception $e) {
+            $lang = 'de';
+        }
+
+        $localeMap = [
+            'de' => 'de_DE',
+            'en' => 'en_GB',
+            'default' => 'de_DE'
+        ];
+
+        return $localeMap[$lang] ?? $localeMap['default'];
+    }
+
+    /**
+     * Extract localized name/title from Pure API response structure
+     */
+    private function extractLocalizedName(array $nameData, string $locale): string
+    {
+        if (isset($nameData['value']) && is_string($nameData['value'])) {
+            return $nameData['value'];
+        }
+
+        if (isset($nameData[$locale]) && is_string($nameData[$locale])) {
+            return $nameData[$locale];
+        }
+
+        if (!isset($nameData['text']) || !is_array($nameData['text'])) {
+            return '';
+        }
+
+        $texts = $nameData['text'];
+        if (isset($texts['value']) && is_string($texts['value'])) {
+            $texts = [$texts];
+        }
+        $fallbackValue = '';
+
+        foreach ($texts as $key => $text) {
+            if (is_string($text)) {
+                if ($fallbackValue === '') {
+                    $fallbackValue = $text;
+                }
+                if (is_string($key) && ($key === $locale ||
+                    (strpos($locale, '_') !== false && strpos($key, substr($locale, 0, 2)) === 0))) {
+                    return $text;
+                }
+                continue;
+            }
+
+            if (!is_array($text) || !isset($text['value'])) {
+                continue;
+            }
+
+            if (empty($fallbackValue)) {
+                $fallbackValue = $text['value'];
+            }
+
+            if (isset($text['locale'])) {
+                $textLocale = $text['locale'];
+                if ($textLocale === $locale ||
+                    (strpos($locale, '_') !== false && strpos($textLocale, substr($locale, 0, 2)) === 0) ||
+                    (strpos($textLocale, '_') !== false && strpos($locale, substr($textLocale, 0, 2)) === 0)) {
+                    return $text['value'];
+                }
+            }
+        }
+
+        return $fallbackValue;
+    }
+
+    /**
+     * Resolve equipment label from multiple possible API field shapes.
+     */
+    private function getEquipmentLabel(array $equipment): string
+    {
+        $label = $this->extractLocalizedName($equipment['title'] ?? [], $this->locale);
+        if ($label !== '') {
+            return $label;
+        }
+
+        $label = $this->extractLocalizedName($equipment['name'] ?? [], $this->locale);
+        if ($label !== '') {
+            return $label;
+        }
+
+        if (isset($equipment['title']) && is_string($equipment['title'])) {
+            return $equipment['title'];
+        }
+        if (isset($equipment['name']) && is_string($equipment['name'])) {
+            return $equipment['name'];
+        }
+
+        return '';
+    }
+
+    /**
+     * Resolve uuid from API payload.
+     */
+    private function getUuidFromItem(array $item): string
+    {
+        if (!empty($item['uuid']) && is_string($item['uuid'])) {
+            return $item['uuid'];
+        }
+        return '';
+    }
+
     public function setLocale(string $locale): void
     {
         $this->locale = $locale;
@@ -43,323 +159,296 @@ class ClassificationScheme
 
     public function getOrganisations(&$config): void
     {
-        $postData = trim('<?xml version="1.0"?>
-            <organisationalUnitsQuery>
-            <size>999999</size>
-            <locales>
-            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
-            </locales>
-            <fields>
-            <field>uuid</field>
-            <field>name.text.value</field>
-            </fields>
-            <orderings>
-            <ordering>name</ordering>
-            </orderings>
-            <returnUsedContent>true</returnUsedContent>
-            </organisationalUnitsQuery>');
+        $selectedUuids = $this->getCurrentlySelectedUuids('selectorOrganisations');
 
-        $organisations = $this->getOrganisationsFromCache($this->locale);
-        if ($organisations === null || !$this->isValidOrganisationsData($organisations)) {
-            $organisations = $this->webService->getJson('organisational-units', $postData);
-
-            if (!$organisations || !isset($organisations['items'])) {
-                $this->addFlashMessage(
-                    'Could not fetch organisations from the API. Please check your connection.',
-                    'Organisations Fetch Failed',
-                    ContextualFeedbackSeverity::WARNING
-                );
-                return;
-            }
-
-            $this->storeOrganisationsToCache($organisations, $this->locale);
+        $selectedItems = [];
+        if (!empty($selectedUuids)) {
+            $selectedItems = $this->getSelectedItemsWithRealNames($selectedUuids, 'org');
         }
 
-        if (is_array($organisations) && isset($organisations['items'])) {
-            foreach ($organisations['items'] as $org) {
-                $config['items'][] = [
-                    $org['name']['text']['0']['value'],
-                    $org['uuid']
-                ];
+        try {
+            $response = $this->apiService->getOrganisationalUnits([
+                'limit' => 8,
+                'locale' => $this->locale,
+            ]);
+        } catch (\Throwable $e) {
+            $this->addFlashMessage(
+                'Could not fetch organisations from the API: ' . $e->getMessage(),
+                'Organisations Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            foreach ($selectedItems as $item) {
+                $config['items'][] = $item;
+            }
+            return;
+        }
+
+        foreach ($selectedItems as $item) {
+            $config['items'][] = $item;
+        }
+
+        $existingUuids = array_column($selectedItems, 1);
+        $items = $response['items'] ?? [];
+
+        foreach ($items as $org) {
+            $uuid = $org['uuid'] ?? '';
+            if (empty($uuid) || in_array($uuid, $existingUuids)) {
+                continue;
+            }
+            $name = $this->extractLocalizedName($org['name'] ?? [], $this->locale);
+            if (!empty($name)) {
+                $config['items'][] = [$name, $uuid];
             }
         }
     }
 
     public function getPersons(&$config): void
     {
-        $personXML = trim('<?xml version="1.0"?>
-            <personsQuery>
-            <size>999999</size>
-            <fields>
-            <field>uuid</field>
-            <field>name.*</field>
-            </fields>
-            <orderings>
-            <ordering>lastName</ordering>
-            </orderings>
-            <employmentStatus>ACTIVE</employmentStatus>
-            </personsQuery>');
+        $selectedUuids = array_merge(
+            $this->getCurrentlySelectedUuids('selectorPersons'),
+            $this->getCurrentlySelectedUuids('selectorPersonsWithOrganization')
+        );
 
-        $persons = $this->getPersonsFromCache();
-
-        if ($persons === null || !$this->isValidPersonsData($persons)) {
-            $persons = $this->webService->getJson('persons', $personXML);
-            if (!$persons || !isset($persons['items'])) {
-                $this->addFlashMessage(
-                    'Could not fetch Persondata from the API. Please check your connection.',
-                    'Persondata Fetch Failed',
-                    ContextualFeedbackSeverity::WARNING
-                );
-                return;
-            }
-            $this->storePersonsToCache($persons);
+        $selectedItems = [];
+        if (!empty($selectedUuids)) {
+            $selectedItems = $this->getSelectedItemsWithRealNames($selectedUuids, 'person');
         }
 
-        if (is_array($persons) && isset($persons['items'])) {
-            foreach ($persons['items'] as $person) {
-                $config['items'][] = [
-                    $person['name']['lastName'] . ', ' . $person['name']['firstName'],
-                    $person['uuid']
-                ];
+        try {
+            $response = $this->apiService->getPersons([
+                'limit' => 8,
+                'locale' => $this->locale,
+            ]);
+        } catch (\Throwable $e) {
+            $this->addFlashMessage(
+                'Could not fetch persons from the API: ' . $e->getMessage(),
+                'Persons Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            foreach ($selectedItems as $item) {
+                $config['items'][] = $item;
             }
-        }
-    }
-
-    public function getPersonsByOrganization(&$config): void
-    {
-        $personXML = trim('<?xml version="1.0"?>
-            <personsQuery>
-            <size>999999</size>
-            <fields>
-            <field>uuid</field>
-            <field>name.*</field>
-            <field>honoraryStaffOrganisationAssociations.uuid</field>
-            <field>honoraryStaffOrganisationAssociations.period.*</field>
-            <field>honoraryStaffOrganisationAssociations.organisationalUnit.uuid</field>
-            <field>honoraryStaffOrganisationAssociations.organisationalUnit.name.*</field>
-            </fields>
-            <orderings>
-            <ordering>lastName</ordering>
-            </orderings>
-            <employmentStatus>ACTIVE</employmentStatus>
-            </personsQuery>');
-
-        $persons = $this->getPersonsByOrganizationFromCache();
-
-        if ($persons === null || !$this->isValidPersonsData($persons)) {
-            $persons = $this->webService->getJson('persons', $personXML);
-            if (!$persons || !isset($persons['items'])) {
-                $this->addFlashMessage(
-                    'Could not fetch Person data with organization associations from the API. Please check your connection.',
-                    'Person Organization Data Fetch Failed',
-                    ContextualFeedbackSeverity::WARNING
-                );
-                return;
-            }
-            $this->storePersonsByOrganizationToCache($persons);
+            return;
         }
 
-        if (is_array($persons) && isset($persons['items'])) {
-            foreach ($persons['items'] as $person) {
-                $personName = $person['name']['lastName'] . ', ' . $person['name']['firstName'];
-                $organizationNames = $this->getActiveOrganizationNames($person);
-                
-                if (!empty($organizationNames)) {
-                    $displayName = $personName . ' (' . implode(', ', $organizationNames) . ')';
-                } else {
-                    $displayName = $personName;
-                }
-                
-                $config['items'][] = [
-                    $displayName,
-                    $person['uuid']
-                ];
+        foreach ($selectedItems as $item) {
+            $config['items'][] = $item;
+        }
+
+        $existingUuids = array_column($selectedItems, 1);
+        $items = $response['items'] ?? [];
+
+        foreach ($items as $person) {
+            $uuid = $person['uuid'] ?? '';
+            if (empty($uuid) || in_array($uuid, $existingUuids)) {
+                continue;
             }
+
+            $personName = ($person['name']['lastName'] ?? '') . ', ' . ($person['name']['firstName'] ?? '');
+            $organizationNames = $this->getActiveOrganizationNames($person);
+
+            if (!empty($organizationNames)) {
+                $displayName = $personName . ' (' . implode(', ', $organizationNames) . ')';
+            } else {
+                $displayName = $personName;
+            }
+
+            $config['items'][] = [$displayName, $uuid];
         }
     }
 
     private function getActiveOrganizationNames(array $person): array
     {
         $organizationNames = [];
-        
-        if (isset($person['honoraryStaffOrganisationAssociations']) && is_array($person['honoraryStaffOrganisationAssociations'])) {
-            foreach ($person['honoraryStaffOrganisationAssociations'] as $association) {
-                // Check if association is active (no endDate or endDate is in the future)
-                $isActive = !isset($association['period']['endDate']) || 
-                           strtotime($association['period']['endDate']) > time();
-                
-                if ($isActive && isset($association['organisationalUnit']['name']['text'])) {
-                    // TYPO3 Backend language detection
-                    $locale = ($GLOBALS['BE_USER']->uc['lang'] == 'de') ? 'de_DE' : 'en_GB';
-                    
-                    // Find organizational unit name in appropriate language
-                    $orgName = $association['organisationalUnit']['name']['text'][0]['value']; // fallback
-                    foreach ($association['organisationalUnit']['name']['text'] as $text) {
-                        if (isset($text['locale']) && $text['locale'] === $locale) {
-                            $orgName = $text['value'];
-                            break;
-                        }
-                    }
-                    
-                    if (!in_array($orgName, $organizationNames)) {
-                        $organizationNames[] = $orgName;
-                    }
+
+        $associations = $person['staffOrganizationAssociations']
+            ?? $person['honoraryStaffOrganisationAssociations']
+            ?? $person['organizationAssociations']
+            ?? [];
+
+        if (isset($associations['organisationalUnit']) || isset($associations['organizationalUnit'])) {
+            $associations = [$associations];
+        }
+
+        foreach ($associations as $association) {
+            if (isset($association['period']['endDate']) &&
+                !empty($association['period']['endDate']) &&
+                strtotime($association['period']['endDate']) < time()) {
+                continue;
+            }
+
+            $orgUnit = $association['organisationalUnit'] ?? $association['organizationalUnit'] ?? [];
+
+            if (isset($orgUnit['name'])) {
+                $orgName = $this->extractLocalizedName($orgUnit['name'], $this->locale);
+
+                if (!empty($orgName) && !in_array($orgName, $organizationNames)) {
+                    $organizationNames[] = $orgName;
                 }
             }
         }
-        
+
         return $organizationNames;
     }
 
     public function getProjects(&$config): void
     {
-        $projectsXML = trim('<?xml version="1.0"?>
-            <projectsQuery>
-            <size>999999</size>
-            <locales>
-            <locale>' . htmlspecialchars($this->locale, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</locale>
-            </locales>
-            <fields>
-            <field>uuid</field>
-            <field>acronym</field>
-            <field>title.*</field>
-            </fields>
-            <orderings>
-            <ordering>title</ordering>
-            </orderings>
-            <workflowSteps>
-            <workflowStep>validated</workflowStep>
-            </workflowSteps>
-            </projectsQuery>');
+        $selectedUuids = $this->getCurrentlySelectedUuids('selectorProjects');
 
-        $projects = $this->getProjectsFromCache($this->locale);
-
-        if ($projects === null || !$this->isValidProjectsData($projects)) {
-            $projects = $this->webService->getJson('projects', $projectsXML);
-            $this->storeProjectsToCache($projects, $this->locale);
+        $selectedItems = [];
+        if (!empty($selectedUuids)) {
+            $selectedItems = $this->getSelectedItemsWithRealNames($selectedUuids, 'project');
         }
 
-        if (is_array($projects) && isset($projects['items'])) {
-            foreach ($projects['items'] as $project) {
-                $title = $project['title']['text'][0]['value'];
-                if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
-                    $title = $project['acronym'] . ' - ' . $title;
-                }
-                $config['items'][] = [$title, $project['uuid']];
+        try {
+            $response = $this->apiService->getProjects([
+                'limit' => 8,
+                'locale' => $this->locale,
+            ]);
+        } catch (\Throwable $e) {
+            $this->addFlashMessage(
+                'Could not fetch projects from the API: ' . $e->getMessage(),
+                'Projects Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            foreach ($selectedItems as $item) {
+                $config['items'][] = $item;
+            }
+            return;
+        }
+
+        foreach ($selectedItems as $item) {
+            $config['items'][] = $item;
+        }
+
+        $existingUuids = array_column($selectedItems, 1);
+        $items = $response['items'] ?? [];
+
+        foreach ($items as $project) {
+            $uuid = $project['uuid'] ?? '';
+            if (empty($uuid) || in_array($uuid, $existingUuids)) {
+                continue;
+            }
+
+            $title = $this->extractLocalizedName($project['title'] ?? [], $this->locale);
+            if (empty($title)) {
+                $title = 'Unknown Project';
+            }
+
+            if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
+                $title = $project['acronym'] . ' - ' . $title;
+            }
+            $config['items'][] = [$title, $uuid];
+        }
+    }
+
+    public function getEquipments(&$config): void
+    {
+        $selectedUuids = $this->getCurrentlySelectedUuids('selectorEquipments');
+
+        $selectedItems = [];
+        if (!empty($selectedUuids)) {
+            $selectedItems = $this->getSelectedItemsWithRealNames($selectedUuids, 'equipment');
+        }
+
+        try {
+            $response = $this->apiService->getEquipments([
+                'limit' => 8,
+                'locale' => $this->locale,
+            ]);
+        } catch (\Throwable $e) {
+            $this->addFlashMessage(
+                'Could not fetch equipments from the API: ' . $e->getMessage(),
+                'Equipment Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            foreach ($selectedItems as $item) {
+                $config['items'][] = $item;
+            }
+            return;
+        }
+
+        foreach ($selectedItems as $item) {
+            $config['items'][] = $item;
+        }
+
+        $existingUuids = array_column($selectedItems, 1);
+        $items = $response['items'] ?? [];
+
+        foreach ($items as $equipment) {
+            $uuid = $this->getUuidFromItem($equipment);
+            if ($uuid === '' || in_array($uuid, $existingUuids, true)) {
+                continue;
+            }
+            $label = $this->getEquipmentLabel($equipment);
+            if (!empty($label)) {
+                $config['items'][] = [$label, $uuid];
             }
         }
     }
 
     public function getTypesFromPublications(&$config): void
     {
-        $classificationXML = trim('<?xml version="1.0"?>
-            <classificationSchemesQuery>
-            <size>99999</size>
-            <offset>0</offset>
-            <locales>
-            <locale>' . $this->locale . '</locale>
-            </locales>
-            <returnUsedContent>true</returnUsedContent>
-            <navigationLink>true</navigationLink> 
-            <baseUri>' . self::RESEARCHOUTPUT . '</baseUri>
-            </classificationSchemesQuery>');
-
-        $publicationTypes = $this->getTypesFromPublicationsFromCache();
-
-        if ($publicationTypes === null || !$this->isValidPublicationTypesData($publicationTypes)) {
-            $publicationTypes = $this->webService->getJson('classification-schemes', $classificationXML);
-            $this->storeTypesFromPublicationsToCache($publicationTypes);
+        try {
+            $publicationTypes = $this->apiService->getResearchOutputTypes();
+        } catch (\Throwable $e) {
+            $this->addFlashMessage(
+                'Could not fetch publication types from the API: ' . $e->getMessage(),
+                'Publication Types Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            return;
         }
 
-        if (is_array($publicationTypes)) {
-            $sorted = $this->sortClassification($publicationTypes);
-            $this->sorted2items($sorted, $config);
+        $this->classificationRefs2items($publicationTypes, $config);
+    }
+
+    public function getEquipmentTypes(&$config): void
+    {
+        try {
+            $equipmentTypes = $this->apiService->getEquipmentTypes();
+        } catch (\Throwable $e) {
+            $this->addFlashMessage(
+                'Could not fetch equipment types from the API: ' . $e->getMessage(),
+                'Equipment Types Fetch Failed',
+                ContextualFeedbackSeverity::WARNING
+            );
+            return;
         }
+
+        $this->classificationRefs2items($equipmentTypes, $config);
     }
 
-    public function getCacheIdentifier(string $key, string $locale = ''): string
+    public function classificationRefs2items(array $classificationRefList, array &$config): void
     {
-        return sha1($key . $locale);
-    }
+        $classifications = $classificationRefList['classifications'] ?? [];
+        if (!is_array($classifications)) {
+            return;
+        }
 
-    public function getFromCache(string $identifier)
-    {
-        return $this->cache->has($identifier) ? $this->cache->get($identifier) : null;
-    }
+        foreach ($classifications as $classification) {
+            if (!is_array($classification)) {
+                continue;
+            }
 
-    public function setToCache(string $identifier, $data): void
-    {
-        $this->cache->set($identifier, $data, [], self::CACHE_LIFETIME);
-    }
+            $uri = $classification['uri'] ?? '';
+            if ($uri === '') {
+                continue;
+            }
 
-    public function getTypesFromPublicationsFromCache()
-    {
-        return $this->getFromCache($this->getCacheIdentifier('getTypesFromPublications'));
-    }
+            $title = $this->extractLocalizedName($classification['term'] ?? [], $this->locale);
+            if ($title === '') {
+                $title = $classification['term']['text'][0]['value']
+                    ?? $classification['term']['value']
+                    ?? $uri;
+            }
 
-    public function getOrganisationsFromCache(string $lang)
-    {
-        return $this->getFromCache($this->getCacheIdentifier('getOrganisations', $lang));
-    }
+            if ($title === '<placeholder>') {
+                continue;
+            }
 
-    public function getPersonsFromCache()
-    {
-        return $this->getFromCache($this->getCacheIdentifier('getPersons'));
-    }
-
-    public function getPersonsByOrganizationFromCache()
-    {
-        return $this->getFromCache($this->getCacheIdentifier('getPersonsByOrganization'));
-    }
-
-    public function getProjectsFromCache(string $lang)
-    {
-        return $this->getFromCache($this->getCacheIdentifier('getProjects', $lang));
-    }
-
-    public function storeTypesFromPublicationsToCache($data): void
-    {
-        $this->setToCache($this->getCacheIdentifier('getTypesFromPublications'), $data);
-    }
-
-    public function storeOrganisationsToCache($data, string $locale): void
-    {
-        $this->setToCache($this->getCacheIdentifier('getOrganisations', $locale), $data);
-    }
-
-    public function storePersonsToCache($data): void
-    {
-        $this->setToCache($this->getCacheIdentifier('getPersons'), $data);
-    }
-
-    public function storePersonsByOrganizationToCache($data): void
-    {
-        $this->setToCache($this->getCacheIdentifier('getPersonsByOrganization'), $data);
-    }
-
-    public function storeProjectsToCache($data, string $locale): void
-    {
-        $this->setToCache($this->getCacheIdentifier('getProjects', $locale), $data);
-    }
-
-    public function isValidOrganisationsData($data): bool
-    {
-        return is_array($data) && isset($data['items']) && count($data['items']) >= 1;
-    }
-
-    public function isValidPersonsData($data): bool
-    {
-        return is_array($data) && isset($data['items']) && count($data['items']) >= 1;
-    }
-
-    public function isValidProjectsData($data): bool
-    {
-        return is_array($data) && isset($data['items']) && count($data['items']) >= 1;
-    }
-
-    public function isValidPublicationTypesData($data): bool
-    {
-        return is_array($data) && isset($data['items']) && count($data['items']) >= 3;
+            $config['items'][] = [$title, $uri];
+        }
     }
 
     public function sorted2items($sorted, &$config): void
@@ -378,7 +467,6 @@ class ClassificationScheme
         }
     }
 
-
     public function sortClassification($unsorted): array
     {
         if (!isset($unsorted['items'][0]['containedClassifications'])) {
@@ -395,18 +483,28 @@ class ClassificationScheme
                 if (isset($parent['classificationRelations'])) {
                     $children = array_values(array_filter(
                         array_map(function ($relation) use ($unsorted) {
-                            if ($relation['relationType']['uri'] !== '/dk/atira/pure/core/hierarchies/child') {
+                            if (($relation['relationType']['uri'] ?? '') !== '/dk/atira/pure/core/hierarchies/child') {
                                 return null;
                             }
 
-                            $relatedUri = $relation['relatedTo'][0]['uri'] ?? '';
+                            $relatedTo = $relation['relatedTo'] ?? [];
+                            if (isset($relatedTo[0]) && is_array($relatedTo[0])) {
+                                $relatedTo = $relatedTo[0];
+                            }
+
+                            $relatedUri = $relatedTo['uri'] ?? '';
                             if ($this->isChildEnabledOnRootLevel($unsorted, $relatedUri)) {
                                 return null;
                             }
 
+                            $title = $this->extractLocalizedName($relatedTo['term'] ?? [], $this->locale);
+                            if ($title === '') {
+                                $title = $relatedTo['term']['text'][0]['value'] ?? '';
+                            }
+
                             return [
-                                'uri' => $relation['relatedTo']['uri'] ?? '',
-                                'title' => $relation['relatedTo']['term']['text'][0]['value'] ?? ''
+                                'uri' => $relatedUri,
+                                'title' => $title
                             ];
                         }, $parent['classificationRelations'])
                     ));
@@ -418,13 +516,13 @@ class ClassificationScheme
 
                 return [
                     'uri' => $parent['uri'],
-                    'title' => $parent['term']['text'][0]['value'] ?? 'Unknown title',
+                    'title' => $this->extractLocalizedName($parent['term'] ?? [], $this->locale)
+                        ?: ($parent['term']['text'][0]['value'] ?? 'Unknown title'),
                     'child' => $children
                 ];
             }, $unsorted['items'][0]['containedClassifications'])
         ));
     }
-
 
     private function classificationHasChild($parent): bool
     {
@@ -433,8 +531,18 @@ class ClassificationScheme
         }
 
         foreach ($parent['classificationRelations'] as $child) {
-            if ($child['relationType']['uri'] === '/dk/atira/pure/core/hierarchies/child'
-                && $child['relatedTo']['term']['text'][0]['value'] !== '<placeholder>'
+            $relatedTo = $child['relatedTo'] ?? [];
+            if (isset($relatedTo[0]) && is_array($relatedTo[0])) {
+                $relatedTo = $relatedTo[0];
+            }
+
+            $title = $this->extractLocalizedName($relatedTo['term'] ?? [], $this->locale);
+            if ($title === '') {
+                $title = $relatedTo['term']['text'][0]['value'] ?? '';
+            }
+
+            if (($child['relationType']['uri'] ?? '') === '/dk/atira/pure/core/hierarchies/child'
+                && $title !== '<placeholder>'
             ) {
                 return true;
             }
@@ -454,22 +562,21 @@ class ClassificationScheme
 
     public function getUuidForEmail(string $email): string
     {
-        $xml = '<?xml version="1.0"?>
-            <personsQuery>
-            <searchString>' . htmlspecialchars($email, ENT_QUOTES | ENT_XML1, 'UTF-8') . '</searchString>
-            <locales>
-            <locale>' . $this->locale . '</locale>
-            </locales>
-            <fields>name</fields>
-            </personsQuery>';
+        try {
+            $response = $this->apiService->getPersons([
+                'search' => $email,
+                'limit' => 1,
+                'locale' => $this->locale,
+            ]);
 
-        $uuids = $this->webService->getXml('persons', $xml);
-
-        if (isset($uuids['count']) && $uuids['count'] === 1) {
-            return $uuids['person']['@attributes']['uuid'];
+            if (isset($response['count']) && $response['count'] === 1 && isset($response['items'][0]['uuid'])) {
+                return $response['items'][0]['uuid'];
+            }
+        } catch (\Throwable $e) {
+            // Fall through to default
         }
 
-        return '123456789'; // Default fallback UUID
+        return '123456789';
     }
 
     public function getItemsToChoose(&$config, $PA): void
@@ -477,46 +584,96 @@ class ClassificationScheme
         $languageService = $GLOBALS['LANG'];
 
         $config['items'][] = [
-            $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectBlank'),
+            $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectBlank'),
             -1
-        ];
-        $config['items'][] = [
-            $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByUnit'),
-            0
-        ];
-        $config['items'][] = [
-            $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPerson'),
-            1
-        ];
-        $config['items'][] = [
-            $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByPersonWithOrganization'),
-            3
         ];
 
         $settings = $config['flexParentDatabaseRow']['pi_flexform'];
         $whatToDisplay = $settings['data']['sDEF']['lDEF']['settings.what_to_display']['vDEF'][0] ?? '';
 
-        if ($whatToDisplay === 'PUBLICATIONS' || $whatToDisplay === 'DATASETS') {
-            $config['items'][] = [
-                $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xml:flexform.common.selectByProject'),
-                2
-            ];
+        switch ($whatToDisplay) {
+            case 'PUBLICATIONS':
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByUnit'),
+                    0
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByPerson'),
+                    1
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByProject'),
+                    2
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByEquipment'),
+                    4
+                ];
+                break;
+
+            case 'PROJECTS':
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByUnit'),
+                    0
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByPerson'),
+                    1
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByEquipment'),
+                    4
+                ];
+                break;
+
+            case 'EQUIPMENTS':
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByUnit'),
+                    0
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByPerson'),
+                    1
+                ];
+                break;
+
+            case 'DATASETS':
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByUnit'),
+                    0
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByPerson'),
+                    1
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByProject'),
+                    2
+                ];
+                break;
+
+            default:
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByUnit'),
+                    0
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByPerson'),
+                    1
+                ];
+                $config['items'][] = [
+                    $languageService->sL('LLL:EXT:univie_pure/Resources/Private/Language/locallang_tca.xlf:flexform.common.selectByProject'),
+                    2
+                ];
+                break;
         }
     }
 
-    /**
-     * Display a FlashMessage in the TYPO3 Backend.
-     *
-     * @param string $message The message to display
-     * @param string $title The title for the message
-     * @param ContextualFeedbackSeverity $severity The severity of the message
-     */
     protected function addFlashMessage(
         string                     $message,
         string                     $title,
         ContextualFeedbackSeverity $severity
-    ): void
-    {
+    ): void {
         $flashMessage = GeneralUtility::makeInstance(
             FlashMessage::class,
             $message,
@@ -524,9 +681,226 @@ class ClassificationScheme
             $severity
         );
 
-        /** @var FlashMessageService $flashMessageService */
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
         $messageQueue->enqueue($flashMessage);
+    }
+
+    protected function getCurrentlySelectedUuids(string $fieldName): array
+    {
+        $uuids = [];
+
+        if (!empty($_POST['data']['tt_content'])) {
+            foreach ($_POST['data']['tt_content'] as $uid => $record) {
+                if (isset($record['pi_flexform']['data']['Common']['lDEF']["settings.$fieldName"]['vDEF'])) {
+                    $values = $record['pi_flexform']['data']['Common']['lDEF']["settings.$fieldName"]['vDEF'];
+                    if (is_array($values)) {
+                        $uuids = array_merge($uuids, array_filter($values));
+                    } elseif (is_string($values) && !empty($values)) {
+                        $uuids = array_merge($uuids, explode(',', $values));
+                    }
+                }
+            }
+        }
+
+        if (empty($uuids) && !empty($_GET['edit']['tt_content'])) {
+            $editUid = key($_GET['edit']['tt_content']);
+            if ($editUid) {
+                $queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
+                    ->getQueryBuilderForTable('tt_content');
+
+                $record = $queryBuilder
+                    ->select('pi_flexform')
+                    ->from('tt_content')
+                    ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($editUid, \PDO::PARAM_INT)))
+                    ->executeQuery()
+                    ->fetchAssociative();
+
+                if ($record && !empty($record['pi_flexform'])) {
+                    $flexFormData = GeneralUtility::xml2array($record['pi_flexform']);
+                    if ($flexFormData && isset($flexFormData['data']['Common']['lDEF']["settings.$fieldName"]['vDEF'])) {
+                        $values = $flexFormData['data']['Common']['lDEF']["settings.$fieldName"]['vDEF'];
+                        if (is_string($values) && !empty($values)) {
+                            $uuids = explode(',', $values);
+                        }
+                    }
+                }
+            }
+        }
+
+        $normalizedUuids = [];
+        foreach ($uuids as $uuid) {
+            $normalized = $this->normalizeSelectedIdentifier((string)$uuid);
+            if ($normalized !== '') {
+                $normalizedUuids[] = $normalized;
+            }
+        }
+
+        return array_values(array_unique($normalizedUuids));
+    }
+
+    private function normalizeSelectedIdentifier(string $value): string
+    {
+        $value = trim($value);
+        if ($value === '') {
+            return '';
+        }
+        if (str_contains($value, '|')) {
+            $value = explode('|', $value, 2)[0];
+        }
+        return trim($value);
+    }
+
+    protected function fetchOrganizationByUuid(string $uuid): ?array
+    {
+        try {
+            $response = $this->apiService->getOrganisationalUnits([
+                'search' => $uuid,
+                'limit' => 1,
+                'locale' => $this->locale,
+            ]);
+
+            if (isset($response['items'][0])) {
+                $name = $this->extractLocalizedName($response['items'][0]['name'] ?? [], $this->locale);
+                if (!empty($name)) {
+                    return ['name' => $name];
+                }
+            }
+        } catch (\Throwable $e) {
+            // Fall through
+        }
+
+        return null;
+    }
+
+    protected function fetchPersonByUuid(string $uuid): ?array
+    {
+        try {
+            $person = $this->apiService->getPerson($uuid, ['locale' => $this->locale]);
+
+            if (is_array($person)) {
+                $personName = ($person['name']['lastName'] ?? '') . ', ' . ($person['name']['firstName'] ?? '');
+                $organizationNames = $this->getActiveOrganizationNames($person);
+
+                if (!empty($organizationNames)) {
+                    $personName .= ' (' . implode(', ', $organizationNames) . ')';
+                }
+
+                return ['name' => $personName];
+            }
+        } catch (\Throwable $e) {
+            // Fall through
+        }
+
+        return null;
+    }
+
+    protected function fetchProjectByUuid(string $uuid): ?array
+    {
+        try {
+            $project = $this->apiService->getProject($uuid, ['locale' => $this->locale]);
+
+            if (is_array($project)) {
+                $title = $this->extractLocalizedName($project['title'] ?? [], $this->locale);
+
+                if (empty($title)) {
+                    $title = 'Unknown Project';
+                }
+
+                if (!empty($project['acronym']) && strpos($title, $project['acronym']) === false) {
+                    $title = $project['acronym'] . ' - ' . $title;
+                }
+
+                return ['title' => $title];
+            }
+        } catch (\Throwable $e) {
+            // Fall through
+        }
+
+        return null;
+    }
+
+    protected function fetchEquipmentByUuid(string $uuid): ?array
+    {
+        try {
+            $response = $this->apiService->getEquipments([
+                'search' => $uuid,
+                'limit' => 1,
+                'locale' => $this->locale,
+            ]);
+
+            $items = $response['items'] ?? [];
+            foreach ($items as $equipment) {
+                $itemUuid = $this->getUuidFromItem($equipment);
+                if ($itemUuid !== '' && $itemUuid !== $uuid) {
+                    continue;
+                }
+                $title = $this->getEquipmentLabel($equipment);
+                if ($title !== '') {
+                    return ['title' => $title];
+                }
+            }
+        } catch (\Throwable $e) {
+            // Fall through
+        }
+
+        return null;
+    }
+
+    protected function getSelectedItemsWithRealNames(array $uuids, string $type): array
+    {
+        $items = [];
+
+        foreach ($uuids as $uuid) {
+            $uuid = $this->normalizeSelectedIdentifier((string)$uuid);
+            if ($uuid === '') {
+                continue;
+            }
+
+            try {
+                $realName = null;
+                switch ($type) {
+                    case 'org':
+                        $item = $this->fetchOrganizationByUuid($uuid);
+                        if ($item) {
+                            $realName = $item['name'];
+                        }
+                        break;
+
+                    case 'person':
+                        $item = $this->fetchPersonByUuid($uuid);
+                        if ($item) {
+                            $realName = $item['name'];
+                        }
+                        break;
+
+                    case 'project':
+                        $item = $this->fetchProjectByUuid($uuid);
+                        if ($item) {
+                            $realName = $item['title'];
+                        }
+                        break;
+
+                    case 'equipment':
+                        $item = $this->fetchEquipmentByUuid($uuid);
+                        if ($item) {
+                            $realName = $item['title'];
+                        }
+                        break;
+                }
+
+                if ($realName) {
+                    $items[] = [$realName, $uuid];
+                } else {
+                    $placeholder = '[' . ucfirst($type) . ': ' . substr($uuid, 0, 8) . '...]';
+                    $items[] = [$placeholder, $uuid];
+                }
+            } catch (\Exception $e) {
+                $placeholder = '[' . ucfirst($type) . ': ' . substr($uuid, 0, 8) . '...]';
+                $items[] = [$placeholder, $uuid];
+            }
+        }
+
+        return $items;
     }
 }

@@ -1,0 +1,211 @@
+{
+    "test_name": "persons_search",
+    "description": "Search persons by name",
+    "timestamp": "2026-06-02 13:42:43",
+    "endpoint": "persons",
+    "query_params": {
+        "size": 3,
+        "q": "Schmidt"
+    },
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 980.5700000000000500222085975110530853271484375,
+        "url": "https://fis.uni-hannover.de/ws/api/persons?size=3&q=Schmidt",
+        "curl_error": null,
+        "response": "{\"count\":6,\"pageInformation\":{\"offset\":0,\"size\":3},\"items\":[{\"pureId\":2918695,\"uuid\":\"8584b413-86d9-4a40-ae98-37ea74464fc9\",\"portalUrl\":\"https://research.uni-hannover.de/en/persons/8584b413-86d9-4a40-ae98-37ea74464fc9\",\"prettyUrlIdentifiers\":[\"piet-oliver-schmidt\"],\"version\":\"3a640755ba0574ccc5889216ecd894a64183b4ec\",\"name\":{\"firstName\":\"Piet Oliver\",\"lastName\":\"Schmidt\"},\"names\":[{\"pureId\":2918698,\"name\":{\"firstName\":\"Piet Oliver\",\"lastName\":\"Schmidt\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/sort\",\"term\":{\"en_GB\":\"Sort name\",\"de_DE\":\"Sortiername\"}}}],\"orcid\":\"0000-0003-0773-5889\",\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"synchronisedUnifiedPerson\",\"value\":\"D36-2G5\"},{\"typeDiscriminator\":\"ClassifiedId\",\"pureId\":2952882,\"id\":\"7403629895\",\"type\":{\"uri\":\"/dk/atira/pure/person/personsources/scopusauthor\",\"term\":{\"en_GB\":\"Scopus Author ID\",\"de_DE\":\"Scopus-ID\"}}}],\"systemName\":\"Person\"},{\"pureId\":2942095,\"uuid\":\"479d7bc7-4e7d-4e2e-99b1-782502254984\",\"portalUrl\":\"https://research.uni-hannover.de/en/persons/479d7bc7-4e7d-4e2e-99b1-782502254984\",\"version\":\"f08dbd125534c6dc4b814981bcc678f290da038a\",\"name\":{\"firstName\":\"Torben Rainer Reinhard\",\"lastName\":\"Schmidt\"},\"names\":[{\"pureId\":2942098,\"name\":{\"firstName\":\"Torben Rainer Reinhard\",\"lastName\":\"Schmidt\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/sort\",\"term\":{\"en_GB\":\"Sort name\",\"de_DE\":\"Sortiername\"}}},{\"pureId\":16508460,\"name\":{\"firstName\":\"Torben\",\"lastName\":\"Schmidt\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/defaultpublishing\",\"term\":{\"en_GB\":\"Default publishing name\",\"de_DE\":\"Standardname bei Veröffentlichungen\"}}}],\"orcid\":\"0000-0002-2280-4718\",\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"synchronisedUnifiedPerson\",\"value\":\"8Q4-CUG\"},{\"typeDiscriminator\":\"ClassifiedId\",\"pureId\":19446343,\"id\":\"57188837882\",\"type\":{\"uri\":\"/dk/atira/pure/person/personsources/scopusauthor\",\"term\":{\"en_GB\":\"Scopus Author ID\",\"de_DE\":\"Scopus-ID\"}}}],\"systemName\":\"Person\"},{\"pureId\":2944963,\"uuid\":\"b28b6988-05a8-4d99-8681-2d9526aed245\",\"portalUrl\":\"https://research.uni-hannover.de/en/persons/b28b6988-05a8-4d99-8681-2d9526aed245\",\"prettyUrlIdentifiers\":[\"jan-schmidt\"],\"version\":\"c3d0ede3353d867da64d71688e7eaad91dd22676\",\"name\":{\"firstName\":\"Jan\",\"lastName\":\"Schmidt\"},\"names\":[{\"pureId\":2944966,\"name\":{\"firstName\":\"Jan\",\"lastName\":\"Schmidt\"},\"type\":{\"uri\":\"/dk/atira/pure/person/names/sort\",\"term\":{\"en_GB\":\"Sort name\",\"de_DE\":\"Sortiername\"}}}],\"orcid\":\"0000-0002-4851-4452\",\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"synchronisedUnifiedPerson\",\"value\":\"PF5-MRL\"},{\"typeDiscriminator\":\"ClassifiedId\",\"pureId\":5128188,\"id\":\"56532928300\",\"type\":{\"uri\":\"/dk/atira/pure/person/personsources/scopusauthor\",\"term\":{\"en_GB\":\"Scopus Author ID\",\"de_DE\":\"Scopus-ID\"}}}],\"systemName\":\"Person\"}]}",
+        "response_data": {
+            "count": 6,
+            "pageInformation": {
+                "offset": 0,
+                "size": 3
+            },
+            "items": [
+                {
+                    "pureId": 2918695,
+                    "uuid": "8584b413-86d9-4a40-ae98-37ea74464fc9",
+                    "portalUrl": "https://research.uni-hannover.de/en/persons/8584b413-86d9-4a40-ae98-37ea74464fc9",
+                    "prettyUrlIdentifiers": [
+                        "piet-oliver-schmidt"
+                    ],
+                    "version": "3a640755ba0574ccc5889216ecd894a64183b4ec",
+                    "name": {
+                        "firstName": "Piet Oliver",
+                        "lastName": "Schmidt"
+                    },
+                    "names": [
+                        {
+                            "pureId": 2918698,
+                            "name": {
+                                "firstName": "Piet Oliver",
+                                "lastName": "Schmidt"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/sort",
+                                "term": {
+                                    "en_GB": "Sort name",
+                                    "de_DE": "Sortiername"
+                                }
+                            }
+                        }
+                    ],
+                    "orcid": "0000-0003-0773-5889",
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "synchronisedUnifiedPerson",
+                            "value": "D36-2G5"
+                        },
+                        {
+                            "typeDiscriminator": "ClassifiedId",
+                            "pureId": 2952882,
+                            "id": "7403629895",
+                            "type": {
+                                "uri": "/dk/atira/pure/person/personsources/scopusauthor",
+                                "term": {
+                                    "en_GB": "Scopus Author ID",
+                                    "de_DE": "Scopus-ID"
+                                }
+                            }
+                        }
+                    ],
+                    "systemName": "Person"
+                },
+                {
+                    "pureId": 2942095,
+                    "uuid": "479d7bc7-4e7d-4e2e-99b1-782502254984",
+                    "portalUrl": "https://research.uni-hannover.de/en/persons/479d7bc7-4e7d-4e2e-99b1-782502254984",
+                    "version": "f08dbd125534c6dc4b814981bcc678f290da038a",
+                    "name": {
+                        "firstName": "Torben Rainer Reinhard",
+                        "lastName": "Schmidt"
+                    },
+                    "names": [
+                        {
+                            "pureId": 2942098,
+                            "name": {
+                                "firstName": "Torben Rainer Reinhard",
+                                "lastName": "Schmidt"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/sort",
+                                "term": {
+                                    "en_GB": "Sort name",
+                                    "de_DE": "Sortiername"
+                                }
+                            }
+                        },
+                        {
+                            "pureId": 16508460,
+                            "name": {
+                                "firstName": "Torben",
+                                "lastName": "Schmidt"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/defaultpublishing",
+                                "term": {
+                                    "en_GB": "Default publishing name",
+                                    "de_DE": "Standardname bei Veröffentlichungen"
+                                }
+                            }
+                        }
+                    ],
+                    "orcid": "0000-0002-2280-4718",
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "synchronisedUnifiedPerson",
+                            "value": "8Q4-CUG"
+                        },
+                        {
+                            "typeDiscriminator": "ClassifiedId",
+                            "pureId": 19446343,
+                            "id": "57188837882",
+                            "type": {
+                                "uri": "/dk/atira/pure/person/personsources/scopusauthor",
+                                "term": {
+                                    "en_GB": "Scopus Author ID",
+                                    "de_DE": "Scopus-ID"
+                                }
+                            }
+                        }
+                    ],
+                    "systemName": "Person"
+                },
+                {
+                    "pureId": 2944963,
+                    "uuid": "b28b6988-05a8-4d99-8681-2d9526aed245",
+                    "portalUrl": "https://research.uni-hannover.de/en/persons/b28b6988-05a8-4d99-8681-2d9526aed245",
+                    "prettyUrlIdentifiers": [
+                        "jan-schmidt"
+                    ],
+                    "version": "c3d0ede3353d867da64d71688e7eaad91dd22676",
+                    "name": {
+                        "firstName": "Jan",
+                        "lastName": "Schmidt"
+                    },
+                    "names": [
+                        {
+                            "pureId": 2944966,
+                            "name": {
+                                "firstName": "Jan",
+                                "lastName": "Schmidt"
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/person/names/sort",
+                                "term": {
+                                    "en_GB": "Sort name",
+                                    "de_DE": "Sortiername"
+                                }
+                            }
+                        }
+                    ],
+                    "orcid": "0000-0002-4851-4452",
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "synchronisedUnifiedPerson",
+                            "value": "PF5-MRL"
+                        },
+                        {
+                            "typeDiscriminator": "ClassifiedId",
+                            "pureId": 5128188,
+                            "id": "56532928300",
+                            "type": {
+                                "uri": "/dk/atira/pure/person/personsources/scopusauthor",
+                                "term": {
+                                    "en_GB": "Scopus Author ID",
+                                    "de_DE": "Scopus-ID"
+                                }
+                            }
+                        }
+                    ],
+                    "systemName": "Person"
+                }
+            ]
+        },
+        "json_error": "No error"
+    }
+}

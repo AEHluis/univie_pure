@@ -1,0 +1,119 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="rendering_researchoutput rendering_detailed" data-uuid="{data.uuid}">
+    <f:if condition="{data.title.value}">
+        <h3 class="publication-title">
+            <f:format.raw>{data.title.value}</f:format.raw>
+        </h3>
+    </f:if>
+
+    <div class="publication-authors">
+        <f:if condition="{data.contributors}">
+            <h5>Authors</h5>
+            <ul class="author-list">
+                <f:for each="{data.contributors}" as="contributor">
+                    <f:if condition="{contributor.name.lastName}">
+                        <li class="author">
+                            <span class="name">{contributor.name.lastName}<f:if condition="{contributor.name.firstName}">, {contributor.name.firstName}</f:if></span>
+                            <f:if condition="{contributor.person.orcid}">
+                                <a href="https://orcid.org/{contributor.person.orcid}" target="_blank" rel="noopener" class="orcid">ORCID</a>
+                            </f:if>
+                        </li>
+                    </f:if>
+                </f:for>
+            </ul>
+        </f:if>
+    </div>
+
+    <div class="publication-details">
+        <dl>
+            <f:for each="{data.publicationStatuses}" as="status">
+                <f:if condition="{status.current}">
+                    <dt>Year</dt>
+                    <dd>{status.publicationDate.year}</dd>
+                </f:if>
+            </f:for>
+
+            <f:if condition="{data.type.term.en_GB}">
+                <f:then>
+                    <dt>Type</dt>
+                    <dd>{data.type.term.en_GB}</dd>
+                </f:then>
+                <f:else>
+                    <f:if condition="{data.type.term.de_DE}">
+                        <dt>Type</dt>
+                        <dd>{data.type.term.de_DE}</dd>
+                    </f:if>
+                </f:else>
+            </f:if>
+
+            <f:if condition="{data.journalAssociation.title.title}">
+                <dt>Journal</dt>
+                <dd><em>{data.journalAssociation.title.title}</em></dd>
+            </f:if>
+
+            <f:if condition="{data.volume}">
+                <dt>Volume</dt>
+                <dd>{data.volume}<f:if condition="{data.journalNumber}">({data.journalNumber})</f:if></dd>
+            </f:if>
+
+            <f:if condition="{data.pages}">
+                <dt>Pages</dt>
+                <dd>{data.pages}</dd>
+            </f:if>
+
+            <f:if condition="{data.publisher.name}">
+                <dt>Publisher</dt>
+                <dd>{data.publisher.name}</dd>
+            </f:if>
+
+            <f:for each="{data.electronicVersions}" as="version">
+                <f:if condition="{version.doi}">
+                    <dt>DOI</dt>
+                    <dd>
+                        <a href="https://doi.org/{version.doi}" target="_blank" rel="noopener">{version.doi}</a>
+                    </dd>
+                </f:if>
+            </f:for>
+
+            <f:if condition="{data.portalUrl}">
+                <dt>Pure Portal</dt>
+                <dd>
+                    <a href="{data.portalUrl}" target="_blank" rel="noopener">View in Pure</a>
+                </dd>
+            </f:if>
+        </dl>
+    </div>
+
+    <f:if condition="{data.abstract.en_GB}">
+        <f:then>
+            <div class="publication-abstract">
+                <h5>Abstract</h5>
+                <p><f:format.raw>{data.abstract.en_GB}</f:format.raw></p>
+            </div>
+        </f:then>
+        <f:else>
+            <f:if condition="{data.abstract.de_DE}">
+                <div class="publication-abstract">
+                    <h5>Abstract</h5>
+                    <p><f:format.raw>{data.abstract.de_DE}</f:format.raw></p>
+                </div>
+            </f:if>
+        </f:else>
+    </f:if>
+
+    <f:if condition="{data.keywordGroups}">
+        <div class="publication-keywords">
+            <h5>Keywords</h5>
+            <ul class="keyword-list">
+                <f:for each="{data.keywordGroups}" as="group">
+                    <f:for each="{group.keywords}" as="keywordObj">
+                        <f:for each="{keywordObj.freeKeywords}" as="keyword">
+                            <li class="keyword">{keyword}</li>
+                        </f:for>
+                    </f:for>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+</div>
+</html>

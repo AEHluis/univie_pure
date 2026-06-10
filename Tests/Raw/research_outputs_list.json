@@ -1,0 +1,2469 @@
+{
+    "test_name": "research_outputs_list",
+    "description": "List research outputs with pagination",
+    "timestamp": "2026-06-02 13:42:40",
+    "endpoint": "research-outputs",
+    "query_params": {
+        "size": 5,
+        "offset": 0
+    },
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 233.18000000000000682121026329696178436279296875,
+        "url": "https://fis.uni-hannover.de/ws/api/research-outputs?size=5&offset=0",
+        "curl_error": null,
+        "response": "{\"count\":81152,\"pageInformation\":{\"offset\":0,\"size\":5},\"items\":[{\"typeDiscriminator\":\"ContributionToJournal\",\"pureId\":2947453,\"uuid\":\"91ec7a28-2899-4001-ad2a-f46e93f6e546\",\"createdBy\":\"fa_support\",\"createdDate\":\"2019-12-18T10:24:41.392+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-10-25T20:36:40.488+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/publications/91ec7a28-2899-4001-ad2a-f46e93f6e546\",\"prettyUrlIdentifiers\":[\"the-analyses-of-dynamic-response-and-reliability-for-failure-depe\"],\"version\":\"d81db4bff07ecce2a138bc12870e9ddd4d4ade92\",\"title\":{\"value\":\"The analyses of dynamic response and reliability for failure-dependent stochastic micro-resonator with thermoelastic coupling effects\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article\",\"term\":{\"en_GB\":\"Article\",\"de_DE\":\"Artikel\"}},\"category\":{\"uri\":\"/dk/atira/pure/researchoutput/category/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"peerReview\":true,\"publicationStatuses\":[{\"pureId\":12093731,\"current\":false,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/submitted\",\"term\":{\"en_GB\":\"Submitted\",\"de_DE\":\"Eingereicht\"}},\"publicationDate\":{\"year\":2018,\"month\":8,\"day\":13}},{\"pureId\":12093732,\"current\":false,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/inpress\",\"term\":{\"en_GB\":\"Accepted/In press\",\"de_DE\":\"Angenommen/Im Druck\"}},\"publicationDate\":{\"year\":2019,\"month\":9,\"day\":25}},{\"pureId\":2947469,\"current\":false,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/epub\",\"term\":{\"en_GB\":\"E-pub ahead of print\",\"de_DE\":\"Elektronisch veröffentlicht (E-Pub)\"}},\"publicationDate\":{\"year\":2019,\"month\":9,\"day\":27}},{\"pureId\":5251000,\"current\":true,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/published\",\"term\":{\"en_GB\":\"Published\",\"de_DE\":\"Veröffentlicht\"}},\"publicationDate\":{\"year\":2020,\"month\":1}}],\"language\":{\"uri\":\"/dk/atira/pure/core/languages/en_GB\",\"term\":{\"en_GB\":\"English\",\"de_DE\":\"Englisch\"}},\"contributors\":[{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947464,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"140b390d-316b-4538-97ef-5d29882634ef\"},{\"systemName\":\"ExternalOrganization\",\"uuid\":\"1e2db3f8-3e31-4336-b928-629c662bb1ad\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Bin\",\"lastName\":\"Yan\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"8e8d3674-829f-4f1b-b3a9-c0c01cccddc4\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947465,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"140b390d-316b-4538-97ef-5d29882634ef\"}],\"hidden\":false,\"correspondingAuthor\":true,\"name\":{\"firstName\":\"Juan\",\"lastName\":\"Ma\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"c077156a-22dd-46a4-9c46-2151d658cc70\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947466,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"b2d2b18e-875f-4c7b-a9a3-1b3854ee1470\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Di\",\"lastName\":\"Wu\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"635a6c9b-73c7-4221-999d-91f2ba5a5403\"}},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947467,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Peter\",\"lastName\":\"Wriggers\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"51d4b357-6720-4e28-942d-2482c2056a52\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}]}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"140b390d-316b-4538-97ef-5d29882634ef\"},{\"systemName\":\"ExternalOrganization\",\"uuid\":\"b2d2b18e-875f-4c7b-a9a3-1b3854ee1470\"},{\"systemName\":\"ExternalOrganization\",\"uuid\":\"1e2db3f8-3e31-4336-b928-629c662bb1ad\"}],\"totalNumberOfContributors\":4,\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"},\"submissionYear\":2020,\"electronicVersions\":[{\"typeDiscriminator\":\"DoiElectronicVersion\",\"pureId\":2947455,\"accessType\":{\"uri\":\"/dk/atira/pure/core/openaccesspermission/closed\",\"term\":{\"en_GB\":\"Closed\",\"de_DE\":\"Geschlossen\"}},\"doi\":\"10.1016/j.apm.2019.09.040\",\"versionType\":{\"uri\":\"/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion\",\"term\":{\"en_GB\":\"Final published version\",\"de_DE\":\"Endgültige, publizierte Fassung\"}}}],\"links\":[{\"pureId\":2947462,\"url\":\"http://www.scopus.com/inward/record.url?scp=85074402411&partnerID=8YFLogxK\",\"description\":{\"en_GB\":\"Link to publication in Scopus\",\"de_DE\":\"Link zur Publikation in Scopus\"},\"linkType\":{\"uri\":\"/dk/atira/pure/links/researchoutput/scopuspublication\",\"term\":{\"en_GB\":\"Scopus publication\",\"de_DE\":\"Scopus-Publikation\"}}}],\"keywordGroups\":[{\"typeDiscriminator\":\"FreeKeywordsKeywordGroup\",\"pureId\":2947456,\"logicalName\":\"keywordContainers\",\"name\":{\"en_GB\":\"Keywords\",\"de_DE\":\"Schlagwörter\"},\"keywords\":[{\"pureId\":2947458,\"locale\":\"en_GB\",\"freeKeywords\":[\"Dynamic correlation\",\"Dynamic reliability assessment\",\"Random micro-resonators\",\"Stochastic dynamic response analysis\",\"Thermoelastic coupling effects\"]}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":2947459,\"logicalName\":\"ASJCSubjectAreas\",\"name\":{\"en_GB\":\"ASJC Scopus subject areas\",\"de_DE\":\"ASJC Scopus Sachgebiete\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2600/2611\",\"term\":{\"en_GB\":\"Modelling and Simulation\",\"de_DE\":\"Modellierung und Simulation\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2600/2604\",\"term\":{\"en_GB\":\"Applied Mathematics\",\"de_DE\":\"Angewandte Mathematik\"}}]}],\"bibliographicalNote\":{\"en_GB\":\"Funding information: The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript.\",\"de_DE\":\"Funding information: The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript.\"},\"descriptions\":[{\"pureId\":12093730,\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/descriptions/contributiontojournal/further_bibliographic_information\",\"term\":{\"en_GB\":\"Further bibliographic information\",\"de_DE\":\"Weitere bibliographische Informationen\"}}}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"workflow\":{\"step\":\"approved\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"Scopus\",\"value\":\"85074402411\"}],\"customDefinedFields\":{},\"fundingText\":{\"en_GB\":\"The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript.\"},\"pages\":\"1168-1187\",\"volume\":\"77\",\"journalAssociation\":{\"pureId\":2947454,\"title\":{\"pureId\":288764,\"title\":\"Applied mathematical modelling\"},\"issn\":{\"pureId\":288760,\"issn\":\"0307-904X\"},\"journal\":{\"systemName\":\"Journal\",\"uuid\":\"802a45ab-f424-4db8-9ac9-fcdaa762573f\"}},\"journalNumber\":\"2\",\"numberOfPages\":20,\"abstract\":{\"en_GB\":\"<p>A crucial measure for the design of high-performance micro-resonators is to consider the randomness of structural parameters when analyzing the structural system reliability. In this work, the stochastic dynamic response analysis and subsequently, a dynamic reliability assessment of the random micro-resonators are originally presented, where the thermoelastic coupling effects are freshly incorporated in the models proposed. The dynamic characteristics equation of the deterministic micro-resonator is firstly established based on the finite element method. The random dynamic characteristics of the resonator are then solved by implementing the left and right eigenvectors and the block Lanczos algorithm, and the random temperature field and structural random dynamic stress are also tackled. Afterwards, the overall structural reliability is investigated with a comprehensive consideration of the strength failure and frequency resonance failure, in which the Copula function is used for describing the dynamic correlation between two failure modes. Finally, the feasibility and rationality of the method put forward are demonstrated via a practically motivated example.</p>\"},\"systemName\":\"ResearchOutput\"},{\"typeDiscriminator\":\"ContributionToJournal\",\"pureId\":2947503,\"uuid\":\"493b7bd5-2209-418b-8683-e24fa5c6f16e\",\"createdBy\":\"fa_support\",\"createdDate\":\"2019-12-18T10:30:24.949+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2026-03-12T17:56:34.442+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/publications/493b7bd5-2209-418b-8683-e24fa5c6f16e\",\"prettyUrlIdentifiers\":[\"peridynamic-petrovgalerkin-method-a-generalization-of-the-peridyn\"],\"version\":\"5576a0ff325a68ae27d7cadc041e733c86359b74\",\"title\":{\"value\":\"Peridynamic Petrov–Galerkin method\"},\"subTitle\":{\"value\":\"A generalization of the peridynamic theory of correspondence materials\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article\",\"term\":{\"en_GB\":\"Article\",\"de_DE\":\"Artikel\"}},\"category\":{\"uri\":\"/dk/atira/pure/researchoutput/category/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"peerReview\":true,\"publicationStatuses\":[{\"pureId\":2947523,\"current\":true,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/published\",\"term\":{\"en_GB\":\"Published\",\"de_DE\":\"Veröffentlicht\"}},\"publicationDate\":{\"year\":2019,\"month\":9,\"day\":24}}],\"language\":{\"uri\":\"/dk/atira/pure/core/languages/en_GB\",\"term\":{\"en_GB\":\"English\",\"de_DE\":\"Englisch\"}},\"contributors\":[{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947517,\"hidden\":false,\"correspondingAuthor\":true,\"name\":{\"firstName\":\"T.\",\"lastName\":\"Bode\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"d2851a0d-9f32-4176-b3e7-8d73c4e7359d\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}]},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947519,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"C.\",\"lastName\":\"Weißenfels\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}]},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947521,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"P.\",\"lastName\":\"Wriggers\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"51d4b357-6720-4e28-942d-2482c2056a52\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}]}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}],\"totalNumberOfContributors\":3,\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"},\"submissionYear\":2020,\"electronicVersions\":[{\"typeDiscriminator\":\"DoiElectronicVersion\",\"pureId\":2947505,\"accessType\":{\"uri\":\"/dk/atira/pure/core/openaccesspermission/closed\",\"term\":{\"en_GB\":\"Closed\",\"de_DE\":\"Geschlossen\"}},\"doi\":\"10.1016/j.cma.2019.112636\",\"versionType\":{\"uri\":\"/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion\",\"term\":{\"en_GB\":\"Final published version\",\"de_DE\":\"Endgültige, publizierte Fassung\"}}}],\"links\":[{\"pureId\":2947515,\"url\":\"http://www.scopus.com/inward/record.url?scp=85072532492&partnerID=8YFLogxK\",\"description\":{\"en_GB\":\"Link to publication in Scopus\",\"de_DE\":\"Link zur Publikation in Scopus\"},\"linkType\":{\"uri\":\"/dk/atira/pure/links/researchoutput/scopuspublication\",\"term\":{\"en_GB\":\"Scopus publication\",\"de_DE\":\"Scopus-Publikation\"}}}],\"keywordGroups\":[{\"typeDiscriminator\":\"FreeKeywordsKeywordGroup\",\"pureId\":2947506,\"logicalName\":\"keywordContainers\",\"name\":{\"en_GB\":\"Keywords\",\"de_DE\":\"Schlagwörter\"},\"keywords\":[{\"pureId\":2947508,\"locale\":\"en_GB\",\"freeKeywords\":[\"Consistent linearization\",\"Meshfree method\",\"Peridynamic correspondence formulation\",\"Peridynamic reduction\",\"Petrov–Galerkin method\",\"Smoothed particle hydrodynamics\"]}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":2947509,\"logicalName\":\"ASJCSubjectAreas\",\"name\":{\"en_GB\":\"ASJC Scopus subject areas\",\"de_DE\":\"ASJC Scopus Sachgebiete\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2200/2206\",\"term\":{\"en_GB\":\"Computational Mechanics\",\"de_DE\":\"Numerische Mechanik\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2200/2211\",\"term\":{\"en_GB\":\"Mechanics of Materials\",\"de_DE\":\"Werkstoffmechanik\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2200/2210\",\"term\":{\"en_GB\":\"Mechanical Engineering\",\"de_DE\":\"Maschinenbau\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/3100/3100\",\"term\":{\"en_GB\":\"General Physics and Astronomy\",\"de_DE\":\"Allgemeine Physik und Astronomie\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/1700/1706\",\"term\":{\"en_GB\":\"Computer Science Applications\",\"de_DE\":\"Angewandte Informatik\"}}]}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"workflow\":{\"step\":\"approved\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"Scopus\",\"value\":\"85072532492\"}],\"customDefinedFields\":{},\"volume\":\"358\",\"journalAssociation\":{\"pureId\":2947504,\"title\":{\"pureId\":568078,\"title\":\"Computer Methods in Applied Mechanics and Engineering\"},\"issn\":{\"pureId\":262088,\"issn\":\"0045-7825\"},\"journal\":{\"systemName\":\"Journal\",\"uuid\":\"de84a1d9-23cc-46ad-b669-4392e4da4baf\"}},\"articleNumber\":\"112636\",\"abstract\":{\"en_GB\":\"<p>The Peridynamic Petrov–Galerkin (PPG) method is a meshfree approach based on the peridynamic integro-differential form of the momentum equation. The spurious oscillations in the common peridynamic correspondence formulation are investigated. They occur due to an inadmissible linearized mapping of the family deformation field. This leads to a generalized correspondence formulation, which contains the common formulation as a special case. It is based on the weak form of the peridynamic momentum equation. Test and trial function requirements are examined which ensure an exact imposition of Dirichlet and Neumann boundary conditions and Weighted Least Square (WLS) shape functions as well as Local Maximum Entropy (LME) approximants are utilized to examine the PPG Method. A consistent linearization is provided, which can also be used to speed up common implicit peridynamic correspondence codes. It is used in an implicit quasistatic framework to investigate the impact of different shape function combinations. Test cases show that low-energy modes can be prevented by the PPG Method and highlight the fast convergence and stability.</p>\"},\"systemName\":\"ResearchOutput\"},{\"typeDiscriminator\":\"ContributionToJournal\",\"pureId\":2947565,\"uuid\":\"dfbff63f-d6e7-48ef-a21d-2e17d8150706\",\"createdBy\":\"fa_support\",\"createdDate\":\"2019-12-18T10:37:59.694+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-05-24T05:18:27.337+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/publications/dfbff63f-d6e7-48ef-a21d-2e17d8150706\",\"prettyUrlIdentifiers\":[\"a-simulation-model-for-the-degradation-of-magnesium-based-bone-im\"],\"version\":\"90c26f7c40cc03588b7a1545dcd524cd98f189ae\",\"title\":{\"value\":\"A simulation model for the degradation of magnesium-based bone implants\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article\",\"term\":{\"en_GB\":\"Article\",\"de_DE\":\"Artikel\"}},\"category\":{\"uri\":\"/dk/atira/pure/researchoutput/category/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"peerReview\":true,\"publicationStatuses\":[{\"pureId\":2947591,\"current\":true,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/published\",\"term\":{\"en_GB\":\"Published\",\"de_DE\":\"Veröffentlicht\"}},\"publicationDate\":{\"year\":2019,\"month\":9,\"day\":5}}],\"language\":{\"uri\":\"/dk/atira/pure/core/languages/en_GB\",\"term\":{\"en_GB\":\"English\",\"de_DE\":\"Englisch\"}},\"contributors\":[{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947578,\"hidden\":false,\"correspondingAuthor\":true,\"name\":{\"firstName\":\"Ann Kathrin\",\"lastName\":\"Gartzke\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}]},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947580,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Stefan\",\"lastName\":\"Julmi\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"4dd28d41-4ca7-4c4e-847b-d28811919991\"}]},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947582,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Christian\",\"lastName\":\"Klose\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"da0e8436-f13e-4b35-8445-067827af65ec\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"4dd28d41-4ca7-4c4e-847b-d28811919991\"}]},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947584,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"3346b249-a745-46c8-8c03-599aaffa178b\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Anja Christina\",\"lastName\":\"Waselau\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"3ffc1fa3-78d2-48ba-be52-4bdca0a8ba5b\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947585,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"3346b249-a745-46c8-8c03-599aaffa178b\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Andrea\",\"lastName\":\"Meyer-Lindenberg\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"bfd44778-eed6-479b-8881-a9f59a750542\"}},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947586,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Hans Jürgen\",\"lastName\":\"Maier\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"e1ac7c62-92d4-4a52-aa6f-091bbd63d694\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"4dd28d41-4ca7-4c4e-847b-d28811919991\"}]},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947588,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Silke\",\"lastName\":\"Besdo\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"b96e4c0a-919c-44ac-8f17-36d80c5fdd0f\"}},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947589,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Peter\",\"lastName\":\"Wriggers\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"51d4b357-6720-4e28-942d-2482c2056a52\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}]}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"},{\"systemName\":\"Organization\",\"uuid\":\"4dd28d41-4ca7-4c4e-847b-d28811919991\"}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"3346b249-a745-46c8-8c03-599aaffa178b\"}],\"totalNumberOfContributors\":8,\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"},\"submissionYear\":2020,\"electronicVersions\":[{\"typeDiscriminator\":\"DoiElectronicVersion\",\"pureId\":2947567,\"accessType\":{\"uri\":\"/dk/atira/pure/core/openaccesspermission/closed\",\"term\":{\"en_GB\":\"Closed\",\"de_DE\":\"Geschlossen\"}},\"doi\":\"10.1016/j.jmbbm.2019.103411\",\"versionType\":{\"uri\":\"/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion\",\"term\":{\"en_GB\":\"Final published version\",\"de_DE\":\"Endgültige, publizierte Fassung\"}}}],\"links\":[{\"pureId\":2947575,\"url\":\"http://www.scopus.com/inward/record.url?scp=85072274089&partnerID=8YFLogxK\",\"description\":{\"en_GB\":\"Link to publication in Scopus\",\"de_DE\":\"Link zur Publikation in Scopus\"},\"linkType\":{\"uri\":\"/dk/atira/pure/links/researchoutput/scopuspublication\",\"term\":{\"en_GB\":\"Scopus publication\",\"de_DE\":\"Scopus-Publikation\"}}}],\"keywordGroups\":[{\"typeDiscriminator\":\"FreeKeywordsKeywordGroup\",\"pureId\":2947568,\"logicalName\":\"keywordContainers\",\"name\":{\"en_GB\":\"Keywords\",\"de_DE\":\"Schlagwörter\"},\"keywords\":[{\"pureId\":2947570,\"locale\":\"en_GB\",\"freeKeywords\":[\"Bone substitute material\",\"Finite element method\",\"Level set method\",\"Magnesium\",\"Magnesium degradation\"]}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":2947571,\"logicalName\":\"ASJCSubjectAreas\",\"name\":{\"en_GB\":\"ASJC Scopus subject areas\",\"de_DE\":\"ASJC Scopus Sachgebiete\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2500/2502\",\"term\":{\"en_GB\":\"Biomaterials\",\"de_DE\":\"Biomaterialien\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2200/2204\",\"term\":{\"en_GB\":\"Biomedical Engineering\",\"de_DE\":\"Biomedizintechnik\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2200/2211\",\"term\":{\"en_GB\":\"Mechanics of Materials\",\"de_DE\":\"Werkstoffmechanik\"}}]}],\"bibliographicalNote\":{\"en_GB\":\"Funding information: This research is supported by the German Research Foundation ( DFG ) within the project Interfacial effects and ingrowing behaviour of magnesium-based foams as bioresorbable bone substitute material” (grant no. 271761343 ). The authors gratefully acknowledge the support.\",\"de_DE\":\"Funding information: This research is supported by the German Research Foundation ( DFG ) within the project Interfacial effects and ingrowing behaviour of magnesium-based foams as bioresorbable bone substitute material” (grant no. 271761343 ). The authors gratefully acknowledge the support.\"},\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"workflow\":{\"step\":\"approved\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"Scopus\",\"value\":\"85072274089\"},{\"typeDiscriminator\":\"Id\",\"pureId\":2947592,\"idSource\":\"PubMed\",\"value\":\"31546176\"},{\"typeDiscriminator\":\"Id\",\"pureId\":58638934,\"idSource\":\"ORCID\",\"value\":\"/0000-0002-5341-8457/work/173220694\"}],\"customDefinedFields\":{},\"fundingText\":{\"en_GB\":\"This research is supported by the German Research Foundation ( DFG ) within the project Interfacial effects and ingrowing behaviour of magnesium-based foams as bioresorbable bone substitute material” (grant no. 271761343 ). The authors gratefully acknowledge the support.\"},\"volume\":\"101\",\"journalAssociation\":{\"pureId\":2947566,\"title\":{\"pureId\":970601,\"title\":\"Journal of the Mechanical Behavior of Biomedical Materials\"},\"issn\":{\"pureId\":321640,\"issn\":\"1751-6161\"},\"journal\":{\"systemName\":\"Journal\",\"uuid\":\"10ff61cd-dc38-48f8-942d-ed3a1cfbcda4\"}},\"articleNumber\":\"103411\",\"systemName\":\"ResearchOutput\"},{\"typeDiscriminator\":\"ContributionToJournal\",\"pureId\":2947747,\"uuid\":\"1023b219-21db-4f2c-bf51-31b4659e4456\",\"createdBy\":\"lp_support\",\"createdDate\":\"2019-12-18T10:43:10.624+01:00\",\"modifiedBy\":\"mk_support\",\"modifiedDate\":\"2026-03-20T08:31:41.58+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/publications/1023b219-21db-4f2c-bf51-31b4659e4456\",\"prettyUrlIdentifiers\":[\"memorandum-zur-lage-und-zur-zukunft-des-faches-geschichte-der-psy\"],\"version\":\"0521aa718aa11153ccaa5a563f2ae534983ea61d\",\"title\":{\"value\":\"Memorandum zur Lage und zur Zukunft des Faches Geschichte der Psychologie\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/comment\",\"term\":{\"en_GB\":\"Comment/debate\",\"de_DE\":\"Meinungsbeitrag\"}},\"category\":{\"uri\":\"/dk/atira/pure/researchoutput/category/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"peerReview\":true,\"publicationStatuses\":[{\"pureId\":2947794,\"current\":true,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/published\",\"term\":{\"en_GB\":\"Published\",\"de_DE\":\"Veröffentlicht\"}},\"publicationDate\":{\"year\":2015,\"month\":7,\"day\":1}}],\"language\":{\"uri\":\"/dk/atira/pure/core/languages/de_DE\",\"term\":{\"en_GB\":\"German\",\"de_DE\":\"Deutsch\"}},\"contributors\":[{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947766,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Christian\",\"lastName\":\"Allesch\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"98e83cff-a66b-4128-99c6-03a347f997e7\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947767,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Lars\",\"lastName\":\"Allolio-Näcke\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"a8dff291-cff9-4d90-aa30-13ab815b2cc5\"}},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947768,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Elfriede\",\"lastName\":\"Billmann-Mahecha\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"881fd185-724b-4bda-9b32-07f4dac6ded0\"}]},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947770,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Michael\",\"lastName\":\"Eid\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"f806d46f-3fae-4b30-ac08-455c5a813f60\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947771,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Herbert\",\"lastName\":\"Fitzek\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"7f85ab90-3ad0-4ffc-8920-0dceacc682de\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947772,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Susanne\",\"lastName\":\"Guski-Leinwand\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"635b6c60-7621-41d7-b710-af2b8ceb32dd\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947773,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Siegfried\",\"lastName\":\"Hoppe-Graf\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"602a7014-55fb-4327-a307-197f4b264a6b\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947774,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Arthur\",\"lastName\":\"Jacobs\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"84205be3-9023-4d46-9fb4-2136664d7f9c\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947775,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Margret\",\"lastName\":\"Kaiser-El-Safti\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"a12d934f-30a8-4e1b-9156-2ddc0d0d34b3\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947776,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Gönter\",\"lastName\":\"Krampen\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"02ffa3ae-7a8b-4141-acb3-7bb733d95548\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947777,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Walter\",\"lastName\":\"Kugemann\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"43aa335d-9ef2-4bbd-90d5-cf0e8908125f\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947778,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Lydia\",\"lastName\":\"Lange\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"0cce1970-412f-4f7e-a521-8cca124e9d96\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947779,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Helmut\",\"lastName\":\"E. Löck\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"464610c8-0879-40a2-9dea-f15891601962\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947780,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Mike\",\"lastName\":\"Lödmann\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"b2844144-0879-40e5-9d55-09b7acb90ad8\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947781,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Gerd\",\"lastName\":\"Löer\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"9edd0131-6b90-4931-8619-be428c8d7bc7\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947782,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Wolfgang\",\"lastName\":\"Mack\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"240fb849-54e1-490c-b364-105fa2514abc\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947783,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Wolfgang\",\"lastName\":\"Maiers\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"2b1da232-ec7d-4c20-ac39-9fcb1fa003ad\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947784,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Wolfgang\",\"lastName\":\"Prinz\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"d5fe3073-fbf5-4daf-b47d-fe02e7dcda1c\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947785,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Karl Heinz\",\"lastName\":\"Renner\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"72ce37c2-a778-49a4-b9e8-b66a84f82afa\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947786,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Wolfgang\",\"lastName\":\"Schneider\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"2df5c3d3-a58b-43db-975b-c981ac4690b8\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947787,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":true,\"name\":{\"firstName\":\"Wolfgang\",\"lastName\":\"Schönpflug\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"c4ace0bf-d25a-47ee-9b5f-32b98cc5665c\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947788,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Helga\",\"lastName\":\"Sprung\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"ec6a5c14-9e24-45b7-b50f-9700a2a92008\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947789,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Lothar\",\"lastName\":\"Sprung\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"dd0edeed-15db-45f7-b449-30c266ce440b\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947790,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Reiner\",\"lastName\":\"Stegie\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"529fa102-1abb-492f-be2a-d85e2f55f9ab\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947791,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Sibylle\",\"lastName\":\"Volkmann-Raue\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"038c7376-e758-4fc7-a407-5a0ba8120884\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947792,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Erich\",\"lastName\":\"Witte\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"d35129ec-6dbf-4b57-93aa-55210a9385b6\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947793,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Uwe\",\"lastName\":\"Wolfradt\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"03c0cd98-ebad-4de4-b82f-394902702f73\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"881fd185-724b-4bda-9b32-07f4dac6ded0\"}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"40dc6a81-9aa1-4796-a938-20cbdee77366\"}],\"totalNumberOfContributors\":27,\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"881fd185-724b-4bda-9b32-07f4dac6ded0\"},\"submissionYear\":2015,\"electronicVersions\":[{\"typeDiscriminator\":\"DoiElectronicVersion\",\"pureId\":10858488,\"accessType\":{\"uri\":\"/dk/atira/pure/core/openaccesspermission/closed\",\"term\":{\"en_GB\":\"Closed\",\"de_DE\":\"Geschlossen\"}},\"doi\":\"10.1026/0033-3042/a000255\",\"versionType\":{\"uri\":\"/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion\",\"term\":{\"en_GB\":\"Final published version\",\"de_DE\":\"Endgültige, publizierte Fassung\"}}}],\"links\":[{\"pureId\":2947752,\"url\":\"http://www.scopus.com/inward/record.url?scp=84938780543&partnerID=8YFLogxK\",\"description\":{\"en_GB\":\"Link to publication in Scopus\",\"de_DE\":\"Link zur Publikation in Scopus\"},\"linkType\":{\"uri\":\"/dk/atira/pure/links/researchoutput/scopuspublication\",\"term\":{\"en_GB\":\"Scopus publication\",\"de_DE\":\"Scopus-Publikation\"}}}],\"keywordGroups\":[{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":2947750,\"logicalName\":\"ASJCSubjectAreas\",\"name\":{\"en_GB\":\"ASJC Scopus subject areas\",\"de_DE\":\"ASJC Scopus Sachgebiete\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/subjectarea/asjc/3200/3200\",\"term\":{\"en_GB\":\"General Psychology\",\"de_DE\":\"Allgemeine Psychologie\"}}]}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"workflow\":{\"step\":\"forApproval\",\"description\":{\"en_GB\":\"For validation\",\"de_DE\":\"Zur Validierung\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"Scopus\",\"value\":\"84938780543\"},{\"typeDiscriminator\":\"Id\",\"pureId\":10858489,\"idSource\":\"unpaywall\",\"value\":\"10.1026/0033-3042/a000255\"}],\"customDefinedFields\":{},\"pages\":\"176-177\",\"volume\":\"66\",\"journalAssociation\":{\"pureId\":2947748,\"title\":{\"pureId\":268503,\"title\":\"Psychologische Rundschau\"},\"issn\":{\"pureId\":268498,\"issn\":\"0033-3042\"},\"journal\":{\"systemName\":\"Journal\",\"uuid\":\"9319168f-0164-4195-8a07-fbb515cc86f6\"}},\"journalNumber\":\"3\",\"numberOfPages\":2,\"systemName\":\"ResearchOutput\"},{\"typeDiscriminator\":\"ContributionToJournal\",\"pureId\":2947859,\"uuid\":\"b211258a-5dbc-4c7d-84bb-c25cba339d84\",\"createdBy\":\"fa_support\",\"createdDate\":\"2019-12-18T10:48:45.195+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2026-05-14T18:14:39.915+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/publications/b211258a-5dbc-4c7d-84bb-c25cba339d84\",\"prettyUrlIdentifiers\":[\"generating-virtual-process-maps-of-slm-using-powder-scale-sph-sim\"],\"version\":\"0ef92ef35a166d434a1af89507f24290d826203e\",\"title\":{\"value\":\"Generating virtual process maps of SLM using powder-scale SPH simulations\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article\",\"term\":{\"en_GB\":\"Article\",\"de_DE\":\"Artikel\"}},\"category\":{\"uri\":\"/dk/atira/pure/researchoutput/category/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"peerReview\":true,\"publicationStatuses\":[{\"pureId\":21644402,\"current\":false,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/submitted\",\"term\":{\"en_GB\":\"Submitted\",\"de_DE\":\"Eingereicht\"}},\"publicationDate\":{\"year\":2019,\"month\":2,\"day\":13}},{\"pureId\":21644403,\"current\":false,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/inpress\",\"term\":{\"en_GB\":\"Accepted/In press\",\"de_DE\":\"Angenommen/Im Druck\"}},\"publicationDate\":{\"year\":2019,\"month\":10,\"day\":20}},{\"pureId\":9285683,\"current\":false,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/epub\",\"term\":{\"en_GB\":\"E-pub ahead of print\",\"de_DE\":\"Elektronisch veröffentlicht (E-Pub)\"}},\"publicationDate\":{\"year\":2019,\"month\":11,\"day\":30}},{\"pureId\":2947886,\"current\":true,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/published\",\"term\":{\"en_GB\":\"Published\",\"de_DE\":\"Veröffentlicht\"}},\"publicationDate\":{\"year\":2020,\"month\":7}}],\"language\":{\"uri\":\"/dk/atira/pure/core/languages/en_GB\",\"term\":{\"en_GB\":\"English\",\"de_DE\":\"Englisch\"}},\"contributors\":[{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947878,\"hidden\":false,\"correspondingAuthor\":true,\"name\":{\"firstName\":\"Jan Philipp\",\"lastName\":\"Fürstenau\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}]},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947880,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Henning\",\"lastName\":\"Wessels\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}]},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947882,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Christian\",\"lastName\":\"Weißenfels\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}]},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947884,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Peter\",\"lastName\":\"Wriggers\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"51d4b357-6720-4e28-942d-2482c2056a52\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}]}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}],\"totalNumberOfContributors\":4,\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"},\"submissionYear\":2019,\"electronicVersions\":[{\"typeDiscriminator\":\"DoiElectronicVersion\",\"pureId\":10797694,\"accessType\":{\"uri\":\"/dk/atira/pure/core/openaccesspermission/closed\",\"term\":{\"en_GB\":\"Closed\",\"de_DE\":\"Geschlossen\"}},\"doi\":\"10.1007/s40571-019-00296-3\",\"versionType\":{\"uri\":\"/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion\",\"term\":{\"en_GB\":\"Final published version\",\"de_DE\":\"Endgültige, publizierte Fassung\"}}}],\"links\":[{\"pureId\":2947872,\"url\":\"http://www.scopus.com/inward/record.url?scp=85076105547&partnerID=8YFLogxK\",\"description\":{\"en_GB\":\"Link to publication in Scopus\",\"de_DE\":\"Link zur Publikation in Scopus\"},\"linkType\":{\"uri\":\"/dk/atira/pure/links/researchoutput/scopuspublication\",\"term\":{\"en_GB\":\"Scopus publication\",\"de_DE\":\"Scopus-Publikation\"}}}],\"keywordGroups\":[{\"typeDiscriminator\":\"FreeKeywordsKeywordGroup\",\"pureId\":2947862,\"logicalName\":\"keywordContainers\",\"name\":{\"en_GB\":\"Keywords\",\"de_DE\":\"Schlagwörter\"},\"keywords\":[{\"pureId\":2947864,\"locale\":\"en_GB\",\"freeKeywords\":[\"Additive manufacturing\",\"Laser powder bed fusion\",\"Selective laser melting\",\"SPH\",\"Steel powder\",\"Surface tension\",\"Virtual process map\"]}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":2947865,\"logicalName\":\"ASJCSubjectAreas\",\"name\":{\"en_GB\":\"ASJC Scopus subject areas\",\"de_DE\":\"ASJC Scopus Sachgebiete\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2200/2206\",\"term\":{\"en_GB\":\"Computational Mechanics\",\"de_DE\":\"Numerische Mechanik\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2200/2205\",\"term\":{\"en_GB\":\"Civil and Structural Engineering\",\"de_DE\":\"Tief- und Ingenieurbau\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2600/2612\",\"term\":{\"en_GB\":\"Numerical Analysis\",\"de_DE\":\"Numerische Mathematik\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2600/2611\",\"term\":{\"en_GB\":\"Modelling and Simulation\",\"de_DE\":\"Modellierung und Simulation\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/1500/1507\",\"term\":{\"en_GB\":\"Fluid Flow and Transfer Processes\",\"de_DE\":\"Fließ- und Transferprozesse von Flüssigkeiten\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2600/2605\",\"term\":{\"en_GB\":\"Computational Mathematics\",\"de_DE\":\"Computational Mathematics\"}}]}],\"descriptions\":[{\"pureId\":21644401,\"value\":{\"en_GB\":\"Publisher Copyright:<br/>© 2019, OWZ.\",\"de_DE\":\"Publisher Copyright:<br/>© 2019, OWZ.\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/descriptions/contributiontojournal/further_bibliographic_information\",\"term\":{\"en_GB\":\"Further bibliographic information\",\"de_DE\":\"Weitere bibliographische Informationen\"}}}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"workflow\":{\"step\":\"approved\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"Scopus\",\"value\":\"85076105547\"},{\"typeDiscriminator\":\"Id\",\"pureId\":10797695,\"idSource\":\"unpaywall\",\"value\":\"10.1007/s40571-019-00296-3\"}],\"customDefinedFields\":{},\"pages\":\"655-677\",\"volume\":\"7\",\"journalAssociation\":{\"pureId\":2947860,\"title\":{\"pureId\":2947856,\"title\":\"Computational Particle Mechanics\"},\"issn\":{\"pureId\":2947854,\"issn\":\"2196-4378\"},\"journal\":{\"systemName\":\"Journal\",\"uuid\":\"42311007-ef5d-4105-9ad7-030b0298e77a\"}},\"journalNumber\":\"4\",\"numberOfPages\":23,\"abstract\":{\"en_GB\":\"<p>In selective laser melting (SLM), three-dimensional parts are build up from a metal powder bed by layer-wise melting with a laser. While SLM offers a high flexibility in geometrical design and material texture, the interplay of dozens of parameters is difficult to analyze experimentally. The current research focuses on numerical simulation to increase confidence in manufactured parts and to reduce the time to market. Using a smoothed particle hydrodynamics (SPH) implementation on GPU, the 3D melt pool dynamics in a single laser track can be simulated within less than 2 h with a reasonable spatial resolution of 3 μ m. This is an extreme speedup compared to concurrent CFD methods that have recently been applied to the same problem. Using a SPH implementation on GPU, the 3D melt pool dynamics in a single laser track can be simulated within less than an hour with a reasonable spatial resolution of 3 μ m. This is an extreme speedup compared to concurrent CFD methods that have recently been applied to the same problem. The computational efficiency allows to conduct parameter studies, which before were prohibitively expensive, to generate a virtual process. To make the simulations possible a curvature calculation technique was applied, which is novel in the field of SPH. Additionally the advantage of a direct description of the internal energy is outlined by comparing the approach with the commonly applied apparent heat approach. Designers may profit from the fast simulations in two different scenarios: firstly, through a direct numerical simulation of certain parameter combinations and scenarios and, secondly, by informing advanced surrogate models or part-scale models to predict the behavior of the entire part being produced. When adapting the heat source model, the SPH framework may also be used to describe the related electron beam melting process.</p>\"},\"systemName\":\"ResearchOutput\"}]}",
+        "response_data": {
+            "count": 81152,
+            "pageInformation": {
+                "offset": 0,
+                "size": 5
+            },
+            "items": [
+                {
+                    "typeDiscriminator": "ContributionToJournal",
+                    "pureId": 2947453,
+                    "uuid": "91ec7a28-2899-4001-ad2a-f46e93f6e546",
+                    "createdBy": "fa_support",
+                    "createdDate": "2019-12-18T10:24:41.392+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2025-10-25T20:36:40.488+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/publications/91ec7a28-2899-4001-ad2a-f46e93f6e546",
+                    "prettyUrlIdentifiers": [
+                        "the-analyses-of-dynamic-response-and-reliability-for-failure-depe"
+                    ],
+                    "version": "d81db4bff07ecce2a138bc12870e9ddd4d4ade92",
+                    "title": {
+                        "value": "The analyses of dynamic response and reliability for failure-dependent stochastic micro-resonator with thermoelastic coupling effects"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article",
+                        "term": {
+                            "en_GB": "Article",
+                            "de_DE": "Artikel"
+                        }
+                    },
+                    "category": {
+                        "uri": "/dk/atira/pure/researchoutput/category/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "peerReview": true,
+                    "publicationStatuses": [
+                        {
+                            "pureId": 12093731,
+                            "current": false,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/submitted",
+                                "term": {
+                                    "en_GB": "Submitted",
+                                    "de_DE": "Eingereicht"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2018,
+                                "month": 8,
+                                "day": 13
+                            }
+                        },
+                        {
+                            "pureId": 12093732,
+                            "current": false,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/inpress",
+                                "term": {
+                                    "en_GB": "Accepted/In press",
+                                    "de_DE": "Angenommen/Im Druck"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2019,
+                                "month": 9,
+                                "day": 25
+                            }
+                        },
+                        {
+                            "pureId": 2947469,
+                            "current": false,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/epub",
+                                "term": {
+                                    "en_GB": "E-pub ahead of print",
+                                    "de_DE": "Elektronisch veröffentlicht (E-Pub)"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2019,
+                                "month": 9,
+                                "day": 27
+                            }
+                        },
+                        {
+                            "pureId": 5251000,
+                            "current": true,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/published",
+                                "term": {
+                                    "en_GB": "Published",
+                                    "de_DE": "Veröffentlicht"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2020,
+                                "month": 1
+                            }
+                        }
+                    ],
+                    "language": {
+                        "uri": "/dk/atira/pure/core/languages/en_GB",
+                        "term": {
+                            "en_GB": "English",
+                            "de_DE": "Englisch"
+                        }
+                    },
+                    "contributors": [
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947464,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "140b390d-316b-4538-97ef-5d29882634ef"
+                                },
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "1e2db3f8-3e31-4336-b928-629c662bb1ad"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Bin",
+                                "lastName": "Yan"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "8e8d3674-829f-4f1b-b3a9-c0c01cccddc4"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947465,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "140b390d-316b-4538-97ef-5d29882634ef"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": true,
+                            "name": {
+                                "firstName": "Juan",
+                                "lastName": "Ma"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "c077156a-22dd-46a4-9c46-2151d658cc70"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947466,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "b2d2b18e-875f-4c7b-a9a3-1b3854ee1470"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Di",
+                                "lastName": "Wu"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "635a6c9b-73c7-4221-999d-91f2ba5a5403"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947467,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Peter",
+                                "lastName": "Wriggers"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "51d4b357-6720-4e28-942d-2482c2056a52"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                                }
+                            ]
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                        }
+                    ],
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "140b390d-316b-4538-97ef-5d29882634ef"
+                        },
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "b2d2b18e-875f-4c7b-a9a3-1b3854ee1470"
+                        },
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "1e2db3f8-3e31-4336-b928-629c662bb1ad"
+                        }
+                    ],
+                    "totalNumberOfContributors": 4,
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                    },
+                    "submissionYear": 2020,
+                    "electronicVersions": [
+                        {
+                            "typeDiscriminator": "DoiElectronicVersion",
+                            "pureId": 2947455,
+                            "accessType": {
+                                "uri": "/dk/atira/pure/core/openaccesspermission/closed",
+                                "term": {
+                                    "en_GB": "Closed",
+                                    "de_DE": "Geschlossen"
+                                }
+                            },
+                            "doi": "10.1016/j.apm.2019.09.040",
+                            "versionType": {
+                                "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                                "term": {
+                                    "en_GB": "Final published version",
+                                    "de_DE": "Endgültige, publizierte Fassung"
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 2947462,
+                            "url": "http://www.scopus.com/inward/record.url?scp=85074402411&partnerID=8YFLogxK",
+                            "description": {
+                                "en_GB": "Link to publication in Scopus",
+                                "de_DE": "Link zur Publikation in Scopus"
+                            },
+                            "linkType": {
+                                "uri": "/dk/atira/pure/links/researchoutput/scopuspublication",
+                                "term": {
+                                    "en_GB": "Scopus publication",
+                                    "de_DE": "Scopus-Publikation"
+                                }
+                            }
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                            "pureId": 2947456,
+                            "logicalName": "keywordContainers",
+                            "name": {
+                                "en_GB": "Keywords",
+                                "de_DE": "Schlagwörter"
+                            },
+                            "keywords": [
+                                {
+                                    "pureId": 2947458,
+                                    "locale": "en_GB",
+                                    "freeKeywords": [
+                                        "Dynamic correlation",
+                                        "Dynamic reliability assessment",
+                                        "Random micro-resonators",
+                                        "Stochastic dynamic response analysis",
+                                        "Thermoelastic coupling effects"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 2947459,
+                            "logicalName": "ASJCSubjectAreas",
+                            "name": {
+                                "en_GB": "ASJC Scopus subject areas",
+                                "de_DE": "ASJC Scopus Sachgebiete"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2600/2611",
+                                    "term": {
+                                        "en_GB": "Modelling and Simulation",
+                                        "de_DE": "Modellierung und Simulation"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2600/2604",
+                                    "term": {
+                                        "en_GB": "Applied Mathematics",
+                                        "de_DE": "Angewandte Mathematik"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "bibliographicalNote": {
+                        "en_GB": "Funding information: The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript.",
+                        "de_DE": "Funding information: The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript."
+                    },
+                    "descriptions": [
+                        {
+                            "pureId": 12093730,
+                            "type": {
+                                "uri": "/dk/atira/pure/researchoutput/descriptions/contributiontojournal/further_bibliographic_information",
+                                "term": {
+                                    "en_GB": "Further bibliographic information",
+                                    "de_DE": "Weitere bibliographische Informationen"
+                                }
+                            }
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "workflow": {
+                        "step": "approved",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "Scopus",
+                            "value": "85074402411"
+                        }
+                    ],
+                    "customDefinedFields": [],
+                    "fundingText": {
+                        "en_GB": "The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript."
+                    },
+                    "pages": "1168-1187",
+                    "volume": "77",
+                    "journalAssociation": {
+                        "pureId": 2947454,
+                        "title": {
+                            "pureId": 288764,
+                            "title": "Applied mathematical modelling"
+                        },
+                        "issn": {
+                            "pureId": 288760,
+                            "issn": "0307-904X"
+                        },
+                        "journal": {
+                            "systemName": "Journal",
+                            "uuid": "802a45ab-f424-4db8-9ac9-fcdaa762573f"
+                        }
+                    },
+                    "journalNumber": "2",
+                    "numberOfPages": 20,
+                    "abstract": {
+                        "en_GB": "<p>A crucial measure for the design of high-performance micro-resonators is to consider the randomness of structural parameters when analyzing the structural system reliability. In this work, the stochastic dynamic response analysis and subsequently, a dynamic reliability assessment of the random micro-resonators are originally presented, where the thermoelastic coupling effects are freshly incorporated in the models proposed. The dynamic characteristics equation of the deterministic micro-resonator is firstly established based on the finite element method. The random dynamic characteristics of the resonator are then solved by implementing the left and right eigenvectors and the block Lanczos algorithm, and the random temperature field and structural random dynamic stress are also tackled. Afterwards, the overall structural reliability is investigated with a comprehensive consideration of the strength failure and frequency resonance failure, in which the Copula function is used for describing the dynamic correlation between two failure modes. Finally, the feasibility and rationality of the method put forward are demonstrated via a practically motivated example.</p>"
+                    },
+                    "systemName": "ResearchOutput"
+                },
+                {
+                    "typeDiscriminator": "ContributionToJournal",
+                    "pureId": 2947503,
+                    "uuid": "493b7bd5-2209-418b-8683-e24fa5c6f16e",
+                    "createdBy": "fa_support",
+                    "createdDate": "2019-12-18T10:30:24.949+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2026-03-12T17:56:34.442+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/publications/493b7bd5-2209-418b-8683-e24fa5c6f16e",
+                    "prettyUrlIdentifiers": [
+                        "peridynamic-petrovgalerkin-method-a-generalization-of-the-peridyn"
+                    ],
+                    "version": "5576a0ff325a68ae27d7cadc041e733c86359b74",
+                    "title": {
+                        "value": "Peridynamic Petrov–Galerkin method"
+                    },
+                    "subTitle": {
+                        "value": "A generalization of the peridynamic theory of correspondence materials"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article",
+                        "term": {
+                            "en_GB": "Article",
+                            "de_DE": "Artikel"
+                        }
+                    },
+                    "category": {
+                        "uri": "/dk/atira/pure/researchoutput/category/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "peerReview": true,
+                    "publicationStatuses": [
+                        {
+                            "pureId": 2947523,
+                            "current": true,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/published",
+                                "term": {
+                                    "en_GB": "Published",
+                                    "de_DE": "Veröffentlicht"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2019,
+                                "month": 9,
+                                "day": 24
+                            }
+                        }
+                    ],
+                    "language": {
+                        "uri": "/dk/atira/pure/core/languages/en_GB",
+                        "term": {
+                            "en_GB": "English",
+                            "de_DE": "Englisch"
+                        }
+                    },
+                    "contributors": [
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947517,
+                            "hidden": false,
+                            "correspondingAuthor": true,
+                            "name": {
+                                "firstName": "T.",
+                                "lastName": "Bode"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "d2851a0d-9f32-4176-b3e7-8d73c4e7359d"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947519,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "C.",
+                                "lastName": "Weißenfels"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947521,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "P.",
+                                "lastName": "Wriggers"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "51d4b357-6720-4e28-942d-2482c2056a52"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                                }
+                            ]
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                        }
+                    ],
+                    "totalNumberOfContributors": 3,
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                    },
+                    "submissionYear": 2020,
+                    "electronicVersions": [
+                        {
+                            "typeDiscriminator": "DoiElectronicVersion",
+                            "pureId": 2947505,
+                            "accessType": {
+                                "uri": "/dk/atira/pure/core/openaccesspermission/closed",
+                                "term": {
+                                    "en_GB": "Closed",
+                                    "de_DE": "Geschlossen"
+                                }
+                            },
+                            "doi": "10.1016/j.cma.2019.112636",
+                            "versionType": {
+                                "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                                "term": {
+                                    "en_GB": "Final published version",
+                                    "de_DE": "Endgültige, publizierte Fassung"
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 2947515,
+                            "url": "http://www.scopus.com/inward/record.url?scp=85072532492&partnerID=8YFLogxK",
+                            "description": {
+                                "en_GB": "Link to publication in Scopus",
+                                "de_DE": "Link zur Publikation in Scopus"
+                            },
+                            "linkType": {
+                                "uri": "/dk/atira/pure/links/researchoutput/scopuspublication",
+                                "term": {
+                                    "en_GB": "Scopus publication",
+                                    "de_DE": "Scopus-Publikation"
+                                }
+                            }
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                            "pureId": 2947506,
+                            "logicalName": "keywordContainers",
+                            "name": {
+                                "en_GB": "Keywords",
+                                "de_DE": "Schlagwörter"
+                            },
+                            "keywords": [
+                                {
+                                    "pureId": 2947508,
+                                    "locale": "en_GB",
+                                    "freeKeywords": [
+                                        "Consistent linearization",
+                                        "Meshfree method",
+                                        "Peridynamic correspondence formulation",
+                                        "Peridynamic reduction",
+                                        "Petrov–Galerkin method",
+                                        "Smoothed particle hydrodynamics"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 2947509,
+                            "logicalName": "ASJCSubjectAreas",
+                            "name": {
+                                "en_GB": "ASJC Scopus subject areas",
+                                "de_DE": "ASJC Scopus Sachgebiete"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2200/2206",
+                                    "term": {
+                                        "en_GB": "Computational Mechanics",
+                                        "de_DE": "Numerische Mechanik"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2200/2211",
+                                    "term": {
+                                        "en_GB": "Mechanics of Materials",
+                                        "de_DE": "Werkstoffmechanik"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2200/2210",
+                                    "term": {
+                                        "en_GB": "Mechanical Engineering",
+                                        "de_DE": "Maschinenbau"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/3100/3100",
+                                    "term": {
+                                        "en_GB": "General Physics and Astronomy",
+                                        "de_DE": "Allgemeine Physik und Astronomie"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/1700/1706",
+                                    "term": {
+                                        "en_GB": "Computer Science Applications",
+                                        "de_DE": "Angewandte Informatik"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "workflow": {
+                        "step": "approved",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "Scopus",
+                            "value": "85072532492"
+                        }
+                    ],
+                    "customDefinedFields": [],
+                    "volume": "358",
+                    "journalAssociation": {
+                        "pureId": 2947504,
+                        "title": {
+                            "pureId": 568078,
+                            "title": "Computer Methods in Applied Mechanics and Engineering"
+                        },
+                        "issn": {
+                            "pureId": 262088,
+                            "issn": "0045-7825"
+                        },
+                        "journal": {
+                            "systemName": "Journal",
+                            "uuid": "de84a1d9-23cc-46ad-b669-4392e4da4baf"
+                        }
+                    },
+                    "articleNumber": "112636",
+                    "abstract": {
+                        "en_GB": "<p>The Peridynamic Petrov–Galerkin (PPG) method is a meshfree approach based on the peridynamic integro-differential form of the momentum equation. The spurious oscillations in the common peridynamic correspondence formulation are investigated. They occur due to an inadmissible linearized mapping of the family deformation field. This leads to a generalized correspondence formulation, which contains the common formulation as a special case. It is based on the weak form of the peridynamic momentum equation. Test and trial function requirements are examined which ensure an exact imposition of Dirichlet and Neumann boundary conditions and Weighted Least Square (WLS) shape functions as well as Local Maximum Entropy (LME) approximants are utilized to examine the PPG Method. A consistent linearization is provided, which can also be used to speed up common implicit peridynamic correspondence codes. It is used in an implicit quasistatic framework to investigate the impact of different shape function combinations. Test cases show that low-energy modes can be prevented by the PPG Method and highlight the fast convergence and stability.</p>"
+                    },
+                    "systemName": "ResearchOutput"
+                },
+                {
+                    "typeDiscriminator": "ContributionToJournal",
+                    "pureId": 2947565,
+                    "uuid": "dfbff63f-d6e7-48ef-a21d-2e17d8150706",
+                    "createdBy": "fa_support",
+                    "createdDate": "2019-12-18T10:37:59.694+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2025-05-24T05:18:27.337+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/publications/dfbff63f-d6e7-48ef-a21d-2e17d8150706",
+                    "prettyUrlIdentifiers": [
+                        "a-simulation-model-for-the-degradation-of-magnesium-based-bone-im"
+                    ],
+                    "version": "90c26f7c40cc03588b7a1545dcd524cd98f189ae",
+                    "title": {
+                        "value": "A simulation model for the degradation of magnesium-based bone implants"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article",
+                        "term": {
+                            "en_GB": "Article",
+                            "de_DE": "Artikel"
+                        }
+                    },
+                    "category": {
+                        "uri": "/dk/atira/pure/researchoutput/category/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "peerReview": true,
+                    "publicationStatuses": [
+                        {
+                            "pureId": 2947591,
+                            "current": true,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/published",
+                                "term": {
+                                    "en_GB": "Published",
+                                    "de_DE": "Veröffentlicht"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2019,
+                                "month": 9,
+                                "day": 5
+                            }
+                        }
+                    ],
+                    "language": {
+                        "uri": "/dk/atira/pure/core/languages/en_GB",
+                        "term": {
+                            "en_GB": "English",
+                            "de_DE": "Englisch"
+                        }
+                    },
+                    "contributors": [
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947578,
+                            "hidden": false,
+                            "correspondingAuthor": true,
+                            "name": {
+                                "firstName": "Ann Kathrin",
+                                "lastName": "Gartzke"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947580,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Stefan",
+                                "lastName": "Julmi"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "4dd28d41-4ca7-4c4e-847b-d28811919991"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947582,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Christian",
+                                "lastName": "Klose"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "da0e8436-f13e-4b35-8445-067827af65ec"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "4dd28d41-4ca7-4c4e-847b-d28811919991"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947584,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "3346b249-a745-46c8-8c03-599aaffa178b"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Anja Christina",
+                                "lastName": "Waselau"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "3ffc1fa3-78d2-48ba-be52-4bdca0a8ba5b"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947585,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "3346b249-a745-46c8-8c03-599aaffa178b"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Andrea",
+                                "lastName": "Meyer-Lindenberg"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "bfd44778-eed6-479b-8881-a9f59a750542"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947586,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Hans Jürgen",
+                                "lastName": "Maier"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "e1ac7c62-92d4-4a52-aa6f-091bbd63d694"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "4dd28d41-4ca7-4c4e-847b-d28811919991"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947588,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Silke",
+                                "lastName": "Besdo"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "b96e4c0a-919c-44ac-8f17-36d80c5fdd0f"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947589,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Peter",
+                                "lastName": "Wriggers"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "51d4b357-6720-4e28-942d-2482c2056a52"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                                }
+                            ]
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "4dd28d41-4ca7-4c4e-847b-d28811919991"
+                        }
+                    ],
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "3346b249-a745-46c8-8c03-599aaffa178b"
+                        }
+                    ],
+                    "totalNumberOfContributors": 8,
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                    },
+                    "submissionYear": 2020,
+                    "electronicVersions": [
+                        {
+                            "typeDiscriminator": "DoiElectronicVersion",
+                            "pureId": 2947567,
+                            "accessType": {
+                                "uri": "/dk/atira/pure/core/openaccesspermission/closed",
+                                "term": {
+                                    "en_GB": "Closed",
+                                    "de_DE": "Geschlossen"
+                                }
+                            },
+                            "doi": "10.1016/j.jmbbm.2019.103411",
+                            "versionType": {
+                                "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                                "term": {
+                                    "en_GB": "Final published version",
+                                    "de_DE": "Endgültige, publizierte Fassung"
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 2947575,
+                            "url": "http://www.scopus.com/inward/record.url?scp=85072274089&partnerID=8YFLogxK",
+                            "description": {
+                                "en_GB": "Link to publication in Scopus",
+                                "de_DE": "Link zur Publikation in Scopus"
+                            },
+                            "linkType": {
+                                "uri": "/dk/atira/pure/links/researchoutput/scopuspublication",
+                                "term": {
+                                    "en_GB": "Scopus publication",
+                                    "de_DE": "Scopus-Publikation"
+                                }
+                            }
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                            "pureId": 2947568,
+                            "logicalName": "keywordContainers",
+                            "name": {
+                                "en_GB": "Keywords",
+                                "de_DE": "Schlagwörter"
+                            },
+                            "keywords": [
+                                {
+                                    "pureId": 2947570,
+                                    "locale": "en_GB",
+                                    "freeKeywords": [
+                                        "Bone substitute material",
+                                        "Finite element method",
+                                        "Level set method",
+                                        "Magnesium",
+                                        "Magnesium degradation"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 2947571,
+                            "logicalName": "ASJCSubjectAreas",
+                            "name": {
+                                "en_GB": "ASJC Scopus subject areas",
+                                "de_DE": "ASJC Scopus Sachgebiete"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2500/2502",
+                                    "term": {
+                                        "en_GB": "Biomaterials",
+                                        "de_DE": "Biomaterialien"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2200/2204",
+                                    "term": {
+                                        "en_GB": "Biomedical Engineering",
+                                        "de_DE": "Biomedizintechnik"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2200/2211",
+                                    "term": {
+                                        "en_GB": "Mechanics of Materials",
+                                        "de_DE": "Werkstoffmechanik"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "bibliographicalNote": {
+                        "en_GB": "Funding information: This research is supported by the German Research Foundation ( DFG ) within the project Interfacial effects and ingrowing behaviour of magnesium-based foams as bioresorbable bone substitute material” (grant no. 271761343 ). The authors gratefully acknowledge the support.",
+                        "de_DE": "Funding information: This research is supported by the German Research Foundation ( DFG ) within the project Interfacial effects and ingrowing behaviour of magnesium-based foams as bioresorbable bone substitute material” (grant no. 271761343 ). The authors gratefully acknowledge the support."
+                    },
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "workflow": {
+                        "step": "approved",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "Scopus",
+                            "value": "85072274089"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 2947592,
+                            "idSource": "PubMed",
+                            "value": "31546176"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 58638934,
+                            "idSource": "ORCID",
+                            "value": "/0000-0002-5341-8457/work/173220694"
+                        }
+                    ],
+                    "customDefinedFields": [],
+                    "fundingText": {
+                        "en_GB": "This research is supported by the German Research Foundation ( DFG ) within the project Interfacial effects and ingrowing behaviour of magnesium-based foams as bioresorbable bone substitute material” (grant no. 271761343 ). The authors gratefully acknowledge the support."
+                    },
+                    "volume": "101",
+                    "journalAssociation": {
+                        "pureId": 2947566,
+                        "title": {
+                            "pureId": 970601,
+                            "title": "Journal of the Mechanical Behavior of Biomedical Materials"
+                        },
+                        "issn": {
+                            "pureId": 321640,
+                            "issn": "1751-6161"
+                        },
+                        "journal": {
+                            "systemName": "Journal",
+                            "uuid": "10ff61cd-dc38-48f8-942d-ed3a1cfbcda4"
+                        }
+                    },
+                    "articleNumber": "103411",
+                    "systemName": "ResearchOutput"
+                },
+                {
+                    "typeDiscriminator": "ContributionToJournal",
+                    "pureId": 2947747,
+                    "uuid": "1023b219-21db-4f2c-bf51-31b4659e4456",
+                    "createdBy": "lp_support",
+                    "createdDate": "2019-12-18T10:43:10.624+01:00",
+                    "modifiedBy": "mk_support",
+                    "modifiedDate": "2026-03-20T08:31:41.58+01:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/publications/1023b219-21db-4f2c-bf51-31b4659e4456",
+                    "prettyUrlIdentifiers": [
+                        "memorandum-zur-lage-und-zur-zukunft-des-faches-geschichte-der-psy"
+                    ],
+                    "version": "0521aa718aa11153ccaa5a563f2ae534983ea61d",
+                    "title": {
+                        "value": "Memorandum zur Lage und zur Zukunft des Faches Geschichte der Psychologie"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/comment",
+                        "term": {
+                            "en_GB": "Comment/debate",
+                            "de_DE": "Meinungsbeitrag"
+                        }
+                    },
+                    "category": {
+                        "uri": "/dk/atira/pure/researchoutput/category/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "peerReview": true,
+                    "publicationStatuses": [
+                        {
+                            "pureId": 2947794,
+                            "current": true,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/published",
+                                "term": {
+                                    "en_GB": "Published",
+                                    "de_DE": "Veröffentlicht"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2015,
+                                "month": 7,
+                                "day": 1
+                            }
+                        }
+                    ],
+                    "language": {
+                        "uri": "/dk/atira/pure/core/languages/de_DE",
+                        "term": {
+                            "en_GB": "German",
+                            "de_DE": "Deutsch"
+                        }
+                    },
+                    "contributors": [
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947766,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Christian",
+                                "lastName": "Allesch"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "98e83cff-a66b-4128-99c6-03a347f997e7"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947767,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Lars",
+                                "lastName": "Allolio-Näcke"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "a8dff291-cff9-4d90-aa30-13ab815b2cc5"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947768,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Elfriede",
+                                "lastName": "Billmann-Mahecha"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "881fd185-724b-4bda-9b32-07f4dac6ded0"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947770,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Michael",
+                                "lastName": "Eid"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "f806d46f-3fae-4b30-ac08-455c5a813f60"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947771,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Herbert",
+                                "lastName": "Fitzek"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "7f85ab90-3ad0-4ffc-8920-0dceacc682de"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947772,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Susanne",
+                                "lastName": "Guski-Leinwand"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "635b6c60-7621-41d7-b710-af2b8ceb32dd"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947773,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Siegfried",
+                                "lastName": "Hoppe-Graf"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "602a7014-55fb-4327-a307-197f4b264a6b"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947774,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Arthur",
+                                "lastName": "Jacobs"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "84205be3-9023-4d46-9fb4-2136664d7f9c"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947775,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Margret",
+                                "lastName": "Kaiser-El-Safti"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "a12d934f-30a8-4e1b-9156-2ddc0d0d34b3"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947776,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Gönter",
+                                "lastName": "Krampen"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "02ffa3ae-7a8b-4141-acb3-7bb733d95548"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947777,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Walter",
+                                "lastName": "Kugemann"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "43aa335d-9ef2-4bbd-90d5-cf0e8908125f"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947778,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Lydia",
+                                "lastName": "Lange"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "0cce1970-412f-4f7e-a521-8cca124e9d96"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947779,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Helmut",
+                                "lastName": "E. Löck"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "464610c8-0879-40a2-9dea-f15891601962"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947780,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Mike",
+                                "lastName": "Lödmann"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "b2844144-0879-40e5-9d55-09b7acb90ad8"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947781,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Gerd",
+                                "lastName": "Löer"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "9edd0131-6b90-4931-8619-be428c8d7bc7"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947782,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Wolfgang",
+                                "lastName": "Mack"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "240fb849-54e1-490c-b364-105fa2514abc"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947783,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Wolfgang",
+                                "lastName": "Maiers"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "2b1da232-ec7d-4c20-ac39-9fcb1fa003ad"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947784,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Wolfgang",
+                                "lastName": "Prinz"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "d5fe3073-fbf5-4daf-b47d-fe02e7dcda1c"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947785,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Karl Heinz",
+                                "lastName": "Renner"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "72ce37c2-a778-49a4-b9e8-b66a84f82afa"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947786,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Wolfgang",
+                                "lastName": "Schneider"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "2df5c3d3-a58b-43db-975b-c981ac4690b8"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947787,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": true,
+                            "name": {
+                                "firstName": "Wolfgang",
+                                "lastName": "Schönpflug"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "c4ace0bf-d25a-47ee-9b5f-32b98cc5665c"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947788,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Helga",
+                                "lastName": "Sprung"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "ec6a5c14-9e24-45b7-b50f-9700a2a92008"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947789,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Lothar",
+                                "lastName": "Sprung"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "dd0edeed-15db-45f7-b449-30c266ce440b"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947790,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Reiner",
+                                "lastName": "Stegie"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "529fa102-1abb-492f-be2a-d85e2f55f9ab"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947791,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Sibylle",
+                                "lastName": "Volkmann-Raue"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "038c7376-e758-4fc7-a407-5a0ba8120884"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947792,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Erich",
+                                "lastName": "Witte"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "d35129ec-6dbf-4b57-93aa-55210a9385b6"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2947793,
+                            "externalOrganizations": [
+                                {
+                                    "systemName": "ExternalOrganization",
+                                    "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                                }
+                            ],
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Uwe",
+                                "lastName": "Wolfradt"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "03c0cd98-ebad-4de4-b82f-394902702f73"
+                            }
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "881fd185-724b-4bda-9b32-07f4dac6ded0"
+                        }
+                    ],
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "40dc6a81-9aa1-4796-a938-20cbdee77366"
+                        }
+                    ],
+                    "totalNumberOfContributors": 27,
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "881fd185-724b-4bda-9b32-07f4dac6ded0"
+                    },
+                    "submissionYear": 2015,
+                    "electronicVersions": [
+                        {
+                            "typeDiscriminator": "DoiElectronicVersion",
+                            "pureId": 10858488,
+                            "accessType": {
+                                "uri": "/dk/atira/pure/core/openaccesspermission/closed",
+                                "term": {
+                                    "en_GB": "Closed",
+                                    "de_DE": "Geschlossen"
+                                }
+                            },
+                            "doi": "10.1026/0033-3042/a000255",
+                            "versionType": {
+                                "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                                "term": {
+                                    "en_GB": "Final published version",
+                                    "de_DE": "Endgültige, publizierte Fassung"
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 2947752,
+                            "url": "http://www.scopus.com/inward/record.url?scp=84938780543&partnerID=8YFLogxK",
+                            "description": {
+                                "en_GB": "Link to publication in Scopus",
+                                "de_DE": "Link zur Publikation in Scopus"
+                            },
+                            "linkType": {
+                                "uri": "/dk/atira/pure/links/researchoutput/scopuspublication",
+                                "term": {
+                                    "en_GB": "Scopus publication",
+                                    "de_DE": "Scopus-Publikation"
+                                }
+                            }
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 2947750,
+                            "logicalName": "ASJCSubjectAreas",
+                            "name": {
+                                "en_GB": "ASJC Scopus subject areas",
+                                "de_DE": "ASJC Scopus Sachgebiete"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/3200/3200",
+                                    "term": {
+                                        "en_GB": "General Psychology",
+                                        "de_DE": "Allgemeine Psychologie"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "workflow": {
+                        "step": "forApproval",
+                        "description": {
+                            "en_GB": "For validation",
+                            "de_DE": "Zur Validierung"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "Scopus",
+                            "value": "84938780543"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 10858489,
+                            "idSource": "unpaywall",
+                            "value": "10.1026/0033-3042/a000255"
+                        }
+                    ],
+                    "customDefinedFields": [],
+                    "pages": "176-177",
+                    "volume": "66",
+                    "journalAssociation": {
+                        "pureId": 2947748,
+                        "title": {
+                            "pureId": 268503,
+                            "title": "Psychologische Rundschau"
+                        },
+                        "issn": {
+                            "pureId": 268498,
+                            "issn": "0033-3042"
+                        },
+                        "journal": {
+                            "systemName": "Journal",
+                            "uuid": "9319168f-0164-4195-8a07-fbb515cc86f6"
+                        }
+                    },
+                    "journalNumber": "3",
+                    "numberOfPages": 2,
+                    "systemName": "ResearchOutput"
+                },
+                {
+                    "typeDiscriminator": "ContributionToJournal",
+                    "pureId": 2947859,
+                    "uuid": "b211258a-5dbc-4c7d-84bb-c25cba339d84",
+                    "createdBy": "fa_support",
+                    "createdDate": "2019-12-18T10:48:45.195+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2026-05-14T18:14:39.915+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/publications/b211258a-5dbc-4c7d-84bb-c25cba339d84",
+                    "prettyUrlIdentifiers": [
+                        "generating-virtual-process-maps-of-slm-using-powder-scale-sph-sim"
+                    ],
+                    "version": "0ef92ef35a166d434a1af89507f24290d826203e",
+                    "title": {
+                        "value": "Generating virtual process maps of SLM using powder-scale SPH simulations"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article",
+                        "term": {
+                            "en_GB": "Article",
+                            "de_DE": "Artikel"
+                        }
+                    },
+                    "category": {
+                        "uri": "/dk/atira/pure/researchoutput/category/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "peerReview": true,
+                    "publicationStatuses": [
+                        {
+                            "pureId": 21644402,
+                            "current": false,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/submitted",
+                                "term": {
+                                    "en_GB": "Submitted",
+                                    "de_DE": "Eingereicht"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2019,
+                                "month": 2,
+                                "day": 13
+                            }
+                        },
+                        {
+                            "pureId": 21644403,
+                            "current": false,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/inpress",
+                                "term": {
+                                    "en_GB": "Accepted/In press",
+                                    "de_DE": "Angenommen/Im Druck"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2019,
+                                "month": 10,
+                                "day": 20
+                            }
+                        },
+                        {
+                            "pureId": 9285683,
+                            "current": false,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/epub",
+                                "term": {
+                                    "en_GB": "E-pub ahead of print",
+                                    "de_DE": "Elektronisch veröffentlicht (E-Pub)"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2019,
+                                "month": 11,
+                                "day": 30
+                            }
+                        },
+                        {
+                            "pureId": 2947886,
+                            "current": true,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/published",
+                                "term": {
+                                    "en_GB": "Published",
+                                    "de_DE": "Veröffentlicht"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2020,
+                                "month": 7
+                            }
+                        }
+                    ],
+                    "language": {
+                        "uri": "/dk/atira/pure/core/languages/en_GB",
+                        "term": {
+                            "en_GB": "English",
+                            "de_DE": "Englisch"
+                        }
+                    },
+                    "contributors": [
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947878,
+                            "hidden": false,
+                            "correspondingAuthor": true,
+                            "name": {
+                                "firstName": "Jan Philipp",
+                                "lastName": "Fürstenau"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947880,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Henning",
+                                "lastName": "Wessels"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947882,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Christian",
+                                "lastName": "Weißenfels"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2947884,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Peter",
+                                "lastName": "Wriggers"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "person": {
+                                "systemName": "Person",
+                                "uuid": "51d4b357-6720-4e28-942d-2482c2056a52"
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                                }
+                            ]
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                        }
+                    ],
+                    "totalNumberOfContributors": 4,
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                    },
+                    "submissionYear": 2019,
+                    "electronicVersions": [
+                        {
+                            "typeDiscriminator": "DoiElectronicVersion",
+                            "pureId": 10797694,
+                            "accessType": {
+                                "uri": "/dk/atira/pure/core/openaccesspermission/closed",
+                                "term": {
+                                    "en_GB": "Closed",
+                                    "de_DE": "Geschlossen"
+                                }
+                            },
+                            "doi": "10.1007/s40571-019-00296-3",
+                            "versionType": {
+                                "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                                "term": {
+                                    "en_GB": "Final published version",
+                                    "de_DE": "Endgültige, publizierte Fassung"
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "pureId": 2947872,
+                            "url": "http://www.scopus.com/inward/record.url?scp=85076105547&partnerID=8YFLogxK",
+                            "description": {
+                                "en_GB": "Link to publication in Scopus",
+                                "de_DE": "Link zur Publikation in Scopus"
+                            },
+                            "linkType": {
+                                "uri": "/dk/atira/pure/links/researchoutput/scopuspublication",
+                                "term": {
+                                    "en_GB": "Scopus publication",
+                                    "de_DE": "Scopus-Publikation"
+                                }
+                            }
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                            "pureId": 2947862,
+                            "logicalName": "keywordContainers",
+                            "name": {
+                                "en_GB": "Keywords",
+                                "de_DE": "Schlagwörter"
+                            },
+                            "keywords": [
+                                {
+                                    "pureId": 2947864,
+                                    "locale": "en_GB",
+                                    "freeKeywords": [
+                                        "Additive manufacturing",
+                                        "Laser powder bed fusion",
+                                        "Selective laser melting",
+                                        "SPH",
+                                        "Steel powder",
+                                        "Surface tension",
+                                        "Virtual process map"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 2947865,
+                            "logicalName": "ASJCSubjectAreas",
+                            "name": {
+                                "en_GB": "ASJC Scopus subject areas",
+                                "de_DE": "ASJC Scopus Sachgebiete"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2200/2206",
+                                    "term": {
+                                        "en_GB": "Computational Mechanics",
+                                        "de_DE": "Numerische Mechanik"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2200/2205",
+                                    "term": {
+                                        "en_GB": "Civil and Structural Engineering",
+                                        "de_DE": "Tief- und Ingenieurbau"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2600/2612",
+                                    "term": {
+                                        "en_GB": "Numerical Analysis",
+                                        "de_DE": "Numerische Mathematik"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2600/2611",
+                                    "term": {
+                                        "en_GB": "Modelling and Simulation",
+                                        "de_DE": "Modellierung und Simulation"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/1500/1507",
+                                    "term": {
+                                        "en_GB": "Fluid Flow and Transfer Processes",
+                                        "de_DE": "Fließ- und Transferprozesse von Flüssigkeiten"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/2600/2605",
+                                    "term": {
+                                        "en_GB": "Computational Mathematics",
+                                        "de_DE": "Computational Mathematics"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "descriptions": [
+                        {
+                            "pureId": 21644401,
+                            "value": {
+                                "en_GB": "Publisher Copyright:<br/>© 2019, OWZ.",
+                                "de_DE": "Publisher Copyright:<br/>© 2019, OWZ."
+                            },
+                            "type": {
+                                "uri": "/dk/atira/pure/researchoutput/descriptions/contributiontojournal/further_bibliographic_information",
+                                "term": {
+                                    "en_GB": "Further bibliographic information",
+                                    "de_DE": "Weitere bibliographische Informationen"
+                                }
+                            }
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "workflow": {
+                        "step": "approved",
+                        "description": {
+                            "en_GB": "Validated",
+                            "de_DE": "Validiert"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "Scopus",
+                            "value": "85076105547"
+                        },
+                        {
+                            "typeDiscriminator": "Id",
+                            "pureId": 10797695,
+                            "idSource": "unpaywall",
+                            "value": "10.1007/s40571-019-00296-3"
+                        }
+                    ],
+                    "customDefinedFields": [],
+                    "pages": "655-677",
+                    "volume": "7",
+                    "journalAssociation": {
+                        "pureId": 2947860,
+                        "title": {
+                            "pureId": 2947856,
+                            "title": "Computational Particle Mechanics"
+                        },
+                        "issn": {
+                            "pureId": 2947854,
+                            "issn": "2196-4378"
+                        },
+                        "journal": {
+                            "systemName": "Journal",
+                            "uuid": "42311007-ef5d-4105-9ad7-030b0298e77a"
+                        }
+                    },
+                    "journalNumber": "4",
+                    "numberOfPages": 23,
+                    "abstract": {
+                        "en_GB": "<p>In selective laser melting (SLM), three-dimensional parts are build up from a metal powder bed by layer-wise melting with a laser. While SLM offers a high flexibility in geometrical design and material texture, the interplay of dozens of parameters is difficult to analyze experimentally. The current research focuses on numerical simulation to increase confidence in manufactured parts and to reduce the time to market. Using a smoothed particle hydrodynamics (SPH) implementation on GPU, the 3D melt pool dynamics in a single laser track can be simulated within less than 2 h with a reasonable spatial resolution of 3 μ m. This is an extreme speedup compared to concurrent CFD methods that have recently been applied to the same problem. Using a SPH implementation on GPU, the 3D melt pool dynamics in a single laser track can be simulated within less than an hour with a reasonable spatial resolution of 3 μ m. This is an extreme speedup compared to concurrent CFD methods that have recently been applied to the same problem. The computational efficiency allows to conduct parameter studies, which before were prohibitively expensive, to generate a virtual process. To make the simulations possible a curvature calculation technique was applied, which is novel in the field of SPH. Additionally the advantage of a direct description of the internal energy is outlined by comparing the approach with the commonly applied apparent heat approach. Designers may profit from the fast simulations in two different scenarios: firstly, through a direct numerical simulation of certain parameter combinations and scenarios and, secondly, by informing advanced surrogate models or part-scale models to predict the behavior of the entire part being produced. When adapting the heat source model, the SPH framework may also be used to describe the related electron beam melting process.</p>"
+                    },
+                    "systemName": "ResearchOutput"
+                }
+            ]
+        },
+        "json_error": "No error"
+    }
+}

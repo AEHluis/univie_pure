@@ -1,0 +1,19 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="rendering_person rendering_short" data-uuid="{data.uuid}">
+    <h4 class="person-name">
+        <f:if condition="{data.name.lastName}">
+            {data.name.lastName}<f:if condition="{data.name.firstName}">, {data.name.firstName}</f:if>
+        </f:if>
+    </h4>
+
+    <f:if condition="{data.title.value}">
+        <p class="person-title">{data.title.value}</p>
+    </f:if>
+
+    <f:if condition="{data.email}">
+        <p class="person-email">
+            <a href="mailto:{data.email}">{data.email}</a>
+        </p>
+    </f:if>
+</div>
+</html>

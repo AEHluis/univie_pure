@@ -1,0 +1,21 @@
+{
+    "test_name": "organizational_units_list",
+    "description": "List organizational units with pagination",
+    "timestamp": "2026-06-02 13:42:46",
+    "endpoint": "organizational-units",
+    "query_params": {
+        "size": 5,
+        "offset": 0
+    },
+    "result": {
+        "success": false,
+        "http_code": 404,
+        "content_type": "text/html; charset=iso-8859-1",
+        "response_time_ms": 28.5799999999999982946974341757595539093017578125,
+        "url": "https://fis.uni-hannover.de/ws/api/organizational-units?size=5&offset=0",
+        "curl_error": null,
+        "response": "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html><head>\n<title>404 404</title>\n</head><body>\n<h1>404</h1>\n<p>The requested URL was not found on this server.</p>\n</body></html>\n",
+        "response_data": null,
+        "json_error": "Syntax error"
+    }
+}

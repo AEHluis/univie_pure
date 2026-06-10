@@ -63,6 +63,9 @@
 			<trans-unit id="flexform.common.selectBlank">
 				<source>--- please choose ---</source>
 			</trans-unit>
+			<trans-unit id="flexform.common.searchForMore">
+				<source>→ Search for more results</source>
+			</trans-unit>
 			<trans-unit id="flexform.common.ChooseSelector">
 				<source>Choose entity for which to show entries:</source>
 			</trans-unit>
@@ -78,6 +81,9 @@
 			<trans-unit id="flexform.common.selectByProject">
 				<source>Show list of chosen endpoint for project(s):</source>
 			</trans-unit>
+			<trans-unit id="flexform.common.selectByEquipment">
+				<source>Show list of chosen endpoint for equipment:</source>
+			</trans-unit>
 			<trans-unit id="flexform.common.selectOrganisation">
 				<source>Show list for selected organisation:</source>
 			</trans-unit>
@@ -89,6 +95,12 @@
 			</trans-unit>
 			<trans-unit id="flexform.common.selectPerson">
 				<source>Show list for selected person(s):</source>
+			</trans-unit>
+			<trans-unit id="flexform.common.selectEquipment">
+				<source>Show list for selected equipment:</source>
+			</trans-unit>
+			<trans-unit id="flexform.common.selectPerson.description">
+				<source>Note: Persons are selectable only if their FIS profile is public. Researchers missing from this list must set their FIS profile to public. Help: http://go.lu-h.de/fis-schnelleinstieg-en</source>
 			</trans-unit>
 			<trans-unit id="flexform.data_sets">
 				<source>In depth settings for datasets</source>
@@ -202,6 +214,18 @@
 			<trans-unit id="flexform.publications.rendering">
 				<source>Citation style (Vancouver, Harvard...):</source>
 			</trans-unit>
+			<trans-unit id="flexform.publications.citationStyle">
+				<source>Citation style:</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.citationStyle.description">
+				<source>Select a citation style. Styles are automatically downloaded from the Citation Style Language repository (10,000+ available).</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.citationStyleCustom">
+				<source>Custom CSL style name:</source>
+			</trans-unit>
+			<trans-unit id="flexform.publications.citationStyleCustom.description">
+				<source>Enter a custom CSL style name (overrides selection above). Find style names at https://github.com/citation-style-language/styles - use the filename without .csl extension.</source>
+			</trans-unit>
 			<trans-unit id="flexform.activities">
 				<source>In depth settings for activities</source>
 			</trans-unit>
@@ -225,6 +249,27 @@
 			</trans-unit>
 			<trans-unit id="flexform.equipments">
 				<source>In depth settings for equipment</source>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.orderEquipments">
+				<source>Order equipment:</source>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.orderEquipments.title.asc">
+				<source>Title a-z</source>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.orderEquipments.title.desc">
+				<source>Title z-a</source>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.orderEquipments.created.desc">
+				<source>Created date (newest first)</source>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.orderEquipments.created.asc">
+				<source>Created date (oldest first)</source>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.narrowByEquipmentType">
+				<source>Narrow selection by equipment type</source>
+			</trans-unit>
+			<trans-unit id="flexform.equipments.selectEquipmentType">
+				<source>Select equipment types:</source>
 			</trans-unit>
 			<trans-unit id="flexform.projects.narrowBySearch">
 				<source>Choose Projects by searchterms (separated by OR or AND if more than 1 entry):</source>
@@ -266,6 +311,9 @@
 				<source>T3LUH FIS extension for pure research information system</source>
 			</trans-unit>
 			<trans-unit id="univiepure.title">
+				<source>T3LUH FIS</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type.univiepure_univiepure">
 				<source>T3LUH FIS</source>
 			</trans-unit>
 		</body>

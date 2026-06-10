@@ -1,42 +1,52 @@
-
-
 <div class="tx-univie-pure publication">
 
-	<h1 class="content-element-margin"><f:format.raw>{publication.title.value}</f:format.raw></h1>
-	<!-- -> f:format.stripTags(allowedTags: "<sub><sup>") for v8.x++ -->
-	<!-- supervisors -->
+		<h1 class="content-element-margin">
+			<f:if condition="{publication.title.value}">
+				<f:format.raw>{publication.title.value}</f:format.raw>
+			</f:if>
+		</h1>
+
 	<f:if condition="{publication.subTitle}">
 		<f:then>
-			<h2 class="content-element-margin"><f:format.raw>{publication.subTitle.value}</f:format.raw></h2>
+			<h2 class="content-element-margin publication-section-title"><f:format.raw>{publication.subTitle.value}</f:format.raw></h2>
 		</f:then>
 	</f:if>
+
+	<section class="publication-block publication-authorship">
+		<h3 class="publication-section-title"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.authors" /></h3>
+		<p class="publication-authors-list">
+			<f:if condition="{publication.contributors}">
+				<f:then>
+					<f:for each="{publication.contributors}" as="person" iteration="persIter">
+						{person.name.firstName} {person.name.lastName}<f:if condition="{persIter.isLast}"><f:else>, </f:else></f:if>
+					</f:for>
+				</f:then>
+				<f:else>
+					<f:for each="{publication.personAssociations}" as="person" iteration="persIter">
+						<f:if condition="{person.authorCollaboration}">
+							<f:render partial="Pure/LocalizedText" arguments="{textData: person.authorCollaboration.name, lang: lang}" />
+						</f:if>
+						{person.name.firstName} {person.name.lastName}<f:if condition="{persIter.isLast}"><f:else>, </f:else></f:if>
+					</f:for>
+				</f:else>
+			</f:if>
+		</p>
+	</section>
+
+	<f:if condition="{publication.abstract}">
+		<section class="publication-block publication-abstract-block">
+			<h3 class="publication-section-title"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.abstract" /></h3>
+			<div class="publication-abstract-content">
+				<f:render partial="Pure/LocalizedHtml" arguments="{textData: publication.abstract, lang: lang}" />
+			</div>
+		</section>
+	</f:if>
+
+	<section class="publication-block publication-details-block">
+	<h3 class="publication-section-title publication-section-title--details">
+		<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.details" />
+	</h3>
 	<dl>
-		<!-- AUTHORS -->
-		<dt class="col-sm-3"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.authors" /></dt>
-		<dd class="col-sm-9 content-element-margin-small">
-			<f:for each="{publication.personAssociations}" as="person" iteration="persIter">
-				<f:if condition="{person.authorCollaboration}">
-					<f:if condition="{lang} == 'de_DE' ">
-						<f:then>
-							<f:if condition="{person.authorCollaboration.name.text.1.value} != '' ">
-								<f:then>
-									{person.authorCollaboration.name.text.1.value}
-								</f:then>
-								<f:else>
-									{person.authorCollaboration.name.text.0.value}
-								</f:else>
-							</f:if>
-						</f:then>
-						<f:else>
-							{person.authorCollaboration.name.text.0.value}
-						</f:else>
-					</f:if>
-				</f:if>
-				{person.name.firstName} {person.name.lastName}<f:if condition="{persIter.isLast}"><f:else>, </f:else></f:if>
-			</f:for>
-		</dd>
-
-
 		<!-- supervisors -->
 		<f:if condition="{publication.supervisors}">
 			<f:then>
@@ -48,100 +58,32 @@
 			</f:then>
 		</f:if>
 
-
-		<!-- ABSTRACT -->
-		<f:if condition="{publication.abstract.text}">
-			<dt class="col-sm-3"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.abstract" /></dt>
-			<f:if condition="{lang} == 'de_DE' ">
-				<f:then>
-					<f:if condition="{publication.abstract.text.1.value} != '' ">
-						<f:then>
-							<dd class="col-sm-9 content-element-margin-small"><f:format.html>{publication.abstract.text.1.value}</f:format.html></dd>
-						</f:then>
-						<f:else>
-							<dd class="col-sm-9 content-element-margin-small"><f:format.html>{publication.abstract.text.0.value}</f:format.html></dd>
-						</f:else>
-					</f:if>
-				</f:then>
-				<f:else>
-					<f:if condition="{publication.abstract.text.0.value} != '' ">
-						<f:then>
-							<dd class="col-sm-9 content-element-margin-small"><f:format.html>{publication.abstract.text.0.value}</f:format.html></dd>
-						</f:then>
-						<f:else>
-							<dd class="col-sm-9 content-element-margin-small"><f:format.html>{publication.abstract.text.1.value}</f:format.html></dd>
-						</f:else>
-					</f:if>
-				</f:else>
-			</f:if>
-		</f:if>
-
 		<!-- Internal UNITS -->
-		<f:if condition="{publication.organisationalUnits.0.name.text}">
-			<dt class="col-sm-3"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.units" /></dt>
-			<f:if condition="{lang} == 'de_DE'">
-				<f:then>
-					<dd class="col-sm-9 content-element-margin-small">
-						<f:for each="{publication.organisationalUnits}" as="unit" iteration="unitIter">
-							{unit.name.text.1.value} <br>
-						</f:for>
-					</dd>
-				</f:then>
-				<f:else>
-					<dd class="col-sm-9 content-element-margin-small">
-						<f:for each="{publication.organisationalUnits}" as="unit" iteration="unitIter">
-							{unit.name.text.0.value} <br>
-						</f:for>
-					</dd>
-				</f:else>
+			<f:if condition="{publication.organizationsDetailed}">
+				<dt class="col-sm-3"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.units" /></dt>
+				<dd class="col-sm-9 content-element-margin-small">
+					<f:for each="{publication.organizationsDetailed}" as="unit" iteration="unitIter">
+						<f:render partial="Pure/LocalizedText" arguments="{textData: unit.name, lang: lang}" /><br>
+					</f:for>
+				</dd>
 			</f:if>
-		</f:if>
 
-		<!-- ext. UNITS -->
-		<f:if condition="{publication.externalOrganisations.0.name.text}">
-			<dt class="col-sm-3"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.extunits" /></dt>
-
-			<dd class="col-sm-9 content-element-margin-small">
-
-				<f:if condition="{lang} == 'de_DE'">
-					<f:then>
-						<f:for each="{publication.externalOrganisations}" as="unit" iteration="unitIter">
-							<f:if condition="{unit.name.text.1.value} != '' ">
-								<f:then>
-									{unit.name.text.1.value} <br>
-								</f:then>
-								<f:else>
-									{unit.name.text.0.value} <br>
-								</f:else>
-							</f:if>
-						</f:for>
-					</f:then>
-					<f:else>
-						<f:for each="{publication.externalOrganisations}" as="unit" iteration="unitIter">
-							<f:if condition="{unit.name.text.0.value} != '' ">
-								<f:then>
-									{unit.name.text.0.value} <br>
-								</f:then>
-								<f:else>
-									{unit.name.text.1.value} <br>
-								</f:else>
-							</f:if>
-						</f:for>
-					</f:else>
-				</f:if>
-			</dd>
-
+			<!-- ext. UNITS -->
+			<f:if condition="{publication.externalOrganizationsDetailed}">
+				<dt class="col-sm-3"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.extunits" /></dt>
+				<dd class="col-sm-9 content-element-margin-small">
+					<f:for each="{publication.externalOrganizationsDetailed}" as="unit" iteration="unitIter">
+						<f:render partial="Pure/LocalizedText" arguments="{textData: unit.name, lang: lang}" /><br>
+					</f:for>
+				</dd>
 		</f:if>
 
 		<!-- TYPE -->
-		<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.type" /></dt>
-		<f:if condition="{lang} == 'de_DE'">
-			<f:then>
-				<dd>{publication.type.term.text.1.value}</dd>
-			</f:then>
-			<f:else>
-				<dd>{publication.type.term.text.0.value}</dd>
-			</f:else>
+		<f:if condition="{publication.type}">
+			<dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.type" /></dt>
+			<dd>
+				<f:render partial="Pure/LocalizedText" arguments="{textData: publication.type.term, lang: lang}" />
+			</dd>
 		</f:if>
 
 		<!-- JOURNAL -->
@@ -175,42 +117,33 @@
 		</f:if>
 
 		<!-- ISSN -->
-		<f:if condition="{publication.journalAssociation.issn}">
+		<f:if condition="{publication.journalAssociation.issn.value}">
 			<f:then>
 				<dt class="col-sm-3"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.issn" /></dt>
 				<dd class="col-sm-9">{publication.journalAssociation.issn.value}</dd>
 			</f:then>
 		</f:if>
 
-
 		<!-- DATE -->
 		<dt class="col-sm-3"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.publicationDate" /></dt>
 		<dd class="col-sm-9">
 			<f:for each="{publication.publicationStatuses}" as="status" iteration="unitIter">
-				<f:if condition="{status.current} == 'true'"><f:then><f:if condition="{status.publicationDate.month}"><f:then><f:if condition="{status.publicationDate.day} != '' "><f:format.padding padLength="2" padString="0" padType="left">{status.publicationDate.day}</f:format.padding>.</f:if><f:format.padding padLength="2" padString="0" padType="left">{status.publicationDate.month}</f:format.padding>.<f:format.padding padLength="2" padString="0" padType="left">{status.publicationDate.year}</f:format.padding></f:then><f:else>{status.publicationDate.year}</f:else></f:if></f:then></f:if>
+				<f:if condition="{status.current}"><f:then><f:if condition="{status.publicationDate.month}"><f:then><f:if condition="{status.publicationDate.day}"><f:format.padding padLength="2" padString="0" padType="left">{status.publicationDate.day}</f:format.padding>.</f:if><f:format.padding padLength="2" padString="0" padType="left">{status.publicationDate.month}</f:format.padding>.<f:format.padding padLength="2" padString="0" padType="left">{status.publicationDate.year}</f:format.padding></f:then><f:else>{status.publicationDate.year}</f:else></f:if></f:then></f:if>
 			</f:for>
 		</dd>
 
 		<!-- STATUS -->
-		<f:if condition="{publication.publicationStatuses.0.publicationStatus.term.text}">
+		<f:if condition="{publication.publicationStatuses}">
 			<dt class="col-sm-3"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.publicationStatus" /></dt>
 			<dd class="col-sm-9">
 				<f:for each="{publication.publicationStatuses}" as="status" iteration="unitIter">
-					<f:if condition="{status.current} == 'true'">
+					<f:if condition="{status.current}">
 						<f:then>
-							<f:if condition="{lang} == 'de_DE'">
-								<f:then>
-									{status.publicationStatus.term.text.1.value}
-								</f:then>
-								<f:else>
-									{status.publicationStatus.term.text.0.value}
-								</f:else>
-							</f:if>
+							<f:render partial="Pure/LocalizedText" arguments="{textData: status.publicationStatus.term, lang: lang}" />
 						</f:then>
 					</f:if>
 				</f:for>
 			</dd>
-
 		</f:if>
 
 		<!-- PEER REVIEW -->
@@ -227,26 +160,16 @@
 		<f:if condition="{publication.keywordGroups}">
 			<f:then>
 				<f:for each="{publication.keywordGroups}" as="keywordsGroup">
-					<f:if condition="{keywordsGroup.keywordContainers.0.structuredKeyword.term.text}">
+					<f:if condition="{keywordsGroup.keywordContainers}">
 						<f:then>
-							<f:if condition="{lang} == 'de_DE'">
-								<f:then>
-									<dt class="col-sm-3">{keywordsGroup.type.term.text.1.value}</dt>
-									<dd class="col-sm-9 content-element-margin-small">
-										<f:for each="{keywordsGroup.keywordContainers}" as="container" iteration="keywordIter">
-											{container.structuredKeyword.term.text.1.value}<f:if condition="{keywordIter.isLast}"><f:else>, </f:else></f:if>
-										</f:for>
-									</dd>
-								</f:then>
-								<f:else>
-									<dt class="col-sm-3">{keywordsGroup.type.term.text.0.value}</dt>
-									<dd class="col-sm-9 content-element-margin-small">
-										<f:for each="{keywordsGroup.keywordContainers}" as="container" iteration="keywordIter">
-											{container.structuredKeyword.term.text.0.value}<f:if condition="{keywordIter.isLast}"><f:else>, </f:else></f:if>
-										</f:for>
-									</dd>
-								</f:else>
-							</f:if>
+							<dt class="col-sm-3">
+								<f:render partial="Pure/LocalizedText" arguments="{textData: keywordsGroup.type.term, lang: lang, fallback: 'Keywords'}" />
+							</dt>
+							<dd class="col-sm-9 content-element-margin-small">
+								<f:for each="{keywordsGroup.keywordContainers}" as="container" iteration="keywordIter">
+									<f:render partial="Pure/LocalizedText" arguments="{textData: container.structuredKeyword.term, lang: lang}" /><f:if condition="{keywordIter.isLast}"><f:else>, </f:else></f:if>
+								</f:for>
+							</dd>
 						</f:then>
 					</f:if>
 				</f:for>
@@ -259,48 +182,38 @@
 			<dd class="col-sm-9 content-element-margin-small">
 				<f:for each="{publication.electronicVersions}" as="electronicVersion">
 					<f:if condition="{electronicVersion.link}">
-						<a href="{electronicVersion.link}" target="_blank">{electronicVersion.link}</a> (<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.electronicVersionsAccess" />
-						<f:if condition="{lang} == 'de_DE'">
-							<f:then>
-								{electronicVersion.accessType.term.text.1.value})<br>
-							</f:then>
-							<f:else>
-								{electronicVersion.accessType.term.text.0.value})<br>
-							</f:else>
-						</f:if>
-
+						<a href="{electronicVersion.link}" target="_blank" rel="noopener noreferrer">{electronicVersion.link}</a>
+						(<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.electronicVersionsAccess" />
+						<f:render partial="Pure/LocalizedText" arguments="{textData: electronicVersion.accessType.term, lang: lang}" /><f:if condition="{electronicVersion.versionType}">; <f:render partial="Pure/LocalizedText" arguments="{textData: electronicVersion.versionType.term, lang: lang}" /></f:if>)<br>
 					</f:if>
 					<f:if condition="{electronicVersion.doi}">
-						<a href="{electronicVersion.doi}" target="_blank">{electronicVersion.doi}</a> (<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.electronicVersionsAccess" />
-						<f:if condition="{lang} == 'de_DE'">
-							<f:then>
-								{electronicVersion.accessType.term.text.1.value})<br>
-							</f:then>
-							<f:else>
-								{electronicVersion.accessType.term.text.0.value})<br>
-							</f:else>
-						</f:if>
+						<a href="https://doi.org/{electronicVersion.doi}" target="_blank" rel="noopener noreferrer">{electronicVersion.doi}</a>
+						(<f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.electronicVersionsAccess" />
+						<f:render partial="Pure/LocalizedText" arguments="{textData: electronicVersion.accessType.term, lang: lang}" /><f:if condition="{electronicVersion.versionType}">; <f:render partial="Pure/LocalizedText" arguments="{textData: electronicVersion.versionType.term, lang: lang}" /></f:if>)<br>
 					</f:if>
 				</f:for>
 			</dd>
 		</f:if>
 
 		<!-- PORTAL URL -->
-		<f:if condition="{settings.linkToPortal}">
-			<dt class="col-sm-3"><f:format.htmlentitiesDecode>&nbsp;</f:format.htmlentitiesDecode>
-
-			</dt>
+		<f:if condition="{showLinkToPortal}">
+			<dt class="col-sm-3"><f:format.htmlentitiesDecode>&nbsp;</f:format.htmlentitiesDecode></dt>
 			<dd class="col-sm-9 content-element-margin-small">
-				<f:if condition="{publication.info.portalUrl}">
-					<p class="type" style="margin-top:1rem">
-					<f:link.external uri="{publication.info.portalUrl}" target="_blank" class="c-button u-icon-after u-icon-after--new-tab"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" /></f:link.external>
-					</p>
-				</f:if>
+					<f:if condition="{publication.portalUrl}">
+						<p class="type publication-portal-link-row">
+							<f:link.external uri="{publication.portalUrl}" target="_blank" rel="noopener noreferrer" class="c-button u-icon-after u-icon-after--new-tab"><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.portalUrlLong" /></f:link.external>
+						</p>
+					</f:if>
+				</dd>
+			</f:if>
 
+		<f:if condition="{publicationInsights}">
+			<f:then>
+				<f:render partial="Pure/PublicationInsights" arguments="{publicationInsights:publicationInsights}" />
+			</f:then>
 		</f:if>
 
-
-
 	</dl>
+	</section>
 
 </div>

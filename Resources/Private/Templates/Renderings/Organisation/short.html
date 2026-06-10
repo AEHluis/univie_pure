@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="rendering_organisation rendering_short" data-uuid="{data.uuid}">
+    <h4 class="organisation-name">
+        <f:if condition="{data.name.en_GB}">
+            <f:then><f:format.raw>{data.name.en_GB}</f:format.raw></f:then>
+            <f:else>
+                <f:if condition="{data.name.de_DE}">
+                    <f:format.raw>{data.name.de_DE}</f:format.raw>
+                </f:if>
+            </f:else>
+        </f:if>
+    </h4>
+
+    <f:if condition="{data.type.term.en_GB}">
+        <f:then><p class="organisation-type">{data.type.term.en_GB}</p></f:then>
+        <f:else>
+            <f:if condition="{data.type.term.de_DE}">
+                <p class="organisation-type">{data.type.term.de_DE}</p>
+            </f:if>
+        </f:else>
+    </f:if>
+</div>
+</html>

@@ -1,0 +1,12 @@
+<f:if condition="{publicationInsights.enabled}">
+  <f:if condition="{publicationInsights.document.best} && {publicationInsights.document.best.isPdf}">
+    <dt><f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.openPdf" /></dt>
+    <dd>
+      <a href="{publicationInsights.document.best.url}" target="_blank" rel="noopener noreferrer"
+         class="c-button u-icon-after u-icon-after--new-tab publication-insights__cta">
+        <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.publication.insights.openPdf" />
+      </a>
+    </dd>
+  </f:if>
+
+</f:if>

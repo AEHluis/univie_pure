@@ -1,0 +1,81 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>
+	Extracts localized HTML content from Pure API structures.
+	Similar to LocalizedText but outputs raw HTML.
+
+	Arguments:
+	- textData: The localized data structure
+	- lang: Current language (e.g., 'de_DE', 'en_GB')
+</f:comment>
+
+<f:if condition="{textData}">
+	<f:then>
+		<f:comment><!-- Try direct locale key first (OpenAPI format) --></f:comment>
+		<f:if condition="{lang} == 'de_DE'">
+			<f:then>
+				<f:if condition="{textData.de_DE}">
+					<f:then><f:format.html>{textData.de_DE}</f:format.html></f:then>
+					<f:else>
+						<f:if condition="{textData.en_GB}">
+							<f:then><f:format.html>{textData.en_GB}</f:format.html></f:then>
+							<f:else>
+								<f:comment><!-- Try normalized text array format --></f:comment>
+								<f:if condition="{textData.text}">
+									<f:then>
+										<f:for each="{textData.text}" as="textItem">
+											<f:if condition="{textItem.locale} == 'de_DE'">
+												<f:then><f:format.html>{textItem.value}</f:format.html></f:then>
+											</f:if>
+										</f:for>
+										<f:comment><!-- Fallback to first item --></f:comment>
+										<f:if condition="{textData.text.0.value}">
+											<f:format.html>{textData.text.0.value}</f:format.html>
+										</f:if>
+									</f:then>
+									<f:else>
+										<f:if condition="{textData.value}">
+											<f:format.html>{textData.value}</f:format.html>
+										</f:if>
+									</f:else>
+								</f:if>
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+			</f:then>
+			<f:else>
+				<f:comment><!-- English or other language --></f:comment>
+				<f:if condition="{textData.en_GB}">
+					<f:then><f:format.html>{textData.en_GB}</f:format.html></f:then>
+					<f:else>
+						<f:if condition="{textData.de_DE}">
+							<f:then><f:format.html>{textData.de_DE}</f:format.html></f:then>
+							<f:else>
+								<f:comment><!-- Try normalized text array format --></f:comment>
+								<f:if condition="{textData.text}">
+									<f:then>
+										<f:for each="{textData.text}" as="textItem">
+											<f:if condition="{textItem.locale} == 'en_GB'">
+												<f:then><f:format.html>{textItem.value}</f:format.html></f:then>
+											</f:if>
+										</f:for>
+										<f:comment><!-- Fallback to first item --></f:comment>
+										<f:if condition="{textData.text.0.value}">
+											<f:format.html>{textData.text.0.value}</f:format.html>
+										</f:if>
+									</f:then>
+									<f:else>
+										<f:if condition="{textData.value}">
+											<f:format.html>{textData.value}</f:format.html>
+										</f:if>
+									</f:else>
+								</f:if>
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
+	</f:then>
+</f:if>
+</html>

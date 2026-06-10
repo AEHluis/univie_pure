@@ -1,0 +1,21 @@
+{
+    "test_name": "equipments_search",
+    "description": "Search equipments by keyword",
+    "timestamp": "2026-06-02 13:42:48",
+    "endpoint": "equipments",
+    "query_params": {
+        "size": 3,
+        "q": "microscope"
+    },
+    "result": {
+        "success": false,
+        "http_code": 404,
+        "content_type": "text/html; charset=iso-8859-1",
+        "response_time_ms": 26.489999999999998436805981327779591083526611328125,
+        "url": "https://fis.uni-hannover.de/ws/api/equipments?size=3&q=microscope",
+        "curl_error": null,
+        "response": "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html><head>\n<title>404 404</title>\n</head><body>\n<h1>404</h1>\n<p>The requested URL was not found on this server.</p>\n</body></html>\n",
+        "response_data": null,
+        "json_error": "Syntax error"
+    }
+}

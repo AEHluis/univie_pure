@@ -1,0 +1,485 @@
+{
+    "test_name": "research_outputs_pagination",
+    "description": "Research outputs with offset pagination",
+    "timestamp": "2026-06-02 13:42:48",
+    "endpoint": "research-outputs",
+    "query_params": {
+        "size": 2,
+        "offset": 10
+    },
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 195.840000000000003410605131648480892181396484375,
+        "url": "https://fis.uni-hannover.de/ws/api/research-outputs?size=2&offset=10",
+        "curl_error": null,
+        "response": "{\"count\":81152,\"pageInformation\":{\"offset\":10,\"size\":2},\"items\":[{\"typeDiscriminator\":\"ContributionToJournal\",\"pureId\":2948272,\"uuid\":\"da709905-2a93-4c23-8529-a92f675449d5\",\"createdBy\":\"lp_support\",\"createdDate\":\"2019-12-18T11:03:11.838+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-05-10T22:45:19.245+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/publications/da709905-2a93-4c23-8529-a92f675449d5\",\"prettyUrlIdentifiers\":[\"die-bedeutung-der-lesekompetenz-für-sachfächer\"],\"version\":\"cbdd8b37fb056398675336eada2c18c5f5c2b7e5\",\"title\":{\"value\":\"Die Bedeutung der Lesekompetenz für Sachfächer\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/systematicreview\",\"term\":{\"en_GB\":\"Review article\",\"de_DE\":\"Übersichtsarbeit\"}},\"category\":{\"uri\":\"/dk/atira/pure/researchoutput/category/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"peerReview\":true,\"publicationStatuses\":[{\"pureId\":2948315,\"current\":true,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/published\",\"term\":{\"en_GB\":\"Published\",\"de_DE\":\"Veröffentlicht\"}},\"publicationDate\":{\"year\":2006,\"month\":7,\"day\":27}}],\"language\":{\"uri\":\"/dk/atira/pure/core/languages/de_DE\",\"term\":{\"en_GB\":\"German\",\"de_DE\":\"Deutsch\"}},\"translatedTitle\":{\"en_GB\":\"The significance of reading literacy for general knowledge\"},\"contributors\":[{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2948311,\"hidden\":false,\"country\":{\"uri\":\"/dk/atira/pure/core/countries/de\",\"term\":{\"en_GB\":\"Germany\",\"de_DE\":\"Deutschland\"}},\"correspondingAuthor\":true,\"name\":{\"firstName\":\"Carlos\",\"lastName\":\"Kölbl\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"cdb7f8fe-ee80-4334-ba87-8b1bdb559c4e\"}},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2948312,\"hidden\":false,\"country\":{\"uri\":\"/dk/atira/pure/core/countries/de\",\"term\":{\"en_GB\":\"Germany\",\"de_DE\":\"Deutschland\"}},\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Joachim\",\"lastName\":\"Tiedemann\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}}},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2948313,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Elfriede\",\"lastName\":\"Billmann-Mahecha\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"881fd185-724b-4bda-9b32-07f4dac6ded0\"}]}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"881fd185-724b-4bda-9b32-07f4dac6ded0\"}],\"totalNumberOfContributors\":3,\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"881fd185-724b-4bda-9b32-07f4dac6ded0\"},\"submissionYear\":2006,\"links\":[{\"pureId\":2948279,\"url\":\"http://www.scopus.com/inward/record.url?scp=33746267284&partnerID=8YFLogxK\",\"description\":{\"en_GB\":\"Link to publication in Scopus\"},\"linkType\":{\"uri\":\"/dk/atira/pure/links/researchoutput/scopuspublication\",\"term\":{\"en_GB\":\"Scopus publication\",\"de_DE\":\"Scopus-Publikation\"}}}],\"keywordGroups\":[{\"typeDiscriminator\":\"FreeKeywordsKeywordGroup\",\"pureId\":2948274,\"logicalName\":\"keywordContainers\",\"name\":{\"en_GB\":\"Keywords\",\"de_DE\":\"Schlagwörter\"},\"keywords\":[{\"pureId\":2948276,\"locale\":\"de_DE\",\"freeKeywords\":[\"Development of knowledge\",\"Elementary school\",\"General Knowledge\",\"History\",\"Reading literacy\"]}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":2948277,\"logicalName\":\"ASJCSubjectAreas\",\"name\":{\"en_GB\":\"ASJC Scopus subject areas\",\"de_DE\":\"ASJC Scopus Sachgebiete\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/subjectarea/asjc/3200/3204\",\"term\":{\"en_GB\":\"Developmental and Educational Psychology\",\"de_DE\":\"Pädagogische und Entwicklungspsychologie\"}}]}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"workflow\":{\"step\":\"forApproval\",\"description\":{\"en_GB\":\"For validation\",\"de_DE\":\"Zur Validierung\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"Scopus\",\"value\":\"33746267284\"}],\"customDefinedFields\":{},\"pages\":\"201-212\",\"volume\":\"53\",\"journalAssociation\":{\"pureId\":2948273,\"title\":{\"pureId\":881875,\"title\":\"Psychologie in Erziehung und Unterricht\"},\"issn\":{\"pureId\":276029,\"issn\":\"0342-183X\"},\"journal\":{\"systemName\":\"Journal\",\"uuid\":\"35355bf7-8aa2-4bb2-8f7a-8483d9ad55da\"}},\"journalNumber\":\"3\",\"numberOfPages\":12,\"abstract\":{\"en_GB\":\"<p>Based on the Hannover Primary School Study, the significance of reading literacy for General Knowledge was established for 485 fourth-grade students, taking the domain of history as an example. Historical knowledge was ascertained as criterion. The data were analyzed using hierarchical linear modelling. Reading literacy predicts substantial amounts of variance of historical knowledge even when controlling for cognitive abilities. Furthermore the proportion of students with an immigrant background proved to be a significant context factor. The results suggest cumulative effects of reading literacy on the development of knowledge for primary-school-level already. Results are discussed in regard to the development of school competencies as well as to the development of a complex historical consciousness.</p>\"},\"systemName\":\"ResearchOutput\"},{\"typeDiscriminator\":\"ContributionToBookAnthology\",\"pureId\":2948351,\"uuid\":\"b643788d-2b5d-4508-bbff-d96cb0935656\",\"createdBy\":\"lp_support\",\"createdDate\":\"2019-12-18T11:11:17.656+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-05-17T09:07:11.097+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/publications/b643788d-2b5d-4508-bbff-d96cb0935656\",\"prettyUrlIdentifiers\":[\"empirical-psychological-approaches-to-the-historical-consciousnes\"],\"version\":\"9b618592fa7110fe6bee53b09216df9d103f9b9b\",\"title\":{\"value\":\"Empirical psychological approaches to the historical consciousness of children\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/researchoutputtypes/contributiontobookanthology/chapter\",\"term\":{\"en_GB\":\"Contribution to book/anthology\",\"de_DE\":\"Beitrag in Buch/Sammelwerk\"}},\"category\":{\"uri\":\"/dk/atira/pure/researchoutput/category/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"peerReview\":true,\"publicationStatuses\":[{\"pureId\":2948394,\"current\":true,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/published\",\"term\":{\"en_GB\":\"Published\",\"de_DE\":\"Veröffentlicht\"}},\"publicationDate\":{\"year\":2005,\"month\":6,\"day\":15}}],\"language\":{\"uri\":\"/dk/atira/pure/core/languages/en_GB\",\"term\":{\"en_GB\":\"English\",\"de_DE\":\"Englisch\"}},\"contributors\":[{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2948391,\"hidden\":false,\"correspondingAuthor\":true,\"name\":{\"firstName\":\"Elfriede\",\"lastName\":\"Billmann-Mahecha\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontobookanthology/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"881fd185-724b-4bda-9b32-07f4dac6ded0\"}]},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2948393,\"hidden\":false,\"country\":{\"uri\":\"/dk/atira/pure/core/countries/de\",\"term\":{\"en_GB\":\"Germany\",\"de_DE\":\"Deutschland\"}},\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Monika\",\"lastName\":\"Hausen\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontobookanthology/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"73897030-8400-42da-b72b-0cd4bf55bd22\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"881fd185-724b-4bda-9b32-07f4dac6ded0\"}],\"totalNumberOfContributors\":2,\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"881fd185-724b-4bda-9b32-07f4dac6ded0\"},\"submissionYear\":2005,\"links\":[{\"pureId\":2948357,\"url\":\"http://www.scopus.com/inward/record.url?scp=84958143792&partnerID=8YFLogxK\",\"description\":{\"en_GB\":\"Link to publication in Scopus\"},\"linkType\":{\"uri\":\"/dk/atira/pure/links/researchoutput/scopuspublication\",\"term\":{\"en_GB\":\"Scopus publication\",\"de_DE\":\"Scopus-Publikation\"}}}],\"keywordGroups\":[{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":2948352,\"logicalName\":\"ASJCSubjectAreas\",\"name\":{\"en_GB\":\"ASJC Scopus subject areas\",\"de_DE\":\"ASJC Scopus Sachgebiete\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/subjectarea/asjc/1200/1200\",\"term\":{\"en_GB\":\"General Arts and Humanities\",\"de_DE\":\"Allgemeine Kunst und Geisteswissenschaften\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/3300/3300\",\"term\":{\"en_GB\":\"General Social Sciences\",\"de_DE\":\"Allgemeine Sozialwissenschaften\"}}]}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"workflow\":{\"step\":\"forApproval\",\"description\":{\"en_GB\":\"For validation\",\"de_DE\":\"Zur Validierung\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"Scopus\",\"value\":\"84958143792\"}],\"customDefinedFields\":{},\"printISBNs\":[\"1571817778\",\"9781845450397\"],\"electronicISBNs\":[\"9781782388609\"],\"publisher\":{\"systemName\":\"Publisher\",\"uuid\":\"8ebc3c4a-4440-4d05-8da8-dacbb61cd4b8\"},\"pages\":\"163-186\",\"hostPublicationTitle\":{\"value\":\"Narration, Identity, and Historical Consciousness\"},\"numberOfPages\":24,\"systemName\":\"ResearchOutput\"}]}",
+        "response_data": {
+            "count": 81152,
+            "pageInformation": {
+                "offset": 10,
+                "size": 2
+            },
+            "items": [
+                {
+                    "typeDiscriminator": "ContributionToJournal",
+                    "pureId": 2948272,
+                    "uuid": "da709905-2a93-4c23-8529-a92f675449d5",
+                    "createdBy": "lp_support",
+                    "createdDate": "2019-12-18T11:03:11.838+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2025-05-10T22:45:19.245+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/publications/da709905-2a93-4c23-8529-a92f675449d5",
+                    "prettyUrlIdentifiers": [
+                        "die-bedeutung-der-lesekompetenz-für-sachfächer"
+                    ],
+                    "version": "cbdd8b37fb056398675336eada2c18c5f5c2b7e5",
+                    "title": {
+                        "value": "Die Bedeutung der Lesekompetenz für Sachfächer"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/systematicreview",
+                        "term": {
+                            "en_GB": "Review article",
+                            "de_DE": "Übersichtsarbeit"
+                        }
+                    },
+                    "category": {
+                        "uri": "/dk/atira/pure/researchoutput/category/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "peerReview": true,
+                    "publicationStatuses": [
+                        {
+                            "pureId": 2948315,
+                            "current": true,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/published",
+                                "term": {
+                                    "en_GB": "Published",
+                                    "de_DE": "Veröffentlicht"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2006,
+                                "month": 7,
+                                "day": 27
+                            }
+                        }
+                    ],
+                    "language": {
+                        "uri": "/dk/atira/pure/core/languages/de_DE",
+                        "term": {
+                            "en_GB": "German",
+                            "de_DE": "Deutsch"
+                        }
+                    },
+                    "translatedTitle": {
+                        "en_GB": "The significance of reading literacy for general knowledge"
+                    },
+                    "contributors": [
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2948311,
+                            "hidden": false,
+                            "country": {
+                                "uri": "/dk/atira/pure/core/countries/de",
+                                "term": {
+                                    "en_GB": "Germany",
+                                    "de_DE": "Deutschland"
+                                }
+                            },
+                            "correspondingAuthor": true,
+                            "name": {
+                                "firstName": "Carlos",
+                                "lastName": "Kölbl"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "cdb7f8fe-ee80-4334-ba87-8b1bdb559c4e"
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2948312,
+                            "hidden": false,
+                            "country": {
+                                "uri": "/dk/atira/pure/core/countries/de",
+                                "term": {
+                                    "en_GB": "Germany",
+                                    "de_DE": "Deutschland"
+                                }
+                            },
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Joachim",
+                                "lastName": "Tiedemann"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            }
+                        },
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2948313,
+                            "hidden": false,
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Elfriede",
+                                "lastName": "Billmann-Mahecha"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "881fd185-724b-4bda-9b32-07f4dac6ded0"
+                                }
+                            ]
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "881fd185-724b-4bda-9b32-07f4dac6ded0"
+                        }
+                    ],
+                    "totalNumberOfContributors": 3,
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "881fd185-724b-4bda-9b32-07f4dac6ded0"
+                    },
+                    "submissionYear": 2006,
+                    "links": [
+                        {
+                            "pureId": 2948279,
+                            "url": "http://www.scopus.com/inward/record.url?scp=33746267284&partnerID=8YFLogxK",
+                            "description": {
+                                "en_GB": "Link to publication in Scopus"
+                            },
+                            "linkType": {
+                                "uri": "/dk/atira/pure/links/researchoutput/scopuspublication",
+                                "term": {
+                                    "en_GB": "Scopus publication",
+                                    "de_DE": "Scopus-Publikation"
+                                }
+                            }
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                            "pureId": 2948274,
+                            "logicalName": "keywordContainers",
+                            "name": {
+                                "en_GB": "Keywords",
+                                "de_DE": "Schlagwörter"
+                            },
+                            "keywords": [
+                                {
+                                    "pureId": 2948276,
+                                    "locale": "de_DE",
+                                    "freeKeywords": [
+                                        "Development of knowledge",
+                                        "Elementary school",
+                                        "General Knowledge",
+                                        "History",
+                                        "Reading literacy"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 2948277,
+                            "logicalName": "ASJCSubjectAreas",
+                            "name": {
+                                "en_GB": "ASJC Scopus subject areas",
+                                "de_DE": "ASJC Scopus Sachgebiete"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/3200/3204",
+                                    "term": {
+                                        "en_GB": "Developmental and Educational Psychology",
+                                        "de_DE": "Pädagogische und Entwicklungspsychologie"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "workflow": {
+                        "step": "forApproval",
+                        "description": {
+                            "en_GB": "For validation",
+                            "de_DE": "Zur Validierung"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "Scopus",
+                            "value": "33746267284"
+                        }
+                    ],
+                    "customDefinedFields": [],
+                    "pages": "201-212",
+                    "volume": "53",
+                    "journalAssociation": {
+                        "pureId": 2948273,
+                        "title": {
+                            "pureId": 881875,
+                            "title": "Psychologie in Erziehung und Unterricht"
+                        },
+                        "issn": {
+                            "pureId": 276029,
+                            "issn": "0342-183X"
+                        },
+                        "journal": {
+                            "systemName": "Journal",
+                            "uuid": "35355bf7-8aa2-4bb2-8f7a-8483d9ad55da"
+                        }
+                    },
+                    "journalNumber": "3",
+                    "numberOfPages": 12,
+                    "abstract": {
+                        "en_GB": "<p>Based on the Hannover Primary School Study, the significance of reading literacy for General Knowledge was established for 485 fourth-grade students, taking the domain of history as an example. Historical knowledge was ascertained as criterion. The data were analyzed using hierarchical linear modelling. Reading literacy predicts substantial amounts of variance of historical knowledge even when controlling for cognitive abilities. Furthermore the proportion of students with an immigrant background proved to be a significant context factor. The results suggest cumulative effects of reading literacy on the development of knowledge for primary-school-level already. Results are discussed in regard to the development of school competencies as well as to the development of a complex historical consciousness.</p>"
+                    },
+                    "systemName": "ResearchOutput"
+                },
+                {
+                    "typeDiscriminator": "ContributionToBookAnthology",
+                    "pureId": 2948351,
+                    "uuid": "b643788d-2b5d-4508-bbff-d96cb0935656",
+                    "createdBy": "lp_support",
+                    "createdDate": "2019-12-18T11:11:17.656+01:00",
+                    "modifiedBy": "root",
+                    "modifiedDate": "2025-05-17T09:07:11.097+02:00",
+                    "portalUrl": "https://research.uni-hannover.de/en/publications/b643788d-2b5d-4508-bbff-d96cb0935656",
+                    "prettyUrlIdentifiers": [
+                        "empirical-psychological-approaches-to-the-historical-consciousnes"
+                    ],
+                    "version": "9b618592fa7110fe6bee53b09216df9d103f9b9b",
+                    "title": {
+                        "value": "Empirical psychological approaches to the historical consciousness of children"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontobookanthology/chapter",
+                        "term": {
+                            "en_GB": "Contribution to book/anthology",
+                            "de_DE": "Beitrag in Buch/Sammelwerk"
+                        }
+                    },
+                    "category": {
+                        "uri": "/dk/atira/pure/researchoutput/category/research",
+                        "term": {
+                            "en_GB": "Research",
+                            "de_DE": "Forschung"
+                        }
+                    },
+                    "peerReview": true,
+                    "publicationStatuses": [
+                        {
+                            "pureId": 2948394,
+                            "current": true,
+                            "publicationStatus": {
+                                "uri": "/dk/atira/pure/researchoutput/status/published",
+                                "term": {
+                                    "en_GB": "Published",
+                                    "de_DE": "Veröffentlicht"
+                                }
+                            },
+                            "publicationDate": {
+                                "year": 2005,
+                                "month": 6,
+                                "day": 15
+                            }
+                        }
+                    ],
+                    "language": {
+                        "uri": "/dk/atira/pure/core/languages/en_GB",
+                        "term": {
+                            "en_GB": "English",
+                            "de_DE": "Englisch"
+                        }
+                    },
+                    "contributors": [
+                        {
+                            "typeDiscriminator": "InternalContributorAssociation",
+                            "pureId": 2948391,
+                            "hidden": false,
+                            "correspondingAuthor": true,
+                            "name": {
+                                "firstName": "Elfriede",
+                                "lastName": "Billmann-Mahecha"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontobookanthology/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "organizations": [
+                                {
+                                    "systemName": "Organization",
+                                    "uuid": "881fd185-724b-4bda-9b32-07f4dac6ded0"
+                                }
+                            ]
+                        },
+                        {
+                            "typeDiscriminator": "ExternalContributorAssociation",
+                            "pureId": 2948393,
+                            "hidden": false,
+                            "country": {
+                                "uri": "/dk/atira/pure/core/countries/de",
+                                "term": {
+                                    "en_GB": "Germany",
+                                    "de_DE": "Deutschland"
+                                }
+                            },
+                            "correspondingAuthor": false,
+                            "name": {
+                                "firstName": "Monika",
+                                "lastName": "Hausen"
+                            },
+                            "role": {
+                                "uri": "/dk/atira/pure/researchoutput/roles/contributiontobookanthology/author",
+                                "term": {
+                                    "en_GB": "Author",
+                                    "de_DE": "Autor*in"
+                                }
+                            },
+                            "externalPerson": {
+                                "systemName": "ExternalPerson",
+                                "uuid": "73897030-8400-42da-b72b-0cd4bf55bd22"
+                            }
+                        }
+                    ],
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "881fd185-724b-4bda-9b32-07f4dac6ded0"
+                        }
+                    ],
+                    "totalNumberOfContributors": 2,
+                    "managingOrganization": {
+                        "systemName": "Organization",
+                        "uuid": "881fd185-724b-4bda-9b32-07f4dac6ded0"
+                    },
+                    "submissionYear": 2005,
+                    "links": [
+                        {
+                            "pureId": 2948357,
+                            "url": "http://www.scopus.com/inward/record.url?scp=84958143792&partnerID=8YFLogxK",
+                            "description": {
+                                "en_GB": "Link to publication in Scopus"
+                            },
+                            "linkType": {
+                                "uri": "/dk/atira/pure/links/researchoutput/scopuspublication",
+                                "term": {
+                                    "en_GB": "Scopus publication",
+                                    "de_DE": "Scopus-Publikation"
+                                }
+                            }
+                        }
+                    ],
+                    "keywordGroups": [
+                        {
+                            "typeDiscriminator": "ClassificationsKeywordGroup",
+                            "pureId": 2948352,
+                            "logicalName": "ASJCSubjectAreas",
+                            "name": {
+                                "en_GB": "ASJC Scopus subject areas",
+                                "de_DE": "ASJC Scopus Sachgebiete"
+                            },
+                            "classifications": [
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/1200/1200",
+                                    "term": {
+                                        "en_GB": "General Arts and Humanities",
+                                        "de_DE": "Allgemeine Kunst und Geisteswissenschaften"
+                                    }
+                                },
+                                {
+                                    "uri": "/dk/atira/pure/subjectarea/asjc/3300/3300",
+                                    "term": {
+                                        "en_GB": "General Social Sciences",
+                                        "de_DE": "Allgemeine Sozialwissenschaften"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "visibility": {
+                        "key": "FREE",
+                        "description": {
+                            "en_GB": "Public - No restriction",
+                            "de_DE": "Öffentlich - Keine Einschränkungen"
+                        }
+                    },
+                    "workflow": {
+                        "step": "forApproval",
+                        "description": {
+                            "en_GB": "For validation",
+                            "de_DE": "Zur Validierung"
+                        }
+                    },
+                    "identifiers": [
+                        {
+                            "typeDiscriminator": "PrimaryId",
+                            "idSource": "Scopus",
+                            "value": "84958143792"
+                        }
+                    ],
+                    "customDefinedFields": [],
+                    "printISBNs": [
+                        "1571817778",
+                        "9781845450397"
+                    ],
+                    "electronicISBNs": [
+                        "9781782388609"
+                    ],
+                    "publisher": {
+                        "systemName": "Publisher",
+                        "uuid": "8ebc3c4a-4440-4d05-8da8-dacbb61cd4b8"
+                    },
+                    "pages": "163-186",
+                    "hostPublicationTitle": {
+                        "value": "Narration, Identity, and Historical Consciousness"
+                    },
+                    "numberOfPages": 24,
+                    "systemName": "ResearchOutput"
+                }
+            ]
+        },
+        "json_error": "No error"
+    }
+}

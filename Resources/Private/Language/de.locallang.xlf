@@ -28,16 +28,16 @@
 				<target>Abstract</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.authors">
-				<source>authored by</source>
-				<target>verfasst von</target>
+				<source>Authored by</source>
+				<target>Verfasst von</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.supervisors">
 				<source>supervised by</source>
 				<target>betreut von</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.units">
-				<source>Organisational Unit(s)</source>
-				<target>Organisationseinheit(en)</target>
+				<source>Organisational Unit(s):</source>
+				<target>Organisationseinheit(en):</target>
 			</trans-unit>
 			<trans-unit id="univiepur.publication.extunits">
 				<source>External Organisation(s)</source>
@@ -99,9 +99,65 @@
 				<source>Link</source>
 				<target>Link</target>
 			</trans-unit>
+			<trans-unit id="univiepur.datasets.type">
+				<source>Type: </source>
+				<target>Typ: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.year">
+				<source>Year: </source>
+				<target>Jahr: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.creators">
+				<source>Creators: </source>
+				<target>Urheber: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.license">
+				<source>License: </source>
+				<target>Lizenz: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.publisher">
+				<source>Publisher</source>
+				<target>Herausgeber</target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.relatedProjects">
+				<source>Related Projects</source>
+				<target>Verknüpfte Projekte</target>
+			</trans-unit>
+			<trans-unit id="univiepur.datasets.relatedResearchOutputs">
+				<source>Related Research Outputs</source>
+				<target>Verknüpfte Forschungsleistungen</target>
+			</trans-unit>
 			<trans-unit id="univiepur.projects.description">
 				<source>Abstract</source>
 				<target>Abstract</target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.type">
+				<source>Type: </source>
+				<target>Typ: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.status">
+				<source>Status: </source>
+				<target>Status: </target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.duration">
+				<source>Duration</source>
+				<target>Laufzeit</target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.participants">
+				<source>Participants</source>
+				<target>Beteiligte</target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.links">
+				<source>Links</source>
+				<target>Links</target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.researchOutputs">
+				<source>Research Outputs</source>
+				<target>Forschungsleistungen</target>
+			</trans-unit>
+			<trans-unit id="univiepur.projects.publications">
+				<source>publications</source>
+				<target>Publikationen</target>
 			</trans-unit>
 			<trans-unit id="univiepur.equipments.contactPerson">
 				<source>Contact person(s) for booking:</source>
@@ -115,6 +171,10 @@
 				<source>URL(s):</source>
 				<target>URL(s):</target>
 			</trans-unit>
+			<trans-unit id="univiepur.equipments.type">
+				<source>Type:</source>
+				<target>Typ:</target>
+			</trans-unit>
 			<trans-unit id="univiepur.publication.portalUrlLong">
                 <source>Details in the research portal "Research@Leibniz University"</source>
             	<target>Details im Forschungsportal „Research@Leibniz University“</target>
@@ -127,6 +187,106 @@
                 <source>Access:</source>
             	<target>Zugang:</target>
             </trans-unit>
+			<trans-unit id="univiepur.publication.details">
+				<source>Details</source>
+				<target>Details</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citations">
+				<source>Cite</source>
+				<target>Zitieren</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.standard">
+				<source>Standard</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.harvard">
+				<source>Harvard</source>
+				<target>Harvard</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.apa">
+				<source>APA</source>
+				<target>APA</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.vancouver">
+				<source>Vancouver</source>
+				<target>Vancouver</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.author">
+				<source>Author</source>
+				<target>Autor</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.bibtex">
+				<source>BibTeX</source>
+				<target>BibTeX</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.ieee">
+				<source>IEEE</source>
+				<target>IEEE</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.chicago">
+				<source>Chicago</source>
+				<target>Chicago</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.mla">
+				<source>MLA</source>
+				<target>MLA</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.ris">
+				<source>RIS</source>
+				<target>RIS</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.loading">
+				<source>Loading...</source>
+				<target>Laden...</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.error">
+				<source>Failed to load citation</source>
+				<target>Zitat konnte nicht geladen werden</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.citation.clickToLoad">
+				<source>Loading...</source>
+				<target>Laden...</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights">
+				<source>Publication Insights</source>
+				<target>Publikations-Insights</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.oaStatus">
+				<source>Open Access status</source>
+				<target>Open-Access-Status</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.dois">
+				<source>DOI(s)</source>
+				<target>DOI(s)</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.scopusCitations">
+				<source>Scopus citations</source>
+				<target>Scopus-Zitationen</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.fwci">
+				<source>Field-Weighted Citation Impact (FWCI)</source>
+				<target>Field-Weighted Citation Impact (FWCI)</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.openPdf">
+				<source>PDF</source>
+				<target>PDF</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.lastModified">
+				<source>Last modified</source>
+				<target>Zuletzt geändert</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.publishedDate">
+				<source>Published</source>
+				<target>Veröffentlicht</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.externalOaNotice">
+				<source>An external Open Access version is available.</source>
+				<target>Eine externe Open-Access-Version ist verfügbar.</target>
+			</trans-unit>
+			<trans-unit id="univiepur.publication.insights.externalLookupUnavailable">
+				<source>External metadata lookup is currently unavailable.</source>
+				<target>Externe Metadaten sind aktuell nicht verfügbar.</target>
+			</trans-unit>
 			<trans-unit id="univiepur.more">
 				<source>more...</source>
 				<target>Mehr...</target>
@@ -173,6 +333,10 @@
 			<trans-unit id="suggest-already-in-list">
 				<source> is already in the list!</source>
 				<target> ist bereits in der Liste!</target>
+			</trans-unit>
+			<trans-unit id="univiepure_univiepure">
+				<source>T3LUH FIS</source>
+				<target>T3LUH FIS</target>
 			</trans-unit>
 		</body>
 	</file>

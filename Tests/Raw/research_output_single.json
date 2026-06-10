@@ -1,0 +1,412 @@
+{
+    "test_name": "research_output_single",
+    "description": "Get single research output by UUID",
+    "timestamp": "2026-06-02 13:42:42",
+    "endpoint": "research-outputs/91ec7a28-2899-4001-ad2a-f46e93f6e546",
+    "query_params": [],
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 176.719999999999998863131622783839702606201171875,
+        "url": "https://fis.uni-hannover.de/ws/api/research-outputs/91ec7a28-2899-4001-ad2a-f46e93f6e546",
+        "curl_error": null,
+        "response": "{\"typeDiscriminator\":\"ContributionToJournal\",\"pureId\":2947453,\"uuid\":\"91ec7a28-2899-4001-ad2a-f46e93f6e546\",\"createdBy\":\"fa_support\",\"createdDate\":\"2019-12-18T10:24:41.392+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-10-25T20:36:40.488+02:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/publications/91ec7a28-2899-4001-ad2a-f46e93f6e546\",\"prettyUrlIdentifiers\":[\"the-analyses-of-dynamic-response-and-reliability-for-failure-depe\"],\"version\":\"d81db4bff07ecce2a138bc12870e9ddd4d4ade92\",\"title\":{\"value\":\"The analyses of dynamic response and reliability for failure-dependent stochastic micro-resonator with thermoelastic coupling effects\"},\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article\",\"term\":{\"en_GB\":\"Article\",\"de_DE\":\"Artikel\"}},\"category\":{\"uri\":\"/dk/atira/pure/researchoutput/category/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"peerReview\":true,\"publicationStatuses\":[{\"pureId\":12093731,\"current\":false,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/submitted\",\"term\":{\"en_GB\":\"Submitted\",\"de_DE\":\"Eingereicht\"}},\"publicationDate\":{\"year\":2018,\"month\":8,\"day\":13}},{\"pureId\":12093732,\"current\":false,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/inpress\",\"term\":{\"en_GB\":\"Accepted/In press\",\"de_DE\":\"Angenommen/Im Druck\"}},\"publicationDate\":{\"year\":2019,\"month\":9,\"day\":25}},{\"pureId\":2947469,\"current\":false,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/epub\",\"term\":{\"en_GB\":\"E-pub ahead of print\",\"de_DE\":\"Elektronisch veröffentlicht (E-Pub)\"}},\"publicationDate\":{\"year\":2019,\"month\":9,\"day\":27}},{\"pureId\":5251000,\"current\":true,\"publicationStatus\":{\"uri\":\"/dk/atira/pure/researchoutput/status/published\",\"term\":{\"en_GB\":\"Published\",\"de_DE\":\"Veröffentlicht\"}},\"publicationDate\":{\"year\":2020,\"month\":1}}],\"language\":{\"uri\":\"/dk/atira/pure/core/languages/en_GB\",\"term\":{\"en_GB\":\"English\",\"de_DE\":\"Englisch\"}},\"contributors\":[{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947464,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"140b390d-316b-4538-97ef-5d29882634ef\"},{\"systemName\":\"ExternalOrganization\",\"uuid\":\"1e2db3f8-3e31-4336-b928-629c662bb1ad\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Bin\",\"lastName\":\"Yan\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"8e8d3674-829f-4f1b-b3a9-c0c01cccddc4\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947465,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"140b390d-316b-4538-97ef-5d29882634ef\"}],\"hidden\":false,\"correspondingAuthor\":true,\"name\":{\"firstName\":\"Juan\",\"lastName\":\"Ma\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"c077156a-22dd-46a4-9c46-2151d658cc70\"}},{\"typeDiscriminator\":\"ExternalContributorAssociation\",\"pureId\":2947466,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"b2d2b18e-875f-4c7b-a9a3-1b3854ee1470\"}],\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Di\",\"lastName\":\"Wu\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"635a6c9b-73c7-4221-999d-91f2ba5a5403\"}},{\"typeDiscriminator\":\"InternalContributorAssociation\",\"pureId\":2947467,\"hidden\":false,\"correspondingAuthor\":false,\"name\":{\"firstName\":\"Peter\",\"lastName\":\"Wriggers\"},\"role\":{\"uri\":\"/dk/atira/pure/researchoutput/roles/contributiontojournal/author\",\"term\":{\"en_GB\":\"Author\",\"de_DE\":\"Autor*in\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"51d4b357-6720-4e28-942d-2482c2056a52\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}]}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"140b390d-316b-4538-97ef-5d29882634ef\"},{\"systemName\":\"ExternalOrganization\",\"uuid\":\"b2d2b18e-875f-4c7b-a9a3-1b3854ee1470\"},{\"systemName\":\"ExternalOrganization\",\"uuid\":\"1e2db3f8-3e31-4336-b928-629c662bb1ad\"}],\"totalNumberOfContributors\":4,\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"8df53f0f-7056-4dd1-b987-5bedff59ffad\"},\"submissionYear\":2020,\"electronicVersions\":[{\"typeDiscriminator\":\"DoiElectronicVersion\",\"pureId\":2947455,\"accessType\":{\"uri\":\"/dk/atira/pure/core/openaccesspermission/closed\",\"term\":{\"en_GB\":\"Closed\",\"de_DE\":\"Geschlossen\"}},\"doi\":\"10.1016/j.apm.2019.09.040\",\"versionType\":{\"uri\":\"/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion\",\"term\":{\"en_GB\":\"Final published version\",\"de_DE\":\"Endgültige, publizierte Fassung\"}}}],\"links\":[{\"pureId\":2947462,\"url\":\"http://www.scopus.com/inward/record.url?scp=85074402411&partnerID=8YFLogxK\",\"description\":{\"en_GB\":\"Link to publication in Scopus\",\"de_DE\":\"Link zur Publikation in Scopus\"},\"linkType\":{\"uri\":\"/dk/atira/pure/links/researchoutput/scopuspublication\",\"term\":{\"en_GB\":\"Scopus publication\",\"de_DE\":\"Scopus-Publikation\"}}}],\"keywordGroups\":[{\"typeDiscriminator\":\"FreeKeywordsKeywordGroup\",\"pureId\":2947456,\"logicalName\":\"keywordContainers\",\"name\":{\"en_GB\":\"Keywords\",\"de_DE\":\"Schlagwörter\"},\"keywords\":[{\"pureId\":2947458,\"locale\":\"en_GB\",\"freeKeywords\":[\"Dynamic correlation\",\"Dynamic reliability assessment\",\"Random micro-resonators\",\"Stochastic dynamic response analysis\",\"Thermoelastic coupling effects\"]}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":2947459,\"logicalName\":\"ASJCSubjectAreas\",\"name\":{\"en_GB\":\"ASJC Scopus subject areas\",\"de_DE\":\"ASJC Scopus Sachgebiete\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2600/2611\",\"term\":{\"en_GB\":\"Modelling and Simulation\",\"de_DE\":\"Modellierung und Simulation\"}},{\"uri\":\"/dk/atira/pure/subjectarea/asjc/2600/2604\",\"term\":{\"en_GB\":\"Applied Mathematics\",\"de_DE\":\"Angewandte Mathematik\"}}]}],\"bibliographicalNote\":{\"en_GB\":\"Funding information: The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript.\",\"de_DE\":\"Funding information: The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript.\"},\"descriptions\":[{\"pureId\":12093730,\"type\":{\"uri\":\"/dk/atira/pure/researchoutput/descriptions/contributiontojournal/further_bibliographic_information\",\"term\":{\"en_GB\":\"Further bibliographic information\",\"de_DE\":\"Weitere bibliographische Informationen\"}}}],\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"workflow\":{\"step\":\"approved\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"identifiers\":[{\"typeDiscriminator\":\"PrimaryId\",\"idSource\":\"Scopus\",\"value\":\"85074402411\"}],\"customDefinedFields\":{},\"fundingText\":{\"en_GB\":\"The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript.\"},\"pages\":\"1168-1187\",\"volume\":\"77\",\"journalAssociation\":{\"pureId\":2947454,\"title\":{\"pureId\":288764,\"title\":\"Applied mathematical modelling\"},\"issn\":{\"pureId\":288760,\"issn\":\"0307-904X\"},\"journal\":{\"systemName\":\"Journal\",\"uuid\":\"802a45ab-f424-4db8-9ac9-fcdaa762573f\"}},\"journalNumber\":\"2\",\"numberOfPages\":20,\"abstract\":{\"en_GB\":\"<p>A crucial measure for the design of high-performance micro-resonators is to consider the randomness of structural parameters when analyzing the structural system reliability. In this work, the stochastic dynamic response analysis and subsequently, a dynamic reliability assessment of the random micro-resonators are originally presented, where the thermoelastic coupling effects are freshly incorporated in the models proposed. The dynamic characteristics equation of the deterministic micro-resonator is firstly established based on the finite element method. The random dynamic characteristics of the resonator are then solved by implementing the left and right eigenvectors and the block Lanczos algorithm, and the random temperature field and structural random dynamic stress are also tackled. Afterwards, the overall structural reliability is investigated with a comprehensive consideration of the strength failure and frequency resonance failure, in which the Copula function is used for describing the dynamic correlation between two failure modes. Finally, the feasibility and rationality of the method put forward are demonstrated via a practically motivated example.</p>\"},\"systemName\":\"ResearchOutput\"}",
+        "response_data": {
+            "typeDiscriminator": "ContributionToJournal",
+            "pureId": 2947453,
+            "uuid": "91ec7a28-2899-4001-ad2a-f46e93f6e546",
+            "createdBy": "fa_support",
+            "createdDate": "2019-12-18T10:24:41.392+01:00",
+            "modifiedBy": "root",
+            "modifiedDate": "2025-10-25T20:36:40.488+02:00",
+            "portalUrl": "https://research.uni-hannover.de/en/publications/91ec7a28-2899-4001-ad2a-f46e93f6e546",
+            "prettyUrlIdentifiers": [
+                "the-analyses-of-dynamic-response-and-reliability-for-failure-depe"
+            ],
+            "version": "d81db4bff07ecce2a138bc12870e9ddd4d4ade92",
+            "title": {
+                "value": "The analyses of dynamic response and reliability for failure-dependent stochastic micro-resonator with thermoelastic coupling effects"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article",
+                "term": {
+                    "en_GB": "Article",
+                    "de_DE": "Artikel"
+                }
+            },
+            "category": {
+                "uri": "/dk/atira/pure/researchoutput/category/research",
+                "term": {
+                    "en_GB": "Research",
+                    "de_DE": "Forschung"
+                }
+            },
+            "peerReview": true,
+            "publicationStatuses": [
+                {
+                    "pureId": 12093731,
+                    "current": false,
+                    "publicationStatus": {
+                        "uri": "/dk/atira/pure/researchoutput/status/submitted",
+                        "term": {
+                            "en_GB": "Submitted",
+                            "de_DE": "Eingereicht"
+                        }
+                    },
+                    "publicationDate": {
+                        "year": 2018,
+                        "month": 8,
+                        "day": 13
+                    }
+                },
+                {
+                    "pureId": 12093732,
+                    "current": false,
+                    "publicationStatus": {
+                        "uri": "/dk/atira/pure/researchoutput/status/inpress",
+                        "term": {
+                            "en_GB": "Accepted/In press",
+                            "de_DE": "Angenommen/Im Druck"
+                        }
+                    },
+                    "publicationDate": {
+                        "year": 2019,
+                        "month": 9,
+                        "day": 25
+                    }
+                },
+                {
+                    "pureId": 2947469,
+                    "current": false,
+                    "publicationStatus": {
+                        "uri": "/dk/atira/pure/researchoutput/status/epub",
+                        "term": {
+                            "en_GB": "E-pub ahead of print",
+                            "de_DE": "Elektronisch veröffentlicht (E-Pub)"
+                        }
+                    },
+                    "publicationDate": {
+                        "year": 2019,
+                        "month": 9,
+                        "day": 27
+                    }
+                },
+                {
+                    "pureId": 5251000,
+                    "current": true,
+                    "publicationStatus": {
+                        "uri": "/dk/atira/pure/researchoutput/status/published",
+                        "term": {
+                            "en_GB": "Published",
+                            "de_DE": "Veröffentlicht"
+                        }
+                    },
+                    "publicationDate": {
+                        "year": 2020,
+                        "month": 1
+                    }
+                }
+            ],
+            "language": {
+                "uri": "/dk/atira/pure/core/languages/en_GB",
+                "term": {
+                    "en_GB": "English",
+                    "de_DE": "Englisch"
+                }
+            },
+            "contributors": [
+                {
+                    "typeDiscriminator": "ExternalContributorAssociation",
+                    "pureId": 2947464,
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "140b390d-316b-4538-97ef-5d29882634ef"
+                        },
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "1e2db3f8-3e31-4336-b928-629c662bb1ad"
+                        }
+                    ],
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "Bin",
+                        "lastName": "Yan"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author",
+                            "de_DE": "Autor*in"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "8e8d3674-829f-4f1b-b3a9-c0c01cccddc4"
+                    }
+                },
+                {
+                    "typeDiscriminator": "ExternalContributorAssociation",
+                    "pureId": 2947465,
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "140b390d-316b-4538-97ef-5d29882634ef"
+                        }
+                    ],
+                    "hidden": false,
+                    "correspondingAuthor": true,
+                    "name": {
+                        "firstName": "Juan",
+                        "lastName": "Ma"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author",
+                            "de_DE": "Autor*in"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "c077156a-22dd-46a4-9c46-2151d658cc70"
+                    }
+                },
+                {
+                    "typeDiscriminator": "ExternalContributorAssociation",
+                    "pureId": 2947466,
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "b2d2b18e-875f-4c7b-a9a3-1b3854ee1470"
+                        }
+                    ],
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "Di",
+                        "lastName": "Wu"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author",
+                            "de_DE": "Autor*in"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "635a6c9b-73c7-4221-999d-91f2ba5a5403"
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 2947467,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "Peter",
+                        "lastName": "Wriggers"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author",
+                            "de_DE": "Autor*in"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "51d4b357-6720-4e28-942d-2482c2056a52"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                        }
+                    ]
+                }
+            ],
+            "organizations": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+                }
+            ],
+            "externalOrganizations": [
+                {
+                    "systemName": "ExternalOrganization",
+                    "uuid": "140b390d-316b-4538-97ef-5d29882634ef"
+                },
+                {
+                    "systemName": "ExternalOrganization",
+                    "uuid": "b2d2b18e-875f-4c7b-a9a3-1b3854ee1470"
+                },
+                {
+                    "systemName": "ExternalOrganization",
+                    "uuid": "1e2db3f8-3e31-4336-b928-629c662bb1ad"
+                }
+            ],
+            "totalNumberOfContributors": 4,
+            "managingOrganization": {
+                "systemName": "Organization",
+                "uuid": "8df53f0f-7056-4dd1-b987-5bedff59ffad"
+            },
+            "submissionYear": 2020,
+            "electronicVersions": [
+                {
+                    "typeDiscriminator": "DoiElectronicVersion",
+                    "pureId": 2947455,
+                    "accessType": {
+                        "uri": "/dk/atira/pure/core/openaccesspermission/closed",
+                        "term": {
+                            "en_GB": "Closed",
+                            "de_DE": "Geschlossen"
+                        }
+                    },
+                    "doi": "10.1016/j.apm.2019.09.040",
+                    "versionType": {
+                        "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                        "term": {
+                            "en_GB": "Final published version",
+                            "de_DE": "Endgültige, publizierte Fassung"
+                        }
+                    }
+                }
+            ],
+            "links": [
+                {
+                    "pureId": 2947462,
+                    "url": "http://www.scopus.com/inward/record.url?scp=85074402411&partnerID=8YFLogxK",
+                    "description": {
+                        "en_GB": "Link to publication in Scopus",
+                        "de_DE": "Link zur Publikation in Scopus"
+                    },
+                    "linkType": {
+                        "uri": "/dk/atira/pure/links/researchoutput/scopuspublication",
+                        "term": {
+                            "en_GB": "Scopus publication",
+                            "de_DE": "Scopus-Publikation"
+                        }
+                    }
+                }
+            ],
+            "keywordGroups": [
+                {
+                    "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                    "pureId": 2947456,
+                    "logicalName": "keywordContainers",
+                    "name": {
+                        "en_GB": "Keywords",
+                        "de_DE": "Schlagwörter"
+                    },
+                    "keywords": [
+                        {
+                            "pureId": 2947458,
+                            "locale": "en_GB",
+                            "freeKeywords": [
+                                "Dynamic correlation",
+                                "Dynamic reliability assessment",
+                                "Random micro-resonators",
+                                "Stochastic dynamic response analysis",
+                                "Thermoelastic coupling effects"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "ClassificationsKeywordGroup",
+                    "pureId": 2947459,
+                    "logicalName": "ASJCSubjectAreas",
+                    "name": {
+                        "en_GB": "ASJC Scopus subject areas",
+                        "de_DE": "ASJC Scopus Sachgebiete"
+                    },
+                    "classifications": [
+                        {
+                            "uri": "/dk/atira/pure/subjectarea/asjc/2600/2611",
+                            "term": {
+                                "en_GB": "Modelling and Simulation",
+                                "de_DE": "Modellierung und Simulation"
+                            }
+                        },
+                        {
+                            "uri": "/dk/atira/pure/subjectarea/asjc/2600/2604",
+                            "term": {
+                                "en_GB": "Applied Mathematics",
+                                "de_DE": "Angewandte Mathematik"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "bibliographicalNote": {
+                "en_GB": "Funding information: The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript.",
+                "de_DE": "Funding information: The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript."
+            },
+            "descriptions": [
+                {
+                    "pureId": 12093730,
+                    "type": {
+                        "uri": "/dk/atira/pure/researchoutput/descriptions/contributiontojournal/further_bibliographic_information",
+                        "term": {
+                            "en_GB": "Further bibliographic information",
+                            "de_DE": "Weitere bibliographische Informationen"
+                        }
+                    }
+                }
+            ],
+            "visibility": {
+                "key": "FREE",
+                "description": {
+                    "en_GB": "Public - No restriction",
+                    "de_DE": "Öffentlich - Keine Einschränkungen"
+                }
+            },
+            "workflow": {
+                "step": "approved",
+                "description": {
+                    "en_GB": "Validated",
+                    "de_DE": "Validiert"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "Scopus",
+                    "value": "85074402411"
+                }
+            ],
+            "customDefinedFields": [],
+            "fundingText": {
+                "en_GB": "The authors gratefully acknowledge the support of National Natural Science Foundation of China (Grant No. 11572233 ) and Pre-research Foundation (Grant No. 61400020106 ) to the project. Moreover, the authors would like to greatly appreciate Prof. Xue XD for his helpful suggestions and the contributions to the revision of this manuscript."
+            },
+            "pages": "1168-1187",
+            "volume": "77",
+            "journalAssociation": {
+                "pureId": 2947454,
+                "title": {
+                    "pureId": 288764,
+                    "title": "Applied mathematical modelling"
+                },
+                "issn": {
+                    "pureId": 288760,
+                    "issn": "0307-904X"
+                },
+                "journal": {
+                    "systemName": "Journal",
+                    "uuid": "802a45ab-f424-4db8-9ac9-fcdaa762573f"
+                }
+            },
+            "journalNumber": "2",
+            "numberOfPages": 20,
+            "abstract": {
+                "en_GB": "<p>A crucial measure for the design of high-performance micro-resonators is to consider the randomness of structural parameters when analyzing the structural system reliability. In this work, the stochastic dynamic response analysis and subsequently, a dynamic reliability assessment of the random micro-resonators are originally presented, where the thermoelastic coupling effects are freshly incorporated in the models proposed. The dynamic characteristics equation of the deterministic micro-resonator is firstly established based on the finite element method. The random dynamic characteristics of the resonator are then solved by implementing the left and right eigenvectors and the block Lanczos algorithm, and the random temperature field and structural random dynamic stress are also tackled. Afterwards, the overall structural reliability is investigated with a comprehensive consideration of the strength failure and frequency resonance failure, in which the Copula function is used for describing the dynamic correlation between two failure modes. Finally, the feasibility and rationality of the method put forward are demonstrated via a practically motivated example.</p>"
+            },
+            "systemName": "ResearchOutput"
+        },
+        "json_error": "No error"
+    }
+}

@@ -1,0 +1,53 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="rendering_organisation rendering_detailed" data-uuid="{data.uuid}">
+    <h3 class="organisation-name">
+        <f:if condition="{data.name.en_GB}">
+            <f:then><f:format.raw>{data.name.en_GB}</f:format.raw></f:then>
+            <f:else>
+                <f:if condition="{data.name.de_DE}">
+                    <f:format.raw>{data.name.de_DE}</f:format.raw>
+                </f:if>
+            </f:else>
+        </f:if>
+    </h3>
+
+    <div class="organisation-details">
+        <dl>
+            <f:if condition="{data.type.term.en_GB}">
+                <f:then>
+                    <dt>Type</dt>
+                    <dd>{data.type.term.en_GB}</dd>
+                </f:then>
+                <f:else>
+                    <f:if condition="{data.type.term.de_DE}">
+                        <dt>Type</dt>
+                        <dd>{data.type.term.de_DE}</dd>
+                    </f:if>
+                </f:else>
+            </f:if>
+
+            <f:if condition="{data.portalUrl}">
+                <dt>Portal</dt>
+                <dd><a href="{data.portalUrl}" target="_blank" rel="noopener">View in Pure</a></dd>
+            </f:if>
+        </dl>
+    </div>
+
+    <f:if condition="{data.description.en_GB}">
+        <f:then>
+            <div class="organisation-description">
+                <h5>Description</h5>
+                <p><f:format.raw>{data.description.en_GB}</f:format.raw></p>
+            </div>
+        </f:then>
+        <f:else>
+            <f:if condition="{data.description.de_DE}">
+                <div class="organisation-description">
+                    <h5>Description</h5>
+                    <p><f:format.raw>{data.description.de_DE}</f:format.raw></p>
+                </div>
+            </f:if>
+        </f:else>
+    </f:if>
+</div>
+</html>

@@ -2,7 +2,7 @@
 defined('TYPO3') || die();
 
 use Univie\UniviePure\Controller\PureController;
-use Univie\UniviePure\Controller\PaginateController;
+use Univie\UniviePure\Utility\LibraryLoader;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
@@ -13,18 +13,23 @@ use Psr\Log\LogLevel;
 
 call_user_func(
     function () {
+        // Load bundled citeproc-php library for CSL citation rendering
+        // This must be done early to ensure the autoloader is registered
+        if (LibraryLoader::isCiteprocAvailable()) {
+            LibraryLoader::loadCiteproc();
+        }
         // Register plugin
         ExtensionUtility::configurePlugin(
             'UniviePure',
             'UniviePure',
             [
                 PureController::class => 'list,listHandler,show',
-                PaginateController::class => 'index,paginate',
             ],
             // non-cacheable actions
+            // Note: list and show are now cacheable to reduce Pure API load
+            // listHandler remains non-cacheable as it handles form POST and redirects
             [
-                PureController::class => 'list,listHandler,show',
-                PaginateController::class => 'index,paginate',
+                PureController::class => 'listHandler',
             ]
         );
 
@@ -40,6 +45,10 @@ call_user_func(
         ExtensionManagementUtility::addPageTSConfig(
             '@import "EXT:univie_pure/Configuration/TSconfig/Page/Mod/Wizards/NewContentElement.tsconfig"'
         );
+
+        // Hook to add backend JavaScript
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess']['univie_pure'] =
+            \Univie\UniviePure\Hooks\BackendJavaScriptHook::class . '->addJavaScript';
 
         // Cache configuration
         if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['univie_pure'])) {

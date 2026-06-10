@@ -1,0 +1,51 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="rendering_person rendering_detailed" data-uuid="{data.uuid}">
+    <h3 class="person-name">
+        <f:if condition="{data.name.lastName}">
+            {data.name.lastName}<f:if condition="{data.name.firstName}">, {data.name.firstName}</f:if>
+        </f:if>
+    </h3>
+
+    <div class="person-details">
+        <dl>
+            <f:if condition="{data.title.value}">
+                <dt>Title</dt>
+                <dd>{data.title.value}</dd>
+            </f:if>
+
+            <f:if condition="{data.jobDescription.en_GB}">
+                <f:then>
+                    <dt>Position</dt>
+                    <dd>{data.jobDescription.en_GB}</dd>
+                </f:then>
+                <f:else>
+                    <f:if condition="{data.jobDescription.de_DE}">
+                        <dt>Position</dt>
+                        <dd>{data.jobDescription.de_DE}</dd>
+                    </f:if>
+                </f:else>
+            </f:if>
+
+            <f:if condition="{data.email}">
+                <dt>Email</dt>
+                <dd><a href="mailto:{data.email}">{data.email}</a></dd>
+            </f:if>
+
+            <f:if condition="{data.orcid}">
+                <dt>ORCID</dt>
+                <dd><a href="https://orcid.org/{data.orcid}" target="_blank" rel="noopener">{data.orcid}</a></dd>
+            </f:if>
+
+            <f:if condition="{data.phone}">
+                <dt>Phone</dt>
+                <dd>{data.phone}</dd>
+            </f:if>
+
+            <f:if condition="{data.portalUrl}">
+                <dt>Profile</dt>
+                <dd><a href="{data.portalUrl}" target="_blank" rel="noopener">View in Pure</a></dd>
+            </f:if>
+        </dl>
+    </div>
+</div>
+</html>

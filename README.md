@@ -48,6 +48,20 @@ Public API documentation is available at:
 - [TU/e Pure API Docs](https://pure.tue.nl/ws/api/524/api-docs/index.html)
 
 ## Development
+### Building Frontend Assets
+Source assets:
+- `Resources/Private/Assets/Css`
+- `Resources/Private/Assets/JavaScript`
+
+Build minified assets to:
+- `Resources/Public/Css`
+- `Resources/Public/JavaScript`
+
+```sh
+npm install
+npm run build
+```
+
 ### Running PHPUnit Tests
 ```sh
 # Only Unit Tests
@@ -74,4 +88,3 @@ This extension is licensed under the **GNU GENERAL PUBLIC LICENSE Version 3**.
 
 ## Support
 For questions or issues, please open a ticket on [GitHub Issues](https://github.com/AEHluis/univie_pure/issues).
-

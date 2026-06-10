@@ -1,0 +1,512 @@
+{
+    "test_name": "project_single",
+    "description": "Get single project by UUID",
+    "timestamp": "2026-06-02 13:42:46",
+    "endpoint": "projects/8229f43a-02b0-47aa-985d-3a852914bf5e",
+    "query_params": [],
+    "result": {
+        "success": true,
+        "http_code": 200,
+        "content_type": "application/json",
+        "response_time_ms": 170.909999999999996589394868351519107818603515625,
+        "url": "https://fis.uni-hannover.de/ws/api/projects/8229f43a-02b0-47aa-985d-3a852914bf5e",
+        "curl_error": null,
+        "response": "{\"typeDiscriminator\":\"BasicProject\",\"pureId\":3040630,\"uuid\":\"8229f43a-02b0-47aa-985d-3a852914bf5e\",\"createdBy\":\"jw_admin\",\"createdDate\":\"2020-02-13T10:37:57.891+01:00\",\"modifiedBy\":\"root\",\"modifiedDate\":\"2025-11-03T15:37:03.285+01:00\",\"portalUrl\":\"https://research.uni-hannover.de/en/projects/8229f43a-02b0-47aa-985d-3a852914bf5e\",\"prettyUrlIdentifiers\":[\"research-training-group-20732-integrating-ethics-and-epistemology\"],\"version\":\"4c6e7b69d694e76477ec799f4fa3d9e81d672b64\",\"participants\":[{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3040645,\"name\":{\"firstName\":\"Torsten\",\"lastName\":\"Wilholt\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/pi\",\"term\":{\"en_GB\":\"Principal Investigator\",\"de_DE\":\"Projektleiter*in (Principal Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"8c81f21f-9543-4785-b232-4a90a81ea416\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"}]},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3040658,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"name\":{\"firstName\":\"Martin\",\"lastName\":\"Carrier\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/copi\",\"term\":{\"en_GB\":\"Co-Principal Investigator\",\"de_DE\":\"Leitende*r Forscher*in (Co-Principal Investigator)\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"af97d46b-cf0c-44a9-b7f7-7790545ad36c\"}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3040647,\"name\":{\"firstName\":\"Anke\",\"lastName\":\"Büter\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3040649,\"name\":{\"firstName\":\"Uljana\",\"lastName\":\"Feest\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}}},{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3040651,\"name\":{\"firstName\":\"Mathias\",\"lastName\":\"Frisch\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"6423981d-1a77-4ef6-b2a7-d9f0bca3f3e9\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"}]},{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3040653,\"name\":{\"firstName\":\"Dietmar\",\"lastName\":\"Hübner\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"9a34b20b-3b3b-440a-abfb-f7e58353954e\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"}]},{\"typeDiscriminator\":\"InternalParticipantAssociation\",\"pureId\":3040655,\"name\":{\"firstName\":\"Thomas\",\"lastName\":\"Reydon\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"person\":{\"systemName\":\"Person\",\"uuid\":\"e090fc8e-a61a-4e60-98f9-c5b83030678e\"},\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"}]},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3040657,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"name\":{\"firstName\":\"Ralf\",\"lastName\":\"Stoecker\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"802ac8b2-1772-4dad-b1c6-e16834915659\"}},{\"typeDiscriminator\":\"ExternalParticipantAssociation\",\"pureId\":3040659,\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"name\":{\"firstName\":\"Marie I.\",\"lastName\":\"Kaiser\"},\"role\":{\"uri\":\"/dk/atira/pure/upmproject/roles/upmproject/coi\",\"term\":{\"en_GB\":\"Co-Investigator\",\"de_DE\":\"beteiligte*r Wissenschaftler*in (Co-Investigator)\"}},\"externalPerson\":{\"systemName\":\"ExternalPerson\",\"uuid\":\"2251be53-9b69-49dc-a308-06f3784c2c42\"}}],\"externalOrganizations\":[{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}],\"collaborators\":[{\"typeDiscriminator\":\"ExternalCollaboratorAssociation\",\"pureId\":3040633,\"leadCollaborator\":false,\"externalOrganization\":{\"systemName\":\"ExternalOrganization\",\"uuid\":\"48a41363-28e7-46c5-8f8d-7bfab8d7355c\"}},{\"typeDiscriminator\":\"InternalCollaboratorAssociation\",\"pureId\":3040634,\"leadCollaborator\":true,\"organization\":{\"systemName\":\"Organization\",\"uuid\":\"07adc7bb-b839-4e70-900c-76d494d5b00a\"}}],\"descriptions\":[{\"pureId\":3040635,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/projectdescription\",\"term\":{\"en_GB\":\"Description\",\"de_DE\":\"Beschreibung\"}}},{\"pureId\":3040636,\"type\":{\"uri\":\"/dk/atira/pure/upmproject/descriptions/keyfindings\",\"term\":{\"en_GB\":\"Key findings\",\"de_DE\":\"wichtigste Ergebnisse\"}}}],\"period\":{\"startDate\":\"2020-04-01\",\"endDate\":\"2024-09-30\"},\"natureTypes\":[{\"uri\":\"/dk/atira/pure/upm/nature/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}}],\"organizations\":[{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"},{\"systemName\":\"Organization\",\"uuid\":\"34c200f4-c5dd-4864-bdca-64e922c09206\"}],\"managingOrganization\":{\"systemName\":\"Organization\",\"uuid\":\"a5c173ea-0de9-41aa-944a-ad3577fad32f\"},\"title\":{\"en_GB\":\"Research Training Group 2073/2: Integrating Ethics and Epistemology of Scientific Research\",\"de_DE\":\"Graduiertenkolleg 2073/2: Die Integration von theoretischer und praktischer Wissenschaftsphilosophie\"},\"type\":{\"uri\":\"/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research\",\"term\":{\"en_GB\":\"Research\",\"de_DE\":\"Forschung\"}},\"workflow\":{\"step\":\"validated\",\"description\":{\"en_GB\":\"Validated\",\"de_DE\":\"Validiert\"}},\"visibility\":{\"key\":\"FREE\",\"description\":{\"en_GB\":\"Public - No restriction\",\"de_DE\":\"Öffentlich - Keine Einschränkungen\"}},\"links\":[{\"pureId\":3040643,\"url\":\"https://www.philos.uni-hannover.de/de/forschung/grk2037\"}],\"keywordGroups\":[{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3040639,\"logicalName\":\"/dk/atira/pure/project/project_funder\",\"name\":{\"en_GB\":\"Funding type\",\"de_DE\":\"Mittelherkunft\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/project/project_funder/germansciencefoundation\",\"term\":{\"en_GB\":\"German Research Foundation (DFG)\",\"de_DE\":\"Deutsche Forschungsgemeinschaft (DFG)\"}}]},{\"typeDiscriminator\":\"FullKeywordGroup\",\"pureId\":74438221,\"logicalName\":\"/dk/atira/pure/project/financingsources\",\"name\":{\"en_GB\":\"Funding scheme\",\"de_DE\":\"Förderprogramme und -linien\"},\"keywordContainers\":[{\"pureId\":74438222,\"structuredKeyword\":{\"uri\":\"/dk/atira/pure/project/financingsources/02/02/01\",\"term\":{\"en_GB\":\"(International) Research Training Groups\",\"de_DE\":\"(Internationale) Graduiertenkollegs\"}}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":3040717,\"logicalName\":\"luh_schwerpunkte\",\"name\":{\"en_GB\":\"Key research areas of LUH\",\"de_DE\":\"Etablierte Forschungsschwerpunkte der LUH\"},\"classifications\":[{\"uri\":\"luh_schwerpunkte/interdisciplinary_studies_of_science\",\"term\":{\"en_GB\":\"Interdisciplinary Studies of Science and Academia\",\"de_DE\":\"Wissenschaftsreflexion\"}}]},{\"typeDiscriminator\":\"ClassificationsKeywordGroup\",\"pureId\":46974234,\"logicalName\":\"sustainabledevelopmentgoals\",\"name\":{\"en_GB\":\"Sustainable Development Goals\",\"de_DE\":\"Ziele für nachhaltige Entwicklung\"},\"classifications\":[{\"uri\":\"/dk/atira/pure/sustainabledevelopmentgoals/peace_justice_and_strong_institutions\",\"term\":{\"en_GB\":\"SDG 16 - Peace, Justice and Strong Institutions\",\"de_DE\":\"SDG 16 - Frieden, Gerechtigkeit und starke Institutionen\"}},{\"uri\":\"/dk/atira/pure/sustainabledevelopmentgoals/climate_action\",\"term\":{\"en_GB\":\"SDG 13 - Climate Action\",\"de_DE\":\"SDG 13 - Klimaschutzmaßnahmen\"}}]}],\"projects\":[{\"relationType\":{\"uri\":\"/dk/atira/pure/association/bidirectional/upmproject/predecessor\",\"term\":{\"en_GB\":\"Predecessor\",\"de_DE\":\"Vorgänger\"}},\"project\":{\"systemName\":\"Project\",\"uuid\":\"ad231c1e-ae07-4044-8d87-36a48e626a31\"}}],\"researchOutputs\":[{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"bd03a834-116a-42d5-a356-4c6404a08956\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"11f00ce4-cc32-4143-b953-94838811b6d0\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"93ebd2b5-c1fd-4836-b853-afe9e58830d9\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"03e0e66d-06fc-4888-b2d9-7049e782d00d\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"b75cc503-83db-4f32-841f-eaebd46dbd2b\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"9b1be796-84c0-40d3-ad2e-ad7f207524ef\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"f45251e7-2bab-4e64-8a1e-cdc139e944e9\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"5fabe970-3f14-4b9e-8985-6ddd2d2b747e\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"6e275b8b-6f14-4097-ae27-6c190cdad222\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"0878a572-89aa-4d65-9cbf-22d7e5524b26\"}},{\"researchOutput\":{\"systemName\":\"ResearchOutput\",\"uuid\":\"8ff55ff9-dedb-4cd1-9a65-c28265175a98\"}}],\"systemName\":\"Project\"}",
+        "response_data": {
+            "typeDiscriminator": "BasicProject",
+            "pureId": 3040630,
+            "uuid": "8229f43a-02b0-47aa-985d-3a852914bf5e",
+            "createdBy": "jw_admin",
+            "createdDate": "2020-02-13T10:37:57.891+01:00",
+            "modifiedBy": "root",
+            "modifiedDate": "2025-11-03T15:37:03.285+01:00",
+            "portalUrl": "https://research.uni-hannover.de/en/projects/8229f43a-02b0-47aa-985d-3a852914bf5e",
+            "prettyUrlIdentifiers": [
+                "research-training-group-20732-integrating-ethics-and-epistemology"
+            ],
+            "version": "4c6e7b69d694e76477ec799f4fa3d9e81d672b64",
+            "participants": [
+                {
+                    "typeDiscriminator": "InternalParticipantAssociation",
+                    "pureId": 3040645,
+                    "name": {
+                        "firstName": "Torsten",
+                        "lastName": "Wilholt"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/upmproject/roles/upmproject/pi",
+                        "term": {
+                            "en_GB": "Principal Investigator",
+                            "de_DE": "Projektleiter*in (Principal Investigator)"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "8c81f21f-9543-4785-b232-4a90a81ea416"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "ExternalParticipantAssociation",
+                    "pureId": 3040658,
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                        }
+                    ],
+                    "name": {
+                        "firstName": "Martin",
+                        "lastName": "Carrier"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/upmproject/roles/upmproject/copi",
+                        "term": {
+                            "en_GB": "Co-Principal Investigator",
+                            "de_DE": "Leitende*r Forscher*in (Co-Principal Investigator)"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "af97d46b-cf0c-44a9-b7f7-7790545ad36c"
+                    }
+                },
+                {
+                    "typeDiscriminator": "ExternalParticipantAssociation",
+                    "pureId": 3040647,
+                    "name": {
+                        "firstName": "Anke",
+                        "lastName": "Büter"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                        "term": {
+                            "en_GB": "Co-Investigator",
+                            "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ExternalParticipantAssociation",
+                    "pureId": 3040649,
+                    "name": {
+                        "firstName": "Uljana",
+                        "lastName": "Feest"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                        "term": {
+                            "en_GB": "Co-Investigator",
+                            "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalParticipantAssociation",
+                    "pureId": 3040651,
+                    "name": {
+                        "firstName": "Mathias",
+                        "lastName": "Frisch"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                        "term": {
+                            "en_GB": "Co-Investigator",
+                            "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "6423981d-1a77-4ef6-b2a7-d9f0bca3f3e9"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "InternalParticipantAssociation",
+                    "pureId": 3040653,
+                    "name": {
+                        "firstName": "Dietmar",
+                        "lastName": "Hübner"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                        "term": {
+                            "en_GB": "Co-Investigator",
+                            "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "9a34b20b-3b3b-440a-abfb-f7e58353954e"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "InternalParticipantAssociation",
+                    "pureId": 3040655,
+                    "name": {
+                        "firstName": "Thomas",
+                        "lastName": "Reydon"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                        "term": {
+                            "en_GB": "Co-Investigator",
+                            "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "e090fc8e-a61a-4e60-98f9-c5b83030678e"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "ExternalParticipantAssociation",
+                    "pureId": 3040657,
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                        }
+                    ],
+                    "name": {
+                        "firstName": "Ralf",
+                        "lastName": "Stoecker"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                        "term": {
+                            "en_GB": "Co-Investigator",
+                            "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "802ac8b2-1772-4dad-b1c6-e16834915659"
+                    }
+                },
+                {
+                    "typeDiscriminator": "ExternalParticipantAssociation",
+                    "pureId": 3040659,
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                        }
+                    ],
+                    "name": {
+                        "firstName": "Marie I.",
+                        "lastName": "Kaiser"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/upmproject/roles/upmproject/coi",
+                        "term": {
+                            "en_GB": "Co-Investigator",
+                            "de_DE": "beteiligte*r Wissenschaftler*in (Co-Investigator)"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "2251be53-9b69-49dc-a308-06f3784c2c42"
+                    }
+                }
+            ],
+            "externalOrganizations": [
+                {
+                    "systemName": "ExternalOrganization",
+                    "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                }
+            ],
+            "collaborators": [
+                {
+                    "typeDiscriminator": "ExternalCollaboratorAssociation",
+                    "pureId": 3040633,
+                    "leadCollaborator": false,
+                    "externalOrganization": {
+                        "systemName": "ExternalOrganization",
+                        "uuid": "48a41363-28e7-46c5-8f8d-7bfab8d7355c"
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalCollaboratorAssociation",
+                    "pureId": 3040634,
+                    "leadCollaborator": true,
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "07adc7bb-b839-4e70-900c-76d494d5b00a"
+                    }
+                }
+            ],
+            "descriptions": [
+                {
+                    "pureId": 3040635,
+                    "type": {
+                        "uri": "/dk/atira/pure/upmproject/descriptions/projectdescription",
+                        "term": {
+                            "en_GB": "Description",
+                            "de_DE": "Beschreibung"
+                        }
+                    }
+                },
+                {
+                    "pureId": 3040636,
+                    "type": {
+                        "uri": "/dk/atira/pure/upmproject/descriptions/keyfindings",
+                        "term": {
+                            "en_GB": "Key findings",
+                            "de_DE": "wichtigste Ergebnisse"
+                        }
+                    }
+                }
+            ],
+            "period": {
+                "startDate": "2020-04-01",
+                "endDate": "2024-09-30"
+            },
+            "natureTypes": [
+                {
+                    "uri": "/dk/atira/pure/upm/nature/research",
+                    "term": {
+                        "en_GB": "Research",
+                        "de_DE": "Forschung"
+                    }
+                }
+            ],
+            "organizations": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+                },
+                {
+                    "systemName": "Organization",
+                    "uuid": "34c200f4-c5dd-4864-bdca-64e922c09206"
+                }
+            ],
+            "managingOrganization": {
+                "systemName": "Organization",
+                "uuid": "a5c173ea-0de9-41aa-944a-ad3577fad32f"
+            },
+            "title": {
+                "en_GB": "Research Training Group 2073/2: Integrating Ethics and Epistemology of Scientific Research",
+                "de_DE": "Graduiertenkolleg 2073/2: Die Integration von theoretischer und praktischer Wissenschaftsphilosophie"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research",
+                "term": {
+                    "en_GB": "Research",
+                    "de_DE": "Forschung"
+                }
+            },
+            "workflow": {
+                "step": "validated",
+                "description": {
+                    "en_GB": "Validated",
+                    "de_DE": "Validiert"
+                }
+            },
+            "visibility": {
+                "key": "FREE",
+                "description": {
+                    "en_GB": "Public - No restriction",
+                    "de_DE": "Öffentlich - Keine Einschränkungen"
+                }
+            },
+            "links": [
+                {
+                    "pureId": 3040643,
+                    "url": "https://www.philos.uni-hannover.de/de/forschung/grk2037"
+                }
+            ],
+            "keywordGroups": [
+                {
+                    "typeDiscriminator": "ClassificationsKeywordGroup",
+                    "pureId": 3040639,
+                    "logicalName": "/dk/atira/pure/project/project_funder",
+                    "name": {
+                        "en_GB": "Funding type",
+                        "de_DE": "Mittelherkunft"
+                    },
+                    "classifications": [
+                        {
+                            "uri": "/dk/atira/pure/project/project_funder/germansciencefoundation",
+                            "term": {
+                                "en_GB": "German Research Foundation (DFG)",
+                                "de_DE": "Deutsche Forschungsgemeinschaft (DFG)"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "FullKeywordGroup",
+                    "pureId": 74438221,
+                    "logicalName": "/dk/atira/pure/project/financingsources",
+                    "name": {
+                        "en_GB": "Funding scheme",
+                        "de_DE": "Förderprogramme und -linien"
+                    },
+                    "keywordContainers": [
+                        {
+                            "pureId": 74438222,
+                            "structuredKeyword": {
+                                "uri": "/dk/atira/pure/project/financingsources/02/02/01",
+                                "term": {
+                                    "en_GB": "(International) Research Training Groups",
+                                    "de_DE": "(Internationale) Graduiertenkollegs"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "ClassificationsKeywordGroup",
+                    "pureId": 3040717,
+                    "logicalName": "luh_schwerpunkte",
+                    "name": {
+                        "en_GB": "Key research areas of LUH",
+                        "de_DE": "Etablierte Forschungsschwerpunkte der LUH"
+                    },
+                    "classifications": [
+                        {
+                            "uri": "luh_schwerpunkte/interdisciplinary_studies_of_science",
+                            "term": {
+                                "en_GB": "Interdisciplinary Studies of Science and Academia",
+                                "de_DE": "Wissenschaftsreflexion"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "ClassificationsKeywordGroup",
+                    "pureId": 46974234,
+                    "logicalName": "sustainabledevelopmentgoals",
+                    "name": {
+                        "en_GB": "Sustainable Development Goals",
+                        "de_DE": "Ziele für nachhaltige Entwicklung"
+                    },
+                    "classifications": [
+                        {
+                            "uri": "/dk/atira/pure/sustainabledevelopmentgoals/peace_justice_and_strong_institutions",
+                            "term": {
+                                "en_GB": "SDG 16 - Peace, Justice and Strong Institutions",
+                                "de_DE": "SDG 16 - Frieden, Gerechtigkeit und starke Institutionen"
+                            }
+                        },
+                        {
+                            "uri": "/dk/atira/pure/sustainabledevelopmentgoals/climate_action",
+                            "term": {
+                                "en_GB": "SDG 13 - Climate Action",
+                                "de_DE": "SDG 13 - Klimaschutzmaßnahmen"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "projects": [
+                {
+                    "relationType": {
+                        "uri": "/dk/atira/pure/association/bidirectional/upmproject/predecessor",
+                        "term": {
+                            "en_GB": "Predecessor",
+                            "de_DE": "Vorgänger"
+                        }
+                    },
+                    "project": {
+                        "systemName": "Project",
+                        "uuid": "ad231c1e-ae07-4044-8d87-36a48e626a31"
+                    }
+                }
+            ],
+            "researchOutputs": [
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "bd03a834-116a-42d5-a356-4c6404a08956"
+                    }
+                },
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "11f00ce4-cc32-4143-b953-94838811b6d0"
+                    }
+                },
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "93ebd2b5-c1fd-4836-b853-afe9e58830d9"
+                    }
+                },
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "03e0e66d-06fc-4888-b2d9-7049e782d00d"
+                    }
+                },
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "b75cc503-83db-4f32-841f-eaebd46dbd2b"
+                    }
+                },
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "9b1be796-84c0-40d3-ad2e-ad7f207524ef"
+                    }
+                },
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "f45251e7-2bab-4e64-8a1e-cdc139e944e9"
+                    }
+                },
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "5fabe970-3f14-4b9e-8985-6ddd2d2b747e"
+                    }
+                },
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "6e275b8b-6f14-4097-ae27-6c190cdad222"
+                    }
+                },
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "0878a572-89aa-4d65-9cbf-22d7e5524b26"
+                    }
+                },
+                {
+                    "researchOutput": {
+                        "systemName": "ResearchOutput",
+                        "uuid": "8ff55ff9-dedb-4cd1-9a65-c28265175a98"
+                    }
+                }
+            ],
+            "systemName": "Project"
+        },
+        "json_error": "No error"
+    }
+}

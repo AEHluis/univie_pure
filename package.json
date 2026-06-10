@@ -1,0 +1,14 @@
+{
+  "name": "univie-pure-assets",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Asset build pipeline for univie_pure TYPO3 extension",
+  "scripts": {
+    "build": "node scripts/build-assets.mjs"
+  },
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "fast-glob": "^3.3.2",
+    "terser": "^5.36.0"
+  }
+}

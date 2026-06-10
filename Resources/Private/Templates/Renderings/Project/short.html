@@ -1,0 +1,39 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="rendering_project rendering_short" data-uuid="{data.uuid}">
+    <h4 class="project-title"><f:render partial="Pure/LocalizedText" arguments="{textData: data.title, lang: locale, fallback: ''}" /></h4>
+
+    <f:if condition="{data.acronym}">
+        <p class="project-acronym"><strong>{data.acronym}</strong></p>
+    </f:if>
+
+    <f:if condition="{data.type.term}">
+        <p class="project-type">
+            <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.type"/>
+            <f:render partial="Pure/LocalizedText" arguments="{textData: data.type.term, lang: locale, fallback: ''}" />
+        </p>
+    </f:if>
+
+    <f:if condition="{data.status.term}">
+        <p class="project-status">
+            <f:translate key="LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.projects.status"/>
+            <f:render partial="Pure/LocalizedText" arguments="{textData: data.status.term, lang: locale, fallback: ''}" />
+        </p>
+    </f:if>
+
+    <f:if condition="{data.period.startDate}">
+        <p class="project-dates">
+            <f:format.date format="d.m.Y">{data.period.startDate}</f:format.date><f:if condition="{data.period.endDate}"> - <f:format.date format="d.m.Y">{data.period.endDate}</f:format.date></f:if>
+        </p>
+    </f:if>
+
+    <f:if condition="{data.participants}">
+        <p class="project-participants">
+            <f:for each="{data.participants}" as="participant" iteration="iter">
+                <f:if condition="{participant.name.firstName} || {participant.name.lastName}">
+                    <span class="participant">{participant.name.firstName} {participant.name.lastName}<f:if condition="{participant.role.term}"> (<f:render partial="Pure/LocalizedText" arguments="{textData: participant.role.term, lang: locale, fallback: ''}" />)</f:if></span><f:if condition="!{iter.isLast}">, </f:if>
+                </f:if>
+            </f:for>
+        </p>
+    </f:if>
+</div>
+</html>

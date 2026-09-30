@@ -33,11 +33,6 @@ use Throwable;
  */
 class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-    /**
-     * @var array
-     */
-    protected $settings = [];
-
     private readonly ApiServiceInterface $apiService;
     private readonly ?CslRenderingService $cslRenderingService;
     private readonly PublicationInsightsService $publicationInsightsService;

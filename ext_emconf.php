@@ -9,13 +9,13 @@ $EM_CONF[$_EXTKEY] = array(
     'uploadfolder' => '0',
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
-    'version' => '12.23.524',
+    'version' => '14.0.0',
     'constraints' => array(
         'depends' => array(
-            'php' => '8.2.0-8.4.99',
-            'typo3' => '12.0.0-12.99.99',
+            'php' => '8.2.0-8.5.99',
+            'typo3' => '12.0.0-14.99.99',
             'numbered_pagination' => '2.0.1-2.99.99',
-            't3luhlib' => '12.0.0-12.99.99',
+            't3luhlib' => '12.0.0-14.99.99',
         ),
         'conflicts' => array(
         ),

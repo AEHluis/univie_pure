@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Univie\UniviePure\Utility;
 
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Univie\UniviePure\Service\ApiServiceInterface;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
@@ -712,7 +713,7 @@ class ClassificationScheme
                 $record = $queryBuilder
                     ->select('pi_flexform')
                     ->from('tt_content')
-                    ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($editUid, \PDO::PARAM_INT)))
+                    ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($editUid, Connection::PARAM_INT)))
                     ->executeQuery()
                     ->fetchAssociative();
 

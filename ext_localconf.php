@@ -33,18 +33,9 @@ call_user_func(
             ]
         );
 
-        // TypoScript
-        ExtensionManagementUtility::addTypoScriptConstants(
-            '@import "EXT:univie_pure/Configuration/TypoScript/constants.typoscript"'
-        );
-        ExtensionManagementUtility::addTypoScriptSetup(
-            '@import "EXT:univie_pure/Configuration/TypoScript/setup.typoscript"'
-        );
-
-        // Add PageTSConfig for wizard
-        ExtensionManagementUtility::addPageTSConfig(
-            '@import "EXT:univie_pure/Configuration/TSconfig/Page/Mod/Wizards/NewContentElement.tsconfig"'
-        );
+        // Add PageTSConfig for wizard (v14: defaultPageTSconfig statt addPageTSConfig)
+        $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultPageTSconfig'] ??= '';
+        $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultPageTSconfig'] .= "\n@import 'EXT:univie_pure/Configuration/TSconfig/Page/Mod/Wizards/NewContentElement.tsconfig'";
 
         // Hook to add backend JavaScript
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess']['univie_pure'] =

@@ -6,8 +6,8 @@ mod.wizards.newContentElement.wizardItems {
                 title = LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.title
                 description = LLL:EXT:univie_pure/Resources/Private/Language/locallang.xlf:univiepur.description
                 tt_content_defValues {
-                    CType = list
-                    list_type = univiepure_univiepure
+                    
+                    CType = univiepure_univiepure
                 }
             }
         }

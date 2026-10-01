@@ -686,10 +686,6 @@ class PureController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             GeneralUtility::makeInstance(PageRenderer::class)->setTitle($title);
         } catch (Throwable) {
         }
-
-        if (isset($GLOBALS['TSFE'])) {
-            $GLOBALS['TSFE']->indexedDocTitle = $title;
-        }
     }
 
     private function getPublicationVisibilityKey(array $publication): string

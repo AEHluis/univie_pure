@@ -13,7 +13,7 @@ $EM_CONF[$_EXTKEY] = array(
     'constraints' => array(
         'depends' => array(
             'php' => '8.2.0-8.5.99',
-            'typo3' => '12.0.0-14.99.99',
+            'typo3' => '14.3.0-14.99.99',
             'numbered_pagination' => '2.0.1-2.99.99',
             't3luhlib' => '12.0.0-14.99.99',
         ),

@@ -12,7 +12,7 @@
   ],
   "require": {
     "php": ">=8.2.0 <8.6.0",
-    "typo3/cms-core": "^12.4 || ^14.0",
+    "typo3/cms-core": "^14.3",
     "georgringer/numbered-pagination": ">=2.0.1",
     "t3luh/t3luhlib": "^12.0 || ^14.0"
   },
@@ -33,9 +33,9 @@
     "php-mock/php-mock-phpunit": "^2.10",
     "codeception/aspect-mock": "^0.5.1",
     "phpunit/php-code-coverage": "^10.1",
-    "typo3/cms-fluid-styled-content": "^12.4",
-    "typo3/cms-frontend": "^12.4",
-    "typo3/cms-install": "^12.4"
+    "typo3/cms-fluid-styled-content": "^14.3",
+    "typo3/cms-frontend": "^14.3",
+    "typo3/cms-install": "^14.3"
 
   },
   "config": {
